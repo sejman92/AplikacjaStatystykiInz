@@ -1,6 +1,0 @@
-CREATE TABLE uzytkownik
-(
-	id INT PRIMARY KEY NOT NULL IDENTITY(1,1),
-	imie VARCHAR(256),
-	nazwisko VARCHAR(256),
-)
