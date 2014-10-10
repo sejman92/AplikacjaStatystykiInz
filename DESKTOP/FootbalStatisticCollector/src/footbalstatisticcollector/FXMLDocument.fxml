@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import javafx.scene.effect.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" tabClosingPolicy="UNAVAILABLE" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8">
+  <tabs>
+    <Tab text="Analyze">
+      <content>
+        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+      </content>
+    </Tab>
+    <Tab text="Collect">
+         <content>
+            <Pane prefHeight="200.0" prefWidth="200.0">
+               <children>
+                  <ListView layoutX="14.0" layoutY="40.0" prefHeight="357.0" prefWidth="200.0" />
+                  <Separator layoutX="223.0" layoutY="-15.0" orientation="VERTICAL" prefHeight="582.0" prefWidth="5.0" />
+                  <Button layoutX="14.0" layoutY="403.0" mnemonicParsing="false" text="Add Player" />
+                  <Button layoutX="114.0" layoutY="403.0" mnemonicParsing="false" text="Remove Player" />
+                  <Label layoutX="14.0" layoutY="14.0" text="TeamName" />
+                  <Button layoutX="14.0" layoutY="448.0" mnemonicParsing="false" text="CreateNewTeam" />
+                  <Button layoutX="133.0" layoutY="448.0" mnemonicParsing="false" text="Load Team" />
+                  <Label layoutX="229.0" layoutY="14.0" text="Shoot" />
+                  <Button layoutX="699.0" layoutY="532.0" mnemonicParsing="false" text="ADD ACTION" />
+                  <Label layoutX="231.0" layoutY="389.0" text="Body" />
+                  <Separator layoutX="226.0" layoutY="380.0" prefHeight="3.0" prefWidth="556.0" />
+                  <Separator layoutX="231.0" layoutY="413.0" prefHeight="4.0" prefWidth="554.0" />
+                  <Button layoutX="274.0" layoutY="385.0" mnemonicParsing="false" text="Left Foot" />
+                  <Button layoutX="348.0" layoutY="385.0" mnemonicParsing="false" text="Right Foot" />
+                  <Button layoutX="427.0" layoutY="385.0" mnemonicParsing="false" text="Head" />
+                  <Button layoutX="482.0" layoutY="385.0" mnemonicParsing="false" text="Hand" />
+                  <Button layoutX="535.0" layoutY="385.0" mnemonicParsing="false" text="Other" />
+                  <Button layoutX="280.0" layoutY="10.0" mnemonicParsing="false" text="OnGoal" />
+                  <Button layoutX="348.0" layoutY="10.0" mnemonicParsing="false" text="Missed" />
+                  <Label layoutX="419.0" layoutY="14.0" text="GoalPart" />
+                  <Button layoutX="478.0" layoutY="10.0" mnemonicParsing="false" text="Bar" />
+                  <Button layoutX="527.0" layoutY="10.0" mnemonicParsing="false" text="Post" />
+                  <Button layoutX="582.0" layoutY="10.0" mnemonicParsing="false" text="CrossBar" />
+                  <Label layoutX="231.0" layoutY="61.0" text="Pass" />
+                  <Button layoutX="280.0" layoutY="57.0" mnemonicParsing="false" text="OK" />
+                  <Button layoutX="322.0" layoutY="57.0" mnemonicParsing="false" text="Missed" />
+                  <Label layoutX="400.0" layoutY="61.0" text="Type" />
+                  <Button layoutX="445.0" layoutY="57.0" mnemonicParsing="false" text="Short" />
+                  <Button layoutX="501.0" layoutY="57.0" mnemonicParsing="false" text="Long" />
+                  <Button layoutX="556.0" layoutY="57.0" mnemonicParsing="false" text="OnGround" />
+                  <Button layoutX="635.0" layoutY="57.0" mnemonicParsing="false" text="InAir" />
+                  <Label layoutX="231.0" layoutY="277.0" text="Special" />
+                  <Button layoutX="296.0" layoutY="273.0" mnemonicParsing="false" text="Faul" />
+                  <Button layoutX="349.0" layoutY="273.0" mnemonicParsing="false" text="Save" />
+                  <Button layoutX="400.0" layoutY="273.0" mnemonicParsing="false" text="Button" />
+                  <Button layoutX="464.0" layoutY="273.0" mnemonicParsing="false" text="Loss" />
+                  <Button layoutX="509.0" layoutY="273.0" mnemonicParsing="false" text="Overtaking" />
+                  <Label layoutX="231.0" layoutY="236.0" text="Card" />
+                  <Button layoutX="296.0" layoutY="232.0" mnemonicParsing="false" text="Yellow" />
+                  <Button layoutX="358.0" layoutY="232.0" mnemonicParsing="false" text="Red" />
+                  <Button layoutX="592.0" layoutY="273.0" mnemonicParsing="false" text="Penalty" />
+                  <Button layoutX="656.0" layoutY="273.0" mnemonicParsing="false" text="Free Throw" />
+                  <Button layoutX="742.0" layoutY="273.0" mnemonicParsing="false" text="Out" />
+                  <Label layoutX="30.0" layoutY="484.0" prefHeight="48.0" prefWidth="168.0" text="ZEGAR">
+                     <font>
+                        <Font size="54.0" />
+                     </font>
+                  </Label>
+                  <TextArea layoutX="246.0" layoutY="501.0" prefHeight="47.0" prefWidth="441.0" promptText="TUTAJ BEDZIE AKTUALNY INSERT" />
+                  <Button layoutX="699.0" layoutY="489.0" mnemonicParsing="false" text="Cancel" />
+                  <Button layoutX="496.0" layoutY="308.0" mnemonicParsing="false" text="Injury" />
+                  <Button layoutX="556.0" layoutY="308.0" mnemonicParsing="false" text="Substitution IN" />
+                  <Button layoutX="667.0" layoutY="308.0" mnemonicParsing="false" text="Substitution OUT" />
+                  <Button layoutX="296.0" layoutY="308.0" mnemonicParsing="false" text="Corner" />
+                  <Button layoutX="106.0" layoutY="10.0" mnemonicParsing="false" text="Start" />
+                  <Button layoutX="155.0" layoutY="10.0" mnemonicParsing="false" text="Stop" />
+                  <Button layoutX="697.0" layoutY="10.0" mnemonicParsing="false" text="GOAL" />
+                  <TextArea layoutX="247.0" layoutY="435.0" prefHeight="52.0" prefWidth="441.0" promptText="KOMENTARZ DO AKCJI" />
+               </children>
+            </Pane>
+         </content>
+    </Tab>
+  </tabs>
+</TabPane>
