@@ -8,5 +8,5 @@ package fsc.controller;
  * @author Mateusz
  */
 public class GlobalVariables {
-    public static String guiResource = "/fsc/view/GUI.fxml";
+    public static String guiResource = "GUI.fxml";
 }
