@@ -22,6 +22,10 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.VBox;
 import javafx.util.Callback;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.EntityTransaction;
+import javax.persistence.Persistence;
 
 /**
  *
@@ -45,6 +49,11 @@ public class MainController implements Initializable {
      * @it is implementation of add new player into player listView
      */
     public void addPlayer(){
-   
+        /*EntityManagerFactory emfInstance = Persistence.createEntityManagerFactory("FootballStatisticCollectorPU");
+        EntityManager em = emfInstance.createEntityManager();
+        EntityTransaction et = em.getTransaction();
+        et.begin();
+        em.createNativeQuery("INSERT INTO Player (name, surname, no, role, owner_id, team_id) values( 'pawel', 'fefs',10, 'forward','1','1')").executeUpdate();
+        et.commit();*/
     }
 }
