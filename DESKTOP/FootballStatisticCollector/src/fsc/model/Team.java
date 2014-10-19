@@ -81,8 +81,11 @@ public class Team implements Serializable {
         this.name = name;
     }
     
-    public ObservableList<Player> getPlayers()
-    {
+    public void addPlayer(Player player){
+        playerCollection.add(player);
+    }
+    
+    public ObservableList<Player> getPlayers(){
         return (ObservableList<Player>)playerCollection;
     }
 

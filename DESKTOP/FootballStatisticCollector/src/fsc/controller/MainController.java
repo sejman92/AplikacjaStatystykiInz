@@ -5,6 +5,8 @@
  */
 package fsc.controller;
 
+import fsc.model.Player;
+import fsc.model.Role;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.beans.value.ObservableValue;
@@ -30,6 +32,7 @@ import javax.persistence.Persistence;
 import fsc.model.Team;
 import java.util.ArrayList;
 import java.util.List;
+import javafx.beans.Observable;
 
 /**
  *
@@ -43,21 +46,29 @@ public class MainController implements Initializable {
     @FXML private TextField nameTeamTF;
     @FXML private ListView proba;
     @FXML private ListView teamsLV;
+    @FXML private ListView playersLV;
+    @FXML private TextField namePlayerTF;
+    @FXML private TextField surnamePlayerTF;
+    @FXML private TextField noPlayerTF;
+    @FXML private ListView rolesLV;
+    @FXML private Button selectTeamBt;
+    @FXML private Button createPlayerBt;
+    
     private TeamsManager teamsManager;
+    private ObservableList<Role>roles;
+    private Team teamSelected;
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        teamsManager = TeamsManager.getInstance();
+        proba.setItems(teamsManager.getTeams());
         // TODO 
         //there i ititialize conection with db and other stuff
-        teamsManager = TeamsManager.getInstance();
-        
-        /* 
-        ObservableList<String> names = FXCollections.observableArrayList(
-          "Julia", "Ian", "Sue", "Matthew", "Hannah", "Stephan", "Denise");
-        */
-        teamsLV.setItems(teamsManager.getTeams());
-        proba.setItems(teamsManager.getTeams());
 
+        roles = FXCollections.observableArrayList(Role.values());
+        
+        teamsLV.setItems(teamsManager.getTeams());
+        rolesLV.setItems(roles);
         teamsManager.addTeam("atletico");
 
     }    
@@ -66,10 +77,28 @@ public class MainController implements Initializable {
     {
         teamsManager.addTeam(nameTeamTF.getText());
     }
+    public void selectTeamBtClick()
+    {
+        teamSelected = (Team) teamsLV.getSelectionModel().getSelectedItem();
+        nameTeamTF.setText(teamSelected.toString());
+        playersLV.setItems(teamSelected.getPlayers());
+    }
     
     public void createPlayerBtClick()
     {
-        //teamsManager.addTeam(nameTeamTF.getText());
+        try{
+            Player player = new Player(
+                    5,
+                    namePlayerTF.getText(),
+                    surnamePlayerTF.getText(),
+                    5,
+                    rolesLV.getSelectionModel().getSelectedItem().toString()
+            );
+            teamSelected.addPlayer(player);
+        }
+        catch(Exception e){
+            
+        }
     }
     
     

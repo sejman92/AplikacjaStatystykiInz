@@ -61,6 +61,15 @@ public class Player implements Serializable {
     public Player(Integer id) {
         this.id = id;
     }
+    
+    public Player(Integer id, String name, String surname, Integer no, String role)
+    {
+        this.id = id;
+        this.name = name;
+        this.surname = surname;
+        this.no = no;
+        this.role = role;
+    }
 
     public Integer getId() {
         return id;

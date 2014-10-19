@@ -457,9 +457,9 @@
         <content>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                <children>
-                  <ListView fx:id="teamsLV" layoutX="23.0" layoutY="14.0" prefHeight="200.0" prefWidth="200.0" />
+                  <ListView fx:id="teamsLV" layoutX="23.0" layoutY="14.0" prefHeight="176.0" prefWidth="200.0" />
                   <TextField fx:id="nameTeamTF" layoutX="318.0" layoutY="22.0" />
-                  <Button fx:id="createTeamBt" layoutX="339.0" layoutY="89.0" mnemonicParsing="false" onAction="#createTeamBtClick" text="Create team" />
+                  <Button fx:id="createTeamBt" layoutX="342.0" layoutY="61.0" mnemonicParsing="false" onAction="#createTeamBtClick" text="Create team" />
                   <ListView fx:id="playersLV" layoutX="23.0" layoutY="264.0" prefHeight="200.0" prefWidth="200.0" />
                   <TextField fx:id="namePlayerTF" layoutX="318.0" layoutY="264.0" />
                   <TextField fx:id="surnamePlayerTF" layoutX="318.0" layoutY="300.0" />
@@ -469,8 +469,9 @@
                   <Label layoutX="252.0" layoutY="304.0" text="Surname" />
                   <Label layoutX="252.0" layoutY="350.0" text="No" />
                   <Label layoutX="252.0" layoutY="394.0" text="Role" />
-                  <TextField fx:id="rolePlayerTF" layoutX="318.0" layoutY="390.0" />
-                  <Button fx:id="createPlayerBt" layoutX="339.0" layoutY="425.0" mnemonicParsing="false" onAction="#createPlayerBtClick" text="Create player" />
+                  <Button fx:id="createPlayerBt" layoutX="340.0" layoutY="439.0" mnemonicParsing="false" onAction="#createPlayerBtClick" text="Create player" />
+                  <Button fx:id="selectTeamBt" layoutX="83.0" layoutY="218.0" mnemonicParsing="false" onAction="#selectTeamBtClick" text="Select Team" />
+                  <ListView fx:id="rolesLV" layoutX="318.0" layoutY="383.0" prefHeight="39.0" prefWidth="148.0" />
                </children></AnchorPane>
         </content>
       </Tab>
