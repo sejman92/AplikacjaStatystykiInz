@@ -19,6 +19,7 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.VBox;
 import javafx.util.Callback;
@@ -26,6 +27,9 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
+import fsc.model.Team;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -35,14 +39,38 @@ public class MainController implements Initializable {
     
     @FXML private Button AddPlayerBt;
     @FXML private Label timer;
+    @FXML private Button createTeamBt;
+    @FXML private TextField nameTeamTF;
+    @FXML private ListView proba;
+    @FXML private ListView teamsLV;
+    private TeamsManager teamsManager;
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO 
         //there i ititialize conection with db and other stuff
-     
+        teamsManager = TeamsManager.getInstance();
+        
+        /* 
+        ObservableList<String> names = FXCollections.observableArrayList(
+          "Julia", "Ian", "Sue", "Matthew", "Hannah", "Stephan", "Denise");
+        */
+        teamsLV.setItems(teamsManager.getTeams());
+        proba.setItems(teamsManager.getTeams());
+
+        teamsManager.addTeam("atletico");
+
     }    
 
+    public void createTeamBtClick()
+    {
+        teamsManager.addTeam(nameTeamTF.getText());
+    }
+    
+    public void createPlayerBtClick()
+    {
+        //teamsManager.addTeam(nameTeamTF.getText());
+    }
     
     
     /**

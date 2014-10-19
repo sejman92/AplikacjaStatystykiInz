@@ -7,6 +7,8 @@ package fsc.model;
 
 import java.io.Serializable;
 import java.util.Collection;
+import java.util.Observable;
+import javafx.collections.ObservableList;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -57,6 +59,11 @@ public class Team implements Serializable {
     public Team(Integer id) {
         this.id = id;
     }
+    
+    public Team(Integer id, String name) {
+        this.id = id;
+        this.name = name;
+    }
 
     public Integer getId() {
         return id;
@@ -72,6 +79,11 @@ public class Team implements Serializable {
 
     public void setName(String name) {
         this.name = name;
+    }
+    
+    public ObservableList<Player> getPlayers()
+    {
+        return (ObservableList<Player>)playerCollection;
     }
 
     @XmlTransient
@@ -122,7 +134,7 @@ public class Team implements Serializable {
 
     @Override
     public String toString() {
-        return "fsc.model.Team[ id=" + id + " ]";
+        return name;
     }
     
 }

@@ -140,7 +140,7 @@ public class Player implements Serializable {
 
     @Override
     public String toString() {
-        return "fsc.model.Player[ id=" + id + " ]";
+        return name + " " + surname;
     }
     
 }
