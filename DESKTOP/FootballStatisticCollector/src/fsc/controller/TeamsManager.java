@@ -51,11 +51,4 @@ public class TeamsManager {
     public ObservableList<Team> getTeams(){
         return teams;
     }
-    
-    public void showTeamList(){
-        for(Team t: teams)
-        {
-            
-        }
-    }
 }
