@@ -211,6 +211,8 @@ public class DatabaseManager extends SQLiteOpenHelper {
 		{
 			Log.d("baza",e.toString());
 		}
+		deletePlayerByTeamId(id);
+		//TODO dodaæ usuniêcie wszystkich meczy dru¿yny, jak ju¿ bêdzie mo¿na dodawaæ mecze
 	}
 
 	public List<Player> getAllPlayersFromTeam(int team_id)
@@ -221,7 +223,7 @@ public class DatabaseManager extends SQLiteOpenHelper {
 		try
 		{
 			String[] columns={"id", "imie", "nazwisko", "numer", "pozycja", "id_druzyny"};
-			String[] args={String.valueOf(team_id), ""};
+			String[] args={String.valueOf(team_id)};
 			cursor = db.query("zawodnik", columns, "id_druzyny=?", args, null, null, null);
 			while(cursor.moveToNext())
 			{
@@ -234,13 +236,48 @@ public class DatabaseManager extends SQLiteOpenHelper {
 		}
 		return list;		
 	}
-	public void addPlayer()
+	public void addPlayer(String name, String surname, int no, String role, int id_team)
 	{
+		SQLiteDatabase db = getWritableDatabase();
+		try
+		{
+			ContentValues values = new ContentValues();
+			values.put("imie", name);
+			values.put("nazwisko", surname);
+			values.put("numer", no);
+			values.put("pozycja", role);
+			values.put("id_druzyny", id_team);
+			db.insertOrThrow("zawodnik", null, values);
+		}catch(SQLException e)
+		{
+			Log.d("blad", e.toString());
+		}
 		
+		Log.d("Baza","dodano rekord do zawodnika o nazwie"+name);
 	}
-	public void deletePlayer(int id)
+	public void deletePlayerById(int id)
 	{
-		
+		SQLiteDatabase db = getWritableDatabase();
+		String[] arg={""+id};
+		try{
+			db.delete("zawodnik", "id=?", arg);
+		}catch(SQLException e)
+		{
+			Log.d("baza",e.toString());
+		}
+		//TODO dodaæ usuniêcie wszystkich innych wydarzen zwi¹zanych z tym zawodnikiem
+	}
+	public void deletePlayerByTeamId(int team_id)
+	{
+		SQLiteDatabase db = getWritableDatabase();
+		String[] arg={""+team_id};
+		try{
+			db.delete("zawodnik", "id_druzyny=?", arg);
+		}catch(SQLException e)
+		{
+			Log.d("baza",e.toString());
+		}
+		//TODO dodaæ usuniêcie wszystkich innych wydarzen zwi¹zanych z tym zawodnikiem
 	}
 	
 	@Override

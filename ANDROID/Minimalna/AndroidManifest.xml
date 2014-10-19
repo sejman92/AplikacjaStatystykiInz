@@ -30,6 +30,10 @@
             android:name="pl.gda.pg.eti.kio.project.footballstatisticmanager.activities.SettingsActivity"
             android:label="@string/title_activity_ustawienia" >
         </activity>
+        <activity
+            android:name="pl.gda.pg.eti.kio.project.footballstatisticmanager.activities.TeamActivity"
+            android:label="@string/title_activity_team" >
+        </activity>
     </application>
 
 </manifest>

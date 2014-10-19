@@ -13,6 +13,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -41,7 +42,12 @@ public class TeamsActivity extends Activity {
         public void onItemClick(AdapterView<?> parent, View v, int position, long id) 
         {
         	int idt=listTeam.get(position).getId();
-            Toast.makeText(getApplicationContext(), "Wybrano dru¿ynê o ID = "+String.valueOf(idt), Toast.LENGTH_SHORT).show();
+        	
+        	Intent intent = new Intent(TeamsActivity.this,TeamActivity.class);
+        	intent.putExtra("id", idt);
+        	intent.putExtra("name",listTeam.get(position).getName() );
+        	startActivity(intent);
+        	//Toast.makeText(getApplicationContext(), "Wybrano dru¿ynê o ID = "+String.valueOf(idt), Toast.LENGTH_SHORT).show();
         }
 	};
 	
@@ -49,16 +55,10 @@ public class TeamsActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_teams);
-		view_Team_List = (ListView) findViewById(R.id.listView1);
-		listTeam = dbm.getAllTeams();
-		dbm.close();
-		String[] team_list= new String[listTeam.size()];
-		for(int i=0;i<listTeam.size();i++)
-			team_list[i]=listTeam.get(i).getId()+" "+listTeam.get(i).getName();
-		list_adapter = new ArrayAdapter(this,android.R.layout.simple_list_item_1, team_list);
-		view_Team_List.setAdapter(list_adapter);
-		view_Team_List.setOnItemClickListener( listner);
+		
+		refresh_team_list();
 	}
+	
 	public void refresh_team_list()
 	{		
 		view_Team_List = (ListView) findViewById(R.id.listView1);
@@ -66,13 +66,20 @@ public class TeamsActivity extends Activity {
 		dbm.close();
 		String[] team_list= new String[listTeam.size()];
 		for(int i=0;i<listTeam.size();i++)
-			team_list[i]=listTeam.get(i).getId()+" "+listTeam.get(i).getName();
+			team_list[i]=listTeam.get(i).getName();
 		list_adapter = new ArrayAdapter(this,android.R.layout.simple_list_item_1, team_list);
 		view_Team_List.refreshDrawableState();
 		view_Team_List.setAdapter(list_adapter);
 		view_Team_List.setOnItemClickListener( listner);
 	}
-
+	
+	@Override
+	public void onResume()
+	{
+		super.onResume();
+		setContentView(R.layout.activity_teams);
+		refresh_team_list();
+	}
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
