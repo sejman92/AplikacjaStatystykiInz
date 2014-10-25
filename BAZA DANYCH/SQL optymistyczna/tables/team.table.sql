@@ -1,0 +1,8 @@
+CREATE TABLE Team
+(
+	id INT PRIMARY KEY AUTO_INCREMENT,
+	name CHAR(100),
+	owner_id INT,
+	FOREIGN KEY (owner_id)
+	REFERENCES User(id)	
+)

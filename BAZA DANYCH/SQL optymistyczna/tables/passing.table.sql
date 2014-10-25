@@ -7,5 +7,15 @@ CREATE TABLE Passing
         time TIME,
         comment TEXT,
 		owner_id INT,
-        successful BOOL        
+        successful BOOL,
+		FOREIGN KEY(player_passing_id)
+		REFERENCES Player(id),
+		FOREIGN KEY(player_getting_id)
+		REFERENCES Player(id),
+		FOREIGN KEY(game_id)
+		REFERENCES Game(id),
+		FOREIGN KEY(game_id)
+		REFERENCES Game(id),
+		FOREIGN KEY(owner_id)
+		REFERENCES User(id)
 )

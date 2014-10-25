@@ -6,5 +6,15 @@ CREATE TABLE Swap
         game_id INT,
         comment TEXT,
         injury_id INT,
-        owner_id INT        
+        owner_id INT,
+		FOREIGN KEY (player_in_id)
+		REFERENCES Player(id),
+		FOREIGN KEY (player_out_id)
+		REFERENCES Player(id),
+		FOREIGN KEY (game_id)
+		REFERENCES Game(id),
+		FOREIGN KEY (injury_id)
+		REFERENCES Injury(id),
+		FOREIGN KEY (owner_id)
+		REFERENCES User(id)
 )

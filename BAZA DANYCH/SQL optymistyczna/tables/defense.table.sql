@@ -5,5 +5,11 @@ CREATE TABLE Defense
         game_id INT,
         time TIME,
 		owner_id INT,
-        comment TEXT        
+        comment TEXT,
+		FOREIGN KEY (player_id)
+		REFERENCES Player(id),
+		FOREIGN KEY (game_id)
+		REFERENCES Game(id),
+		FOREIGN KEY (owner_id)
+		REFERENCES User(id)
 )

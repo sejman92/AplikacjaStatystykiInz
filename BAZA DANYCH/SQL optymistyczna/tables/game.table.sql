@@ -7,5 +7,7 @@ CREATE TABLE Game
         lost_goals INT,
         scored_goals INT,
         oponent CHAR(150),
-        owner_id INT        
+        owner_id INT,
+		FOREIGN KEY (owner_id)
+		REFERENCES user(id)
 )

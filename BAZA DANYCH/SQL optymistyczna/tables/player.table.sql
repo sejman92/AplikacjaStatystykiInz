@@ -1,4 +1,4 @@
-CREATE TABLE player
+CREATE TABLE Player
 (
 	id INT NOT NULL AUTO_INCREMENT,
         name CHAR(20),
@@ -8,6 +8,6 @@ CREATE TABLE player
         owner_id INT NOT NULL,
         team_id INT NOT NULL,
         PRIMARY KEY (id),
-        FOREIGN KEY(owner_id) REFERENCES user(id),
-        FOREIGN KEY(team_id) REFERENCES team(id)
+        FOREIGN KEY(owner_id) REFERENCES User(id),
+        FOREIGN KEY(team_id) REFERENCES Team(id)
 )

@@ -8,5 +8,16 @@ CREATE TABLE Card
         comment TEXT,
         owner_id INT,
         swap_id INT,
-        faul_id INT
+        faul_id INT,
+		FOREIGN KEY (player_id)
+		REFERENCES Player(id),
+		FOREIGN KEY (game_id)
+		REFERENCES Game(id),
+		FOREIGN KEY (owner_id)
+		REFERENCES User(id),
+		FOREIGN KEY (swap_id)
+		REFERENCES Swap(id),
+		FOREIGN KEY (faul_is)
+		REFERENCES Faul(id)
+		
 )
