@@ -22,23 +22,7 @@
                <children>
                   <VBox layoutX="14.0" layoutY="14.0" prefHeight="656.0" prefWidth="200.0">
                      <children>
-                        <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Select Existing Team" textAlignment="CENTER" VBox.vgrow="ALWAYS">
-                           <VBox.margin>
-                              <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
-                           </VBox.margin>
-                           <padding>
-                              <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
-                           </padding>
-                        </Button>
-                        <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Save Existing Team" textAlignment="CENTER" VBox.vgrow="ALWAYS">
-                           <padding>
-                              <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
-                           </padding>
-                           <VBox.margin>
-                              <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
-                           </VBox.margin>
-                        </Button>
-                        <Label alignment="CENTER" layoutX="14.0" layoutY="14.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="TeamName" VBox.vgrow="ALWAYS">
+                        <Label alignment="CENTER" layoutX="14.0" layoutY="14.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Nazwa drużyny" VBox.vgrow="ALWAYS">
                            <font>
                               <Font size="27.0" />
                            </font>
@@ -58,35 +42,7 @@
                            </padding>
                         </ListView>
                         <ListView layoutX="14.0" layoutY="340.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="187.0" prefWidth="200.0" VBox.vgrow="ALWAYS" />
-                        <HBox prefHeight="100.0" prefWidth="200.0">
-                           <children>
-                              <Button fx:id="AddPlayerBt" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#addPlayer" text="Add" HBox.hgrow="ALWAYS">
-                                 <HBox.margin>
-                                    <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
-                                 </HBox.margin>
-                                 <padding>
-                                    <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
-                                 </padding>
-                              </Button>
-                              <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Delete" HBox.hgrow="ALWAYS">
-                                 <HBox.margin>
-                                    <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
-                                 </HBox.margin>
-                                 <padding>
-                                    <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
-                                 </padding>
-                              </Button>
-                              <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Edit" HBox.hgrow="ALWAYS">
-                                 <HBox.margin>
-                                    <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
-                                 </HBox.margin>
-                                 <padding>
-                                    <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
-                                 </padding>
-                              </Button>
-                           </children>
-                        </HBox>
-                        <Label fx:id="timer" alignment="CENTER" contentDisplay="CENTER" layoutX="30.0" layoutY="538.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="TIMER" textAlignment="CENTER" VBox.vgrow="ALWAYS">
+                        <Label fx:id="timer" alignment="CENTER" contentDisplay="CENTER" layoutX="30.0" layoutY="538.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="ZEGAR" textAlignment="CENTER" VBox.vgrow="ALWAYS">
                            <font>
                               <Font size="54.0" />
                            </font>
@@ -107,7 +63,7 @@
                                     <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
                                  </padding>
                               </Button>
-                              <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Pause" HBox.hgrow="ALWAYS">
+                              <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Pauza" HBox.hgrow="ALWAYS">
                                  <HBox.margin>
                                     <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
                                  </HBox.margin>
@@ -130,15 +86,15 @@
                   <Separator layoutX="223.0" layoutY="-15.0" orientation="VERTICAL" prefHeight="710.0" prefWidth="7.0" />
                   <TextArea editable="false" layoutX="257.0" layoutY="520.0" prefHeight="56.0" prefWidth="548.0" promptText="TUTAJ BEDZIE AKTUALNY INSERT" />
                   <TextArea layoutX="256.0" layoutY="397.0" prefHeight="88.0" prefWidth="549.0" promptText="KOMENTARZ DO AKCJI" />
-                  <Label layoutX="245.0" layoutY="33.0" text="Main Action" />
-                  <Label layoutX="261.0" layoutY="348.0" text="Result" />
-                  <Label layoutX="266.0" layoutY="198.0" text="Kick" />
-                  <Label layoutX="251.0" layoutY="87.0" text="Body part" />
+                  <Label layoutX="263.0" layoutY="33.0" text="Akcja" />
+                  <Label layoutX="261.0" layoutY="348.0" text="Wynik" />
+                  <Label layoutX="265.0" layoutY="198.0" text="Rzut" />
+                  <Label layoutX="249.0" layoutY="87.0" text="Część ciała" />
                   <VBox layoutX="323.0" layoutY="17.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="48.0" prefWidth="477.0">
                      <children>
                         <HBox maxHeight="1.7976931348623157E308" prefHeight="52.0" prefWidth="477.0" VBox.vgrow="ALWAYS">
                            <children>
-                              <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Shoot" textAlignment="CENTER" HBox.hgrow="ALWAYS">
+                              <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Strzał" textAlignment="CENTER" HBox.hgrow="ALWAYS">
                                  <padding>
                                     <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
                                  </padding>
@@ -146,7 +102,7 @@
                                     <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
                                  </HBox.margin>
                               </Button>
-                              <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Pass" textAlignment="CENTER" HBox.hgrow="ALWAYS">
+                              <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Podanie" textAlignment="CENTER" HBox.hgrow="ALWAYS">
                                  <padding>
                                     <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
                                  </padding>
@@ -168,7 +124,7 @@
                      <children>
                         <HBox maxHeight="1.7976931348623157E308" prefHeight="52.0" prefWidth="477.0" VBox.vgrow="ALWAYS">
                            <children>
-                              <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Left Foot" textAlignment="CENTER" HBox.hgrow="ALWAYS">
+                              <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Lewa noga" textAlignment="CENTER" HBox.hgrow="ALWAYS">
                                  <padding>
                                     <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
                                  </padding>
@@ -176,7 +132,7 @@
                                     <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
                                  </HBox.margin>
                               </Button>
-                              <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Right Foot" textAlignment="CENTER" HBox.hgrow="ALWAYS">
+                              <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Prawa noga" textAlignment="CENTER" HBox.hgrow="ALWAYS">
                                  <padding>
                                     <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
                                  </padding>
@@ -184,7 +140,7 @@
                                     <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
                                  </HBox.margin>
                               </Button>
-                              <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Head" HBox.hgrow="ALWAYS">
+                              <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Głowa" HBox.hgrow="ALWAYS">
                                  <HBox.margin>
                                     <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
                                  </HBox.margin>
@@ -192,7 +148,7 @@
                                     <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
                                  </padding>
                               </Button>
-                              <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Chest" HBox.hgrow="ALWAYS">
+                              <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Klatka" HBox.hgrow="ALWAYS">
                                  <HBox.margin>
                                     <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
                                  </HBox.margin>
@@ -200,7 +156,7 @@
                                     <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
                                  </padding>
                               </Button>
-                              <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Other" textAlignment="CENTER" HBox.hgrow="ALWAYS">
+                              <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Inne" textAlignment="CENTER" HBox.hgrow="ALWAYS">
                                  <HBox.margin>
                                     <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
                                  </HBox.margin>
@@ -222,7 +178,7 @@
                      <children>
                         <HBox maxHeight="1.7976931348623157E308" prefHeight="52.0" prefWidth="477.0" VBox.vgrow="ALWAYS">
                            <children>
-                              <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Flat" textAlignment="CENTER" HBox.hgrow="ALWAYS">
+                              <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Płaskie" textAlignment="CENTER" HBox.hgrow="ALWAYS">
                                  <padding>
                                     <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
                                  </padding>
@@ -230,7 +186,7 @@
                                     <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
                                  </HBox.margin>
                               </Button>
-                              <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Cross" textAlignment="CENTER" HBox.hgrow="ALWAYS">
+                              <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Górą" textAlignment="CENTER" HBox.hgrow="ALWAYS">
                                  <padding>
                                     <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
                                  </padding>
@@ -252,7 +208,7 @@
                      <children>
                         <HBox maxHeight="1.7976931348623157E308" prefHeight="52.0" prefWidth="477.0" VBox.vgrow="ALWAYS">
                            <children>
-                              <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Free" textAlignment="CENTER" HBox.hgrow="ALWAYS">
+                              <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Wolny" textAlignment="CENTER" HBox.hgrow="ALWAYS">
                                  <padding>
                                     <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
                                  </padding>
@@ -260,7 +216,7 @@
                                     <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
                                  </HBox.margin>
                               </Button>
-                              <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Corner" textAlignment="CENTER" HBox.hgrow="ALWAYS">
+                              <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Rożny" textAlignment="CENTER" HBox.hgrow="ALWAYS">
                                  <padding>
                                     <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
                                  </padding>
@@ -268,7 +224,7 @@
                                     <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
                                  </HBox.margin>
                               </Button>
-                              <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Penalty" textAlignment="CENTER" HBox.hgrow="ALWAYS">
+                              <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Karny" textAlignment="CENTER" HBox.hgrow="ALWAYS">
                                  <HBox.margin>
                                     <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
                                  </HBox.margin>
@@ -290,7 +246,7 @@
                      <children>
                         <HBox maxHeight="1.7976931348623157E308" prefHeight="52.0" prefWidth="477.0" VBox.vgrow="ALWAYS">
                            <children>
-                              <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Tackle" textAlignment="CENTER" HBox.hgrow="ALWAYS">
+                              <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Wślizg" textAlignment="CENTER" HBox.hgrow="ALWAYS">
                                  <padding>
                                     <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
                                  </padding>
@@ -298,7 +254,7 @@
                                     <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
                                  </HBox.margin>
                               </Button>
-                              <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Save" textAlignment="CENTER" HBox.hgrow="ALWAYS">
+                              <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Obrona" textAlignment="CENTER" HBox.hgrow="ALWAYS">
                                  <HBox.margin>
                                     <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
                                  </HBox.margin>
@@ -314,7 +270,7 @@
                                     <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
                                  </HBox.margin>
                               </Button>
-                              <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Out" textAlignment="CENTER" HBox.hgrow="ALWAYS">
+                              <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Aut" textAlignment="CENTER" HBox.hgrow="ALWAYS">
                                  <HBox.margin>
                                     <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
                                  </HBox.margin>
@@ -332,7 +288,7 @@
                         </HBox>
                         <HBox maxHeight="1.7976931348623157E308" prefHeight="52.0" prefWidth="477.0" VBox.vgrow="ALWAYS">
                            <children>
-                              <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Handball" textAlignment="CENTER" HBox.hgrow="ALWAYS">
+                              <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Ręka" textAlignment="CENTER" HBox.hgrow="ALWAYS">
                                  <padding>
                                     <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
                                  </padding>
@@ -340,7 +296,7 @@
                                     <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
                                  </HBox.margin>
                               </Button>
-                              <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Substitution" textAlignment="CENTER" HBox.hgrow="ALWAYS">
+                              <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Zmiana" textAlignment="CENTER" HBox.hgrow="ALWAYS">
                                  <padding>
                                     <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
                                  </padding>
@@ -348,7 +304,7 @@
                                     <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
                                  </HBox.margin>
                               </Button>
-                              <Button contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Yellow Card" textAlignment="CENTER" HBox.hgrow="ALWAYS">
+                              <Button contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Żółta kartka" textAlignment="CENTER" HBox.hgrow="ALWAYS">
                                  <padding>
                                     <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
                                  </padding>
@@ -356,7 +312,7 @@
                                     <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
                                  </HBox.margin>
                               </Button>
-                              <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Red Card" textAlignment="CENTER" HBox.hgrow="ALWAYS">
+                              <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Czerwona kartka" textAlignment="CENTER" HBox.hgrow="ALWAYS">
                                  <padding>
                                     <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
                                  </padding>
@@ -364,7 +320,7 @@
                                     <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
                                  </HBox.margin>
                               </Button>
-                              <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Turnover" textAlignment="CENTER" HBox.hgrow="ALWAYS">
+                              <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Przechwyt" textAlignment="CENTER" HBox.hgrow="ALWAYS">
                                  <padding>
                                     <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
                                  </padding>
@@ -386,7 +342,7 @@
                      <children>
                         <HBox maxHeight="1.7976931348623157E308" prefHeight="52.0" prefWidth="477.0" VBox.vgrow="ALWAYS">
                            <children>
-                              <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Completed" textAlignment="CENTER" HBox.hgrow="ALWAYS">
+                              <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Celny" textAlignment="CENTER" HBox.hgrow="ALWAYS">
                                  <padding>
                                     <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
                                  </padding>
@@ -394,7 +350,7 @@
                                     <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
                                  </HBox.margin>
                               </Button>
-                              <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Incompleted" textAlignment="CENTER" HBox.hgrow="ALWAYS">
+                              <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Niecelny" textAlignment="CENTER" HBox.hgrow="ALWAYS">
                                  <padding>
                                     <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
                                  </padding>
@@ -412,17 +368,17 @@
                         </HBox>
                      </children>
                   </VBox>
-                  <Label layoutX="264.0" layoutY="142.0" text="Type" />
-                  <Label layoutX="259.0" layoutY="272.0" text="Others" />
+                  <Label layoutX="268.0" layoutY="142.0" text="Typ" />
+                  <Label layoutX="265.0" layoutY="263.0" text="Inne" />
                   <Separator layoutX="821.0" layoutY="14.0" orientation="VERTICAL" prefHeight="684.0" prefWidth="2.0" />
-                  <Label layoutX="849.0" layoutY="14.0" text="History">
+                  <Label layoutX="849.0" layoutY="14.0" text="Historia">
                      <font>
                         <Font name="Arial" size="30.0" />
                      </font>
                   </Label>
                   <HBox layoutX="277.0" layoutY="594.0" prefHeight="60.0" prefWidth="508.0">
                      <children>
-                        <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Undo" HBox.hgrow="ALWAYS">
+                        <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Cofnij" HBox.hgrow="ALWAYS">
                            <HBox.margin>
                               <Insets bottom="1.0" left="1.0" right="10.0" top="1.0" />
                            </HBox.margin>
@@ -430,7 +386,7 @@
                               <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
                            </padding>
                         </Button>
-                        <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Accept" HBox.hgrow="ALWAYS">
+                        <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Akceptuj" HBox.hgrow="ALWAYS">
                            <HBox.margin>
                               <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
                            </HBox.margin>
@@ -438,7 +394,7 @@
                               <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
                            </padding>
                         </Button>
-                        <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Cancel" HBox.hgrow="ALWAYS">
+                        <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Anuluj" HBox.hgrow="ALWAYS">
                            <HBox.margin>
                               <Insets bottom="1.0" left="10.0" right="1.0" top="1.0" />
                            </HBox.margin>
@@ -457,22 +413,257 @@
         <content>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                <children>
-                  <ListView fx:id="teamsLV" layoutX="23.0" layoutY="14.0" prefHeight="176.0" prefWidth="200.0" />
-                  <TextField fx:id="nameTeamTF" layoutX="318.0" layoutY="22.0" />
-                  <Button fx:id="createTeamBt" layoutX="342.0" layoutY="61.0" mnemonicParsing="false" onAction="#createTeamBtClick" text="Create team" />
-                  <ListView fx:id="playersLV" layoutX="23.0" layoutY="264.0" prefHeight="200.0" prefWidth="200.0" />
-                  <TextField fx:id="namePlayerTF" layoutX="318.0" layoutY="264.0" />
-                  <TextField fx:id="surnamePlayerTF" layoutX="318.0" layoutY="300.0" />
-                  <TextField fx:id="noPlayerTF" layoutX="318.0" layoutY="346.0" />
-                  <Label layoutX="252.0" layoutY="27.0" prefHeight="17.0" prefWidth="40.0" text="Name" />
-                  <Label layoutX="252.0" layoutY="268.0" text="Name" />
-                  <Label layoutX="252.0" layoutY="304.0" text="Surname" />
-                  <Label layoutX="252.0" layoutY="350.0" text="No" />
-                  <Label layoutX="252.0" layoutY="394.0" text="Role" />
-                  <Button fx:id="createPlayerBt" layoutX="340.0" layoutY="439.0" mnemonicParsing="false" onAction="#createPlayerBtClick" text="Create player" />
-                  <Button fx:id="selectTeamBt" layoutX="83.0" layoutY="218.0" mnemonicParsing="false" onAction="#selectTeamBtClick" text="Select Team" />
-                  <ListView fx:id="rolesLV" layoutX="318.0" layoutY="383.0" prefHeight="39.0" prefWidth="148.0" />
-               </children></AnchorPane>
+                  <ListView fx:id="teamsLV" layoutX="14.0" layoutY="75.0" prefHeight="351.0" prefWidth="200.0">
+                     <opaqueInsets>
+                        <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
+                     </opaqueInsets></ListView>
+                  <ListView fx:id="playersLV" layoutX="634.0" layoutY="75.0" prefHeight="596.0" prefWidth="311.0" />
+                  <Label layoutX="42.0" layoutY="20.0" prefHeight="39.0" prefWidth="144.0" text="Lista drużyn" textAlignment="CENTER">
+                     <font>
+                        <Font size="27.0" />
+                     </font>
+                  </Label>
+                  <VBox layoutX="14.0" layoutY="440.0" prefHeight="232.0" prefWidth="200.0">
+                     <children>
+                        <HBox prefHeight="40.0" prefWidth="200.0" VBox.vgrow="NEVER">
+                           <children>
+                              <Label maxHeight="1.7976931348623157E308" text="Nazwa" textAlignment="CENTER" HBox.hgrow="ALWAYS">
+                                 <HBox.margin>
+                                    <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
+                                 </HBox.margin>
+                                 <padding>
+                                    <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
+                                 </padding>
+                              </Label>
+                              <TextField fx:id="nameTeamTF" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS">
+                                 <HBox.margin>
+                                    <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
+                                 </HBox.margin>
+                                 <padding>
+                                    <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
+                                 </padding>
+                                 <font>
+                                    <Font size="13.0" />
+                                 </font>
+                              </TextField>
+                           </children>
+                        </HBox>
+                        <Button fx:id="createTeamBt" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#createTeamBtClick" text="Dodaj drużynę" textAlignment="CENTER" VBox.vgrow="ALWAYS">
+                           <VBox.margin>
+                              <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
+                           </VBox.margin>
+                           <padding>
+                              <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
+                           </padding>
+                        </Button>
+                        <Button fx:id="selectTeamBt" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#selectTeamBtClick" text="Wybierz drużynę" VBox.vgrow="ALWAYS">
+                           <VBox.margin>
+                              <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
+                           </VBox.margin>
+                           <padding>
+                              <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
+                           </padding>
+                        </Button>
+                        <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Usuń zaznaczoną" VBox.vgrow="ALWAYS">
+                           <VBox.margin>
+                              <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
+                           </VBox.margin>
+                           <padding>
+                              <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
+                           </padding>
+                        </Button>
+                     </children>
+                  </VBox>
+                  <Label layoutX="707.0" layoutY="20.0" prefHeight="39.0" prefWidth="144.0" text="Zawodnicy" textAlignment="CENTER">
+                     <font>
+                        <Font size="27.0" />
+                     </font>
+                  </Label>
+                  <GridPane layoutX="229.0" layoutY="75.0" prefHeight="254.0" prefWidth="388.0">
+                    <columnConstraints>
+                      <ColumnConstraints halignment="LEFT" hgrow="ALWAYS" maxWidth="1.7976931348623157E308" />
+                      <ColumnConstraints halignment="RIGHT" hgrow="ALWAYS" maxWidth="1.7976931348623157E308" />
+                    </columnConstraints>
+                    <rowConstraints>
+                      <RowConstraints maxHeight="1.7976931348623157E308" />
+                      <RowConstraints maxHeight="1.7976931348623157E308" />
+                      <RowConstraints maxHeight="1.7976931348623157E308" />
+                        <RowConstraints maxHeight="1.7976931348623157E308" />
+                        <RowConstraints maxHeight="1.7976931348623157E308" />
+                    </rowConstraints>
+                     <children>
+                        <TextField fx:id="surnamePlayerTF" alignment="CENTER_RIGHT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                           <font>
+                              <Font size="20.0" />
+                           </font>
+                           <padding>
+                              <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+                           </padding>
+                           <GridPane.margin>
+                              <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+                           </GridPane.margin>
+                        </TextField>
+                        <TextField fx:id="noPlayerTF" alignment="CENTER_RIGHT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                           <font>
+                              <Font size="20.0" />
+                           </font>
+                           <GridPane.margin>
+                              <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+                           </GridPane.margin>
+                           <padding>
+                              <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+                           </padding>
+                        </TextField>
+                        <TextField fx:id="namePlayerTF" alignment="CENTER_RIGHT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1">
+                           <font>
+                              <Font size="20.0" />
+                           </font>
+                           <GridPane.margin>
+                              <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+                           </GridPane.margin>
+                           <padding>
+                              <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+                           </padding>
+                        </TextField>
+                        <Label alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Imię">
+                           <font>
+                              <Font size="20.0" />
+                           </font>
+                           <padding>
+                              <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+                           </padding>
+                        </Label>
+                        <Label alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Nazwisko" textAlignment="CENTER" GridPane.rowIndex="1">
+                           <font>
+                              <Font size="20.0" />
+                           </font>
+                           <padding>
+                              <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+                           </padding>
+                        </Label>
+                        <Label alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Numer" textAlignment="CENTER" GridPane.rowIndex="2">
+                           <font>
+                              <Font size="20.0" />
+                           </font>
+                           <padding>
+                              <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+                           </padding>
+                        </Label>
+                        <ListView fx:id="rolesLV" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                           <GridPane.margin>
+                              <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+                           </GridPane.margin>
+                           <padding>
+                              <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+                           </padding>
+                        </ListView>
+                        <Label alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Pozycja" textAlignment="CENTER" GridPane.rowIndex="3">
+                           <font>
+                              <Font size="20.0" />
+                           </font>
+                           <padding>
+                              <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+                           </padding>
+                        </Label>
+                        <Label alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Lesza noga" textAlignment="CENTER" GridPane.rowIndex="4">
+                           <font>
+                              <Font size="20.0" />
+                           </font>
+                           <padding>
+                              <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+                           </padding>
+                        </Label>
+                        <HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                           <children>
+                              <CheckBox alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Lewa" textAlignment="CENTER" HBox.hgrow="ALWAYS">
+                                 <padding>
+                                    <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+                                 </padding>
+                                 <HBox.margin>
+                                    <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+                                 </HBox.margin>
+                              </CheckBox>
+                              <CheckBox alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Prawa" textAlignment="CENTER" HBox.hgrow="ALWAYS">
+                                 <padding>
+                                    <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+                                 </padding>
+                                 <HBox.margin>
+                                    <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+                                 </HBox.margin>
+                              </CheckBox>
+                           </children>
+                           <padding>
+                              <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+                           </padding>
+                           <GridPane.margin>
+                              <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+                           </GridPane.margin>
+                        </HBox>
+                     </children>
+                  </GridPane>
+                  <HBox layoutX="227.0" layoutY="336.0" prefHeight="42.0" prefWidth="392.0">
+                     <children>
+                        <Button alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Usun zawodnika" textAlignment="CENTER" HBox.hgrow="ALWAYS">
+                           <HBox.margin>
+                              <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
+                           </HBox.margin>
+                           <padding>
+                              <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
+                           </padding>
+                        </Button>
+                        <Button alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Aktualizuj zawodnika" textAlignment="CENTER" HBox.hgrow="ALWAYS">
+                           <HBox.margin>
+                              <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
+                           </HBox.margin>
+                           <padding>
+                              <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
+                           </padding>
+                        </Button>
+                        <Button fx:id="createPlayerBt" alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#createPlayerBtClick" text="Dodaj zawodnika" textAlignment="CENTER" HBox.hgrow="ALWAYS">
+                           <HBox.margin>
+                              <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
+                           </HBox.margin>
+                           <padding>
+                              <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
+                           </padding>
+                        </Button>
+                     </children>
+                  </HBox>
+                  <Label alignment="CENTER" contentDisplay="CENTER" layoutX="988.0" layoutY="20.0" text="Podstawowa 11" textAlignment="CENTER">
+                     <font>
+                        <Font size="27.0" />
+                     </font>
+                  </Label>
+                  <ListView layoutX="980.0" layoutY="75.0" prefHeight="298.0" prefWidth="200.0" />
+                  <Label alignment="CENTER" contentDisplay="CENTER" layoutX="1018.0" layoutY="378.0" text="Rezerwowi" textAlignment="CENTER">
+                     <font>
+                        <Font size="27.0" />
+                     </font>
+                  </Label>
+                  <ListView layoutX="980.0" layoutY="417.0" prefHeight="254.0" prefWidth="200.0" />
+                  <GridPane layoutX="343.0" layoutY="426.0" prefHeight="230.0" prefWidth="274.0">
+                    <columnConstraints>
+                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                    </rowConstraints>
+                     <children>
+                        <Button mnemonicParsing="false" text="Dodaj do meczu" textAlignment="CENTER" />
+                        <Button mnemonicParsing="false" text="Button" GridPane.columnIndex="1" />
+                        <Button mnemonicParsing="false" text="Dodaj do rezerwy" GridPane.rowIndex="1" />
+                        <Button mnemonicParsing="false" text="Button" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                        <Button mnemonicParsing="false" text="Button" GridPane.rowIndex="2" />
+                        <Button mnemonicParsing="false" text="Button" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                     </children>
+                  </GridPane>
+               </children>
+               <opaqueInsets>
+                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+               </opaqueInsets></AnchorPane>
         </content>
       </Tab>
   </tabs>
