@@ -17,7 +17,7 @@ CREATE TABLE Card
 		REFERENCES User(id),
 		FOREIGN KEY (swap_id)
 		REFERENCES Swap(id),
-		FOREIGN KEY (faul_is)
+		FOREIGN KEY (faul_id)
 		REFERENCES Faul(id)
 		
 )

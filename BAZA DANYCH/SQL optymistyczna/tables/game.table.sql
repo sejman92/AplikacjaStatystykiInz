@@ -9,5 +9,5 @@ CREATE TABLE Game
         oponent CHAR(150),
         owner_id INT,
 		FOREIGN KEY (owner_id)
-		REFERENCES user(id)
+		REFERENCES User(id)
 )

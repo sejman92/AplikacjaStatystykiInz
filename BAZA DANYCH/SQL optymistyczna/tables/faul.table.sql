@@ -18,7 +18,5 @@ CREATE TABLE Faul
 		FOREIGN KEY(owner_id)
 		REFERENCES User(id),
 		FOREIGN KEY(injury_id)
-		REFERENCES Injury(id),
-		FOREIGN KEY(card_id)
-		REFERENCES Card(id)
+		REFERENCES Injury(id)
 )

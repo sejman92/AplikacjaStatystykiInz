@@ -13,8 +13,6 @@ CREATE TABLE Swap
 		REFERENCES Player(id),
 		FOREIGN KEY (game_id)
 		REFERENCES Game(id),
-		FOREIGN KEY (injury_id)
-		REFERENCES Injury(id),
 		FOREIGN KEY (owner_id)
 		REFERENCES User(id)
 )

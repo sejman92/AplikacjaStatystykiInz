@@ -1,7 +1,7 @@
 CREATE TABLE Injury
 (
 	id INT PRIMARY KEY AUTO_INCREMENT,
-        player_injured_id INT,
+        player_id INT,
         game_id INT,
         time TIME, 
         duration INT,
