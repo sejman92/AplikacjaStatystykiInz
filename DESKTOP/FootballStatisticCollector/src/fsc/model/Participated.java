@@ -6,9 +6,7 @@
 package fsc.model;
 
 import java.io.Serializable;
-import java.util.Collection;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -17,10 +15,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -30,58 +26,37 @@ import javax.xml.bind.annotation.XmlTransient;
 @Table(catalog = "fsmdb", schema = "")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Team.findAll", query = "SELECT t FROM Team t"),
-    @NamedQuery(name = "Team.findById", query = "SELECT t FROM Team t WHERE t.id = :id"),
-    @NamedQuery(name = "Team.findByName", query = "SELECT t FROM Team t WHERE t.name = :name")})
-public class Team implements Serializable {
+    @NamedQuery(name = "Participated.findAll", query = "SELECT p FROM Participated p"),
+    @NamedQuery(name = "Participated.findById", query = "SELECT p FROM Participated p WHERE p.id = :id")})
+public class Participated implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     private Integer id;
-    private String name;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "teamId")
-    private Collection<Player> playerCollection;
     @JoinColumn(name = "owner_id", referencedColumnName = "id")
     @ManyToOne
     private User ownerId;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "teamId")
-    private Collection<Access> accessCollection;
+    @JoinColumn(name = "game_id", referencedColumnName = "id")
+    @ManyToOne
+    private Game gameId;
+    @JoinColumn(name = "player_id", referencedColumnName = "id")
+    @ManyToOne
+    private Player playerId;
 
-    public Team() {
+    public Participated() {
     }
 
-    public Team(Integer id) {
+    public Participated(Integer id) {
         this.id = id;
     }
-    
-    public Team(Integer id, String name){
-        this.id = id;
-        this.name = name;
-    }
+
     public Integer getId() {
         return id;
     }
 
     public void setId(Integer id) {
         this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    @XmlTransient
-    public Collection<Player> getPlayerCollection() {
-        return playerCollection;
-    }
-
-    public void setPlayerCollection(Collection<Player> playerCollection) {
-        this.playerCollection = playerCollection;
     }
 
     public User getOwnerId() {
@@ -92,13 +67,20 @@ public class Team implements Serializable {
         this.ownerId = ownerId;
     }
 
-    @XmlTransient
-    public Collection<Access> getAccessCollection() {
-        return accessCollection;
+    public Game getGameId() {
+        return gameId;
     }
 
-    public void setAccessCollection(Collection<Access> accessCollection) {
-        this.accessCollection = accessCollection;
+    public void setGameId(Game gameId) {
+        this.gameId = gameId;
+    }
+
+    public Player getPlayerId() {
+        return playerId;
+    }
+
+    public void setPlayerId(Player playerId) {
+        this.playerId = playerId;
     }
 
     @Override
@@ -111,10 +93,10 @@ public class Team implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Team)) {
+        if (!(object instanceof Participated)) {
             return false;
         }
-        Team other = (Team) object;
+        Participated other = (Participated) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -123,7 +105,7 @@ public class Team implements Serializable {
 
     @Override
     public String toString() {
-        return this.name;
+        return "fsc.controller.Participated[ id=" + id + " ]";
     }
     
 }

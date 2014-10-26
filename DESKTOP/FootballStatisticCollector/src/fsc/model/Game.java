@@ -7,7 +7,9 @@ package fsc.model;
 
 import java.io.Serializable;
 import java.util.Collection;
+import java.util.Date;
 import javax.persistence.Basic;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -18,6 +20,8 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
@@ -29,63 +33,63 @@ import javax.xml.bind.annotation.XmlTransient;
 @Table(catalog = "fsmdb", schema = "")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Player.findAll", query = "SELECT p FROM Player p"),
-    @NamedQuery(name = "Player.findById", query = "SELECT p FROM Player p WHERE p.id = :id"),
-    @NamedQuery(name = "Player.findByName", query = "SELECT p FROM Player p WHERE p.name = :name"),
-    @NamedQuery(name = "Player.findBySurname", query = "SELECT p FROM Player p WHERE p.surname = :surname"),
-    @NamedQuery(name = "Player.findByNo", query = "SELECT p FROM Player p WHERE p.no = :no"),
-    @NamedQuery(name = "Player.findByRole", query = "SELECT p FROM Player p WHERE p.role = :role")})
-public class Player implements Serializable {
+    @NamedQuery(name = "Game.findAll", query = "SELECT g FROM Game g"),
+    @NamedQuery(name = "Game.findById", query = "SELECT g FROM Game g WHERE g.id = :id"),
+    @NamedQuery(name = "Game.findByDate", query = "SELECT g FROM Game g WHERE g.date = :date"),
+    @NamedQuery(name = "Game.findByPlace", query = "SELECT g FROM Game g WHERE g.place = :place"),
+    @NamedQuery(name = "Game.findByScore", query = "SELECT g FROM Game g WHERE g.score = :score"),
+    @NamedQuery(name = "Game.findByLostGoals", query = "SELECT g FROM Game g WHERE g.lostGoals = :lostGoals"),
+    @NamedQuery(name = "Game.findByScoredGoals", query = "SELECT g FROM Game g WHERE g.scoredGoals = :scoredGoals"),
+    @NamedQuery(name = "Game.findByOponent", query = "SELECT g FROM Game g WHERE g.oponent = :oponent")})
+public class Game implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     private Integer id;
-    private String name;
-    private String surname;
-    private Integer no;
-    private String role;
-    @OneToMany(mappedBy = "playerId")
+    @Temporal(TemporalType.DATE)
+    private Date date;
+    private String place;
+    private String score;
+    @Column(name = "lost_goals")
+    private Integer lostGoals;
+    @Column(name = "scored_goals")
+    private Integer scoredGoals;
+    private String oponent;
+    @OneToMany(mappedBy = "gameId")
     private Collection<Shot> shotCollection;
-    @OneToMany(mappedBy = "playerId")
+    @OneToMany(mappedBy = "gameId")
     private Collection<Injury> injuryCollection;
-    @OneToMany(mappedBy = "playerId")
+    @OneToMany(mappedBy = "gameId")
     private Collection<Takeover> takeoverCollection;
-    @OneToMany(mappedBy = "playerId")
+    @OneToMany(mappedBy = "gameId")
     private Collection<Corner> cornerCollection;
-    @JoinColumn(name = "team_id", referencedColumnName = "id")
-    @ManyToOne(optional = false)
-    private Team teamId;
     @JoinColumn(name = "owner_id", referencedColumnName = "id")
-    @ManyToOne(optional = false)
+    @ManyToOne
     private User ownerId;
-    @OneToMany(mappedBy = "playerId")
+    @OneToMany(mappedBy = "gameId")
+    private Collection<Played> playedCollection;
+    @OneToMany(mappedBy = "gameId")
     private Collection<Penalty> penaltyCollection;
-    @OneToMany(mappedBy = "playerOfenderId")
+    @OneToMany(mappedBy = "gameId")
     private Collection<Faul> faulCollection;
-    @OneToMany(mappedBy = "playerVictimId")
-    private Collection<Faul> faulCollection1;
-    @OneToMany(mappedBy = "playerId")
+    @OneToMany(mappedBy = "gameId")
     private Collection<Defense> defenseCollection;
-    @OneToMany(mappedBy = "playerId")
+    @OneToMany(mappedBy = "gameId")
     private Collection<Participated> participatedCollection;
-    @OneToMany(mappedBy = "playerOutId")
+    @OneToMany(mappedBy = "gameId")
     private Collection<Swap> swapCollection;
-    @OneToMany(mappedBy = "playerInId")
-    private Collection<Swap> swapCollection1;
-    @OneToMany(mappedBy = "playerGettingId")
+    @OneToMany(mappedBy = "gameId")
     private Collection<Passing> passingCollection;
-    @OneToMany(mappedBy = "playerPassingId")
-    private Collection<Passing> passingCollection1;
-    @OneToMany(mappedBy = "playerId")
+    @OneToMany(mappedBy = "gameId")
     private Collection<Assist> assistCollection;
-    @OneToMany(mappedBy = "playerId")
+    @OneToMany(mappedBy = "gameId")
     private Collection<Card> cardCollection;
 
-    public Player() {
+    public Game() {
     }
 
-    public Player(Integer id) {
+    public Game(Integer id) {
         this.id = id;
     }
 
@@ -97,36 +101,52 @@ public class Player implements Serializable {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public Date getDate() {
+        return date;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setDate(Date date) {
+        this.date = date;
     }
 
-    public String getSurname() {
-        return surname;
+    public String getPlace() {
+        return place;
     }
 
-    public void setSurname(String surname) {
-        this.surname = surname;
+    public void setPlace(String place) {
+        this.place = place;
     }
 
-    public Integer getNo() {
-        return no;
+    public String getScore() {
+        return score;
     }
 
-    public void setNo(Integer no) {
-        this.no = no;
+    public void setScore(String score) {
+        this.score = score;
     }
 
-    public String getRole() {
-        return role;
+    public Integer getLostGoals() {
+        return lostGoals;
     }
 
-    public void setRole(String role) {
-        this.role = role;
+    public void setLostGoals(Integer lostGoals) {
+        this.lostGoals = lostGoals;
+    }
+
+    public Integer getScoredGoals() {
+        return scoredGoals;
+    }
+
+    public void setScoredGoals(Integer scoredGoals) {
+        this.scoredGoals = scoredGoals;
+    }
+
+    public String getOponent() {
+        return oponent;
+    }
+
+    public void setOponent(String oponent) {
+        this.oponent = oponent;
     }
 
     @XmlTransient
@@ -165,20 +185,21 @@ public class Player implements Serializable {
         this.cornerCollection = cornerCollection;
     }
 
-    public Team getTeamId() {
-        return teamId;
-    }
-
-    public void setTeamId(Team teamId) {
-        this.teamId = teamId;
-    }
-
     public User getOwnerId() {
         return ownerId;
     }
 
     public void setOwnerId(User ownerId) {
         this.ownerId = ownerId;
+    }
+
+    @XmlTransient
+    public Collection<Played> getPlayedCollection() {
+        return playedCollection;
+    }
+
+    public void setPlayedCollection(Collection<Played> playedCollection) {
+        this.playedCollection = playedCollection;
     }
 
     @XmlTransient
@@ -197,15 +218,6 @@ public class Player implements Serializable {
 
     public void setFaulCollection(Collection<Faul> faulCollection) {
         this.faulCollection = faulCollection;
-    }
-
-    @XmlTransient
-    public Collection<Faul> getFaulCollection1() {
-        return faulCollection1;
-    }
-
-    public void setFaulCollection1(Collection<Faul> faulCollection1) {
-        this.faulCollection1 = faulCollection1;
     }
 
     @XmlTransient
@@ -236,30 +248,12 @@ public class Player implements Serializable {
     }
 
     @XmlTransient
-    public Collection<Swap> getSwapCollection1() {
-        return swapCollection1;
-    }
-
-    public void setSwapCollection1(Collection<Swap> swapCollection1) {
-        this.swapCollection1 = swapCollection1;
-    }
-
-    @XmlTransient
     public Collection<Passing> getPassingCollection() {
         return passingCollection;
     }
 
     public void setPassingCollection(Collection<Passing> passingCollection) {
         this.passingCollection = passingCollection;
-    }
-
-    @XmlTransient
-    public Collection<Passing> getPassingCollection1() {
-        return passingCollection1;
-    }
-
-    public void setPassingCollection1(Collection<Passing> passingCollection1) {
-        this.passingCollection1 = passingCollection1;
     }
 
     @XmlTransient
@@ -290,10 +284,10 @@ public class Player implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Player)) {
+        if (!(object instanceof Game)) {
             return false;
         }
-        Player other = (Player) object;
+        Game other = (Game) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -302,7 +296,7 @@ public class Player implements Serializable {
 
     @Override
     public String toString() {
-        return "fsc.controller.Player[ id=" + id + " ]";
+        return "fsc.controller.Game[ id=" + id + " ]";
     }
     
 }

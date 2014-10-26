@@ -6,7 +6,7 @@
 package fsc.controller;
 
 import fsc.model.Player;
-import fsc.model.Role;
+import fsc.model.enums.Positions;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.beans.value.ObservableValue;
@@ -50,12 +50,12 @@ public class MainController implements Initializable {
     @FXML private TextField namePlayerTF;
     @FXML private TextField surnamePlayerTF;
     @FXML private TextField noPlayerTF;
-    @FXML private ListView rolesLV;
+    @FXML private ListView positionsLV;
     @FXML private Button selectTeamBt;
     @FXML private Button createPlayerBt;
     
     private TeamsManager teamsManager;
-    private ObservableList<Role>roles;
+    private ObservableList<Positions>positions;
     private Team teamSelected;
     
     @Override
@@ -65,10 +65,10 @@ public class MainController implements Initializable {
         // TODO 
         //there i ititialize conection with db and other stuff
 
-        roles = FXCollections.observableArrayList(Role.values());
+        positions = FXCollections.observableArrayList(Positions.values());
         
         teamsLV.setItems(teamsManager.getTeams());
-        rolesLV.setItems(roles);
+        positionsLV.setItems(positions);
         teamsManager.addTeam("atletico");
 
     }    
@@ -81,20 +81,20 @@ public class MainController implements Initializable {
     {
         teamSelected = (Team) teamsLV.getSelectionModel().getSelectedItem();
         nameTeamTF.setText(teamSelected.toString());
-        playersLV.setItems(teamSelected.getPlayers());
+        playersLV.setItems((ObservableList) teamSelected.getPlayerCollection());
     }
     
     public void createPlayerBtClick()
     {
         try{
-            Player player = new Player(
+            /*Player player = new Player(
                     5,
                     namePlayerTF.getText(),
                     surnamePlayerTF.getText(),
                     5,
-                    rolesLV.getSelectionModel().getSelectedItem().toString()
+                    positionsLV.getSelectionModel().getSelectedItem().toString()
             );
-            teamSelected.addPlayer(player);
+            teamSelected.addPlayer(player);*/
         }
         catch(Exception e){
             

@@ -7,7 +7,6 @@ package fsc.model;
 
 import java.io.Serializable;
 import javax.persistence.Basic;
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -24,7 +23,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author Mateusz
  */
 @Entity
-@Table(name = "access")
+@Table(catalog = "fsmdb", schema = "")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Access.findAll", query = "SELECT a FROM Access a"),
@@ -34,7 +33,6 @@ public class Access implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @Column(name = "id")
     private Integer id;
     @JoinColumn(name = "team_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
@@ -96,7 +94,7 @@ public class Access implements Serializable {
 
     @Override
     public String toString() {
-        return "fsc.model.Access[ id=" + id + " ]";
+        return "fsc.controller.Access[ id=" + id + " ]";
     }
     
 }

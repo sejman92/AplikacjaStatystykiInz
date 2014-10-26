@@ -6,21 +6,21 @@
 package fsc.model;
 
 import java.io.Serializable;
-import java.util.Collection;
+import java.util.Date;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -30,35 +30,36 @@ import javax.xml.bind.annotation.XmlTransient;
 @Table(catalog = "fsmdb", schema = "")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Team.findAll", query = "SELECT t FROM Team t"),
-    @NamedQuery(name = "Team.findById", query = "SELECT t FROM Team t WHERE t.id = :id"),
-    @NamedQuery(name = "Team.findByName", query = "SELECT t FROM Team t WHERE t.name = :name")})
-public class Team implements Serializable {
+    @NamedQuery(name = "Takeover.findAll", query = "SELECT t FROM Takeover t"),
+    @NamedQuery(name = "Takeover.findById", query = "SELECT t FROM Takeover t WHERE t.id = :id"),
+    @NamedQuery(name = "Takeover.findByTime", query = "SELECT t FROM Takeover t WHERE t.time = :time")})
+public class Takeover implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     private Integer id;
-    private String name;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "teamId")
-    private Collection<Player> playerCollection;
+    @Temporal(TemporalType.TIME)
+    private Date time;
+    @Lob
+    private String comment;
     @JoinColumn(name = "owner_id", referencedColumnName = "id")
     @ManyToOne
     private User ownerId;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "teamId")
-    private Collection<Access> accessCollection;
+    @JoinColumn(name = "game_id", referencedColumnName = "id")
+    @ManyToOne
+    private Game gameId;
+    @JoinColumn(name = "player_id", referencedColumnName = "id")
+    @ManyToOne
+    private Player playerId;
 
-    public Team() {
+    public Takeover() {
     }
 
-    public Team(Integer id) {
+    public Takeover(Integer id) {
         this.id = id;
     }
-    
-    public Team(Integer id, String name){
-        this.id = id;
-        this.name = name;
-    }
+
     public Integer getId() {
         return id;
     }
@@ -67,21 +68,20 @@ public class Team implements Serializable {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public Date getTime() {
+        return time;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setTime(Date time) {
+        this.time = time;
     }
 
-    @XmlTransient
-    public Collection<Player> getPlayerCollection() {
-        return playerCollection;
+    public String getComment() {
+        return comment;
     }
 
-    public void setPlayerCollection(Collection<Player> playerCollection) {
-        this.playerCollection = playerCollection;
+    public void setComment(String comment) {
+        this.comment = comment;
     }
 
     public User getOwnerId() {
@@ -92,13 +92,20 @@ public class Team implements Serializable {
         this.ownerId = ownerId;
     }
 
-    @XmlTransient
-    public Collection<Access> getAccessCollection() {
-        return accessCollection;
+    public Game getGameId() {
+        return gameId;
     }
 
-    public void setAccessCollection(Collection<Access> accessCollection) {
-        this.accessCollection = accessCollection;
+    public void setGameId(Game gameId) {
+        this.gameId = gameId;
+    }
+
+    public Player getPlayerId() {
+        return playerId;
+    }
+
+    public void setPlayerId(Player playerId) {
+        this.playerId = playerId;
     }
 
     @Override
@@ -111,10 +118,10 @@ public class Team implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Team)) {
+        if (!(object instanceof Takeover)) {
             return false;
         }
-        Team other = (Team) object;
+        Takeover other = (Takeover) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -123,7 +130,7 @@ public class Team implements Serializable {
 
     @Override
     public String toString() {
-        return this.name;
+        return "fsc.controller.Takeover[ id=" + id + " ]";
     }
     
 }
