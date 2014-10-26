@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <EditText
+        android:id="@+id/add_player_dialog_name_edittext"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="68dp"
+        android:hint="@string/player_name"
+        android:ems="10" >
+
+    </EditText>
+
+    <EditText
+        android:id="@+id/add_player_dialog_surname_edittext"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/add_player_dialog_name_edittext"
+        android:layout_below="@+id/add_player_dialog_name_edittext"
+        android:layout_marginTop="30dp"
+        android:hint="@string/player_surname"
+        android:ems="10" />
+
+    <EditText
+        android:id="@+id/add_player_dialog_number_edittext"
+        android:inputType="number"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/add_player_dialog_surname_edittext"
+        android:layout_below="@+id/add_player_dialog_surname_edittext"
+        android:hint="@string/number"
+        android:layout_marginTop="24dp"
+        android:ems="10" />
+
+    <EditText
+        android:id="@+id/add_player_dialog_role_edittext"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/add_player_dialog_number_edittext"
+        android:layout_below="@+id/add_player_dialog_number_edittext"
+        android:layout_marginTop="22dp"
+        android:hint="@string/role"
+        android:ems="10" />
+
+    <Button
+        android:id="@+id/add_player_dialog_ok_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/add_player_dialog_cancel_button"
+        android:layout_alignBottom="@+id/add_player_dialog_cancel_button"
+        android:layout_alignRight="@+id/add_player_dialog_role_edittext"
+        android:text="@string/add" />
+
+    <Button
+        android:id="@+id/add_player_dialog_cancel_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/add_player_dialog_role_edittext"
+        android:layout_below="@+id/add_player_dialog_role_edittext"
+        android:layout_marginTop="34dp"
+        android:text="@string/cancel" />
+
+</RelativeLayout>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Football Statistic Manager</string>
+    <string name="add_team_teams_menu">dodaj druzynę</string>
+    <string name="teams">Druzyny</string>
+    <string name="settings">Ustawienia</string>
+    <string name="title_activity_druzyny">Druzyny</string>
+    <string name="title_activity_ustawienia">Ustawienia</string>
+    <string name="team_name">Nazwa Drużyny</string>
+    <string name="add">Dodaj</string>
+    <string name="cancel">Anuluj</string>
+    <string name="title_activity_team">TeamActivity</string>
+    <string name="action_settings">Settings</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="delete_team">Usuń drużynę</string>
+    <string name="team_was_deleted">została usunięta</string>
+    <string name="team">Druzyna</string>
+    <string name="player_name">imię zawodnika</string>
+    <string name="player_surname">nazwisko zawodnika</string>
+    <string name="number">numer</string>
+    <string name="role">pozycja</string>
+    <string name="add_player">dodaj zawodnika</string>
+
+</resources>
