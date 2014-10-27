@@ -22,7 +22,7 @@ public class TeamsManager {
 
     TeamsManager() {
         teams = FXCollections.observableArrayList(
-                new Team(10,"manchester"));
+                new Team("manchester"));
     }
     
     public static TeamsManager getInstance(){
@@ -35,8 +35,7 @@ public class TeamsManager {
     public void addTeam(String name){
         if(name != null)
         {
-            int id = teams.size()+1;
-            Team team = new Team(id, name);
+            Team team = new Team(name);
             teams.add(team);
         }
     }

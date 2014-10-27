@@ -7,6 +7,8 @@ package fsc.model;
 
 import java.io.Serializable;
 import java.util.Collection;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -47,18 +49,18 @@ public class Team implements Serializable {
     private User ownerId;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "teamId")
     private Collection<Access> accessCollection;
-
+    private static int lastId = 0;
+    
     public Team() {
-    }
-
-    public Team(Integer id) {
-        this.id = id;
+        id = ++lastId;
     }
     
-    public Team(Integer id, String name){
-        this.id = id;
+    public Team(String name) {
+        id = ++lastId;
         this.name = name;
+        playerCollection = FXCollections.observableArrayList();
     }
+    
     public Integer getId() {
         return id;
     }
@@ -74,6 +76,22 @@ public class Team implements Serializable {
     public void setName(String name) {
         this.name = name;
     }
+    
+    public void addPlayer(Player player){
+        playerCollection.add(player);
+        player.setTeamId(this);
+        //player.setOwnerId(ownerId);
+    }
+    
+    public void removePlayer(Player player){
+        playerCollection.remove(player);
+        //player.setOwnerId(ownerId);
+    }
+    
+    public ObservableList<Player> getPlayers(){
+        return (ObservableList<Player>) playerCollection;
+    }
+
 
     @XmlTransient
     public Collection<Player> getPlayerCollection() {
@@ -123,7 +141,7 @@ public class Team implements Serializable {
 
     @Override
     public String toString() {
-        return this.name;
+        return id + " " + this.name;
     }
     
 }

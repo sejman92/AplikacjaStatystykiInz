@@ -618,7 +618,7 @@
                               <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
                            </padding>
                         </Button>
-                        <Button alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Usuń zaznaczoną" VBox.vgrow="ALWAYS">
+                        <Button fx:id="removeSelectedTeamBt" alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#removeSelectedTeamBtClick" text="Usuń zaznaczoną" VBox.vgrow="ALWAYS">
                            <VBox.margin>
                               <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
                            </VBox.margin>
@@ -757,7 +757,7 @@
                   </GridPane>
                   <HBox layoutX="227.0" layoutY="336.0" prefHeight="42.0" prefWidth="392.0">
                      <children>
-                        <Button alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Usun zawodnika" textAlignment="CENTER" HBox.hgrow="ALWAYS">
+                        <Button fx:id="removeSelectedPlayerBt" alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#removeSelectedPlayerBtClick" text="Usun zawodnika" textAlignment="CENTER" HBox.hgrow="ALWAYS">
                            <HBox.margin>
                               <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
                            </HBox.margin>
@@ -765,7 +765,7 @@
                               <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
                            </padding>
                         </Button>
-                        <Button alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Aktualizuj zawodnika" textAlignment="CENTER" HBox.hgrow="ALWAYS">
+                        <Button fx:id="editSelectedPlayerBt" alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#editSelectedPlayerBtClick" text="Aktualizuj zawodnika" textAlignment="CENTER" HBox.hgrow="ALWAYS">
                            <HBox.margin>
                               <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
                            </HBox.margin>

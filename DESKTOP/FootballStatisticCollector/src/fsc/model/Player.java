@@ -81,12 +81,19 @@ public class Player implements Serializable {
     private Collection<Assist> assistCollection;
     @OneToMany(mappedBy = "playerId")
     private Collection<Card> cardCollection;
-
+    private static int lastId = 0;
+    
     public Player() {
+        id = ++lastId;
     }
-
-    public Player(Integer id) {
-        this.id = id;
+    
+    public Player(String name, String surname, Integer no, String role)
+    {
+        id = ++lastId;
+        this.name = name;
+        this.surname = surname;
+        this.no = no;
+        this.role = role;
     }
 
     public Integer getId() {
@@ -302,7 +309,7 @@ public class Player implements Serializable {
 
     @Override
     public String toString() {
-        return "fsc.controller.Player[ id=" + id + " ]";
+        return id + " " + name + " " + surname;
     }
     
 }
