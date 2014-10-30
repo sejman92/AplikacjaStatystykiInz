@@ -24,7 +24,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author Mateusz
  */
 @Entity
-@Table(catalog = "fsmdb", schema = "")
+@Table(catalog = "fsmdb", name = "Played",schema = "")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Played.findAll", query = "SELECT p FROM Played p"),
@@ -35,6 +35,7 @@ public class Played implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
+    @Column(nullable = false)
     private Integer id;
     @Column(name = "team_id")
     private Integer teamId;
@@ -106,7 +107,7 @@ public class Played implements Serializable {
 
     @Override
     public String toString() {
-        return "fsc.controller.Played[ id=" + id + " ]";
+        return "fsc.model.Played[ id=" + id + " ]";
     }
     
 }

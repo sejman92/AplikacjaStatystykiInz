@@ -6,7 +6,7 @@
 package fsc.model;
 
 import java.io.Serializable;
-import java.util.Collection;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -28,7 +28,7 @@ import javax.xml.bind.annotation.XmlTransient;
  * @author Mateusz
  */
 @Entity
-@Table(catalog = "fsmdb", schema = "")
+@Table(catalog = "fsmdb", name = "Swap",schema = "")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Swap.findAll", query = "SELECT s FROM Swap s"),
@@ -39,13 +39,15 @@ public class Swap implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
+    @Column(nullable = false)
     private Integer id;
     @Lob
+    @Column(length = 65535)
     private String comment;
     @Column(name = "injury_id")
     private Integer injuryId;
     @OneToMany(mappedBy = "swapId")
-    private Collection<Injury> injuryCollection;
+    private List<Injury> injuryList;
     @JoinColumn(name = "owner_id", referencedColumnName = "id")
     @ManyToOne
     private User ownerId;
@@ -59,7 +61,7 @@ public class Swap implements Serializable {
     @ManyToOne
     private Player playerInId;
     @OneToMany(mappedBy = "swapId")
-    private Collection<Card> cardCollection;
+    private List<Card> cardList;
 
     public Swap() {
     }
@@ -93,12 +95,12 @@ public class Swap implements Serializable {
     }
 
     @XmlTransient
-    public Collection<Injury> getInjuryCollection() {
-        return injuryCollection;
+    public List<Injury> getInjuryList() {
+        return injuryList;
     }
 
-    public void setInjuryCollection(Collection<Injury> injuryCollection) {
-        this.injuryCollection = injuryCollection;
+    public void setInjuryList(List<Injury> injuryList) {
+        this.injuryList = injuryList;
     }
 
     public User getOwnerId() {
@@ -134,12 +136,12 @@ public class Swap implements Serializable {
     }
 
     @XmlTransient
-    public Collection<Card> getCardCollection() {
-        return cardCollection;
+    public List<Card> getCardList() {
+        return cardList;
     }
 
-    public void setCardCollection(Collection<Card> cardCollection) {
-        this.cardCollection = cardCollection;
+    public void setCardList(List<Card> cardList) {
+        this.cardList = cardList;
     }
 
     @Override
@@ -164,7 +166,7 @@ public class Swap implements Serializable {
 
     @Override
     public String toString() {
-        return "fsc.controller.Swap[ id=" + id + " ]";
+        return "fsc.model.Swap[ id=" + id + " ]";
     }
     
 }

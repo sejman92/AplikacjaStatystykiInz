@@ -8,6 +8,7 @@ package fsc.model;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Basic;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -27,7 +28,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author Mateusz
  */
 @Entity
-@Table(catalog = "fsmdb", schema = "")
+@Table(catalog = "fsmdb",name = "Defense", schema = "")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Defense.findAll", query = "SELECT d FROM Defense d"),
@@ -38,10 +39,12 @@ public class Defense implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
+    @Column(nullable = false)
     private Integer id;
     @Temporal(TemporalType.TIME)
     private Date time;
     @Lob
+    @Column(length = 65535)
     private String comment;
     @JoinColumn(name = "owner_id", referencedColumnName = "id")
     @ManyToOne
@@ -130,7 +133,7 @@ public class Defense implements Serializable {
 
     @Override
     public String toString() {
-        return "fsc.controller.Defense[ id=" + id + " ]";
+        return "fsc.model.Defense[ id=" + id + " ]";
     }
     
 }

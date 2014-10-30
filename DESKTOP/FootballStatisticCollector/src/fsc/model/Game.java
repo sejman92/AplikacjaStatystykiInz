@@ -6,8 +6,8 @@
 package fsc.model;
 
 import java.io.Serializable;
-import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -30,7 +30,7 @@ import javax.xml.bind.annotation.XmlTransient;
  * @author Mateusz
  */
 @Entity
-@Table(catalog = "fsmdb", schema = "")
+@Table(catalog = "fsmdb",name = "Game", schema = "")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Game.findAll", query = "SELECT g FROM Game g"),
@@ -46,45 +46,49 @@ public class Game implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
+    @Column(nullable = false)
     private Integer id;
     @Temporal(TemporalType.DATE)
     private Date date;
+    @Column(length = 150)
     private String place;
+    @Column(length = 10)
     private String score;
     @Column(name = "lost_goals")
     private Integer lostGoals;
     @Column(name = "scored_goals")
     private Integer scoredGoals;
+    @Column(length = 150)
     private String oponent;
     @OneToMany(mappedBy = "gameId")
-    private Collection<Shot> shotCollection;
+    private List<Shot> shotList;
     @OneToMany(mappedBy = "gameId")
-    private Collection<Injury> injuryCollection;
+    private List<Injury> injuryList;
     @OneToMany(mappedBy = "gameId")
-    private Collection<Takeover> takeoverCollection;
+    private List<Takeover> takeoverList;
     @OneToMany(mappedBy = "gameId")
-    private Collection<Corner> cornerCollection;
+    private List<Corner> cornerList;
     @JoinColumn(name = "owner_id", referencedColumnName = "id")
     @ManyToOne
     private User ownerId;
     @OneToMany(mappedBy = "gameId")
-    private Collection<Played> playedCollection;
+    private List<Played> playedList;
     @OneToMany(mappedBy = "gameId")
-    private Collection<Penalty> penaltyCollection;
+    private List<Penalty> penaltyList;
     @OneToMany(mappedBy = "gameId")
-    private Collection<Faul> faulCollection;
+    private List<Faul> faulList;
     @OneToMany(mappedBy = "gameId")
-    private Collection<Defense> defenseCollection;
+    private List<Defense> defenseList;
     @OneToMany(mappedBy = "gameId")
-    private Collection<Participated> participatedCollection;
+    private List<Participated> participatedList;
     @OneToMany(mappedBy = "gameId")
-    private Collection<Swap> swapCollection;
+    private List<Swap> swapList;
     @OneToMany(mappedBy = "gameId")
-    private Collection<Passing> passingCollection;
+    private List<Passing> passingList;
     @OneToMany(mappedBy = "gameId")
-    private Collection<Assist> assistCollection;
+    private List<Assist> assistList;
     @OneToMany(mappedBy = "gameId")
-    private Collection<Card> cardCollection;
+    private List<Card> cardList;
 
     public Game() {
     }
@@ -150,39 +154,39 @@ public class Game implements Serializable {
     }
 
     @XmlTransient
-    public Collection<Shot> getShotCollection() {
-        return shotCollection;
+    public List<Shot> getShotList() {
+        return shotList;
     }
 
-    public void setShotCollection(Collection<Shot> shotCollection) {
-        this.shotCollection = shotCollection;
-    }
-
-    @XmlTransient
-    public Collection<Injury> getInjuryCollection() {
-        return injuryCollection;
-    }
-
-    public void setInjuryCollection(Collection<Injury> injuryCollection) {
-        this.injuryCollection = injuryCollection;
+    public void setShotList(List<Shot> shotList) {
+        this.shotList = shotList;
     }
 
     @XmlTransient
-    public Collection<Takeover> getTakeoverCollection() {
-        return takeoverCollection;
+    public List<Injury> getInjuryList() {
+        return injuryList;
     }
 
-    public void setTakeoverCollection(Collection<Takeover> takeoverCollection) {
-        this.takeoverCollection = takeoverCollection;
+    public void setInjuryList(List<Injury> injuryList) {
+        this.injuryList = injuryList;
     }
 
     @XmlTransient
-    public Collection<Corner> getCornerCollection() {
-        return cornerCollection;
+    public List<Takeover> getTakeoverList() {
+        return takeoverList;
     }
 
-    public void setCornerCollection(Collection<Corner> cornerCollection) {
-        this.cornerCollection = cornerCollection;
+    public void setTakeoverList(List<Takeover> takeoverList) {
+        this.takeoverList = takeoverList;
+    }
+
+    @XmlTransient
+    public List<Corner> getCornerList() {
+        return cornerList;
+    }
+
+    public void setCornerList(List<Corner> cornerList) {
+        this.cornerList = cornerList;
     }
 
     public User getOwnerId() {
@@ -194,84 +198,84 @@ public class Game implements Serializable {
     }
 
     @XmlTransient
-    public Collection<Played> getPlayedCollection() {
-        return playedCollection;
+    public List<Played> getPlayedList() {
+        return playedList;
     }
 
-    public void setPlayedCollection(Collection<Played> playedCollection) {
-        this.playedCollection = playedCollection;
-    }
-
-    @XmlTransient
-    public Collection<Penalty> getPenaltyCollection() {
-        return penaltyCollection;
-    }
-
-    public void setPenaltyCollection(Collection<Penalty> penaltyCollection) {
-        this.penaltyCollection = penaltyCollection;
+    public void setPlayedList(List<Played> playedList) {
+        this.playedList = playedList;
     }
 
     @XmlTransient
-    public Collection<Faul> getFaulCollection() {
-        return faulCollection;
+    public List<Penalty> getPenaltyList() {
+        return penaltyList;
     }
 
-    public void setFaulCollection(Collection<Faul> faulCollection) {
-        this.faulCollection = faulCollection;
-    }
-
-    @XmlTransient
-    public Collection<Defense> getDefenseCollection() {
-        return defenseCollection;
-    }
-
-    public void setDefenseCollection(Collection<Defense> defenseCollection) {
-        this.defenseCollection = defenseCollection;
+    public void setPenaltyList(List<Penalty> penaltyList) {
+        this.penaltyList = penaltyList;
     }
 
     @XmlTransient
-    public Collection<Participated> getParticipatedCollection() {
-        return participatedCollection;
+    public List<Faul> getFaulList() {
+        return faulList;
     }
 
-    public void setParticipatedCollection(Collection<Participated> participatedCollection) {
-        this.participatedCollection = participatedCollection;
-    }
-
-    @XmlTransient
-    public Collection<Swap> getSwapCollection() {
-        return swapCollection;
-    }
-
-    public void setSwapCollection(Collection<Swap> swapCollection) {
-        this.swapCollection = swapCollection;
+    public void setFaulList(List<Faul> faulList) {
+        this.faulList = faulList;
     }
 
     @XmlTransient
-    public Collection<Passing> getPassingCollection() {
-        return passingCollection;
+    public List<Defense> getDefenseList() {
+        return defenseList;
     }
 
-    public void setPassingCollection(Collection<Passing> passingCollection) {
-        this.passingCollection = passingCollection;
-    }
-
-    @XmlTransient
-    public Collection<Assist> getAssistCollection() {
-        return assistCollection;
-    }
-
-    public void setAssistCollection(Collection<Assist> assistCollection) {
-        this.assistCollection = assistCollection;
+    public void setDefenseList(List<Defense> defenseList) {
+        this.defenseList = defenseList;
     }
 
     @XmlTransient
-    public Collection<Card> getCardCollection() {
-        return cardCollection;
+    public List<Participated> getParticipatedList() {
+        return participatedList;
     }
 
-    public void setCardCollection(Collection<Card> cardCollection) {
-        this.cardCollection = cardCollection;
+    public void setParticipatedList(List<Participated> participatedList) {
+        this.participatedList = participatedList;
+    }
+
+    @XmlTransient
+    public List<Swap> getSwapList() {
+        return swapList;
+    }
+
+    public void setSwapList(List<Swap> swapList) {
+        this.swapList = swapList;
+    }
+
+    @XmlTransient
+    public List<Passing> getPassingList() {
+        return passingList;
+    }
+
+    public void setPassingList(List<Passing> passingList) {
+        this.passingList = passingList;
+    }
+
+    @XmlTransient
+    public List<Assist> getAssistList() {
+        return assistList;
+    }
+
+    public void setAssistList(List<Assist> assistList) {
+        this.assistList = assistList;
+    }
+
+    @XmlTransient
+    public List<Card> getCardList() {
+        return cardList;
+    }
+
+    public void setCardList(List<Card> cardList) {
+        this.cardList = cardList;
     }
 
     @Override
@@ -296,7 +300,7 @@ public class Game implements Serializable {
 
     @Override
     public String toString() {
-        return "fsc.controller.Game[ id=" + id + " ]";
+        return "fsc.model.Game[ id=" + id + " ]";
     }
     
 }

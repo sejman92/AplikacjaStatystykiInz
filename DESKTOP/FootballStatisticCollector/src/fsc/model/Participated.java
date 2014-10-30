@@ -7,6 +7,7 @@ package fsc.model;
 
 import java.io.Serializable;
 import javax.persistence.Basic;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -23,7 +24,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author Mateusz
  */
 @Entity
-@Table(catalog = "fsmdb", schema = "")
+@Table(catalog = "fsmdb",name = "Participated", schema = "")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Participated.findAll", query = "SELECT p FROM Participated p"),
@@ -33,6 +34,7 @@ public class Participated implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
+    @Column(nullable = false)
     private Integer id;
     @JoinColumn(name = "owner_id", referencedColumnName = "id")
     @ManyToOne
@@ -105,7 +107,7 @@ public class Participated implements Serializable {
 
     @Override
     public String toString() {
-        return "fsc.controller.Participated[ id=" + id + " ]";
+        return "fsc.model.Participated[ id=" + id + " ]";
     }
     
 }

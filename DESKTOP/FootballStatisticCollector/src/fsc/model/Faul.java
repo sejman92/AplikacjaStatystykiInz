@@ -6,8 +6,8 @@
 package fsc.model;
 
 import java.io.Serializable;
-import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -31,7 +31,7 @@ import javax.xml.bind.annotation.XmlTransient;
  * @author Mateusz
  */
 @Entity
-@Table(catalog = "fsmdb", schema = "")
+@Table(catalog = "fsmdb",name = "Faul", schema = "")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Faul.findAll", query = "SELECT f FROM Faul f"),
@@ -43,10 +43,12 @@ public class Faul implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
+    @Column(nullable = false)
     private Integer id;
     @Temporal(TemporalType.TIME)
     private Date time;
     @Lob
+    @Column(length = 65535)
     private String comment;
     @Column(name = "card_id")
     private Integer cardId;
@@ -66,7 +68,7 @@ public class Faul implements Serializable {
     @ManyToOne
     private Game gameId;
     @OneToMany(mappedBy = "faulId")
-    private Collection<Card> cardCollection;
+    private List<Card> cardList;
 
     public Faul() {
     }
@@ -148,12 +150,12 @@ public class Faul implements Serializable {
     }
 
     @XmlTransient
-    public Collection<Card> getCardCollection() {
-        return cardCollection;
+    public List<Card> getCardList() {
+        return cardList;
     }
 
-    public void setCardCollection(Collection<Card> cardCollection) {
-        this.cardCollection = cardCollection;
+    public void setCardList(List<Card> cardList) {
+        this.cardList = cardList;
     }
 
     @Override
@@ -178,7 +180,7 @@ public class Faul implements Serializable {
 
     @Override
     public String toString() {
-        return "fsc.controller.Faul[ id=" + id + " ]";
+        return "fsc.model.Faul[ id=" + id + " ]";
     }
     
 }

@@ -8,6 +8,7 @@ package fsc.model;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Basic;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -27,7 +28,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author Mateusz
  */
 @Entity
-@Table(catalog = "fsmdb", schema = "")
+@Table(catalog = "fsmdb", name = "Takeover",schema = "")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Takeover.findAll", query = "SELECT t FROM Takeover t"),
@@ -38,10 +39,12 @@ public class Takeover implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
+    @Column(nullable = false)
     private Integer id;
     @Temporal(TemporalType.TIME)
     private Date time;
     @Lob
+    @Column(length = 65535)
     private String comment;
     @JoinColumn(name = "owner_id", referencedColumnName = "id")
     @ManyToOne
@@ -130,7 +133,7 @@ public class Takeover implements Serializable {
 
     @Override
     public String toString() {
-        return "fsc.controller.Takeover[ id=" + id + " ]";
+        return "fsc.model.Takeover[ id=" + id + " ]";
     }
     
 }

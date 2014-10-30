@@ -33,6 +33,8 @@ import fsc.model.enums.Positions;
 import java.util.ArrayList;
 import java.util.List;
 import javafx.beans.Observable;
+import javafx.scene.control.CheckBox;
+import javax.persistence.Query;
 
 /**
  *
@@ -44,9 +46,9 @@ public class MainController implements Initializable {
     @FXML private Label timer;
     @FXML private Button createTeamBt;
     @FXML private TextField nameTeamTF;
-    @FXML private ListView proba;
+    @FXML private ListView playersListCollectView;
     @FXML private ListView teamsLV;
-    @FXML private ListView playersLV;
+    @FXML private ListView playersListViewTeamManager;
     @FXML private TextField namePlayerTF;
     @FXML private TextField surnamePlayerTF;
     @FXML private TextField noPlayerTF;
@@ -56,14 +58,12 @@ public class MainController implements Initializable {
     @FXML private Button createPlayerBt;
     @FXML private Button editSelectedPlayerBt;
     @FXML private Button removeSelectedPlayerBt;
-    
+    @FXML private CheckBox leftFootCheckBox;
+    @FXML private CheckBox rightFootCheckBox;
+            
     @FXML private ListView matchesLV;
     @FXML private ListView playersOutLV;
     @FXML private ListView playersInLV;
-    //@FXML private Button moveInAllPlayersBt;
-    //@FXML private Button moveOutAllPlayersBt;
-    //@FXML private Button moveInSelectedPlayerBt;
-    //@FXML private Button moveOutSelectedPlayerBt;
     
     private TeamsManager teamsManager;
     private ObservableList<Positions>positions;
@@ -72,64 +72,35 @@ public class MainController implements Initializable {
     private Player playerInSelected;
     private Player playerOutSelected;
     private String matchSelected;
-    private ObservableList<String>matches;
-    private ObservableList<Player>playersIn;
-    private ObservableList<Player>playersOut;
-    
-    private EntityManagerFactory emfInstance;
+
+    private EntityManagerFactory emFactory;
     private EntityManager em;
-    private EntityTransaction et;    
-    
+    private EntityTransaction et;
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        emfInstance = Persistence.createEntityManagerFactory("FootballStatisticCollectorPU");
-        em = emfInstance.createEntityManager();
-        et = em.getTransaction();
-        
-        teamsManager = TeamsManager.getInstance();
-        proba.setItems(teamsManager.getTeams());
+        emFactory = Persistence.createEntityManagerFactory("FootballStatisticCollectorPU"); 
+        em = emFactory.createEntityManager();
+        teamsManager = new TeamsManager();
         // TODO 
         //there i ititialize conection with db and other stuff
-        setDisabledButtonsWhenTeamIsNotSelected(true);
-
-        positions = FXCollections.observableArrayList(Positions.values());
-        matches = FXCollections.observableArrayList();
-        playersIn = FXCollections.observableArrayList();
-        playersOut = FXCollections.observableArrayList();
         
+        positions = FXCollections.observableArrayList(Positions.values());
         teamsLV.setItems(teamsManager.getTeams());
         positionsLV.setItems(positions);
-        teamsManager.addTeam("Atletico de Madrid");
-
-        teamSelected = teamsManager.getTeams().get(0);
-        teamSelected.addPlayer(new Player("David","Villa",7,"CF"));
-        teamSelected.addPlayer(new Player("Santi","Cazorla",21,"AMF"));
-        teamSelected.addPlayer(new Player("Jesus","Navas",15,"RMF"));
-        teamSelected.addPlayer(new Player("Victor","Valdes",1,"GK"));
-        teamSelected.addPlayer(new Player("Sergio","Ramos",4,"CB"));
-        
-        playersLV.setItems(teamSelected.getPlayers());
-        //playersOutLV.setItems(playersOut);
-        //playersInLV.setItems(playersIn);
     }
     
-    void setDisabledButtonsWhenTeamIsNotSelected(boolean isDisabled){
-        createPlayerBt.setDisable(isDisabled);
-        editSelectedPlayerBt.setDisable(isDisabled);
-        removeSelectedPlayerBt.setDisable(isDisabled);
-        //moveInAllPlayersBt.setDisable(isDisabled);
-        //moveOutAllPlayersBt.setDisable(isDisabled);
-        //moveInSelectedPlayerBt.setDisable(isDisabled);
-        //moveOutSelectedPlayerBt.setDisable(isDisabled);
-    }
+    
  
     public void createTeamBtClick(){
         try{
+            et = em.getTransaction();
             et.begin();
-            em.createNativeQuery("INSERT INTO Team (name) values('" + namePlayerTF.getText() + "')").executeUpdate();
+            em.createNativeQuery("INSERT INTO Team (name) values('" + nameTeamTF.getText() + "');").executeUpdate();
             et.commit();
-            teamsManager.addTeam(nameTeamTF.getText()); 
-            System.out.println("ok");
+            em.close();
+            //refreshViews();
+            teamsManager = new TeamsManager();
+            teamsLV.setItems(teamsManager.getTeams());
         }
         catch(Exception e){
             System.out.println("wyjatek createTeam");
@@ -140,36 +111,28 @@ public class MainController implements Initializable {
     public void selectTeamBtClick(){
         teamSelected = (Team) teamsLV.getSelectionModel().getSelectedItem();
         nameTeamTF.setText(teamSelected.toString());
-        playersLV.setItems(teamSelected.getPlayers());
-        //playersOut.addAll(teamSelected.getPlayers());
-        //playersIn.clear();
-        setDisabledButtonsWhenTeamIsNotSelected(false);
+        
     }
-    
+    /*
+    Took selected item in TeamListView and fill players wich is in selected team
+    */
+    public void teamListViewClick(){
+        this.refreshPlayersListViewTeamManager();
+    }
     public void removeSelectedTeamBtClick(){
         
     }
-    
     public void createPlayerBtClick(){
         try{
+            Player player = new Player();
+            player.setName(namePlayerTF.getText());
+            player.setSurname(surnamePlayerTF.getText());
+            player.setNo(Integer.parseInt(noPlayerTF.getText()));
+            player.setRole(positionsLV.getSelectionModel().getSelectedItem().toString());
+            player.setTeamId(teamSelected);
+            this.addPlayer(player);
             
-            Player player = new Player(
-                    namePlayerTF.getText(),
-                    surnamePlayerTF.getText(),
-                    Integer.getInteger(noPlayerTF.getText()),
-                    positionsLV.getSelectionModel().getSelectedItem().toString()
-            );
-            System.out.println(noPlayerTF);
-            System.out.println(noPlayerTF.getText());
-            System.out.println(player.getNo());
-            /*
-            System.out.println("INSERT INTO Player (name, surname, no, role) values('" + player.getName() + "','" + player.getSurname() + "'," + player.getNo() + ",'" + player.getRole() + "')");
-            et.begin();
-            em.createNativeQuery("INSERT INTO Player (name, surname, no, role) values('" + player.getName() + "','" + player.getSurname() + "'," + player.getNo() + ",'" + player.getRole() + "')").executeUpdate();
-            et.commit();
-            */
-            teamSelected.addPlayer(player);
-            noPlayerTF.setText("" + teamSelected.getPlayers().size());
+            
         }
         catch(Exception e){
             System.out.println("wyjatek createPlayer");
@@ -178,58 +141,53 @@ public class MainController implements Initializable {
     }
     
     public void editSelectedPlayerBtClick(){
-        playerSelected = (Player) playersLV.getSelectionModel().getSelectedItem();
+        playerSelected = (Player) playersListViewTeamManager.getSelectionModel().getSelectedItem();
     }
  
     public void removeSelectedPlayerBtClick(){
-        playerSelected = (Player) playersLV.getSelectionModel().getSelectedItem();
+        /*playerSelected = (Player) playersListViewTeamManager.getSelectionModel().getSelectedItem();
         if(playerSelected != null){
             teamSelected.removePlayer(playerSelected);
-            //playersOut.remove(playerSelected);
-            //playersIn.remove(playerSelected);
-        }
+        }*/
     }
     
-    
-    public void selectMatchBtClick(){
-        
+    public void leftFootSelected(){
+        rightFootCheckBox.setSelected(false);
     }
-    
-    public void moveInAllPlayersBtClick(){
-        //playersIn.addAll(playersOut);
-        //playersOut.clear();
+    public void rightFootSelected(){
+        leftFootCheckBox.setSelected(false);
     }
-    
-    public void moveOutAllPlayersBtClick(){
-        //playersOut.addAll(playersIn);
-        //playersIn.clear();
-    }
-    
-    public void moveInSelectedPlayerBtClick(){
-        playerOutSelected = (Player) playersOutLV.getSelectionModel().getSelectedItem();
-        if (playerOutSelected != null){
-            //playersIn.add(playerOutSelected);
-            //playersOut.remove(playerOutSelected);
-        }
-    }
-    
-    public void moveOutSelectedPlayerBtClick(){
-        playerInSelected = (Player) playersInLV.getSelectionModel().getSelectedItem();
-        if( playerInSelected != null){
-            //playersOut.add(playerInSelected);
-            //playersIn.remove(playerInSelected);
-        }
-    }
+
     
     /**
      * @it is implementation of add new player into player listView
      */
-    public void addPlayer(){
-        /*EntityManagerFactory emfInstance = Persistence.createEntityManagerFactory("FootballStatisticCollectorPU");
-        EntityManager em = emfInstance.createEntityManager();
-        EntityTransaction et = em.getTransaction();
+    private void addPlayer(Player p){
+        em = emFactory.createEntityManager();
+        et = em.getTransaction();
         et.begin();
-        em.createNativeQuery("INSERT INTO Player (name, surname, no, role, owner_id, team_id) values( 'pawel', 'fefs',10, 'forward','1','1')").executeUpdate();
-        et.commit();*/
+ 
+        em.createNativeQuery("INSERT INTO Player (name, surname, no, role, team_id) "
+                + "values( '"+p.getName()+"','"+p.getSurname()+"',"+p.getNo()+",'"+p.getRole()+"',"
+                +teamSelected.getId()+");").executeUpdate();
+
+        et.commit();
+        em.close();
+        this.refreshPlayersListViewTeamManager();
+    }
+    /*
+    Download actual list players in selected team from DB
+    and fill ListView
+    */
+    private void refreshPlayersListViewTeamManager(){
+        teamSelected = (Team) teamsLV.getSelectionModel().getSelectedItem();
+        em = emFactory.createEntityManager();
+        et = em.getTransaction();
+        et.begin();
+        Query query = em.createNamedQuery("Player.findByTeamId");
+        query.setParameter("team_id", teamSelected);
+        teamSelected.setPlayerList(query.getResultList());
+        playersListViewTeamManager.setItems(teamSelected.getPlayerObservableList());
+        em.close();
     }
 }

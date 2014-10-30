@@ -7,6 +7,7 @@ package fsc.model;
 
 import java.io.Serializable;
 import javax.persistence.Basic;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -24,7 +25,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author Mateusz
  */
 @Entity
-@Table(catalog = "fsmdb", schema = "")
+@Table(catalog = "fsmdb",name = "Assist", schema = "")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Assist.findAll", query = "SELECT a FROM Assist a"),
@@ -34,8 +35,10 @@ public class Assist implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
+    @Column(nullable = false)
     private Integer id;
     @Lob
+    @Column(length = 65535)
     private String comment;
     @JoinColumn(name = "owner_id", referencedColumnName = "id")
     @ManyToOne
@@ -127,7 +130,7 @@ public class Assist implements Serializable {
 
     @Override
     public String toString() {
-        return "fsc.controller.Assist[ id=" + id + " ]";
+        return "fsc.model.Assist[ id=" + id + " ]";
     }
     
 }

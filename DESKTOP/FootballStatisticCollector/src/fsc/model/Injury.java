@@ -6,9 +6,10 @@
 package fsc.model;
 
 import java.io.Serializable;
-import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Basic;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -30,7 +31,7 @@ import javax.xml.bind.annotation.XmlTransient;
  * @author Mateusz
  */
 @Entity
-@Table(catalog = "fsmdb", schema = "")
+@Table(catalog = "fsmdb",name = "Injury", schema = "")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Injury.findAll", query = "SELECT i FROM Injury i"),
@@ -43,12 +44,15 @@ public class Injury implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
+    @Column(nullable = false)
     private Integer id;
     @Temporal(TemporalType.TIME)
     private Date time;
     private Integer duration;
+    @Column(length = 250)
     private String kind;
     @Lob
+    @Column(length = 65535)
     private String comment;
     @JoinColumn(name = "swap_id", referencedColumnName = "id")
     @ManyToOne
@@ -63,7 +67,7 @@ public class Injury implements Serializable {
     @ManyToOne
     private Player playerId;
     @OneToMany(mappedBy = "injuryId")
-    private Collection<Faul> faulCollection;
+    private List<Faul> faulList;
 
     public Injury() {
     }
@@ -145,12 +149,12 @@ public class Injury implements Serializable {
     }
 
     @XmlTransient
-    public Collection<Faul> getFaulCollection() {
-        return faulCollection;
+    public List<Faul> getFaulList() {
+        return faulList;
     }
 
-    public void setFaulCollection(Collection<Faul> faulCollection) {
-        this.faulCollection = faulCollection;
+    public void setFaulList(List<Faul> faulList) {
+        this.faulList = faulList;
     }
 
     @Override
@@ -175,7 +179,7 @@ public class Injury implements Serializable {
 
     @Override
     public String toString() {
-        return "fsc.controller.Injury[ id=" + id + " ]";
+        return "fsc.model.Injury[ id=" + id + " ]";
     }
     
 }

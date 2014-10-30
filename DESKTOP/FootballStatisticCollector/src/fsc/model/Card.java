@@ -8,6 +8,7 @@ package fsc.model;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Basic;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -27,7 +28,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author Mateusz
  */
 @Entity
-@Table(catalog = "fsmdb", schema = "")
+@Table(catalog = "fsmdb",name = "Card", schema = "")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Card.findAll", query = "SELECT c FROM Card c"),
@@ -39,11 +40,14 @@ public class Card implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
+    @Column(nullable = false)
     private Integer id;
     @Temporal(TemporalType.TIME)
     private Date time;
+    @Column(length = 250)
     private String kind;
     @Lob
+    @Column(length = 65535)
     private String comment;
     @JoinColumn(name = "faul_id", referencedColumnName = "id")
     @ManyToOne
@@ -162,7 +166,7 @@ public class Card implements Serializable {
 
     @Override
     public String toString() {
-        return "fsc.controller.Card[ id=" + id + " ]";
+        return "fsc.model.Card[ id=" + id + " ]";
     }
     
 }

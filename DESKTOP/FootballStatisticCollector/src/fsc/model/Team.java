@@ -6,11 +6,12 @@
 package fsc.model;
 
 import java.io.Serializable;
-import java.util.Collection;
+import java.util.List;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -29,7 +30,7 @@ import javax.xml.bind.annotation.XmlTransient;
  * @author Mateusz
  */
 @Entity
-@Table(catalog = "fsmdb", schema = "")
+@Table(catalog = "fsmdb",name = "Team", schema = "")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Team.findAll", query = "SELECT t FROM Team t"),
@@ -40,27 +41,25 @@ public class Team implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
+    @Column(nullable = false)
     private Integer id;
+    @Column(length = 100)
     private String name;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "teamId")
-    private Collection<Player> playerCollection;
+    private List<Player> playerList;
     @JoinColumn(name = "owner_id", referencedColumnName = "id")
     @ManyToOne
     private User ownerId;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "teamId")
-    private Collection<Access> accessCollection;
-    private static int lastId = 0;
-    
+    private List<Access> accessList;
+
     public Team() {
-        id = ++lastId;
     }
-    
-    public Team(String name) {
-        id = ++lastId;
-        this.name = name;
-        playerCollection = FXCollections.observableArrayList();
+
+    public Team(Integer id) {
+        this.id = id;
     }
-    
+
     public Integer getId() {
         return id;
     }
@@ -76,30 +75,21 @@ public class Team implements Serializable {
     public void setName(String name) {
         this.name = name;
     }
-    
-    public void addPlayer(Player player){
-        playerCollection.add(player);
-        player.setTeamId(this);
-        //player.setOwnerId(ownerId);
-    }
-    
-    public void removePlayer(Player player){
-        playerCollection.remove(player);
-        //player.setOwnerId(ownerId);
-    }
-    
-    public ObservableList<Player> getPlayers(){
-        return (ObservableList<Player>) playerCollection;
-    }
 
-
+    public ObservableList<Player> getPlayerObservableList(){
+        ObservableList<Player> l = FXCollections.observableArrayList();
+        for( Player p: this.getPlayerList()){
+            l.add(p);
+        }
+        return l;
+    }
     @XmlTransient
-    public Collection<Player> getPlayerCollection() {
-        return playerCollection;
+    public List<Player> getPlayerList() {
+        return playerList;
     }
 
-    public void setPlayerCollection(Collection<Player> playerCollection) {
-        this.playerCollection = playerCollection;
+    public void setPlayerList(List<Player> playerList) {
+        this.playerList = playerList;
     }
 
     public User getOwnerId() {
@@ -111,12 +101,12 @@ public class Team implements Serializable {
     }
 
     @XmlTransient
-    public Collection<Access> getAccessCollection() {
-        return accessCollection;
+    public List<Access> getAccessList() {
+        return accessList;
     }
 
-    public void setAccessCollection(Collection<Access> accessCollection) {
-        this.accessCollection = accessCollection;
+    public void setAccessList(List<Access> accessList) {
+        this.accessList = accessList;
     }
 
     @Override
@@ -141,7 +131,7 @@ public class Team implements Serializable {
 
     @Override
     public String toString() {
-        return id + " " + this.name;
+        return this.name;
     }
     
 }

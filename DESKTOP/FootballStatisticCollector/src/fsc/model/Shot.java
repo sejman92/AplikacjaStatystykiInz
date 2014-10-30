@@ -6,8 +6,9 @@
 package fsc.model;
 
 import java.io.Serializable;
-import java.util.Collection;
+import java.util.List;
 import javax.persistence.Basic;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -27,7 +28,7 @@ import javax.xml.bind.annotation.XmlTransient;
  * @author Mateusz
  */
 @Entity
-@Table(catalog = "fsmdb", schema = "")
+@Table(catalog = "fsmdb", name = "Shot",schema = "")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Shot.findAll", query = "SELECT s FROM Shot s"),
@@ -39,9 +40,12 @@ public class Shot implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
+    @Column(nullable = false)
     private Integer id;
     @Lob
+    @Column(length = 65535)
     private String comment;
+    @Column(length = 50)
     private String palce;
     private Boolean success;
     @JoinColumn(name = "owner_id", referencedColumnName = "id")
@@ -54,9 +58,9 @@ public class Shot implements Serializable {
     @ManyToOne
     private Player playerId;
     @OneToMany(mappedBy = "shotId")
-    private Collection<Penalty> penaltyCollection;
+    private List<Penalty> penaltyList;
     @OneToMany(mappedBy = "shotId")
-    private Collection<Assist> assistCollection;
+    private List<Assist> assistList;
 
     public Shot() {
     }
@@ -122,21 +126,21 @@ public class Shot implements Serializable {
     }
 
     @XmlTransient
-    public Collection<Penalty> getPenaltyCollection() {
-        return penaltyCollection;
+    public List<Penalty> getPenaltyList() {
+        return penaltyList;
     }
 
-    public void setPenaltyCollection(Collection<Penalty> penaltyCollection) {
-        this.penaltyCollection = penaltyCollection;
+    public void setPenaltyList(List<Penalty> penaltyList) {
+        this.penaltyList = penaltyList;
     }
 
     @XmlTransient
-    public Collection<Assist> getAssistCollection() {
-        return assistCollection;
+    public List<Assist> getAssistList() {
+        return assistList;
     }
 
-    public void setAssistCollection(Collection<Assist> assistCollection) {
-        this.assistCollection = assistCollection;
+    public void setAssistList(List<Assist> assistList) {
+        this.assistList = assistList;
     }
 
     @Override
@@ -161,7 +165,7 @@ public class Shot implements Serializable {
 
     @Override
     public String toString() {
-        return "fsc.controller.Shot[ id=" + id + " ]";
+        return "fsc.model.Shot[ id=" + id + " ]";
     }
     
 }
