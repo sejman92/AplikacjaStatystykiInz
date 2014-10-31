@@ -13,20 +13,20 @@
         android:id="@+id/playerlistView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/textView1"
+        android:layout_below="@+id/textView2"
         android:layout_centerHorizontal="true"
         android:background="#ffffff" >
 
     </ListView>
 
     <Button
-        android:id="@+id/button1"
+        android:id="@+id/gameSetupButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/playerlistView"
         android:layout_alignParentTop="true"
-        android:background="#ffffff"
-        android:text="Button" />
+        android:onClick="gameSetup"
+        android:text="@string/gamesetup" />
 
 
 
@@ -34,8 +34,8 @@
         android:id="@+id/textView1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignRight="@+id/button1"
-        android:layout_below="@+id/button1"
+        android:layout_alignRight="@+id/gameSetupButton"
+        android:layout_below="@+id/gameSetupButton"
         android:text="" />
 
     <Button
@@ -44,7 +44,6 @@
         android:layout_height="wrap_content"
         android:layout_above="@+id/textView1"
         android:layout_centerHorizontal="true"
-        android:background="#ffffff"
         android:text="Button" />
 
     <Button
@@ -54,7 +53,16 @@
         android:layout_alignBaseline="@+id/button2"
         android:layout_alignBottom="@+id/button2"
         android:layout_alignRight="@+id/playerlistView"
-        android:background="#ffffff"
         android:text="Button" />
+
+
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/textView1"
+        android:layout_below="@+id/gameSetupButton"
+        android:text="" />
 
 </RelativeLayout>

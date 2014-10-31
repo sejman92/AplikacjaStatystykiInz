@@ -1,5 +1,8 @@
 package pl.gda.pg.eti.kio.project.footballstatisticmanager.database;
 
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -15,13 +18,13 @@ import android.database.sqlite.SQLiteDatabase.CursorFactory;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+
 public class DatabaseManager extends SQLiteOpenHelper {
 
 	public DatabaseManager(Context context) {
 		super(context, "baza_danyc.db", null,1);
 		
 	}
-
 	@Override
 	public void onCreate(SQLiteDatabase db) {
 		String[] creaty = new String[16];
@@ -160,7 +163,6 @@ public class DatabaseManager extends SQLiteOpenHelper {
 		}
 		
 	}
-	
 	public List<Team> getAllTeams()
 	{
 		List<Team> list = new LinkedList<Team>();
@@ -214,7 +216,6 @@ public class DatabaseManager extends SQLiteOpenHelper {
 		deletePlayerByTeamId(id);
 		//TODO dodaæ usuniêcie wszystkich meczy dru¿yny, jak ju¿ bêdzie mo¿na dodawaæ mecze
 	}
-
 	public List<Player> getAllPlayersFromTeam(int team_id)
 	{
 		List<Player> list = new LinkedList<Player>();
@@ -235,6 +236,24 @@ public class DatabaseManager extends SQLiteOpenHelper {
 			Log.d("Baza",e.toString());
 		}
 		return list;		
+	}
+	public Player getPlayer(int id)
+	{
+		
+		SQLiteDatabase db = getReadableDatabase();
+		Cursor cursor;
+		try
+		{
+			String[] columns={"id", "imie", "nazwisko", "numer", "pozycja", "id_druzyny"};
+			String[] args={String.valueOf(id)};
+			cursor = db.query("zawodnik", columns, "id=?", args, null, null, null);
+			Player player=new Player(cursor.getInt(0),cursor.getString(1),cursor.getString(2), cursor.getInt(3), cursor.getString(4), cursor.getInt(5));
+			return player;
+		}catch(SQLException e)
+		{
+			Log.d("Baza",e.toString());
+			return null;
+		}
 	}
 	public void addPlayer(String name, String surname, int no, String role, int id_team)
 	{
@@ -279,11 +298,13 @@ public class DatabaseManager extends SQLiteOpenHelper {
 		}
 		//TODO dodaæ usuniêcie wszystkich innych wydarzen zwi¹zanych z tym zawodnikiem
 	}
-	
 	@Override
 	public void onUpgrade(SQLiteDatabase db, int arg1, int arg2) {
 		// TODO Auto-generated method stub
 		
 	}
 
+
+	
+	
 }

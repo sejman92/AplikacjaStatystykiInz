@@ -5,6 +5,7 @@ import java.util.zip.Inflater;
 
 import pl.gda.pg.eti.kio.project.footballstatisticmanager.database.DatabaseManager;
 import pl.gda.pg.eti.kio.project.footballstatisticmanager.entitycalss.Team;
+import pl.gda.pg.eti.kio.project.footballstatisticmanager.focus.Focus;
 
 import com.example.footballstatisticmanager.R;
 
@@ -32,6 +33,7 @@ import android.widget.Toast;
 
 public class TeamsActivity extends Activity {
 
+	
 	DatabaseManager dbm = new DatabaseManager(this);
 	List<Team> listTeam;
 	ListView view_Team_List;
@@ -41,17 +43,18 @@ public class TeamsActivity extends Activity {
 		@Override
         public void onItemClick(AdapterView<?> parent, View v, int position, long id) 
         {
-        	int idt=listTeam.get(position).getId();
+			Focus.focused_team=listTeam.get(position);
+        	//int idt=listTeam.get(position).getId();
         	
-        	Intent intent = new Intent(TeamsActivity.this,TeamActivity.class);
-        	intent.putExtra("id", idt);
-        	intent.putExtra("name",listTeam.get(position).getName() );
+        	Intent intent = new Intent(TeamsActivity.this,TeamActivity.class);      	
+        	/*intent.putExtra("id", Focus.focused_team.getId());
+        	intent.putExtra("name",Focus.focused_team.getName() );*/
         	startActivity(intent);
         	//Toast.makeText(getApplicationContext(), "Wybrano dru¿ynê o ID = "+String.valueOf(idt), Toast.LENGTH_SHORT).show();
         }
 	};
 	
-	@Override
+	@Override	
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_teams);

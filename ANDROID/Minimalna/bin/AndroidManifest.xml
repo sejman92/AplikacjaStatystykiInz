@@ -8,6 +8,7 @@
         android:minSdkVersion="11"
         android:targetSdkVersion="18" />
 
+    <uses-permission android:name="android.permission.INTERNET" />
     <application
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
@@ -34,6 +35,19 @@
             android:name="pl.gda.pg.eti.kio.project.footballstatisticmanager.activities.TeamActivity"
             android:label="@string/title_activity_team" >
         </activity>
+        <activity
+            android:name="pl.gda.pg.eti.kio.project.footballstatisticmanager.activities.PlayerActivity"
+            android:label="@string/title_activity_player" >
+        </activity>
+        <activity
+            android:name="pl.gda.pg.eti.kio.project.footballstatisticmanager.activities.SetupGameActivity"
+            android:label="@string/title_activity_pick_player" >
+        </activity>
+        <activity
+            android:name="pl.gda.pg.eti.kio.project.footballstatisticmanager.activities.GameSetupActivity"
+            android:label="@string/title_activity_game_setup" >
+        </activity>
     </application>
+    
 
 </manifest>
