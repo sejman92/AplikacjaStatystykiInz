@@ -34,6 +34,8 @@ import java.util.ArrayList;
 import java.util.List;
 import javafx.beans.Observable;
 import javafx.scene.control.CheckBox;
+import javafx.scene.control.SelectionModel;
+import javafx.scene.control.Tab;
 import javax.persistence.Query;
 
 /**
@@ -42,37 +44,46 @@ import javax.persistence.Query;
  */
 public class MainController implements Initializable {
     
-    @FXML private Button AddPlayerBt;
+    
     @FXML private Label timer;
-    @FXML private Button createTeamBt;
+    @FXML private Label teamNameCollectView;
+    
     @FXML private TextField nameTeamTF;
-    @FXML private ListView playersListCollectView;
-    @FXML private ListView teamsLV;
-    @FXML private ListView playersListViewTeamManager;
     @FXML private TextField namePlayerTF;
     @FXML private TextField surnamePlayerTF;
     @FXML private TextField noPlayerTF;
-    @FXML private ListView positionsLV;
+    
+    @FXML private Button AddPlayerBt;
+    @FXML private Button createTeamBt;
     @FXML private Button selectTeamBt;
     @FXML private Button removeSelectedTeamBt;
     @FXML private Button createPlayerBt;
     @FXML private Button editSelectedPlayerBt;
     @FXML private Button removeSelectedPlayerBt;
+    @FXML private Button addToStartingLineup;   
+    @FXML private Button loadLineupButton;
     @FXML private CheckBox leftFootCheckBox;
     @FXML private CheckBox rightFootCheckBox;
-            
+    
+    @FXML private ListView playersStartListCollectView;
+    @FXML private ListView playersReserveListCollectView;
+    @FXML private ListView teamsLV;
+    @FXML private ListView playersListViewTeamManager;
+    @FXML private ListView positionsLV;    
     @FXML private ListView matchesLV;
     @FXML private ListView playersOutLV;
     @FXML private ListView playersInLV;
+    @FXML private ListView startingLineupListView;
+    @FXML private ListView reserveLineupListView;
     
+    @FXML private Tab beginMatchTab;
     private TeamsManager teamsManager;
     private ObservableList<Positions>positions;
-    private Team teamSelected;
-    private Player playerSelected;
-    private Player playerInSelected;
-    private Player playerOutSelected;
-    private String matchSelected;
-
+    private Team selectedTeam;
+    private Player selectedPlayer;
+    private Lineup lineup;
+    private Match match;
+    
     private EntityManagerFactory emFactory;
     private EntityManager em;
     private EntityTransaction et;
@@ -81,16 +92,106 @@ public class MainController implements Initializable {
         emFactory = Persistence.createEntityManagerFactory("FootballStatisticCollectorPU"); 
         em = emFactory.createEntityManager();
         teamsManager = new TeamsManager();
-        // TODO 
-        //there i ititialize conection with db and other stuff
-        
         positions = FXCollections.observableArrayList(Positions.values());
         teamsLV.setItems(teamsManager.getTeams());
         positionsLV.setItems(positions);
+        lineup = new Lineup();
+        
     }
     
-    
- 
+    /*
+    Add selected players to starting lineup
+    if selected player is on starting lineup - do nothing
+    if player is on reserve lineup - move him to starting
+    */
+    public void addToStartingLineupButtonClick(){
+        try{
+            selectedPlayer = (Player) playersListViewTeamManager.getSelectionModel().getSelectedItem();
+            if(selectedPlayer == null) return;
+            if(lineup.isOnStartingLineup(selectedPlayer)) return;
+            else if(lineup.isOnReserveLineup(selectedPlayer)){
+                lineup.moveFromReserveToStarting(selectedPlayer);
+            }else {
+                lineup.insertIntoStartingLineup(selectedPlayer);
+            }
+            startingLineupListView.setItems(lineup.getStartingLineup());
+            if( lineup.isCorrect())loadLineupButton.setDisable(false);
+            else loadLineupButton.setDisable(true);
+                
+        }catch (Exception e){
+         System.out.println("Add to starting lineup");
+         System.out.println(e.getCause());
+        }
+    }
+    /*
+    Add selected player to reserve lineup
+    if selected player is on reserve lineup - do nothing
+    if player is on starting lineup - move him to reserve
+    */
+    public void addToReserveLineupButtonClick(){
+        try{
+            selectedPlayer = (Player) playersListViewTeamManager.getSelectionModel().getSelectedItem();
+            if(selectedPlayer == null) return;
+            if(lineup.isOnReserveLineup(selectedPlayer)) return;
+            else if (lineup.isOnStartingLineup(selectedPlayer)){
+                lineup.moveFromStartingToReserve(selectedPlayer);
+            } else {
+                lineup.insertIntoReserveLineup(selectedPlayer);
+            }
+            reserveLineupListView.setItems(lineup.getReserveLineup());
+            if( lineup.isCorrect())loadLineupButton.setDisable(false);
+            else loadLineupButton.setDisable(true);
+        }
+        catch(Exception e)
+        {
+            System.out.println("Add to reserve lineup");
+            System.out.println(e.getCause());
+        }
+    }
+    /*
+    remove selected item from Starting LineUP
+    */
+    public void removeFromStartingLineupButtonClick(){
+        try{
+            selectedPlayer  = (Player) startingLineupListView.getSelectionModel().getSelectedItem();
+            if(selectedPlayer == null) return;
+            lineup.getStartingLineup().remove(selectedPlayer);
+            if( lineup.isCorrect())loadLineupButton.setDisable(false);
+            else loadLineupButton.setDisable(true);
+        } catch (Exception e){
+            System.out.println("Remove from starting lineup");
+            System.out.println(e.getCause());
+        }
+        
+    }
+    /*
+    remove selected item from Reserve LineUP
+    */
+    public void removeFromReserveLineupButtonClick(){
+        
+        try{
+            selectedPlayer  = (Player) reserveLineupListView.getSelectionModel().getSelectedItem();
+            if(selectedPlayer == null) return;
+            lineup.getReserveLineup().remove(selectedPlayer);
+            if( lineup.isCorrect())loadLineupButton.setDisable(false);
+            else loadLineupButton.setDisable(true);
+        } catch (Exception e){
+            System.out.println("Remove from reserve lineup");
+            System.out.println(e.getCause());
+        }
+    }
+    /*
+        load current lineup to match class,
+    */
+    public void loadLineupToMatch(){
+        if (this.lineup.isCorrect()){
+            this.match = new Match(lineup.getStartingLineup(), lineup.getReserveLineup(), selectedTeam);
+            beginMatchTab.setDisable(false);
+        }
+    }
+    /*
+    Create new team and insert into database
+    */
     public void createTeamBtClick(){
         try{
             et = em.getTransaction();
@@ -109,8 +210,8 @@ public class MainController implements Initializable {
     }
     
     public void selectTeamBtClick(){
-        teamSelected = (Team) teamsLV.getSelectionModel().getSelectedItem();
-        nameTeamTF.setText(teamSelected.toString());
+        selectedTeam = (Team) teamsLV.getSelectionModel().getSelectedItem();
+        nameTeamTF.setText(selectedTeam.toString());
         
     }
     /*
@@ -118,10 +219,15 @@ public class MainController implements Initializable {
     */
     public void teamListViewClick(){
         this.refreshPlayersListViewTeamManager();
+        this.refreshLineupViews();
     }
     public void removeSelectedTeamBtClick(){
         
     }
+    /*
+    Read forms and create new Player, after this add him to database,
+    refresh views
+    */
     public void createPlayerBtClick(){
         try{
             Player player = new Player();
@@ -129,7 +235,7 @@ public class MainController implements Initializable {
             player.setSurname(surnamePlayerTF.getText());
             player.setNo(Integer.parseInt(noPlayerTF.getText()));
             player.setRole(positionsLV.getSelectionModel().getSelectedItem().toString());
-            player.setTeamId(teamSelected);
+            player.setTeamId(selectedTeam);
             this.addPlayer(player);
             
             
@@ -141,16 +247,18 @@ public class MainController implements Initializable {
     }
     
     public void editSelectedPlayerBtClick(){
-        playerSelected = (Player) playersListViewTeamManager.getSelectionModel().getSelectedItem();
+        selectedPlayer = (Player) playersListViewTeamManager.getSelectionModel().getSelectedItem();
     }
  
     public void removeSelectedPlayerBtClick(){
-        /*playerSelected = (Player) playersListViewTeamManager.getSelectionModel().getSelectedItem();
-        if(playerSelected != null){
-            teamSelected.removePlayer(playerSelected);
+        /*selectedPlayer = (Player) playersListViewTeamManager.getSelectionModel().getSelectedItem();
+        if(selectedPlayer != null){
+            selectedTeam.removePlayer(selectedPlayer);
         }*/
     }
-    
+    /*
+    Dont lent pick 2 checkbox same same time
+    */
     public void leftFootSelected(){
         rightFootCheckBox.setSelected(false);
     }
@@ -169,7 +277,7 @@ public class MainController implements Initializable {
  
         em.createNativeQuery("INSERT INTO Player (name, surname, no, role, team_id) "
                 + "values( '"+p.getName()+"','"+p.getSurname()+"',"+p.getNo()+",'"+p.getRole()+"',"
-                +teamSelected.getId()+");").executeUpdate();
+                +selectedTeam.getId()+");").executeUpdate();
 
         et.commit();
         em.close();
@@ -180,14 +288,36 @@ public class MainController implements Initializable {
     and fill ListView
     */
     private void refreshPlayersListViewTeamManager(){
-        teamSelected = (Team) teamsLV.getSelectionModel().getSelectedItem();
+        selectedTeam = (Team) teamsLV.getSelectionModel().getSelectedItem();
         em = emFactory.createEntityManager();
         et = em.getTransaction();
         et.begin();
         Query query = em.createNamedQuery("Player.findByTeamId");
-        query.setParameter("team_id", teamSelected);
-        teamSelected.setPlayerList(query.getResultList());
-        playersListViewTeamManager.setItems(teamSelected.getPlayerObservableList());
+        query.setParameter("team_id", selectedTeam);
+        selectedTeam.setPlayerList(query.getResultList());
+        playersListViewTeamManager.setItems(selectedTeam.getPlayerObservableList());
         em.close();
+    }
+    private void refreshLineupViews(){
+        lineup.getStartingLineup().clear();
+        lineup.getReserveLineup().clear();
+        this.startingLineupListView.setItems(lineup.getStartingLineup());
+        this.reserveLineupListView.setItems(lineup.getReserveLineup());
+    }
+    /*
+    COLLECT VIEW
+    
+    */
+    
+    /*
+    Fill cuntetnt in collect view - player lists and team name
+    */
+    public void fillContentCollectView(){
+        if (this.match != null){
+            teamNameCollectView.setText(this.match.getTeam().getName());
+            if(!this.match.getStartingLineup().isEmpty())playersStartListCollectView.setItems(this.match.getStartingLineup());
+            if(!this.match.getReserveLineup().isEmpty())playersReserveListCollectView.setItems(this.match.getReserveLineup());
+            
+        }
     }
 }
