@@ -10,7 +10,10 @@ package fsc.model.enums;
  * @author Mateusz
  */
 public enum Positions {
-    BRAMKARZ, OBROŃCA, POMOCNIK, NAPASTNIK;
     
+    BRAMKARZ,
+    OBROŃCA,
+    POMOCNIK,
+    NAPASTNIK;
     
 }

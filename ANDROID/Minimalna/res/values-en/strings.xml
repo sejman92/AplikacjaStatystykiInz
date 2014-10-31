@@ -21,5 +21,11 @@
     <string name="number">number</string>
     <string name="role">role</string>
     <string name="add_player">add player</string>
+    <string name="delete_player">delete player</string>
+    <string name="player">Player</string>
+    <string name="player_was_deleted">was deleted.</string>
+    <string name="gamesetup">Setup new game</string>
+    <string name="enemy_team_name">Enemy team name</string>
+    <string name="title_activity_game_setup">Setup new game</string>
 
 </resources>

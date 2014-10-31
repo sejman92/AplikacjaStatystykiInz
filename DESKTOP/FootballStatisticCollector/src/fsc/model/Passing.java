@@ -5,6 +5,7 @@
  */
 package fsc.model;
 
+import fsc.model.interfaces.IAction;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Basic;
@@ -35,7 +36,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Passing.findById", query = "SELECT p FROM Passing p WHERE p.id = :id"),
     @NamedQuery(name = "Passing.findByTime", query = "SELECT p FROM Passing p WHERE p.time = :time"),
     @NamedQuery(name = "Passing.findBySuccessful", query = "SELECT p FROM Passing p WHERE p.successful = :successful")})
-public class Passing implements Serializable {
+public class Passing implements Serializable, IAction {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -151,10 +152,33 @@ public class Passing implements Serializable {
         }
         return true;
     }
+    
+    @Override
+    public int getIdTypeOfAction(){
+        return 2;
+    }
+    
+    @Override
+    public String getActionName(){
+        return "podanie";
+    }
 
     @Override
     public String toString() {
-        return "fsc.model.Passing[ id=" + id + " ]";
+        String result = getActionName() + " [";
+        if(getId() != null)
+            result += getId();
+        result += "]: ";
+        if(getPlayerPassingId()!= null)
+            result += getPlayerPassingId() + " ";
+        if(getSuccessful()!=null){
+            if(getSuccessful())            
+                result += "celne";
+            else
+                result += "niecelne";
+        }
+               
+        return result;
     }
     
 }

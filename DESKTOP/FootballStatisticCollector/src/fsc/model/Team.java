@@ -59,6 +59,10 @@ public class Team implements Serializable {
     public Team(Integer id) {
         this.id = id;
     }
+    
+    public Team(String name){
+        this.name = name;
+    }
 
     public Integer getId() {
         return id;
@@ -77,12 +81,9 @@ public class Team implements Serializable {
     }
 
     public ObservableList<Player> getPlayerObservableList(){
-        ObservableList<Player> l = FXCollections.observableArrayList();
-        for( Player p: this.getPlayerList()){
-            l.add(p);
-        }
-        return l;
+        return FXCollections.observableArrayList(playerList);
     }
+    
     @XmlTransient
     public List<Player> getPlayerList() {
         return playerList;

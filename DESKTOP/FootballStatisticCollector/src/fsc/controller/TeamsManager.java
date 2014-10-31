@@ -6,20 +6,13 @@
 package fsc.controller;
 import fsc.model.Player;
 import fsc.model.Team;
-import java.sql.ResultSet;
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.fxml.FXML;
-import javafx.scene.control.ListView;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
-import javax.persistence.Query;
-import javax.persistence.TypedQuery;
 
 /**
  *
@@ -28,19 +21,15 @@ import javax.persistence.TypedQuery;
 public class TeamsManager {
     private static TeamsManager instance;
     ObservableList<Team> teams;
-    private EntityManagerFactory emFactory;
-    private EntityManager em;
-    private EntityTransaction et;
-    TeamsManager() {
+    private final EntityManagerFactory emFactory;
+    private final EntityManager em;
+    private final EntityTransaction et;
+    
+    private TeamsManager() {
         emFactory = Persistence.createEntityManagerFactory("FootballStatisticCollectorPU"); 
         em = emFactory.createEntityManager();
         et = em.getTransaction();
-        et.begin();
-        Query query = em.createNamedQuery("Team.findAll");
-        List<Team> l = query.getResultList();
-        convertToObservableList(l);
-        et.commit();
-        em.close();
+        teams = FXCollections.observableArrayList(em.createNamedQuery("Team.findAll").getResultList());
     }
 
     public static TeamsManager getInstance(){
@@ -50,29 +39,93 @@ public class TeamsManager {
         return instance;
     }
     
-    public void addTeam(Integer id){
-        if(id != null)
-        {
-            Team team = new Team(id);
-            teams.add(team);
+    public void saveTeam(Team team) {
+        try {
+            et.begin();
+            if (team.getId() == null) {
+                em.persist(team);
+            } else {
+                em.merge(team);
+            }
+            et.commit();
+        } catch (Exception ex) {
+            System.out.println("blad w transakcji");
+            try {
+                et.rollback();
+            } catch (Exception ex2) {
+                System.out.println("blad w rollbacku");
+            }
         }
     }
-    public void editTeam(Team team){
-        
+    
+    public void savePlayer(Player player){
+        try {
+            et.begin();
+            if (player.getId() == null) {
+                em.persist(player);
+            } else {
+                em.merge(player);
+            }
+            et.commit();
+        } catch (Exception ex) {
+            System.out.println("blad w transakcji");
+            try {
+                et.rollback();
+            } catch (Exception ex2) {
+                System.out.println("blad w rollbacku");
+            }
+        }
     }
     
     public void removeTeam(Team team){
-        teams.remove(team);
+        try {
+            et.begin();
+            team = em.merge(team);
+            em.remove(team);
+            et.commit();
+        } catch (Exception ex) {
+            System.out.println("blad w transakcji");
+            try {
+                et.rollback();
+            } catch (Exception ex2) {
+                System.out.println("blad w rollbacku");
+            }
+        }
+    }
+    
+    public void removePlayer(Player player){
+        try {
+            et.begin();
+            player = em.merge(player);
+            em.remove(player);
+            et.commit();
+        } catch (Exception ex) {
+            System.out.println("blad w transakcji");
+            try {
+                et.rollback();
+            } catch (Exception ex2) {
+                System.out.println("blad w rollbacku");
+            }
+        }
     }
     
     public ObservableList<Team> getTeams(){
-        return teams;
+        return teams = FXCollections.observableArrayList(em.createNamedQuery("Team.findAll").getResultList());
+    }
+    
+    public Team getTeam(int id){
+        return em.find(Team.class, id);
+    }
+    
+    public ObservableList<Player> findPlayersFromTeam(Team team) {
+        return FXCollections.observableArrayList(em.createNamedQuery("Player.findByTeamId").setParameter("team_id", team).getResultList());
+    }
+    
+    public List<Player> findAllPlayers() {
+        return FXCollections.observableArrayList(em.createNamedQuery("Player.findAll").getResultList());
     }
 
-    private void convertToObservableList(List<Team> l) {
-         teams = FXCollections.observableArrayList();
-         for(Team t: l){
-          teams.add(t);
-         }
+    public Player findPlayer(int id) {
+        return em.find(Player.class, id);
     }
 }

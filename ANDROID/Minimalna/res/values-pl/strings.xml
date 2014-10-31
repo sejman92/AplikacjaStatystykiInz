@@ -21,5 +21,11 @@
     <string name="number">numer</string>
     <string name="role">pozycja</string>
     <string name="add_player">dodaj zawodnika</string>
+    <string name="delete_player">usuń zawodnika</string>
+    <string name="player">Zawodnik</string>
+    <string name="player_was_deleted">został usunięty</string>
+    <string name="gamesetup">Dodaj nowy mecz</string>
+    <string name="enemy_team_name">Nazwa przeciwnika</string>
+    <string name="title_activity_game_setup">Nowy mecz</string>
 
 </resources>

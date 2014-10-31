@@ -5,6 +5,7 @@ CREATE TABLE Player
         surname CHAR(30),
         no INT,
         role CHAR(20),
+		prefered_leg CHAR(20),
         owner_id INT NOT NULL,
         team_id INT NOT NULL,
         PRIMARY KEY (id),

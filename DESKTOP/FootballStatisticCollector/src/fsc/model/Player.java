@@ -319,7 +319,7 @@ public class Player implements Serializable {
 
     @Override
     public String toString() {
-        return (this.no).toString() + " "+this.name+" "+this.surname ;
+        return (this.no).toString() + " " + this.name + " " + this.surname ;
     }
     
 }

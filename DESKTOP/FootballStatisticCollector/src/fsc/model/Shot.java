@@ -5,6 +5,7 @@
  */
 package fsc.model;
 
+import fsc.model.interfaces.IAction;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.Basic;
@@ -35,7 +36,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Shot.findById", query = "SELECT s FROM Shot s WHERE s.id = :id"),
     @NamedQuery(name = "Shot.findByPalce", query = "SELECT s FROM Shot s WHERE s.palce = :palce"),
     @NamedQuery(name = "Shot.findBySuccess", query = "SELECT s FROM Shot s WHERE s.success = :success")})
-public class Shot implements Serializable {
+public class Shot implements Serializable, IAction {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -162,10 +163,28 @@ public class Shot implements Serializable {
         }
         return true;
     }
+    
+    @Override
+    public int getIdTypeOfAction(){
+        return 1;
+    }
+    
+    @Override
+    public String getActionName(){
+        return "strzał";
+    }
 
     @Override
     public String toString() {
-        return "fsc.model.Shot[ id=" + id + " ]";
-    }
-    
+        String result = "strzał [";
+        if(getId() != null)
+            result += getId();
+        result += "]: ";
+        if(getPlayerId() != null)
+            result += getPlayerId() + " ";
+        if(getPalce() != null)
+            result += getPalce();
+               
+        return result;
+    }  
 }

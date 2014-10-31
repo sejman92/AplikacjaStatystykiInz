@@ -21,6 +21,7 @@
     <class>fsc.model.Shot</class>
     <class>fsc.model.Team</class>
     <class>fsc.model.Participated_1</class>
+    <shared-cache-mode>NONE</shared-cache-mode>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:mysql://db4free.net:3306/fsmdb?zeroDateTimeBehavior=convertToNull"/>
       <property name="javax.persistence.jdbc.password" value="inzynierka2014"/>
