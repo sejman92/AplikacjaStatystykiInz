@@ -32,11 +32,11 @@ public class TeamActivity extends Activity {
 
 	
 	static int id;
-	String name;
-	DatabaseManager dbm = new DatabaseManager(this);
-	List<Player> listPlayer;
-	ListView view_Player_List;
-	ArrayAdapter<Player> list_adapter;
+	private String name;
+	private  DatabaseManager dbm = new DatabaseManager(this);
+	private List<Player> listPlayer;
+	private ListView view_Player_List;
+	private ArrayAdapter<Player> list_adapter;
 	
 	OnItemClickListener listner = new OnItemClickListener(){
 		@Override
@@ -67,17 +67,16 @@ public class TeamActivity extends Activity {
         refresh_player_list();
 	}
 	
-	@Override
+	/*@Override
 	public void onResume()
 	{
 		super.onResume();
 		setContentView(R.layout.activity_team);
 		refresh_player_list();
-	}
+	}*/
 	
 	public void gameSetup(View v)
 	{
-		//Toast.makeText(getApplicationContext(), "zaczynamy gre", Toast.LENGTH_SHORT).show();
 		Intent intent = new Intent(TeamActivity.this,GameSetupActivity.class);     	
     	startActivity(intent);
 	}
@@ -93,7 +92,7 @@ public class TeamActivity extends Activity {
 		list_adapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1,player_list );
 		view_Player_List.refreshDrawableState();
 		view_Player_List.setAdapter(list_adapter);
-		view_Player_List.setOnItemClickListener( listner);
+		view_Player_List.setOnItemClickListener(listner);
 	}
 
 	@Override

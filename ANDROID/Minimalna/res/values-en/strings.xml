@@ -27,5 +27,10 @@
     <string name="gamesetup">Setup new game</string>
     <string name="enemy_team_name">Enemy team name</string>
     <string name="title_activity_game_setup">Setup new game</string>
+    <string name="chose_players">Schose players</string>
+    <string name="basic">basic</string>
+    <string name="backup">backup</string>
+    <string name="ready">Done</string>
+    <string name="not_enought_players">There is not enought plyers in basic squad </string>
 
 </resources>
