@@ -5,6 +5,7 @@
  */
 package fsc.controller;
 
+import fsc.model.Game;
 import fsc.model.interfaces.IAction;
 import fsc.model.Passing;
 import fsc.model.Player;
@@ -86,6 +87,7 @@ public class MainController implements Initializable {
    @FXML private Tab beginMatchTab;
    
    private TeamsManager teamsManager;
+   private GameManager gameManager;
    private ObservableList<Positions>positions;
    private Team selectedTeam;
    private Player selectedPlayer;
@@ -93,11 +95,11 @@ public class MainController implements Initializable {
    private Match match;
    private Action action;
    private ObservableList<IAction>actionList;
-   
+   private Game game;
    private EntityManagerFactory emFactory;
    private EntityManager em;
    private EntityTransaction et;
-
+   
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         emFactory = Persistence.createEntityManagerFactory("FootballStatisticCollectorPU"); 
@@ -304,6 +306,12 @@ public class MainController implements Initializable {
     /*
     Fill cuntetnt in collect view - player lists and team name
     */
+    public void startMatchBtClick(){
+        this.game = new Game();
+        this.gameManager = GameManager.getInstance();   
+        gameManager.saveGame(game);
+        
+    }
     public void fillContentCollectView(){
         if (this.match != null){
             teamNameCollectView.setText(this.match.getTeam().getName());
