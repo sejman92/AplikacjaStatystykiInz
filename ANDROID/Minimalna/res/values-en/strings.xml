@@ -32,5 +32,11 @@
     <string name="backup">backup</string>
     <string name="ready">Done</string>
     <string name="not_enought_players">There is not enought plyers in basic squad </string>
+    <string name="begin_game">Begin game</string>
+    <string name="palce">Game place</string>
+    <string name="write_enemy_name">Write enemy name</string>
+    <string name="game_time">current time</string>
+    <string name="game_date">current date</string>
+    <string name="preparing_game">Preparing game</string>
 
 </resources>

@@ -1,13 +1,12 @@
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/scrollView1"
     android:layout_width="wrap_content"
     android:layout_height="fill_parent" 
     android:fillViewport="true"
     android:background="@drawable/boisko_610"
-    >
-
-<RelativeLayout 
     
     
     android:gravity="top"
@@ -16,49 +15,62 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".GameSetupActivity" 
-    
-    android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical" >
+     >
 
     <EditText
-        android:id="@+id/editText1"
+        android:id="@+id/enemy_name_activity_game_setup"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
-        android:hint="@string/enemy_team_name"
-        android:ems="10" />
-
-    <DatePicker
-        android:id="@+id/datePicker1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/editText1"
-        android:layout_below="@+id/editText1"
-        android:layout_marginTop="20dp" />
-
-    
+        android:hint="@string/enemy_team_name" />
 
     <Button
         android:id="@+id/chose_players_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/datePicker1"
-        android:layout_below="@+id/datePicker1"
+        android:layout_alignLeft="@id/enemy_name_activity_game_setup"
+        android:layout_below="@id/enemy_name_activity_game_setup"
         android:layout_marginTop="22dp"
         android:onClick="chose_players_button"
         android:text="@string/chose_players" />
 
-    <TextView
-        android:id="@+id/warning_not_enought_players_in_basic_team"
+    <Button
+        android:id="@+id/begin_game"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignBaseline="@id/chose_players_button"
+        android:layout_alignBottom="@id/chose_players_button"
         android:layout_alignParentRight="true"
-        android:layout_alignTop="@+id/chose_players_button"
-        android:layout_toRightOf="@+id/chose_players_button"
-        android:text="gdf" />
+        android:onClick="begin_game"
+        android:text="@string/begin_game" />
 
+    <EditText
+        android:id="@+id/time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@id/chose_players_button"
+        android:layout_below="@id/chose_players_button"
+        android:hint="@string/game_time"
+        android:inputType="time" >
+    </EditText>
+
+    <EditText
+        android:id="@+id/date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@id/time"
+        android:layout_below="@id/time"
+        android:hint="@string/game_date"
+        android:inputType="date" />
+    
+    <EditText
+        android:id="@+id/place"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@id/time"
+        android:layout_below="@id/date"
+        android:hint="@string/place"
+        android:ems="10" />
 
 </RelativeLayout>
-   </ScrollView>

@@ -1,56 +1,78 @@
 package pl.gda.pg.eti.kio.project.footballstatisticmanager.activities;
 
 
-import java.util.Calendar;
-
-
-
 import pl.gda.pg.eti.kio.project.footballstatisticmanager.database.DatabaseManager;
-import pl.gda.pg.eti.kio.project.footballstatisticmanager.entitycalss.Player;
 import pl.gda.pg.eti.kio.project.footballstatisticmanager.focus.Focus;
-
 import com.example.footballstatisticmanager.R;
-import com.example.footballstatisticmanager.R.layout;
-import com.example.footballstatisticmanager.R.menu;
-
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
 import android.view.Menu;
 import android.view.View;
+import android.widget.Button;
 import android.widget.DatePicker;
-import android.widget.TextView;
+import android.widget.EditText;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
 public class GameSetupActivity extends Activity {
 
 	DatePicker datepicker; 
 	TimePicker timepicker;
 	DatabaseManager dbm = new DatabaseManager(this);
-	TextView warning;
+	public EditText enemy_name;
+	public EditText date;
+	public EditText time;
+	public EditText place;
+	public String enemy_name_s;
+	public String date_s;
+	public String time_s;
+	public String place_s;
+	public Button but;
+
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		Calendar calendar = Calendar.getInstance();
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_game_setup);
-		datepicker = (DatePicker) findViewById(R.id.datePicker1);
-		warning = (TextView) findViewById(R.id.warning_not_enought_players_in_basic_team);
-		//timepicker = (TimePicker) findViewById(R.id.timePicker1);
-		//timepicker.setIs24HourView(true);
-		//timepicker.setCurrentHour(calendar.get(Calendar.HOUR_OF_DAY));
-		if(Focus.main_players_for_focused_game.size()!=11)
-			warning.setText(getResources().getString(R.string.not_enought_players));
-		else
-			warning.setText("nie ma");
-		
-
+		enemy_name = (EditText) findViewById(R.id.enemy_name_activity_game_setup );
+		date = (EditText) findViewById(R.id.date);
+		time = (EditText) findViewById(R.id.time);
+		place = (EditText) findViewById(R.id.place);
+		this.setTitle(getResources().getString(R.string.preparing_game));
 	}
+	
+
 	
 	public void chose_players_button(View v)
 	{
+		enemy_name_s=enemy_name.getText().toString();
+		date_s=date.getText().toString();
+		time_s = time.getText().toString();
+		place_s=place.getText().toString();
 		Intent intent = new Intent(GameSetupActivity.this,ChosePlayersForGameActivity.class);     	
     	startActivity(intent);
+	}
+	
+	public void begin_game(View v)
+	{
+		if(enemy_name.getText().toString().equals(""))
+		{
+			Toast.makeText(this, "Wpisz nazwê dru¿yny przeciwniej", Toast.LENGTH_LONG).show();
+			return;
+		}
+		if(Focus.main_players_for_focused_game.size()!=11)
+		{
+			Toast.makeText(this, "Wybierz 11 podstawowych zawodników",Toast.LENGTH_LONG).show();
+			return;
+		}
+		Intent intent = new Intent(GameSetupActivity.this,GameActivity.class);
+		intent.putExtra("enemy", enemy_name.getText().toString());
+		intent.putExtra("date", date.getText().toString());
+		intent.putExtra("time", time.getText().toString());
+		intent.putExtra("place", place.getText().toString());
+		
+		startActivity(intent);	
 	}
 	
 	@Override
@@ -58,10 +80,16 @@ public class GameSetupActivity extends Activity {
 	{
 		super.onResume();
 		setContentView(R.layout.activity_game_setup);
-		if(Focus.main_players_for_focused_game.size()!=11)
-			warning.setText(getResources().getString(R.string.not_enought_players));
-		else
-			warning.setText("nie ma");
+		date.setText("12.12.1231");
+		time.setText(time_s);
+		place.setText("dupa");
+		enemy_name.setText(enemy_name_s);
+		if(Focus.game_ended==true)
+		{
+			Focus.game_ended=false;
+			finish();
+		}
+
 	}
 
 

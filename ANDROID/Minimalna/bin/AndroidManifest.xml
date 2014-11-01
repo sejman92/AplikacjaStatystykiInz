@@ -52,6 +52,10 @@
             android:name="pl.gda.pg.eti.kio.project.footballstatisticmanager.activities.ChosePlayersForGameActivity"
             android:label="@string/title_activity_chose_players_for_game" >
         </activity>
+        <activity
+            android:name="pl.gda.pg.eti.kio.project.footballstatisticmanager.activities.GameActivity"
+            android:label="@string/title_activity_game" >
+        </activity>
     </application>
 
 </manifest>

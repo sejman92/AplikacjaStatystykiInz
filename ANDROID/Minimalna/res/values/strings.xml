@@ -9,5 +9,6 @@
     <string name="gamesetup">Setup new game</string>
     <string name="enemy_team_name">Enemy team name</string>
     <string name="title_activity_chose_players_for_game">ChosePlayersForGameActivity</string>
+    <string name="title_activity_game">GameActivity</string>
 
 </resources>
