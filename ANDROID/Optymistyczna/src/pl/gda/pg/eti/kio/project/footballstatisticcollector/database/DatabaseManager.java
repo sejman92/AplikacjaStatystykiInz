@@ -364,7 +364,7 @@ public class DatabaseManager extends SQLiteOpenHelper{
 	
 	@Override
 	public void onUpgrade(SQLiteDatabase arg0, int arg1, int arg2) {
-		// TODO Auto-generated method stub
+		// TODO zmieniæ w Game date na String i dodaæ opcje succes w Passing
 		
 	}
 }
