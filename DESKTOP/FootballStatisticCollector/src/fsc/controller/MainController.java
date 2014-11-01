@@ -5,6 +5,7 @@
  */
 package fsc.controller;
 
+import fsc.model.Game;
 import fsc.model.Player;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -83,7 +84,7 @@ public class MainController implements Initializable {
     private Player selectedPlayer;
     private Lineup lineup;
     private Match match;
-    
+    private Game game;
     private EntityManagerFactory emFactory;
     private EntityManager em;
     private EntityTransaction et;
@@ -319,5 +320,8 @@ public class MainController implements Initializable {
             if(!this.match.getReserveLineup().isEmpty())playersReserveListCollectView.setItems(this.match.getReserveLineup());
             
         }
+    }
+    public void startMatch(){
+        
     }
 }
