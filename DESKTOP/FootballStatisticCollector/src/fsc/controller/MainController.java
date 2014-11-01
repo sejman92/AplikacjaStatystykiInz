@@ -113,7 +113,7 @@ public class MainController implements Initializable {
         teamsLV.setItems(teamsManager.getTeams());
         positionsLV.setItems(positions);
         lineup = new Lineup();
-        beginMatchTab.setDisable(false);
+        //beginMatchTab.setDisable(false);
     }
     
     /*
