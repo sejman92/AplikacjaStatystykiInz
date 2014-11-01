@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="pl.gda.pg.kio.project.footballstatisticcollector"
+    android:versionCode="1"
+    android:versionName="1.0" >
+
+    <uses-sdk
+        android:minSdkVersion="8"
+        android:targetSdkVersion="18" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@drawable/ic_launcher"
+        android:label="@string/app_name"
+        android:theme="@style/AppTheme" >
+        <activity
+            android:name="pl.gda.pg.eti.kio.project.footballstatisticcollector.activities.MainMenuActivity"
+            android:label="@string/app_name" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="pl.gda.pg.eti.kio.project.footballstatisticcollector.activities.TeamsActivity"
+            android:label="@string/title_activity_teams" >
+        </activity>
+        <activity
+            android:name="pl.gda.pg.eti.kio.project.footballstatisticcollector.activities.SettingsActivity"
+            android:label="@string/title_activity_settings" >
+        </activity>
+        <activity
+            android:name="pl.gda.pg.eti.kio.project.footballstatisticcollector.activities.TeamActivity"
+            android:label="@string/title_activity_team" >
+        </activity>
+        <activity
+            android:name="pl.gda.pg.eti.kio.project.footballstatisticcollector.activities.PlayerActivity"
+            android:label="@string/title_activity_player" >
+        </activity>
+        <activity
+            android:name="pl.gda.pg.eti.kio.project.footballstatisticcollector.activities.GameSetupActivity"
+            android:label="@string/title_activity_game_setupactivity" >
+        </activity>
+        <activity
+            android:name="pl.gda.pg.eti.kio.project.footballstatisticcollector.activities.ChosePlayersForGameActivity"
+            android:label="@string/title_activity_chose_players_for_game" >
+        </activity>
+        <activity
+            android:name="pl.gda.pg.eti.kio.project.footballstatisticcollector.activities.GameActivity"
+            android:label="@string/title_activity_game" >
+        </activity>
+        <activity
+            android:name="pl.gda.pg.eti.kio.project.footballstatisticcollector.activities.PreGameActivity"
+            android:label="@string/title_activity_pre_game" >
+        </activity>
+    </application>
+
+</manifest>
