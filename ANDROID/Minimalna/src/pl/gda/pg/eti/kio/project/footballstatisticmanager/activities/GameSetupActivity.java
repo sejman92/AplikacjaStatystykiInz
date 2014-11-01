@@ -7,6 +7,7 @@ import com.example.footballstatisticmanager.R;
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
+import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
@@ -17,10 +18,8 @@ import android.widget.Toast;
 
 public class GameSetupActivity extends Activity {
 
-	DatePicker datepicker; 
-	TimePicker timepicker;
 	DatabaseManager dbm = new DatabaseManager(this);
-	public EditText enemy_name;
+	private EditText enemy_name;
 	public EditText date;
 	public EditText time;
 	public EditText place;
@@ -47,6 +46,8 @@ public class GameSetupActivity extends Activity {
 	public void chose_players_button(View v)
 	{
 		enemy_name_s=enemy_name.getText().toString();
+		Log.i("BUTTON PRESSED", enemy_name.getText().toString());
+		Log.i("error", "something");
 		date_s=date.getText().toString();
 		time_s = time.getText().toString();
 		place_s=place.getText().toString();
