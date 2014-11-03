@@ -230,7 +230,18 @@ public class DatabaseManager extends SQLiteOpenHelper{
 		deletePlayerByTeamId(id);
 		
 	}
-
+	public void updateTeam(int id, String name)
+	{
+		SQLiteDatabase db = getWritableDatabase();
+		String query ="UPDATE Team SET name='"+name+"' WHERE id="+id;
+		try{
+			db.execSQL(query);
+		}catch(SQLException e)
+		{
+			Log.d("Team", e.getMessage());
+		}
+	}
+	
 	public List<Player> getAllPlayersFromTeam(int team_id)
 	{
 		List<Player> list = new LinkedList<Player>();
@@ -313,7 +324,18 @@ public class DatabaseManager extends SQLiteOpenHelper{
 		}
 		//TODO dodaæ usuniêcie wszystkich innych wydarzen zwi¹zanych z tym zawodnikiem
 	}
-
+	public void updatePlayer(int id, String name, String surname, String role, int number)
+	{
+		SQLiteDatabase db = getWritableDatabase();
+		String query = "UPDATE Player SET name='"+name+"', surname='"+surname+"',role='"+role+"',number="+String.valueOf(number)+" WHERE id="+id;
+		try{
+			db.execSQL(query);
+		}catch(SQLException e)
+		{
+			Log.d("player", e.getMessage());
+		}
+	}
+	
 	public void addGame(String date, String place, int lost_goals, int scored_goals, String oponent, String comment, List<Player> players_list, int team_id)
 	{
 		int game_id=0;

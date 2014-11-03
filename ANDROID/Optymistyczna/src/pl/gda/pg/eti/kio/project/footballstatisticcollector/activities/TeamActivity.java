@@ -46,20 +46,29 @@ public class TeamActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_team);
-        id = Focus.focused_team.getId();
+        /*id = Focus.focused_team.getId();
         name = Focus.focused_team.getName();
-        this.setTitle(name);
+        this.setTitle(name);*/
         
-        refresh_player_list();
+       // refresh_player_list();
 	}
 	
-	/*@Override
+	@Override
 	public void onResume()
 	{
 		super.onResume();
 		setContentView(R.layout.activity_team);
+		id = Focus.focused_team.getId();
+        name = Focus.focused_team.getName();
+        this.setTitle(name);
 		refresh_player_list();
-	}*/
+	}
+	
+	public void refresh_title()
+	{
+		name = Focus.focused_team.getName();
+        this.setTitle(name);
+	}
 	
 	public void gameSetup(View v)
 	{
@@ -124,6 +133,7 @@ public class TeamActivity extends Activity {
 					dbm.addPlayer(sName, sSurname, Integer.parseInt(iNumber), sRole, TeamActivity.id );
 					dbm.close();
 					refresh_player_list();
+					
 				}
 				
 			};
@@ -137,6 +147,38 @@ public class TeamActivity extends Activity {
 			button.setOnClickListener(l);
 			button2.setOnClickListener(l2);
 			dialog.show();		
+		}
+		if(id==R.id.update_team)
+		{
+			final Dialog dialog = new Dialog(TeamActivity.this);
+			dialog.setContentView(R.layout.update_team_dialog);
+			dialog.setTitle("Edycja dru¿yny");
+			Button button=(Button)dialog.findViewById(R.id.update_team_dialog_update);
+			Button button2=(Button)dialog.findViewById(R.id.update_team_dialog_cancel);
+			OnClickListener l = new OnClickListener(){
+				@Override
+				public void onClick(View arg0) {
+					EditText name = (EditText) dialog.findViewById(R.id.editText1);
+					String sName = name.getText().toString();
+					dialog.dismiss();
+					dbm.updateTeam(Focus.focused_team.getId(), sName);
+					dbm.close();
+					Focus.focused_team.setName(sName);
+					refresh_title();
+				}
+				
+			};
+			OnClickListener l2 = new OnClickListener(){
+				@Override
+				public void onClick(View arg0) {
+					dialog.dismiss();				
+				}
+				
+			};
+			button.setOnClickListener(l);
+			button2.setOnClickListener(l2);
+			dialog.show();
+			
 		}
 		return true;
 	}

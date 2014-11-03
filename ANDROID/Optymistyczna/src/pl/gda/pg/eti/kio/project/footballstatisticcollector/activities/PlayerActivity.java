@@ -8,27 +8,56 @@ import android.os.Bundle;
 import android.app.Activity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.EditText;
 import android.widget.Toast;
 
 public class PlayerActivity extends Activity {
 
-	int id;
-	String name, surname;
+	int id, number;
+	String name, surname, role;
 	DatabaseManager dbm = new DatabaseManager(this);
+	EditText nameet, surnameet, roleet, numberet;
 	Player player;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_player);
-		/*Intent intentInput = getIntent(); 
-        Bundle bundleInputData = intentInput.getExtras();*/ 
-        id =Focus.focused_player.getId(); //bundleInputData.getInt("id");
-        name =Focus.focused_player.getName(); //bundleInputData.getString("name");
-        surname =Focus.focused_player.getSurname(); //bundleInputData.getString("surname");
+		
+        id =Focus.focused_player.getId(); 
+        name =Focus.focused_player.getName(); 
+        surname =Focus.focused_player.getSurname();
+        role= Focus.focused_player.getRole();
+        number = Focus.focused_player.getNr();
+        
+        nameet=(EditText) findViewById(R.id.editText1);
+        surnameet=(EditText) findViewById(R.id.editText2);
+        numberet=(EditText) findViewById(R.id.editText3);
+        roleet=(EditText) findViewById(R.id.editText4);
+        
+        nameet.setText(name);
+        surnameet.setText(surname);
+        numberet.setText(String.valueOf(number));
+        roleet.setText(role);
+        
         this.setTitle(name+" "+surname);
-//		player=dbm.getPlayer(id);
-		//if(player!=null)
-			//Toast.makeText(getApplicationContext(), "mamy gracza", Toast.LENGTH_SHORT).show();
+	}
+	
+	public void back(View v)
+	{
+		finish();
+	}
+	
+	public void update(View v)
+	{
+		name=nameet.getText().toString();
+		surname=surnameet.getText().toString();
+		role=roleet.getText().toString();
+		number=Integer.parseInt(numberet.getText().toString());
+		dbm.updatePlayer(id, name, surname, role, number);
+		dbm.close();
+		Toast.makeText(this, "dane zawodnika zaktualizowane", Toast.LENGTH_SHORT).show();
+		finish();
 	}
 
 	@Override
