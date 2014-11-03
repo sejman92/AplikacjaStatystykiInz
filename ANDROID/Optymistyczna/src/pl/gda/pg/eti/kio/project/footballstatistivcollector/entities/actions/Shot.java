@@ -4,24 +4,33 @@ public class Shot extends Action {
 	private int id;
 	private int player_id;
 	private int game_id;
+	private int time;
 	private String comment;
 	private String succes;
 
-	public Shot(int id, int game_id, int player_id, String comment, String succes)
+	public Shot(int id, int game_id, int player_id, int time, String comment, String succes)
 	{
 		this.id=id;
 		this.game_id=game_id;
 		this.player_id=player_id;
-		this.comment=comment;
-		this.succes=succes;
-	}
-	public Shot(int player_id, String comment, String succes)
-	{
-		this.player_id=player_id;
+		this.time=time;
 		this.comment=comment;
 		this.succes=succes;
 	}
 	
+	public Shot(int player_id, String comment, int time, String succes)
+	{
+		this.player_id=player_id;
+		this.time=time;
+		this.comment=comment;
+		this.succes=succes;
+	}
+	public int getTime() {
+		return time;
+	}
+	public void setTime(int time) {
+		this.time = time;
+	}
 	public int getId() {
 		return id;
 	}

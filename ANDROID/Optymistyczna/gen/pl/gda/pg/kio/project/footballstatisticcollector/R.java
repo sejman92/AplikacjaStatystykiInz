@@ -52,6 +52,9 @@ public final class R {
         public static final int buttonDruzyny=0x7f080016;
         public static final int buttonUstawienia=0x7f080015;
         public static final int checkBox1=0x7f08002a;
+        public static final int checkBox2=0x7f08002b;
+        public static final int checkBox3=0x7f08002c;
+        public static final int checkBox4=0x7f08002d;
         public static final int chose_players_button=0x7f080010;
         public static final int chose_players_for_game_button=0x7f08001c;
         public static final int chronometer1=0x7f080004;
@@ -69,9 +72,6 @@ public final class R {
         public static final int playerListViewChosingForGame=0x7f080001;
         public static final int playerlistView=0x7f08001e;
         public static final int przycisk=0x7f080017;
-        public static final int radioButton1=0x7f08002b;
-        public static final int radioButton2=0x7f08002c;
-        public static final int radioButton3=0x7f08002d;
         public static final int real_chose_players_for_Game_button=0x7f08001d;
         public static final int textView1=0x7f080021;
         public static final int textView2=0x7f08001f;

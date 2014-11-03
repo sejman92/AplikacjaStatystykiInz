@@ -2,6 +2,7 @@ package pl.gda.pg.eti.kio.project.footballstatisticcollector.activities;
 
 import java.util.LinkedList;
 
+import pl.gda.pg.eti.kio.project.footballstatisticcollector.database.DatabaseManager;
 import pl.gda.pg.eti.kio.project.footballstatisticcollector.focus.Focus;
 import pl.gda.pg.eti.kio.project.footballstatistivcollector.entities.Player;
 import pl.gda.pg.kio.project.footballstatisticcollector.R;
@@ -38,6 +39,7 @@ public class MainMenuActivity extends Activity {
 	{
 		String ok= edit.getText().toString();
 		Toast.makeText(this, ok, Toast.LENGTH_LONG).show();
+		DatabaseManager dbm = new DatabaseManager(this);
 	}
 	
 	public void buttonUstawienia(View v)

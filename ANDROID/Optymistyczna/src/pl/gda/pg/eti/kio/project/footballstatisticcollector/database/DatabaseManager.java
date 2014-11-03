@@ -40,9 +40,9 @@ public class DatabaseManager extends SQLiteOpenHelper{
 				"team_id INTEGER"+
 				")";
 		creaty[2]="CREATE TABLE Game "+
-			"("+
+				"("+
 				"ID INTEGER PRIMARY KEY AUTOINCREMENT,"+
-				"data DATE,"+
+				"data TEXT,"+
 				"place TEXT,"+
 				"result TEXT,"+
 				"lost_goals INTEGER,"+
@@ -67,6 +67,7 @@ public class DatabaseManager extends SQLiteOpenHelper{
 					"ID INTEGER PRIMARY KEY AUTOINCREMENT,"+
 					"player_id INTEGERT, "+
 					"success TEXT,"+
+					"time INTEGER,"+
 					"game_id INTEGER,"+
 					"comment TEXT"+
 					")";
@@ -135,6 +136,7 @@ public class DatabaseManager extends SQLiteOpenHelper{
 					"ID INTEGER PRIMARY KEY AUTOINCREMENT,"+
 					"game_id INTEGER,"+
 					"player_id INTEGER,"+
+					"success INTEGER,"+
 					"time INTEGER,"+
 					"comment TEXT)";
 		creaty[13]="CREATE TABLE Takeover"+
@@ -363,8 +365,7 @@ public class DatabaseManager extends SQLiteOpenHelper{
 	}
 	
 	@Override
-	public void onUpgrade(SQLiteDatabase arg0, int arg1, int arg2) {
-		// TODO zmieniæ w Game date na String i dodaæ opcje succes w Passing
+	public void onUpgrade(SQLiteDatabase db, int old, int NEW) {
 		
 	}
 }

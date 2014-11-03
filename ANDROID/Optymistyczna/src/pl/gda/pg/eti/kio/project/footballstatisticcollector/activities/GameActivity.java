@@ -14,11 +14,13 @@ import android.os.SystemClock;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Intent;
+import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.Chronometer;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -29,6 +31,7 @@ public class GameActivity extends Activity {
 
 	String enemy_name, time, place, date;
 	long ctime;
+	boolean play=false;
 	Chronometer chronometer;
 	List<Action> action_list;
 	ArrayAdapter<Player> list_adapter;
@@ -57,26 +60,96 @@ public class GameActivity extends Activity {
 	
 	public void begin_game(View v)
 	{
-		chronometer.setBase(SystemClock.elapsedRealtime()+ctime);
-		chronometer.start();
+		if(!play)
+		{
+			chronometer.setBase(SystemClock.elapsedRealtime()+ctime);
+			chronometer.start();
+			play=true;
+		}
 	}
 	public void end_game(View v)
 	{
-		ctime=chronometer.getBase()-SystemClock.elapsedRealtime();
-		chronometer.stop();
-		Toast.makeText(this, String.valueOf(ctime) , Toast.LENGTH_SHORT).show();
+		
+			ctime=chronometer.getBase()-SystemClock.elapsedRealtime();
+			chronometer.stop();
+			play=false;
+			Toast.makeText(this, String.valueOf(ctime/-60000+1) , Toast.LENGTH_SHORT).show();
 	}	
 	public void pause(View v)
 	{
-		ctime=chronometer.getBase()-SystemClock.elapsedRealtime();
-		Toast.makeText(this, String.valueOf(ctime), Toast.LENGTH_SHORT).show();
-		chronometer.stop();
-		
+		if(play)
+		{
+			ctime=chronometer.getBase()-SystemClock.elapsedRealtime();
+			play=false;
+			Toast.makeText(this, String.valueOf(ctime/-60000+1), Toast.LENGTH_SHORT).show();
+			chronometer.stop();
+		}
 	}
 	
 	public void shot(View v)
 	{
-		Toast.makeText(this, "shot", Toast.LENGTH_SHORT).show();
+		final Dialog dialog = new Dialog(GameActivity.this);
+		dialog.setContentView(R.layout.new_shot_dialog);
+		dialog.setTitle("podanie");
+		
+		ListView view_Player_List = (ListView) dialog.findViewById(R.id.listView1);
+		view_Player_List.refreshDrawableState();
+		view_Player_List.setAdapter(list_adapter);
+		
+		final EditText edit = (EditText) dialog.findViewById(R.id.editText1);
+		final CheckBox box = (CheckBox) dialog.findViewById(R.id.checkBox1);
+		final CheckBox box2 = (CheckBox) dialog.findViewById(R.id.checkBox2);
+		final CheckBox box3 = (CheckBox) dialog.findViewById(R.id.checkBox3);
+		final CheckBox box4 = (CheckBox) dialog.findViewById(R.id.checkBox4);
+		
+		OnItemClickListener listner = new OnItemClickListener(){
+			@Override
+	        public void onItemClick(AdapterView<?> parent, View v, int position, long id) 
+	        {
+				String success="pudlo";
+				int idp,time ;
+				time=(int) (chronometer.getBase()-SystemClock.elapsedRealtime());
+				time*=-1;
+				time/=60000;
+				time++;
+				if(box.isChecked())
+				{
+					success="gol";
+					box2.setChecked(false);
+					box3.setChecked(false);
+					box4.setChecked(false);
+				}
+				if(box2.isChecked())
+				{
+					success="slupek";
+					box.setChecked(false);
+					box3.setChecked(false);
+					box4.setChecked(false);
+				}
+				if(box3.isChecked())
+				{
+					success="obroniony";
+					box.setChecked(false);
+					box2.setChecked(false);
+					box4.setChecked(false);
+				}
+				if(box4.isChecked())
+				{
+					success="pudlo";
+					box.setChecked(false);
+					box3.setChecked(false);
+					box2.setChecked(false);
+				}
+				
+	        	idp=Focus.main_players_for_focused_game.get(position).getId();
+	        	Shot shot = new Shot(idp, edit.getText().toString(), (int)ctime/-60000+1, success );
+	    		action_list.add(shot);
+	    		Log.d("shot", idp+" "+edit.getText().toString()+" "+String.valueOf(ctime/-60000+1)+" "+success);
+	    		dialog.dismiss();
+	        }
+		};
+		view_Player_List.setOnItemClickListener(listner);
+		dialog.show();
 		
 	}
 	
@@ -91,20 +164,24 @@ public class GameActivity extends Activity {
 		view_Player_List.refreshDrawableState();
 		view_Player_List.setAdapter(list_adapter);
 
-		/*Button button = (Button) dialog.findViewById(R.id.button1);
-		Button button2 = (Button) dialog.findViewById(R.id.button2);*/
 		final EditText edit = (EditText) dialog.findViewById(R.id.editText1);
+		final CheckBox box = (CheckBox) dialog.findViewById(R.id.checkBox1);
 		
 		OnItemClickListener listner = new OnItemClickListener(){
 			@Override
 	        public void onItemClick(AdapterView<?> parent, View v, int position, long id) 
 	        {
-				int idp;
+				int idp, success=0;
 				String comm;
+				if(box.isChecked())
+					success=1;
+				else
+					success=0;
 	        	idp=Focus.main_players_for_focused_game.get(position).getId();
 	        	comm=edit.getText().toString();
-	        	Passing passing = new Passing(idp, (int)ctime, comm);
+	        	Passing passing = new Passing(idp, (int)ctime/-60000+1, success, comm);
 	    		action_list.add(passing);
+	    		Log.d("passing", idp+" "+String.valueOf(ctime/-60000+1)+" "+success+" "+comm);
 	    		dialog.dismiss();
 	        }
 		};

@@ -8,62 +8,57 @@
         android:id="@+id/listView1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/editText1"
+        android:layout_above="@+id/checkBox1"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true" >
+        android:layout_alignParentTop="true"
+        android:background="#ffffff" >
 
     </ListView>
 
-    <Button
-        android:id="@+id/button1"
+    <CheckBox
+        android:id="@+id/checkBox1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/checkBox2"
+        android:layout_alignParentLeft="true"
+        android:text="gol" />
+
+    <CheckBox
+        android:id="@+id/checkBox2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/checkBox3"
+        android:layout_alignLeft="@+id/checkBox3"
+        android:text="słupek" />
+
+    <CheckBox
+        android:id="@+id/checkBox4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
-        android:text="anuluj" />
+        android:text="pudło" />
 
-    <Button
-        android:id="@+id/button2"
+    <CheckBox
+        android:id="@+id/checkBox3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:text="ok" />
+        android:layout_above="@+id/checkBox4"
+        android:layout_alignParentLeft="true"
+        android:text="obroniony" />
 
     <EditText
         android:id="@+id/editText1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/radioButton1"
-        android:layout_alignParentLeft="true"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignTop="@+id/checkBox1"
         android:ems="10"
+        android:hint="komentarz"
         android:inputType="textMultiLine" >
 
         <requestFocus />
     </EditText>
-
-    <RadioButton
-        android:id="@+id/radioButton1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/button1"
-        android:layout_alignParentLeft="true"
-        android:text="gol" />
-
-    <RadioButton
-        android:id="@+id/radioButton2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/button2"
-        android:layout_toRightOf="@+id/radioButton1"
-        android:text="pudło" />
-
-    <RadioButton
-        android:id="@+id/radioButton3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/editText1"
-        android:layout_toRightOf="@+id/radioButton2"
-        android:text="słupek" />
 
 </RelativeLayout>
