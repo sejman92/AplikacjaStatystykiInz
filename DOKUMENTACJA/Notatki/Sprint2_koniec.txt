@@ -1,0 +1,9 @@
+01.11.2014
+Koniec sprintu2
+
+Uzgodniliœmy zakres 3 sprintu. Niestety nie uda³o nam siê dokoñczyæ 1 zadania poprzez problemy jakie napotkaliœmy.
+Podczas pracy nad aplikacj¹ mobiln¹ w jednej z aktywnoœci, kontroli EditText nie chcia³y zwracaæ ¿adnej wartoœci
+(zwraca³y null) przy wykorzystaniu metody EditText.getText().toString(). Spêdziliœmy nad tym problemem 2 dni. 
+Po wielu próbach uda³o siê to naprawiæ ( utworzenie nowej aktywnoœci i napisanie kodu od nowa ). Niestety przez
+to jesteœmy zmuszeni przenieœæ tego taska do sprintu 3. W trakcie tego sprintu odby³o siê
+ spotkanie z klientem ( osobna notatka). Jesteœmy zadowoleni z postêpu prac.
