@@ -9,7 +9,7 @@ package fsc.model.enums;
  *
  * @author Gruby
  */
-public enum PartOfBody {
+public enum PartsOfBody {
     
     LEWA_NOGA,
     PRAWA_NOGA,

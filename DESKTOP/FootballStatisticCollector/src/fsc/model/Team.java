@@ -5,6 +5,7 @@
  */
 package fsc.model;
 
+import fsc.model.interfaces.IEntityElement;
 import java.io.Serializable;
 import java.util.List;
 import javafx.collections.FXCollections;
@@ -36,7 +37,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Team.findAll", query = "SELECT t FROM Team t"),
     @NamedQuery(name = "Team.findById", query = "SELECT t FROM Team t WHERE t.id = :id"),
     @NamedQuery(name = "Team.findByName", query = "SELECT t FROM Team t WHERE t.name = :name")})
-public class Team implements Serializable {
+public class Team implements Serializable, IEntityElement {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -5,6 +5,20 @@
  */
 package fsc.model;
 
+import fsc.model.actions.Corner;
+import fsc.model.actions.Takeover;
+import fsc.model.actions.Shot;
+import fsc.model.actions.Card;
+import fsc.model.actions.Assist;
+import fsc.model.actions.Swap;
+import fsc.model.actions.Injury;
+import fsc.model.actions.Faul;
+import fsc.model.actions.Passing;
+import fsc.model.actions.Defense;
+import fsc.model.actions.Penalty;
+import fsc.model.enums.Legs;
+import fsc.model.enums.Positions;
+import fsc.model.interfaces.IEntityElement;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.Basic;
@@ -38,7 +52,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Player.findByRole", query = "SELECT p FROM Player p WHERE p.role = :role"),
     @NamedQuery(name = "Player.findByPreferedLeg", query = "SELECT p FROM Player p WHERE p.preferedLeg = :preferedLeg"),
     @NamedQuery(name = "Player.findByTeamId", query = "SELECT p from Player p WHERE p.teamId = :team_id")})
-public class Player implements Serializable {
+public class Player implements Serializable, IEntityElement, Comparable<Player> {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -129,6 +143,13 @@ public class Player implements Serializable {
     public void setNo(Integer no) {
         this.no = no;
     }
+    public Positions getPositions(){
+        if(role == null){
+            System.out.println("brak pozycji - oznaczono domyslnie jako bramkarz");
+            return Positions.BRAMKARZ;
+        }
+        return Positions.valueOf(role);
+    }
 
     public String getRole() {
         return role;
@@ -136,6 +157,14 @@ public class Player implements Serializable {
 
     public void setRole(String role) {
         this.role = role;
+    }
+    
+    public Legs getPreferedLegs(){
+        if(preferedLeg == null){
+            System.out.println("brak preferowanej nogi - oznaczono domyslnie jako prawa");
+            return Legs.PRAWA;
+        }
+        return Legs.valueOf(preferedLeg);
     }
 
     public String getPreferedLeg() {
@@ -296,7 +325,16 @@ public class Player implements Serializable {
     public void setCardList(List<Card> cardList) {
         this.cardList = cardList;
     }
-
+  
+    @Override
+    public int compareTo(Player p){
+        if(no < p.getNo())
+            return -1;
+        if(no > p.getNo())
+            return 1;
+        return 0;
+    }
+        
     @Override
     public int hashCode() {
         int hash = 0;

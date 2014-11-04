@@ -9,7 +9,6 @@ package fsc.model.interfaces;
  *
  * @author Gruby
  */
-public interface IAction extends IEntityElement{
-    public int getIdTypeOfAction(); //allow to get diffrent id to every type
-    public String getActionName(); //get polish name of action
+public interface IEntityElement {
+    public Integer getId(); //getId in DB    
 }

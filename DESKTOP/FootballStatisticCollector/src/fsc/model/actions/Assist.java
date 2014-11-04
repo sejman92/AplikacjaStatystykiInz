@@ -3,8 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package fsc.model;
+package fsc.model.actions;
 
+import fsc.model.Game;
+import fsc.model.Player;
+import fsc.model.User;
 import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Column;

@@ -7,9 +7,9 @@ package fsc.controller;
 
 import fsc.model.Game;
 import fsc.model.interfaces.IAction;
-import fsc.model.Passing;
+import fsc.model.actions.Passing;
 import fsc.model.Player;
-import fsc.model.Shot;
+import fsc.model.actions.Shot;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
@@ -20,13 +20,10 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.EntityTransaction;
-import javax.persistence.Persistence;
 import fsc.model.Team;
 import fsc.model.User;
-import fsc.model.enums.PartOfBody;
+import fsc.model.enums.Legs;
+import fsc.model.enums.PartsOfBody;
 import fsc.model.enums.Positions;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Tab;
@@ -49,7 +46,7 @@ public class MainController implements Initializable {
    
    @FXML private Button AddPlayerBt;
    @FXML private Button createTeamBt;
-   @FXML private Button selectTeamBt;
+   @FXML private Button editSelectedTeamBt;
    @FXML private Button removeSelectedTeamBt;
    @FXML private Button createPlayerBt;
    @FXML private Button editSelectedPlayerBt;
@@ -86,33 +83,28 @@ public class MainController implements Initializable {
    @FXML private ListView reserveLineupListView;
    @FXML private Tab beginMatchTab;
    
-   private TeamsManager teamsManager;
+   private DatabaseManager databaseManager;
    private GameManager gameManager;
    private ObservableList<Positions>positions;
    private Team selectedTeam;
    private Player selectedPlayer;
+   private Player selectedPlayerToAction;
    private Lineup lineup;
    private Match match;
    private Action action;
    private ObservableList<IAction>actionList;
    private Game game;
-   private EntityManagerFactory emFactory;
-   private EntityManager em;
-   private EntityTransaction et;
    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        emFactory = Persistence.createEntityManagerFactory("FootballStatisticCollectorPU"); 
-        em = emFactory.createEntityManager();
-        et = em.getTransaction();
-        teamsManager = TeamsManager.getInstance();
+        databaseManager = DatabaseManager.getInstance();
         action = Action.getInstance();
         // TODO 
         //there i ititialize conection with db and other stuff
         
         positions = FXCollections.observableArrayList(Positions.values());
         actionList = FXCollections.observableArrayList();
-        teamsLV.setItems(teamsManager.getTeams());
+        teamsLV.setItems(databaseManager.getTeams());
         positionsLV.setItems(positions);
         lineup = new Lineup();
         //beginMatchTab.setDisable(false);
@@ -228,26 +220,68 @@ public class MainController implements Initializable {
     Create new team and insert into database
     */     
     public void createTeamBtClick(){
-        teamsManager.saveTeam(new Team(nameTeamTF.getText()));
-        teamsLV.setItems(teamsManager.getTeams());
+        databaseManager.saveEntityElement(new Team(nameTeamTF.getText()));
+        teamsLV.setItems(databaseManager.getTeams());
     }
     
-    public void selectTeamBtClick(){
+    public void editSelectedTeamBtClick(){
+        selectedTeam.setName(nameTeamTF.getText());
+        databaseManager.saveEntityElement(selectedTeam);
+        teamsLV.setItems(databaseManager.getTeams());
     }
     
     /*
-    Took selected item in TeamListView and fill players wich is in selected team
+    Took selected item in TeamSLV and fill players wich is in selected team
     */
-    public void teamListViewClick(){
+    public void teamsLVClick(){
         selectedTeam = (Team) teamsLV.getSelectionModel().getSelectedItem();     
-        playersListViewTeamManager.setItems(teamsManager.findPlayersFromTeam(selectedTeam));
+        playersListViewTeamManager.setItems(databaseManager.findPlayersFromTeam(selectedTeam));
+        nameTeamTF.setText(selectedTeam.getName());
+    }
+    
+    public void playersListViewTeamManagerClick(){
+        selectedPlayer = (Player) playersListViewTeamManager.getSelectionModel().getSelectedItem();
+        if(selectedPlayer != null){
+            namePlayerTF.setText(selectedPlayer.getName());
+            surnamePlayerTF.setText(selectedPlayer.getSurname());
+            
+            noPlayerTF.setText(selectedPlayer.getNo().toString());
+            positionsLV.getSelectionModel().select(selectedPlayer.getPositions());
+            
+            if(selectedPlayer.getPreferedLegs().equals(Legs.LEWA)){
+                leftFootCheckBox.setSelected(true);
+                rightFootCheckBox.setSelected(false);
+            }else if(selectedPlayer.getPreferedLegs().equals(Legs.PRAWA)){
+                leftFootCheckBox.setSelected(false);
+                rightFootCheckBox.setSelected(true);
+            }else{
+                leftFootCheckBox.setSelected(false);
+                rightFootCheckBox.setSelected(false);
+            }
+        }
+    }
+    
+    public void playersStartListCollectViewClick(){
+        selectedPlayerToAction = (Player) playersStartListCollectView.getSelectionModel().getSelectedItem();
+        if (selectedPlayerToAction != null){
+            action.setPlayer(selectedPlayerToAction);
+            curInsertTA.setText(action.getInsert());
+        }
+    }
+    
+    public void playersReserveListCollectViewClick(){
+        selectedPlayerToAction = (Player) playersReserveListCollectView.getSelectionModel().getSelectedItem();
+        if (selectedPlayerToAction != null){
+            action.setPlayer(selectedPlayerToAction);
+            curInsertTA.setText(action.getInsert());
+        }       
     }
     
     public void removeSelectedTeamBtClick(){              
         selectedTeam = (Team) teamsLV.getSelectionModel().getSelectedItem();
         if(selectedTeam != null){
-            teamsManager.removeTeam(selectedTeam);           
-            teamsLV.setItems(teamsManager.getTeams());
+            databaseManager.removeEntityElement(selectedTeam);           
+            teamsLV.setItems(databaseManager.getTeams());
             selectedTeam = null;
             playersListViewTeamManager.setItems(null);
         }
@@ -262,11 +296,22 @@ public class MainController implements Initializable {
             player.setName(namePlayerTF.getText());
             player.setSurname(surnamePlayerTF.getText());
             player.setNo(Integer.parseInt(noPlayerTF.getText()));
-            player.setRole(positionsLV.getSelectionModel().getSelectedItem().toString());
+            if(positionsLV.getSelectionModel().getSelectedItem() != null)
+                player.setRole(positionsLV.getSelectionModel().getSelectedItem().toString());
+            else
+                return;
+            
+            if(leftFootCheckBox.isSelected())
+                player.setPreferedLeg(Legs.LEWA.toString());
+            else if(rightFootCheckBox.isSelected())
+                player.setPreferedLeg(Legs.PRAWA.toString());
+            else
+                return;
             player.setTeamId(selectedTeam);
             player.setOwnerId(new User(1));
-            teamsManager.savePlayer(player);
-            playersListViewTeamManager.setItems(teamsManager.findPlayersFromTeam(selectedTeam));
+            
+            databaseManager.saveEntityElement(player);
+            playersListViewTeamManager.setItems(databaseManager.findPlayersFromTeam(selectedTeam));
         }
         catch(Exception e){
             System.out.println("wyjatek createPlayer");
@@ -276,13 +321,28 @@ public class MainController implements Initializable {
     
     public void editSelectedPlayerBtClick(){
         selectedPlayer = (Player) playersListViewTeamManager.getSelectionModel().getSelectedItem();
+        if(selectedPlayer != null){
+            selectedPlayer.setName(namePlayerTF.getText());
+            selectedPlayer.setSurname(surnamePlayerTF.getText());
+            
+            selectedPlayer.setNo(Integer.parseInt(noPlayerTF.getText()));
+            selectedPlayer.setRole(positionsLV.getSelectionModel().getSelectedItem().toString());
+            
+            if(leftFootCheckBox.isSelected())
+                selectedPlayer.setPreferedLeg(Legs.LEWA.toString());
+            else if(rightFootCheckBox.isSelected())
+                selectedPlayer.setPreferedLeg(Legs.PRAWA.toString());
+            
+            databaseManager.saveEntityElement(selectedPlayer);
+            playersListViewTeamManager.setItems(databaseManager.findPlayersFromTeam(selectedTeam));
+        }
     }
  
     public void removeSelectedPlayerBtClick(){
         selectedPlayer = (Player) playersListViewTeamManager.getSelectionModel().getSelectedItem();
         if(selectedPlayer != null){
-            teamsManager.removePlayer(selectedPlayer);
-            playersListViewTeamManager.setItems(teamsManager.findPlayersFromTeam(selectedTeam));
+            databaseManager.removeEntityElement(selectedPlayer);
+            playersListViewTeamManager.setItems(databaseManager.findPlayersFromTeam(selectedTeam));
         }
         else
             System.out.println("player to remove was not selected");
@@ -309,8 +369,7 @@ public class MainController implements Initializable {
     public void startMatchBtClick(){
         this.game = new Game();
         this.gameManager = GameManager.getInstance();   
-        gameManager.saveGame(game);
-        
+        gameManager.saveGame(game);       
     }
     public void fillContentCollectView(){
         if (this.match != null){
@@ -344,7 +403,7 @@ public class MainController implements Initializable {
     Add left foot in current action
     */
     public void leftFootBtClick(){
-        action.setPartOfBody(PartOfBody.LEWA_NOGA);
+        action.setPartOfBody(PartsOfBody.LEWA_NOGA);
         curInsertTA.setText(action.getInsert());
     }
 
@@ -352,7 +411,7 @@ public class MainController implements Initializable {
     Add right foot in current action
     */
     public void rightFootBtClick(){
-        action.setPartOfBody(PartOfBody.PRAWA_NOGA);
+        action.setPartOfBody(PartsOfBody.PRAWA_NOGA);
         curInsertTA.setText(action.getInsert());        
     }
         
@@ -360,7 +419,7 @@ public class MainController implements Initializable {
     Add head in current action
     */  
     public void headBtClick(){
-        action.setPartOfBody(PartOfBody.GŁOWA);
+        action.setPartOfBody(PartsOfBody.GŁOWA);
         curInsertTA.setText(action.getInsert());
     }
     
@@ -368,7 +427,7 @@ public class MainController implements Initializable {
     Add chest in current action
     */            
     public void chestBtClick(){        
-        action.setPartOfBody(PartOfBody.KLATKA);
+        action.setPartOfBody(PartsOfBody.KLATKA);
         curInsertTA.setText(action.getInsert());
     }
     
@@ -377,7 +436,7 @@ public class MainController implements Initializable {
     */
                 
     public void otherBtClick(){
-        action.setPartOfBody(PartOfBody.INNA);
+        action.setPartOfBody(PartsOfBody.INNA);
         curInsertTA.setText(action.getInsert());
     }
     

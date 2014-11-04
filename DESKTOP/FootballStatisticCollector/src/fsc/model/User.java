@@ -5,6 +5,17 @@
  */
 package fsc.model;
 
+import fsc.model.actions.Corner;
+import fsc.model.actions.Takeover;
+import fsc.model.actions.Shot;
+import fsc.model.actions.Card;
+import fsc.model.actions.Assist;
+import fsc.model.actions.Swap;
+import fsc.model.actions.Injury;
+import fsc.model.actions.Faul;
+import fsc.model.actions.Passing;
+import fsc.model.actions.Defense;
+import fsc.model.actions.Penalty;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.Basic;

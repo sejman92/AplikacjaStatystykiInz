@@ -5,10 +5,11 @@
  */
 package fsc.controller;
 
-import fsc.model.Passing;
-import fsc.model.Shot;
+import fsc.model.actions.Passing;
+import fsc.model.Player;
+import fsc.model.actions.Shot;
 import fsc.model.interfaces.IAction;
-import fsc.model.enums.PartOfBody;
+import fsc.model.enums.PartsOfBody;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
@@ -20,17 +21,14 @@ import javax.persistence.Persistence;
  */
 public class Action {
     private static Action instance;
+    private final DatabaseManager databaseManager;
     private IAction action;
-    private PartOfBody partOfBody;
+    private Player player;
+    private PartsOfBody partOfBody;
     private int successful; //1 - success, -1 - unsuccess, 0 - unknown
-    private final EntityManagerFactory emFactory;
-    private final EntityManager em;
-    private final EntityTransaction et;
     
     private Action(){
-        emFactory = Persistence.createEntityManagerFactory("FootballStatisticCollectorPU"); 
-        em = emFactory.createEntityManager();
-        et = em.getTransaction();
+        databaseManager = DatabaseManager.getInstance();
         successful = 0;
     }
     
@@ -45,7 +43,11 @@ public class Action {
         this.action = action;
     }
     
-    public void setPartOfBody(PartOfBody partOfBody){
+    public void setPlayer(Player player){
+        this.player = player;
+    }
+    
+    public void setPartOfBody(PartsOfBody partOfBody){
         this.partOfBody = partOfBody;
     }
     
@@ -60,41 +62,31 @@ public class Action {
         try {
             switch(action.getIdTypeOfAction())
             {
-                case 1:{                  
+                case 1:{
+                    ((Shot)action).setPlayerId(player);
                     if(partOfBody != null)
                         ((Shot)action).setPalce(partOfBody.toString());
                     break;
                 }
                 case 2:{
-                    if(successful > 1){
+                    ((Passing)action).setPlayerPassingId(player);
+                    if(successful > 0){
                         ((Passing)action).setSuccessful(true);
-                    }else if(successful < 1){
+                    }else if(successful < 0){
                         ((Passing)action).setSuccessful(false);
                     }                  
                     break;
                 }
                 default:
                     System.out.println("bledny typ akcji");
-                    break;
+                    return null;
             }
-            et.begin();
-            if (action.getId() == null) {
-                em.persist(action);
-            } else {
-                em.merge(action);
-            }
-            et.commit();
-            
-            return action;
         } catch (Exception ex) {
-            System.out.println("blad w transakcji");
-            try {
-                et.rollback();
-            } catch (Exception ex2) {
-                System.out.println("blad w rollbacku");
-            }
+            System.out.println("blad w akcji");
+            return null;
         }
-        return null;
+        
+        return (IAction) databaseManager.saveEntityElement(action);
     }
     
     /*
@@ -112,7 +104,9 @@ public class Action {
     public String getInsert(){
         String result = "";
         if(action != null)
-            result += action.getActionName() + " ";
+            result += action.getActionName() + ": ";
+        if(player != null)
+            result += player + " ";
         if(partOfBody != null)
             result += partOfBody + " ";
         if(successful > 0)
