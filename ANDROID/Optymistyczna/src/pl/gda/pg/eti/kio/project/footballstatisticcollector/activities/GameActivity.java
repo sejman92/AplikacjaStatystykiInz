@@ -6,7 +6,10 @@ import java.util.List;
 import pl.gda.pg.eti.kio.project.footballstatisticcollector.focus.Focus;
 import pl.gda.pg.eti.kio.project.footballstatistivcollector.entities.Player;
 import pl.gda.pg.eti.kio.project.footballstatistivcollector.entities.actions.Action;
+import pl.gda.pg.eti.kio.project.footballstatistivcollector.entities.actions.Corner;
+import pl.gda.pg.eti.kio.project.footballstatistivcollector.entities.actions.Defense;
 import pl.gda.pg.eti.kio.project.footballstatistivcollector.entities.actions.Passing;
+import pl.gda.pg.eti.kio.project.footballstatistivcollector.entities.actions.Penalty;
 import pl.gda.pg.eti.kio.project.footballstatistivcollector.entities.actions.Shot;
 import pl.gda.pg.kio.project.footballstatisticcollector.R;
 import android.os.Bundle;
@@ -19,7 +22,6 @@ import android.view.Menu;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.Chronometer;
 import android.widget.EditText;
@@ -31,6 +33,7 @@ public class GameActivity extends Activity {
 
 	String enemy_name, time, place, date;
 	long ctime;
+	int lost_goals, scored_goals;
 	boolean play=false;
 	Chronometer chronometer;
 	List<Action> action_list;
@@ -39,6 +42,8 @@ public class GameActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_game);
+		
+		lost_goals=scored_goals=0;
 		
 		String[] player_list= new String[Focus.main_players_for_focused_game.size()];
 		for(int i=0;i<Focus.main_players_for_focused_game.size();i++)
@@ -107,17 +112,14 @@ public class GameActivity extends Activity {
 	        public void onItemClick(AdapterView<?> parent, View v, int position, long id) 
 	        {
 				String success="pudlo";
-				int idp,time ;
-				time=(int) (chronometer.getBase()-SystemClock.elapsedRealtime());
-				time*=-1;
-				time/=60000;
-				time++;
+				int idp;
 				if(box.isChecked())
 				{
 					success="gol";
 					box2.setChecked(false);
 					box3.setChecked(false);
 					box4.setChecked(false);
+					scored_goals++;
 				}
 				if(box2.isChecked())
 				{
@@ -201,12 +203,77 @@ public class GameActivity extends Activity {
 	
 	public void penalty(View v)
 	{
-		Toast.makeText(this, "penalty", Toast.LENGTH_SHORT).show();
+		final Dialog dialog = new Dialog(GameActivity.this);
+		dialog.setContentView(R.layout.new_penalty_dialog);
+		dialog.setTitle("rzut karny");
+		
+		ListView view_Player_List = (ListView) dialog.findViewById(R.id.listView1);
+		view_Player_List.refreshDrawableState();
+		view_Player_List.setAdapter(list_adapter);
+		
+		final EditText edit = (EditText) dialog.findViewById(R.id.editText1);
+		final CheckBox box = (CheckBox) dialog.findViewById(R.id.checkBox1);
+		
+		OnItemClickListener listner = new OnItemClickListener(){
+			@Override
+	        public void onItemClick(AdapterView<?> parent, View v, int position, long id) 
+	        {
+				int idp, success;
+				String comm;
+				Shot shot=null;
+				if(box.isChecked())
+					success=1;
+				else
+					success=0;
+	        	idp=Focus.main_players_for_focused_game.get(position).getId();
+	        	comm=edit.getText().toString();
+	        	
+	        	if(success==1)
+	        	{
+	        		shot = new Shot(idp, comm, (int)ctime/-60000+1, "gol");
+	        		scored_goals++;
+	        	}
+	        	Penalty penalty = new Penalty(idp, (int)ctime/-60000+1, comm, success,shot);
+	    		action_list.add(penalty);
+	    		if(success==0)
+	    			Log.d("penalty", idp+" "+String.valueOf(ctime/-60000+1)+comm+" "+String.valueOf(success));
+	    		else
+	    			Log.d("penalty", idp+" "+String.valueOf(ctime/-60000+1)+comm+" "+String.valueOf(success)+" "+shot.getSucces());
+	    		dialog.dismiss();
+	        }
+		};
+		view_Player_List.setOnItemClickListener(listner);
+		dialog.show();
 	}
 	
 	public void corner(View v)
 	{
-		Toast.makeText(this, "corner", Toast.LENGTH_SHORT).show();	
+		final Dialog dialog = new Dialog(GameActivity.this);
+		dialog.setContentView(R.layout.new_corner_dialog);
+		dialog.setTitle("rzut ro¿ny");
+		
+		ListView view_Player_List = (ListView) dialog.findViewById(R.id.listView1);
+		view_Player_List.refreshDrawableState();
+		view_Player_List.setAdapter(list_adapter);
+		
+		final EditText edit = (EditText) dialog.findViewById(R.id.editText1);
+		
+		OnItemClickListener listner = new OnItemClickListener(){
+			@Override
+	        public void onItemClick(AdapterView<?> parent, View v, int position, long id) 
+	        {
+				int idp;
+				String comm;
+	        	idp=Focus.main_players_for_focused_game.get(position).getId();
+	        	comm=edit.getText().toString();
+	        	Corner corner = new Corner(idp, (int)ctime/-60000+1, comm);
+	    		action_list.add(corner);
+	    		Log.d("corner", idp+" "+String.valueOf(ctime/-60000+1)+comm);
+	    		dialog.dismiss();
+	        }
+		};
+		view_Player_List.setOnItemClickListener(listner);
+		dialog.show();	
 	}
 	
 	public void card(View v)
@@ -221,7 +288,32 @@ public class GameActivity extends Activity {
 	
 	public void defense(View v)
 	{
-		Toast.makeText(this, "defense", Toast.LENGTH_SHORT).show();
+		final Dialog dialog = new Dialog(GameActivity.this);
+		dialog.setContentView(R.layout.new_defense_dialog);
+		dialog.setTitle("obrona");
+		
+		ListView view_Player_List = (ListView) dialog.findViewById(R.id.listView1);
+		view_Player_List.refreshDrawableState();
+		view_Player_List.setAdapter(list_adapter);
+		
+		final EditText edit = (EditText) dialog.findViewById(R.id.editText1);
+		
+		OnItemClickListener listner = new OnItemClickListener(){
+			@Override
+	        public void onItemClick(AdapterView<?> parent, View v, int position, long id) 
+	        {
+				int idp;
+				String comm;
+	        	idp=Focus.main_players_for_focused_game.get(position).getId();
+	        	comm=edit.getText().toString();
+	        	Defense defense = new Defense(idp, (int)ctime/-60000+1, comm);
+	    		action_list.add(defense);
+	    		Log.d("passing", idp+" "+String.valueOf(ctime/-60000+1)+comm);
+	    		dialog.dismiss();
+	        }
+		};
+		view_Player_List.setOnItemClickListener(listner);
+		dialog.show();	
 	}
 	
 	public void injury(View v)

@@ -98,9 +98,12 @@ public final class R {
         public static final int activity_teams=0x7f030008;
         public static final int add_player_dialog=0x7f030009;
         public static final int add_team_dialog=0x7f03000a;
-        public static final int new_passing_dialog=0x7f03000b;
-        public static final int new_shot_dialog=0x7f03000c;
-        public static final int update_team_dialog=0x7f03000d;
+        public static final int new_corner_dialog=0x7f03000b;
+        public static final int new_defense_dialog=0x7f03000c;
+        public static final int new_passing_dialog=0x7f03000d;
+        public static final int new_penalty_dialog=0x7f03000e;
+        public static final int new_shot_dialog=0x7f03000f;
+        public static final int update_team_dialog=0x7f030010;
     }
     public static final class menu {
         public static final int chose_players_for_game=0x7f070000;

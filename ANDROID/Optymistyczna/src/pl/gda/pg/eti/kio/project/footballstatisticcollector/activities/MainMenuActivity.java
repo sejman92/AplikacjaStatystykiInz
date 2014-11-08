@@ -40,6 +40,7 @@ public class MainMenuActivity extends Activity {
 		String ok= edit.getText().toString();
 		Toast.makeText(this, ok, Toast.LENGTH_LONG).show();
 		DatabaseManager dbm = new DatabaseManager(this);
+		dbm.onUpgrade(dbm.getWritableDatabase(), 2, 3);
 	}
 	
 	public void buttonUstawienia(View v)

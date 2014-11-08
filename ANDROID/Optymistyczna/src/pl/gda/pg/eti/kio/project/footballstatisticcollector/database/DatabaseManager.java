@@ -98,7 +98,6 @@ public class DatabaseManager extends SQLiteOpenHelper{
 					"time INTEGER,"+
 					"kind TEXT,"+
 					"comment TEXT,"+
-					"swap_id INTEGER,"+
 					"faul_id INTEGER"+
 					")";
 		creaty[9]="CREATE TABLE Swap"+
@@ -160,7 +159,9 @@ public class DatabaseManager extends SQLiteOpenHelper{
 					"player_id INTEGER,"+
 					"game_id INTEGER,"+
 					"time INTEGER,"+
-					"comment TEXT)";
+					"comment TEXT,"+
+					"shot_id INTEGER,"+
+					"success INTEGER)";
 		
 		for(int i=0;i<16;i++)
 		{
@@ -336,7 +337,7 @@ public class DatabaseManager extends SQLiteOpenHelper{
 		}
 	}
 	
-	public void addGame(String date, String place, int lost_goals, int scored_goals, String oponent, String comment, List<Player> players_list, int team_id)
+	public int addGame(String date, String place, int lost_goals, int scored_goals, String oponent, String comment, List<Player> players_list, int team_id)
 	{
 		int game_id=0;
 		SQLiteDatabase db = getWritableDatabase();
@@ -355,7 +356,6 @@ public class DatabaseManager extends SQLiteOpenHelper{
 		}catch(SQLException e)
 		{
 			Log.d("Baza.Game", e.getMessage().toString() );
-			return;
 		}
 		
 		try
@@ -367,7 +367,7 @@ public class DatabaseManager extends SQLiteOpenHelper{
 		}catch(SQLException e)
 		{
 			Log.d("Baza.Played", e.getMessage().toString() );
-			return;
+		
 		}
 		
 		try
@@ -382,12 +382,107 @@ public class DatabaseManager extends SQLiteOpenHelper{
 		}catch(SQLException e)
 		{
 			Log.d("Baza.Participated", e.getMessage().toString() );
-			return;
+		
+		}
+		return game_id;
+	}
+	
+	public void addShot(int game_id, String comment, int time, int player_id)
+	{
+		SQLiteDatabase db = getWritableDatabase();
+		try
+		{
+			ContentValues values = new ContentValues();
+			values.put("game_id", game_id);
+			values.put("player_id", player_id);
+			values.put("time", time);
+			values.put("comment",comment);
+			db.insertOrThrow("Shot", null, values);
+		}catch(SQLException e)
+		{
+			Log.d("blad", e.toString());
+		}
+	}
+	
+	public void addPassing(int game_id, int player_id, int time, int success, String comment)
+	{
+		SQLiteDatabase db = getWritableDatabase();
+		try
+		{
+			ContentValues values = new ContentValues();
+			values.put("game_id", game_id);
+			values.put("player_id", player_id);
+			values.put("time", time);
+			values.put("comment",comment);
+			values.put("success", success);
+			db.insertOrThrow("Passing", null, values);
+		}catch(SQLException e)
+		{
+			Log.d("blad", e.toString());
+		}
+	}
+
+	public void addDefense(int game_id, int player_id, String comment, int time)
+	{
+		SQLiteDatabase db = getWritableDatabase();
+		try
+		{
+			ContentValues values = new ContentValues();
+			values.put("game_id", game_id);
+			values.put("player_id", player_id);
+			values.put("time", time);
+			values.put("comment",comment);
+			db.insertOrThrow("Defense", null, values);
+		}catch(SQLException e)
+		{
+			Log.d("blad", e.toString());
+		}
+	}
+	
+	public void addCorner(int game_id, int player_id, String comment, int time)
+	{
+		SQLiteDatabase db = getWritableDatabase();
+		try
+		{
+			ContentValues values = new ContentValues();
+			values.put("game_id", game_id);
+			values.put("player_id", player_id);
+			values.put("time", time);
+			values.put("comment",comment);
+			db.insertOrThrow("Corner", null, values);
+		}catch(SQLException e)
+		{
+			Log.d("blad", e.toString());
+		}
+	}
+	
+	public void addPenalty(int game_id, int player_id, String comment, int time, int success, int shot_id)
+	{
+		SQLiteDatabase db = getWritableDatabase();
+		try
+		{
+			ContentValues values = new ContentValues();
+			values.put("game_id", game_id);
+			values.put("player_id", player_id);
+			values.put("time", time);
+			values.put("comment",comment);
+			values.put("success", success);
+			values.put("shot_id",shot_id);
+			db.insertOrThrow("Penalty", null, values);
+		}catch(SQLException e)
+		{
+			Log.d("blad", e.toString());
 		}
 	}
 	
 	@Override
 	public void onUpgrade(SQLiteDatabase db, int old, int NEW) {
-		
+		String query = "ALTER TABLE Penalty ADD COLUMN shot_id INTEGER";
+		try{
+			db.execSQL(query);
+		}catch(SQLException e)
+		{
+			Log.d("Penalty", e.getMessage());
+		}
 	}
 }
