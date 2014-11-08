@@ -2,6 +2,7 @@ CREATE TABLE Penalty
 (
 	id INT PRIMARY KEY AUTO_INCREMENT,
         player_id INT,
+		success BOOL,
         game_id INT,
         time TIME, 
         shot_id INT,
