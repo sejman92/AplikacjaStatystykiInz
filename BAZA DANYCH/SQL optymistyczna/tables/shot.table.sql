@@ -5,7 +5,7 @@ CREATE TABLE Shot
     game_id INT,
     comment TEXT,
     palce CHAR(50),
-	success BOOL,
+	success CHAR(20),
     owner_id INT,
 	FOREIGN KEY (player_id)
 	REFERENCES Player(id),
