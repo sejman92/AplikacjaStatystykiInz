@@ -6,11 +6,16 @@ import java.util.List;
 import pl.gda.pg.eti.kio.project.footballstatisticcollector.focus.Focus;
 import pl.gda.pg.eti.kio.project.footballstatistivcollector.entities.Player;
 import pl.gda.pg.eti.kio.project.footballstatistivcollector.entities.actions.Action;
+import pl.gda.pg.eti.kio.project.footballstatistivcollector.entities.actions.Card;
 import pl.gda.pg.eti.kio.project.footballstatistivcollector.entities.actions.Corner;
 import pl.gda.pg.eti.kio.project.footballstatistivcollector.entities.actions.Defense;
+import pl.gda.pg.eti.kio.project.footballstatistivcollector.entities.actions.Faul;
+import pl.gda.pg.eti.kio.project.footballstatistivcollector.entities.actions.Freekick;
+import pl.gda.pg.eti.kio.project.footballstatistivcollector.entities.actions.Injury;
 import pl.gda.pg.eti.kio.project.footballstatistivcollector.entities.actions.Passing;
 import pl.gda.pg.eti.kio.project.footballstatistivcollector.entities.actions.Penalty;
 import pl.gda.pg.eti.kio.project.footballstatistivcollector.entities.actions.Shot;
+import pl.gda.pg.eti.kio.project.footballstatistivcollector.entities.actions.Takeover;
 import pl.gda.pg.kio.project.footballstatisticcollector.R;
 import android.os.Bundle;
 import android.os.SystemClock;
@@ -115,7 +120,7 @@ public class GameActivity extends Activity {
 				int idp;
 				if(box.isChecked())
 				{
-					success="gol";
+					success="goal";
 					box2.setChecked(false);
 					box3.setChecked(false);
 					box4.setChecked(false);
@@ -123,21 +128,21 @@ public class GameActivity extends Activity {
 				}
 				if(box2.isChecked())
 				{
-					success="slupek";
+					success="post";
 					box.setChecked(false);
 					box3.setChecked(false);
 					box4.setChecked(false);
 				}
 				if(box3.isChecked())
 				{
-					success="obroniony";
+					success="saved";
 					box.setChecked(false);
 					box2.setChecked(false);
 					box4.setChecked(false);
 				}
 				if(box4.isChecked())
 				{
-					success="pudlo";
+					success="miss";
 					box.setChecked(false);
 					box3.setChecked(false);
 					box2.setChecked(false);
@@ -193,12 +198,77 @@ public class GameActivity extends Activity {
 	
 	public void faul(View v)
 	{
-		Toast.makeText(this, "faul", Toast.LENGTH_SHORT).show();
+		final Dialog dialog = new Dialog(GameActivity.this);
+		dialog.setContentView(R.layout.new_faul_dialog);
+		dialog.setTitle("faul");
+		
+		ListView view_Player_List = (ListView) dialog.findViewById(R.id.listView1);
+		view_Player_List.refreshDrawableState();
+		view_Player_List.setAdapter(list_adapter);
+		
+		final EditText edit = (EditText) dialog.findViewById(R.id.editText1);
+		final CheckBox box = (CheckBox) dialog.findViewById(R.id.checkBox1);
+		final CheckBox box2 = (CheckBox) dialog.findViewById(R.id.checkBox2);
+		final CheckBox box3 = (CheckBox) dialog.findViewById(R.id.checkBox3);
+		final CheckBox box4 = (CheckBox) dialog.findViewById(R.id.checkBox4);
+		
+		OnItemClickListener listner = new OnItemClickListener(){
+			@Override
+	        public void onItemClick(AdapterView<?> parent, View v, int position, long id) 
+	        {
+				Card card=null;
+				Injury injury=null;
+				int idpo,idpv;
+				if(box.isChecked())
+				{
+					card = new Card(Focus.main_players_for_focused_game.get(position).getId(),(int)ctime/-60000+1,"yellow",edit.getText().toString());
+					box2.setChecked(false);
+					box4.setChecked(false);
+				}
+				if(box4.isChecked())
+				{
+					card = new Card(Focus.main_players_for_focused_game.get(position).getId(),(int)ctime/-60000+1,"red",edit.getText().toString());
+					box2.setChecked(false);
+					box.setChecked(false);
+				}
+				if(box2.isChecked())
+				{
+					injury = new Injury(Focus.main_players_for_focused_game.get(position).getId(), (int)ctime/-60000+1, edit.getText().toString());
+					box.setChecked(false);
+				}
+				if(!box3.isChecked())
+				{
+					idpo=Focus.main_players_for_focused_game.get(position).getId();
+					idpv=0;
+				}
+				else
+				{
+					idpv=Focus.main_players_for_focused_game.get(position).getId();
+					idpo=0;
+				}
+				
+	        	Faul faul = new Faul(idpv, idpo, (int)ctime/-60000+1, edit.getText().toString(), card, injury);
+	    		action_list.add(faul);
+	    		if(box.isChecked())
+	    			Log.d("faul", idpo+" "+edit.getText().toString()+" "+String.valueOf(ctime/-60000+1)+" "+card.getKind());
+	    		if(box2.isChecked())
+	    			Log.d("faul", idpo+" "+edit.getText().toString()+" "+String.valueOf(ctime/-60000+1)+" "+String.valueOf(injury.getPlayer_id()));
+	    		dialog.dismiss();
+	        }
+		};
+		view_Player_List.setOnItemClickListener(listner);
+		dialog.show();
 	}
 	
 	public void swap(View v)
 	{
-		Toast.makeText(this, "swap", Toast.LENGTH_SHORT).show();
+		final Dialog dialog = new Dialog(GameActivity.this);
+		dialog.setContentView(R.layout.new_swap_dialog);
+		dialog.setTitle("zmiana");
+		
+		ListView view_Player_List = (ListView) dialog.findViewById(R.id.listView1);
+		view_Player_List.refreshDrawableState();
+		view_Player_List.setAdapter(list_adapter);
 	}
 	
 	public void penalty(View v)
@@ -230,7 +300,7 @@ public class GameActivity extends Activity {
 	        	
 	        	if(success==1)
 	        	{
-	        		shot = new Shot(idp, comm, (int)ctime/-60000+1, "gol");
+	        		shot = new Shot(idp, comm, (int)ctime/-60000+1, "goal");
 	        		scored_goals++;
 	        	}
 	        	Penalty penalty = new Penalty(idp, (int)ctime/-60000+1, comm, success,shot);
@@ -278,12 +348,76 @@ public class GameActivity extends Activity {
 	
 	public void card(View v)
 	{
-		Toast.makeText(this, "card", Toast.LENGTH_SHORT).show();
+		final Dialog dialog = new Dialog(GameActivity.this);
+		dialog.setContentView(R.layout.new_card_dialog);
+		dialog.setTitle("kartka");
+		
+		ListView view_Player_List = (ListView) dialog.findViewById(R.id.listView1);
+		view_Player_List.refreshDrawableState();
+		view_Player_List.setAdapter(list_adapter);
+		
+		final EditText edit = (EditText) dialog.findViewById(R.id.editText1);
+		final CheckBox box = (CheckBox) dialog.findViewById(R.id.checkBox1);
+		final CheckBox box2 = (CheckBox) dialog.findViewById(R.id.checkBox2);
+		box2.setChecked(true);
+		
+		OnItemClickListener listner = new OnItemClickListener(){
+			@Override
+	        public void onItemClick(AdapterView<?> parent, View v, int position, long id) 
+	        {
+				String kind="";
+				int idp;
+				if(box.isChecked())
+				{
+					kind="red";
+					box2.setChecked(false);
+				}
+				if(box2.isChecked())
+				{
+					kind="yellow";
+					box.setChecked(false);
+				}
+				
+				
+	        	idp=Focus.main_players_for_focused_game.get(position).getId();
+	        	Card card = new Card(idp, (int)ctime/-60000+1, edit.getText().toString(), kind );
+	    		action_list.add(card);
+	    		Log.d("card", idp+" "+edit.getText().toString()+" "+String.valueOf(ctime/-60000+1)+" "+kind);
+	    		dialog.dismiss();
+	        }
+		};
+		view_Player_List.setOnItemClickListener(listner);
+		dialog.show();
 	}
 	
 	public void takeover(View v)
 	{
-		Toast.makeText(this, "takeover", Toast.LENGTH_SHORT).show();
+		final Dialog dialog = new Dialog(GameActivity.this);
+		dialog.setContentView(R.layout.new_takeover_dialog);
+		dialog.setTitle("przejêcie pi³ki");
+		
+		ListView view_Player_List = (ListView) dialog.findViewById(R.id.listView1);
+		view_Player_List.refreshDrawableState();
+		view_Player_List.setAdapter(list_adapter);
+		
+		final EditText edit = (EditText) dialog.findViewById(R.id.editText1);
+		
+		OnItemClickListener listner = new OnItemClickListener(){
+			@Override
+	        public void onItemClick(AdapterView<?> parent, View v, int position, long id) 
+	        {
+				int idp;
+				String comm;
+	        	idp=Focus.main_players_for_focused_game.get(position).getId();
+	        	comm=edit.getText().toString();
+	        	Takeover takeover = new Takeover(idp, (int)ctime/-60000+1, comm);
+	    		action_list.add(takeover);
+	    		Log.d("takeover", idp+" "+String.valueOf(ctime/-60000+1)+comm);
+	    		dialog.dismiss();
+	        }
+		};
+		view_Player_List.setOnItemClickListener(listner);
+		dialog.show();
 	}
 	
 	public void defense(View v)
@@ -316,9 +450,79 @@ public class GameActivity extends Activity {
 		dialog.show();	
 	}
 	
+	public void freekick(View v)
+	{
+		final Dialog dialog = new Dialog(GameActivity.this);
+		dialog.setContentView(R.layout.new_freekick_dialog);
+		dialog.setTitle("rzut wolny");
+		
+		ListView view_Player_List = (ListView) dialog.findViewById(R.id.listView1);
+		view_Player_List.refreshDrawableState();
+		view_Player_List.setAdapter(list_adapter);
+		
+		final EditText edit = (EditText) dialog.findViewById(R.id.editText1);
+		final CheckBox box = (CheckBox) dialog.findViewById(R.id.checkBox1);
+		
+		OnItemClickListener listner = new OnItemClickListener(){
+			@Override
+	        public void onItemClick(AdapterView<?> parent, View v, int position, long id) 
+	        {
+				int idp, success;
+				String comm;
+				Shot shot=null;
+				if(box.isChecked())
+					success=1;
+				else
+					success=0;
+	        	idp=Focus.main_players_for_focused_game.get(position).getId();
+	        	comm=edit.getText().toString();
+	        	
+	        	if(success==1)
+	        	{
+	        		shot = new Shot(idp, comm, (int)ctime/-60000+1, "goal");
+	        		scored_goals++;
+	        	}
+	        	Freekick freekick = new Freekick(idp, (int)ctime/-60000+1, comm, success,shot);
+	    		action_list.add(freekick);
+	    		if(success==0)
+	    			Log.d("freekick", idp+" "+String.valueOf(ctime/-60000+1)+comm+" "+String.valueOf(success));
+	    		else
+	    			Log.d("freekick", idp+" "+String.valueOf(ctime/-60000+1)+comm+" "+String.valueOf(success)+" "+shot.getSucces());
+	    		dialog.dismiss();
+	        }
+		};
+		view_Player_List.setOnItemClickListener(listner);
+		dialog.show();
+	}
+	
 	public void injury(View v)
 	{
-		Toast.makeText(this, "injury", Toast.LENGTH_SHORT).show();
+		final Dialog dialog = new Dialog(GameActivity.this);
+		dialog.setContentView(R.layout.new_injury_dialog);
+		dialog.setTitle("kontuzja");
+		
+		ListView view_Player_List = (ListView) dialog.findViewById(R.id.listView1);
+		view_Player_List.refreshDrawableState();
+		view_Player_List.setAdapter(list_adapter);
+		
+		final EditText edit = (EditText) dialog.findViewById(R.id.editText1);
+		
+		OnItemClickListener listner = new OnItemClickListener(){
+			@Override
+	        public void onItemClick(AdapterView<?> parent, View v, int position, long id) 
+	        {
+				int idp;
+				String comm;
+	        	idp=Focus.main_players_for_focused_game.get(position).getId();
+	        	comm=edit.getText().toString();
+	        	Injury injury = new Injury(idp, (int)ctime/-60000+1, comm);
+	    		action_list.add(injury);
+	    		Log.d("injury", idp+" "+String.valueOf(ctime/-60000+1)+comm);
+	    		dialog.dismiss();
+	        }
+		};
+		view_Player_List.setOnItemClickListener(listner);
+		dialog.show();	
 	}
 	
 	@Override

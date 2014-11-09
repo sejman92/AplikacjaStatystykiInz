@@ -5,6 +5,11 @@ import java.util.List;
 
 import pl.gda.pg.eti.kio.project.footballstatistivcollector.entities.Player;
 import pl.gda.pg.eti.kio.project.footballstatistivcollector.entities.Team;
+import pl.gda.pg.eti.kio.project.footballstatistivcollector.entities.actions.Card;
+import pl.gda.pg.eti.kio.project.footballstatistivcollector.entities.actions.Faul;
+import pl.gda.pg.eti.kio.project.footballstatistivcollector.entities.actions.Injury;
+import pl.gda.pg.eti.kio.project.footballstatistivcollector.entities.actions.Swap;
+import pl.gda.pg.eti.kio.project.footballstatistivcollector.entities.actions.Takeover;
 
 
 import android.content.ContentValues;
@@ -475,11 +480,124 @@ public class DatabaseManager extends SQLiteOpenHelper{
 		}
 	}
 	
+	public void addCard(Card card)
+	{
+		SQLiteDatabase db = getWritableDatabase();
+		try
+		{
+			ContentValues values = new ContentValues();
+			values.put("game_id",card.getGame_id());
+			values.put("player_id", card.getPlayer_id());
+			values.put("time", card.getTime());
+			values.put("comment",card.getComment() );
+			values.put("kind",card.getKind());
+			db.insertOrThrow("Card", null, values);
+		}catch(SQLException e)
+		{
+			Log.d("blad", e.toString());
+		}
+	}
+	
+	public void addFaul(Faul faul)
+	{
+		SQLiteDatabase db = getWritableDatabase();
+		try
+		{
+			ContentValues values = new ContentValues();
+			values.put("game_id",faul.getGame_id());
+			values.put("player_victim_id", faul.getPlayer_victim_id());
+			values.put("player_ofender_id", faul.getPlayer_ofender_id());
+			values.put("time", faul.getTime());
+			values.put("comment",faul.getComment() );
+			values.put("card_id",faul.getCard_id());
+			values.put("injury_id",faul.getInjury_id());
+			db.insertOrThrow("Faul", null, values);
+		}catch(SQLException e)
+		{
+			Log.d("blad", e.toString());
+		}
+	}
+	
+	public void addInjury(Injury injury)
+	{
+		SQLiteDatabase db = getWritableDatabase();
+		try
+		{
+			ContentValues values = new ContentValues();
+			values.put("game_id",injury.getGame_id());
+			values.put("player_id", injury.getPlayer_id());
+			values.put("time", injury.getTime());
+			values.put("comment",injury.getComment());
+			values.put("faul_id|", injury.getFaul_id());
+			values.put("kind", injury.getKind());
+			values.put("duration", injury.getDuration());
+			db.insertOrThrow("Injury", null, values);
+		}catch(SQLException e)
+		{
+			Log.d("blad", e.toString());
+		}
+	}
+	
+	public void addFreekick(int game_id, int player_id, String comment, int time, int success, int shot_id)
+	{
+		SQLiteDatabase db = getWritableDatabase();
+		try
+		{
+			ContentValues values = new ContentValues();
+			values.put("game_id", game_id);
+			values.put("player_id", player_id);
+			values.put("time", time);
+			values.put("comment",comment);
+			values.put("success", success);
+			values.put("shot_id",shot_id);
+			db.insertOrThrow("Freekick", null, values);
+		}catch(SQLException e)
+		{
+			Log.d("blad", e.toString());
+		}
+	}
+	
+	public void addTakeover(Takeover takeover)
+	{
+		SQLiteDatabase db = getWritableDatabase();
+		try
+		{
+			ContentValues values = new ContentValues();
+			values.put("game_id",takeover.getGame_id());
+			values.put("player_id", takeover.getPlayer_id());
+			values.put("time", takeover.getTime());
+			values.put("comment",takeover.getComment());
+			db.insertOrThrow("Injury", null, values);
+		}catch(SQLException e)
+		{
+			Log.d("blad", e.toString());
+		}
+	}
+	
+	public void addSwap(Swap swap)
+	{
+		SQLiteDatabase db = getWritableDatabase();
+		try
+		{
+			ContentValues values = new ContentValues();
+			values.put("game_id",swap.getGame_id());
+			values.put("player_in_id", swap.getPlayer_in_id());
+			values.put("player_out_id", swap.getPlayer_out_id());
+			values.put("time", swap.getTime());
+			values.put("comment",swap.getComment());
+			db.insertOrThrow("Swap", null, values);
+		}catch(SQLException e)
+		{
+			Log.d("blad", e.toString());
+		}
+	}
+	
 	@Override
 	public void onUpgrade(SQLiteDatabase db, int old, int NEW) {
-		String query = "ALTER TABLE Penalty ADD COLUMN shot_id INTEGER";
+		String query = "";
 		try{
 			db.execSQL(query);
+			
 		}catch(SQLException e)
 		{
 			Log.d("Penalty", e.getMessage());
