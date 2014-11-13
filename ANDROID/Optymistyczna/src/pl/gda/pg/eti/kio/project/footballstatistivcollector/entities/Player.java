@@ -7,6 +7,7 @@ public class Player {
 	private int nr;
 	private String role;
 	private int team_id;
+	private boolean on_field;
 	
 	public Player(int id, String name, String surname, int nr, String role, int team_id)
 	{
@@ -17,7 +18,7 @@ public class Player {
 		this.role=role;
 		this.team_id=team_id;	
 	}
-
+	
 	public String getName() {
 		return name;
 	}

@@ -15,6 +15,7 @@ import pl.gda.pg.eti.kio.project.footballstatistivcollector.entities.actions.Inj
 import pl.gda.pg.eti.kio.project.footballstatistivcollector.entities.actions.Passing;
 import pl.gda.pg.eti.kio.project.footballstatistivcollector.entities.actions.Penalty;
 import pl.gda.pg.eti.kio.project.footballstatistivcollector.entities.actions.Shot;
+import pl.gda.pg.eti.kio.project.footballstatistivcollector.entities.actions.Swap;
 import pl.gda.pg.eti.kio.project.footballstatistivcollector.entities.actions.Takeover;
 import pl.gda.pg.kio.project.footballstatisticcollector.R;
 import android.os.Bundle;
@@ -25,8 +26,10 @@ import android.content.Intent;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.Chronometer;
 import android.widget.EditText;
@@ -43,6 +46,11 @@ public class GameActivity extends Activity {
 	Chronometer chronometer;
 	List<Action> action_list;
 	ArrayAdapter<Player> list_adapter;
+	ArrayAdapter<Player> list_adapter_backup;
+	
+	int swaped=-1;
+	int to_swap=-1;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -50,10 +58,7 @@ public class GameActivity extends Activity {
 		
 		lost_goals=scored_goals=0;
 		
-		String[] player_list= new String[Focus.main_players_for_focused_game.size()];
-		for(int i=0;i<Focus.main_players_for_focused_game.size();i++)
-			player_list[i]=Focus.main_players_for_focused_game.get(i).getNr()+"  "+Focus.main_players_for_focused_game.get(i).getName()+" "+Focus.main_players_for_focused_game.get(i).getSurname();
-		list_adapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1,player_list );
+		refresh_player_lists();
 		
 		action_list= new LinkedList<Action>();
 		chronometer =(Chronometer) findViewById(R.id.chronometer1);
@@ -66,6 +71,30 @@ public class GameActivity extends Activity {
 		date = input_bundle.getString("date");
 		time = input_bundle.getString("time");
 		this.setTitle(Focus.focused_team.getName()+" vs. "+enemy_name);
+	}
+	
+	private void refresh_player_lists()
+	{
+		String[] player_list= new String[Focus.main_players_for_focused_game.size()];
+		String[] player_list_backup = new String[Focus.backup_players_for_focused_game.size()];
+		for(int i=0;i<Focus.main_players_for_focused_game.size();i++)
+		{
+			/*if(to_swap!=-1)
+				player_list[i]=Focus.main_players_for_focused_game.get(i).getNr()+"  "+Focus.main_players_for_focused_game.get(i).getName()+" "+Focus.main_players_for_focused_game.get(i).getSurname()+" wybrany";
+			else*/
+				player_list[i]=Focus.main_players_for_focused_game.get(i).getNr()+"  "+Focus.main_players_for_focused_game.get(i).getName()+" "+Focus.main_players_for_focused_game.get(i).getSurname();
+		}
+		list_adapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1,player_list );
+		
+		for(int i=0;i<Focus.backup_players_for_focused_game.size();i++)
+		{
+			/*if(swaped!=-1)
+				player_list_backup[i]=Focus.backup_players_for_focused_game.get(i).getNr()+" "+Focus.backup_players_for_focused_game.get(i).getName()+" "+Focus.backup_players_for_focused_game.get(i).getSurname()+" wybrany";
+			else*/
+				player_list_backup[i]=Focus.backup_players_for_focused_game.get(i).getNr()+" "+Focus.backup_players_for_focused_game.get(i).getName()+" "+Focus.backup_players_for_focused_game.get(i).getSurname();
+		}
+		list_adapter_backup = new ArrayAdapter(this, android.R.layout.simple_list_item_1,player_list_backup);
+		
 	}
 	
 	public void begin_game(View v)
@@ -265,10 +294,85 @@ public class GameActivity extends Activity {
 		final Dialog dialog = new Dialog(GameActivity.this);
 		dialog.setContentView(R.layout.new_swap_dialog);
 		dialog.setTitle("zmiana");
+		to_swap=-1;
+		swaped=-1;
+		
 		
 		ListView view_Player_List = (ListView) dialog.findViewById(R.id.listView1);
 		view_Player_List.refreshDrawableState();
 		view_Player_List.setAdapter(list_adapter);
+		
+		ListView view_Player_List_backup = (ListView) dialog.findViewById(R.id.listView2);
+		view_Player_List_backup.refreshDrawableState();
+		view_Player_List_backup.setAdapter(list_adapter_backup);
+		
+		Button button = (Button) dialog.findViewById(R.id.button1);
+		
+		OnItemClickListener listner_main = new OnItemClickListener()
+		{
+
+			@Override
+			public void onItemClick(AdapterView<?> arg0, View v, int position, long arg3) {
+				if(to_swap==position)
+					to_swap=-1;
+				else
+					to_swap=position;					
+				//refresh_player_lists();
+		}			
+		};
+		
+		OnItemClickListener listner_backup = new OnItemClickListener()
+		{
+
+			@Override
+			public void onItemClick(AdapterView<?> arg0, View v, int position, long arg3) {
+				if(swaped==position)
+					swaped=-1;
+				else
+					swaped=position;
+				//refresh_player_lists();
+			}
+			
+		};
+		
+		OnClickListener listner_button = new OnClickListener()
+		{
+
+			@Override
+			public void onClick(View arg0) {
+				if(to_swap==-1 || swaped==-1)
+				{
+					Log.d("no swap", String.valueOf(to_swap)+" "+String.valueOf(swaped)+" "+String.valueOf(ctime/-60000+1));
+					to_swap=-1;
+					swaped=-1;
+					dialog.dismiss();
+					return;
+				}
+				else
+				{
+					int ido=Focus.main_players_for_focused_game.get(to_swap).getId();
+					int idi=Focus.backup_players_for_focused_game.get(swaped).getId();
+					Focus.swaped_players_for_focused_game.add(Focus.main_players_for_focused_game.get(to_swap));
+					Focus.removePlayerFromListForGame(Focus.main_players_for_focused_game.get(to_swap).getId(), Focus.main_players_for_focused_game);
+					Focus.main_players_for_focused_game.add(Focus.backup_players_for_focused_game.get(swaped));
+					Focus.removePlayerFromListForGame(Focus.backup_players_for_focused_game.get(swaped).getId(), Focus.backup_players_for_focused_game);
+					Swap swap = new Swap(idi, ido, (int)ctime/-60000+1);
+					action_list.add(swap);
+					swaped=0;
+					to_swap=0;
+					Log.d("swap", String.valueOf(swap.getPlayer_in_id())+" "+String.valueOf(swap.getPlayer_out_id())+" "+String.valueOf(ctime/-60000+1));
+					dialog.dismiss();
+					refresh_player_lists();
+				}
+
+			}
+
+			
+		};
+		view_Player_List.setOnItemClickListener(listner_main);
+		view_Player_List_backup.setOnItemClickListener(listner_backup);
+		button.setOnClickListener(listner_button);
+		dialog.show();
 	}
 	
 	public void penalty(View v)

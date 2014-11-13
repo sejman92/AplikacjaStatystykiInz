@@ -18,12 +18,11 @@ public class Swap extends Action {
 		this.comment=comment;		
 	}
 	
-	public Swap(int player_in_id, int player_out_id, int time, String comment)
+	public Swap(int player_in_id, int player_out_id, int time)
 	{
 		this.player_in_id=player_in_id;
 		this.player_out_id=player_out_id;
-		this.time=time;
-		this.comment=comment;		
+		this.time=time;	
 	}
 
 	public int getId() {

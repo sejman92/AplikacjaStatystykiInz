@@ -13,9 +13,11 @@ public class Focus {
 	static public Game focused_game;
 	static public List<Player> main_players_for_focused_game;
 	static public List<Player> backup_players_for_focused_game;
+	static public List<Player> swaped_players_for_focused_game;
 	static public String enemy_name_for_new_game;
 	static public boolean game_ended=false;
 		
+
 	
 	static public boolean isInPlayersList(int id,List<Player> list)
 	{

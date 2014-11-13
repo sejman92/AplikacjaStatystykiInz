@@ -62,7 +62,6 @@ public class GameSetupActivity extends Activity {
 		intent.putExtra("date", date.getText().toString());
 		intent.putExtra("time", time.getText().toString());
 		intent.putExtra("place", place.getText().toString());
-		
 		startActivity(intent);	
 	}
 	

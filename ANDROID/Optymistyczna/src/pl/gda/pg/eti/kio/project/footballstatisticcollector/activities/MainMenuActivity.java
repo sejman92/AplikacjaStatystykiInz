@@ -26,6 +26,7 @@ public class MainMenuActivity extends Activity {
 		edit = (EditText) findViewById(R.id.przycisk);
 		Focus.main_players_for_focused_game= new LinkedList<Player>();
 		Focus.backup_players_for_focused_game= new LinkedList<Player>();
+		Focus.swaped_players_for_focused_game= new LinkedList<Player>();
 		
 	}
 	
