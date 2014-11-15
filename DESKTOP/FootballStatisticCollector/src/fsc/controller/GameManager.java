@@ -24,7 +24,7 @@ public class GameManager {
     private final EntityManagerFactory emFactory;
     private final EntityManager em;
     private final EntityTransaction et;
-    
+
     public GameManager(){
         emFactory = Persistence.createEntityManagerFactory("FootballStatisticCollectorPU"); 
         em = emFactory.createEntityManager();

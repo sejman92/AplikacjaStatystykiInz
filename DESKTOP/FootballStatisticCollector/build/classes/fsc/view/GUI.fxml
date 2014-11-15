@@ -239,7 +239,7 @@
 </VBox>
 <Separator layoutX="223.0" layoutY="-15.0" orientation="VERTICAL" prefHeight="710.0" prefWidth="7.0" />
 <TextArea fx:id="curInsertTA" editable="false" layoutX="257.0" layoutY="520.0" prefHeight="56.0" prefWidth="548.0" promptText="TUTAJ BEDZIE AKTUALNY INSERT" />
-<TextArea fx:id="commentTA" layoutX="256.0" layoutY="397.0" prefHeight="88.0" prefWidth="549.0" promptText="KOMENTARZ DO AKCJI" />
+<TextArea fx:id="commentTA" layoutX="257.0" layoutY="419.0" prefHeight="88.0" prefWidth="297.0" promptText="KOMENTARZ DO AKCJI" />
 <Label layoutX="263.0" layoutY="33.0" text="Akcja" />
 <Label layoutX="261.0" layoutY="348.0" text="Wynik" />
 <Label layoutX="265.0" layoutY="198.0" text="Rzut" />
@@ -552,6 +552,26 @@
 </children>
 </HBox>
 <ListView fx:id="historyLV" layoutX="849.0" layoutY="65.0" prefHeight="609.0" prefWidth="415.0" />
+                  <HBox layoutX="562.0" layoutY="419.0" prefHeight="54.0" prefWidth="236.0">
+                     <children>
+                        <Button fx:id="goalPositiveBt" alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#goalPositiveBtClick" text="Bramka strzelona" textAlignment="CENTER" HBox.hgrow="ALWAYS">
+                           <HBox.margin>
+                              <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
+                           </HBox.margin>
+                           <padding>
+                              <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
+                           </padding>
+                        </Button>
+                        <Button fx:id="goalNegativeBt" alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#goalNegativeBtClick" text="Bramka stracona" textAlignment="CENTER" HBox.hgrow="ALWAYS">
+                           <HBox.margin>
+                              <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
+                           </HBox.margin>
+                           <padding>
+                              <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
+                           </padding>
+                        </Button>
+                     </children>
+                  </HBox>
 </children>
 </Pane>
 </content>

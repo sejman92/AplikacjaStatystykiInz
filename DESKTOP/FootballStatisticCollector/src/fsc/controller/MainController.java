@@ -86,13 +86,14 @@ public class MainController implements Initializable {
    @FXML private Button outBt;
    @FXML private Button faulBt;
    @FXML private Button defenseBt;
-   @FXML private Button tackleBt;
    @FXML private Button handBt;
    @FXML private Button swapBt;
    @FXML private Button yelloCardBt;
    @FXML private Button redCardBt;
    @FXML private Button takeoverBt;
    @FXML private Button stopMatchBt;
+   @FXML private Button goalPositiveBt;
+   @FXML private Button goalNegativeBt;
    
    @FXML private ListView historyLV;
    @FXML private TextArea commentTA;
@@ -150,7 +151,9 @@ public class MainController implements Initializable {
             this.noSuccessfullButton.setText("Niecelny");
         }
     }
-    
+    /*
+    like name pointing
+    */
     private void disableAllButtonInCollectView(){
         this.shotBt.setDisable(true);
         this.passingBt.setDisable(true);
@@ -172,12 +175,28 @@ public class MainController implements Initializable {
         this.outBt.setDisable(true);
         this.defenseBt.setDisable(true);
         this.faulBt.setDisable(true);
-        this.tackleBt.setDisable(true);
         this.handBt.setDisable(true);
         this.yelloCardBt.setDisable(true);
         this.redCardBt.setDisable(true);
         this.takeoverBt.setDisable(true);
         this.swapBt.setDisable(true);
+        this.goalNegativeBt.setDisable(true);
+        this.goalPositiveBt.setDisable(true);
+    }
+    private void setBasicActionsEnable(){
+        this.disableAllButtonInCollectView();
+        this.shotBt.setDisable(false);
+        this.passingBt.setDisable(false);
+        this.defenseBt.setDisable(false);
+        this.faulBt.setDisable(false);
+        this.outBt.setDisable(false);
+        this.injuryBt.setDisable(false);
+        this.handBt.setDisable(false);
+        this.swapBt.setDisable(false);
+        this.yelloCardBt.setDisable(false);
+        this.redCardBt.setDisable(false);
+        this.takeoverBt.setDisable(false);
+        
     }
     /*
     Add selected players to starting lineup
@@ -369,14 +388,11 @@ public class MainController implements Initializable {
             if(positionsLV.getSelectionModel().getSelectedItem() != null)
                 player.setRole(positionsLV.getSelectionModel().getSelectedItem().toString());
             else
-                return;
-            
+                return;       
             if(leftFootCheckBox.isSelected())
                 player.setPreferedLeg(Legs.LEWA.toString());
-            else if(rightFootCheckBox.isSelected())
+            else 
                 player.setPreferedLeg(Legs.PRAWA.toString());
-            else
-                return;
             player.setTeamId(selectedTeam);
             player.setOwnerId(new User(1));
             
@@ -436,6 +452,8 @@ public class MainController implements Initializable {
     
     public void startMatchBtClick(){
         this.game = new Game();
+        this.game.setScoredGoals(0);
+        this.game.setLostGoals(0);
         this.gameManager = GameManager.getInstance();   
         gameManager.saveGame(game);
         setSuccessButtonContent();
@@ -444,6 +462,7 @@ public class MainController implements Initializable {
     
     public void stopMatchBtClick(){
         this.disableAllButtonInCollectView();
+        this.gameManager.saveGame(game);   
     }
     /*
     Fill content in collect view - player lists and team name
@@ -594,8 +613,8 @@ public class MainController implements Initializable {
     */
     public void successfulBtClick(){
 
-            action.setSuccessful(1);
-            curInsertTA.setText(action.getInsert());
+        action.setSuccessful(1);
+        curInsertTA.setText(action.getInsert());
 
     }
 
@@ -603,10 +622,31 @@ public class MainController implements Initializable {
     mark as unsuccessful action
     */
     public void unsuccessfulBtClick(){
-            action.setSuccessful(-1);
-            curInsertTA.setText(action.getInsert());
+        action.setSuccessful(-1);
+        curInsertTA.setText(action.getInsert());
     }
     
+    /*
+    insert lost goal ( just increase counter in Game obj.)
+    */
+    public void goalNegativeBtClick(){
+        this.game.setLostGoals(this.game.getLostGoals()+1);
+        gameManager.saveGame(game);
+        this.faulButtonFlag = false;
+        setSuccessButtonContent();
+    }
+    /*
+    insert successfull shot and mark it as goal.
+    */
+    public void goalPositiveBtClick(){
+        action.setSuccessful(1);
+        action.setAction(new Shot());
+        curInsertTA.setText(action.getInsert() + "ZDOBYTA BRAMKA!!!");
+        this.game.setScoredGoals(this.game.getScoredGoals()+1);
+        gameManager.saveGame(game);
+        this.faulButtonFlag = false;
+        setSuccessButtonContent();
+    }
     /*
     accept current action and add query to database 
     */
