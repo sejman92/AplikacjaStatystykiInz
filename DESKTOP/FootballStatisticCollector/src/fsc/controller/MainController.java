@@ -77,6 +77,23 @@ public class MainController implements Initializable {
    @FXML private Button noSuccessfullButton;
    @FXML private Button acceptBt;   
    @FXML private Button cancelBt;
+   @FXML private Button flatPassBt;
+   @FXML private Button crossPassBt;
+   @FXML private Button freeKickBt;
+   @FXML private Button cornerKickBt;
+   @FXML private Button penaltyKickBt;
+   @FXML private Button injuryBt;
+   @FXML private Button outBt;
+   @FXML private Button faulBt;
+   @FXML private Button defenseBt;
+   @FXML private Button tackleBt;
+   @FXML private Button handBt;
+   @FXML private Button swapBt;
+   @FXML private Button yelloCardBt;
+   @FXML private Button redCardBt;
+   @FXML private Button takeoverBt;
+   @FXML private Button stopMatchBt;
+   
    @FXML private ListView historyLV;
    @FXML private TextArea commentTA;
    @FXML private TextArea curInsertTA;   
@@ -132,6 +149,35 @@ public class MainController implements Initializable {
             this.successfullButton.setText("Celny");
             this.noSuccessfullButton.setText("Niecelny");
         }
+    }
+    
+    private void disableAllButtonInCollectView(){
+        this.shotBt.setDisable(true);
+        this.passingBt.setDisable(true);
+        this.leftFootBt.setDisable(true);
+        this.rightFootBt.setDisable(true);
+        this.headBt.setDisable(true);
+        this.chestBt.setDisable(true);
+        this.otherBt.setDisable(true);
+        this.successfullButton.setDisable(true);
+        this.noSuccessfullButton.setDisable(true);
+        this.acceptBt.setDisable(true);   
+        this.cancelBt.setDisable(true);
+        this.flatPassBt.setDisable(true);
+        this.crossPassBt.setDisable(true);
+        this.freeKickBt.setDisable(true);
+        this.cornerKickBt.setDisable(true);
+        this.penaltyKickBt.setDisable(true);
+        this.injuryBt.setDisable(true);
+        this.outBt.setDisable(true);
+        this.defenseBt.setDisable(true);
+        this.faulBt.setDisable(true);
+        this.tackleBt.setDisable(true);
+        this.handBt.setDisable(true);
+        this.yelloCardBt.setDisable(true);
+        this.redCardBt.setDisable(true);
+        this.takeoverBt.setDisable(true);
+        this.swapBt.setDisable(true);
     }
     /*
     Add selected players to starting lineup
@@ -394,6 +440,10 @@ public class MainController implements Initializable {
         gameManager.saveGame(game);
         setSuccessButtonContent();
         
+    }
+    
+    public void stopMatchBtClick(){
+        this.disableAllButtonInCollectView();
     }
     /*
     Fill content in collect view - player lists and team name

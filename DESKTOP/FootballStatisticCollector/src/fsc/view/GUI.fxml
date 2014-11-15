@@ -225,7 +225,7 @@
 <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
 </padding>
 </Button>
-<Button alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Stop" textAlignment="CENTER" HBox.hgrow="ALWAYS">
+<Button fx:id="stopMatchBt" alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#stopMatchBtClick" text="Stop" textAlignment="CENTER" HBox.hgrow="ALWAYS">
 <HBox.margin>
 <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
 </HBox.margin>
@@ -332,7 +332,7 @@
 <children>
 <HBox maxHeight="1.7976931348623157E308" prefHeight="52.0" prefWidth="477.0" VBox.vgrow="ALWAYS">
 <children>
-<Button alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Płaskie" textAlignment="CENTER" HBox.hgrow="ALWAYS">
+<Button fx:id="flatPassBt" alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Płaskie" textAlignment="CENTER" HBox.hgrow="ALWAYS">
 <padding>
 <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
 </padding>
@@ -340,7 +340,7 @@
 <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
 </HBox.margin>
 </Button>
-<Button alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Górą" textAlignment="CENTER" HBox.hgrow="ALWAYS">
+<Button fx:id="crossPassBt" alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Górą" textAlignment="CENTER" HBox.hgrow="ALWAYS">
 <padding>
 <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
 </padding>
@@ -362,7 +362,7 @@
 <children>
 <HBox maxHeight="1.7976931348623157E308" prefHeight="52.0" prefWidth="477.0" VBox.vgrow="ALWAYS">
 <children>
-<Button alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Wolny" textAlignment="CENTER" HBox.hgrow="ALWAYS">
+<Button fx:id="freeKickBt" alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Wolny" textAlignment="CENTER" HBox.hgrow="ALWAYS">
 <padding>
 <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
 </padding>
@@ -370,7 +370,7 @@
 <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
 </HBox.margin>
 </Button>
-<Button alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#cornerBtClick" text="Rożny" textAlignment="CENTER" HBox.hgrow="ALWAYS">
+<Button fx:id="cornerKickBt" alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#cornerBtClick" text="Rożny" textAlignment="CENTER" HBox.hgrow="ALWAYS">
 <padding>
 <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
 </padding>
@@ -378,7 +378,7 @@
 <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
 </HBox.margin>
 </Button>
-<Button alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#penaltyBtClick" text="Karny" textAlignment="CENTER" HBox.hgrow="ALWAYS">
+<Button fx:id="penaltyKickBt" alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#penaltyBtClick" text="Karny" textAlignment="CENTER" HBox.hgrow="ALWAYS">
 <HBox.margin>
 <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
 </HBox.margin>
@@ -400,7 +400,7 @@
 <children>
 <HBox maxHeight="1.7976931348623157E308" prefHeight="52.0" prefWidth="477.0" VBox.vgrow="ALWAYS">
 <children>
-<Button alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" prefHeight="38.0" prefWidth="0.0" text="Wślizg" textAlignment="CENTER" HBox.hgrow="ALWAYS">
+<Button fx:id="tackleBt" alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" prefHeight="38.0" prefWidth="0.0" text="Wślizg" textAlignment="CENTER" HBox.hgrow="ALWAYS">
 <padding>
 <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
 </padding>
@@ -408,7 +408,7 @@
 <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
 </HBox.margin>
 </Button>
-<Button alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#defenseBtClick" prefHeight="38.0" prefWidth="6.0" text="Obrona" textAlignment="CENTER" HBox.hgrow="ALWAYS">
+<Button fx:id="defenseBt" alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#defenseBtClick" prefHeight="38.0" prefWidth="6.0" text="Obrona" textAlignment="CENTER" HBox.hgrow="ALWAYS">
 <HBox.margin>
 <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
 </HBox.margin>
@@ -416,7 +416,7 @@
 <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
 </padding>
 </Button>
-<Button alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#faulBtClick" prefHeight="38.0" prefWidth="1.0" text="Faul" textAlignment="CENTER" HBox.hgrow="ALWAYS">
+<Button fx:id="faulBt" alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#faulBtClick" prefHeight="38.0" prefWidth="1.0" text="Faul" textAlignment="CENTER" HBox.hgrow="ALWAYS">
 <padding>
 <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
 </padding>
@@ -424,7 +424,7 @@
 <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
 </HBox.margin>
 </Button>
-<Button alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" prefHeight="38.0" prefWidth="0.0" text="Aut" textAlignment="CENTER" HBox.hgrow="ALWAYS">
+<Button fx:id="outBt" alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" prefHeight="38.0" prefWidth="0.0" text="Aut" textAlignment="CENTER" HBox.hgrow="ALWAYS">
 <HBox.margin>
 <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
 </HBox.margin>
@@ -443,7 +443,7 @@
 </HBox>
 <HBox maxHeight="1.7976931348623157E308" prefHeight="52.0" prefWidth="477.0" VBox.vgrow="ALWAYS">
 <children>
-<Button alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Ręka" textAlignment="CENTER" HBox.hgrow="ALWAYS">
+<Button fx:id="handBt" alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Ręka" textAlignment="CENTER" HBox.hgrow="ALWAYS">
 <padding>
 <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
 </padding>
@@ -459,7 +459,7 @@
 <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
 </HBox.margin>
 </Button>
-<Button alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#yellowCardBtClick" text="Żółta kartka" textAlignment="CENTER" HBox.hgrow="ALWAYS">
+<Button fx:id="yelloCardBt" alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#yellowCardBtClick" text="Żółta kartka" textAlignment="CENTER" HBox.hgrow="ALWAYS">
 <padding>
 <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
 </padding>
@@ -467,7 +467,7 @@
 <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
 </HBox.margin>
 </Button>
-<Button alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#redCardBtClick" text="Czerwona kartka" textAlignment="CENTER" HBox.hgrow="ALWAYS">
+<Button fx:id="redCardBt" alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#redCardBtClick" text="Czerwona kartka" textAlignment="CENTER" HBox.hgrow="ALWAYS">
 <padding>
 <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
 </padding>
