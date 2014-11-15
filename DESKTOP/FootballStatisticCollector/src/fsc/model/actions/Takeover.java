@@ -8,6 +8,7 @@ package fsc.model.actions;
 import fsc.model.Game;
 import fsc.model.Player;
 import fsc.model.User;
+import fsc.model.interfaces.IAction;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Basic;
@@ -37,7 +38,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Takeover.findAll", query = "SELECT t FROM Takeover t"),
     @NamedQuery(name = "Takeover.findById", query = "SELECT t FROM Takeover t WHERE t.id = :id"),
     @NamedQuery(name = "Takeover.findByTime", query = "SELECT t FROM Takeover t WHERE t.time = :time")})
-public class Takeover implements Serializable {
+public class Takeover implements Serializable, IAction {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -66,6 +67,7 @@ public class Takeover implements Serializable {
         this.id = id;
     }
 
+    @Override
     public Integer getId() {
         return id;
     }
@@ -86,6 +88,7 @@ public class Takeover implements Serializable {
         return comment;
     }
 
+    @Override
     public void setComment(String comment) {
         this.comment = comment;
     }
@@ -94,6 +97,7 @@ public class Takeover implements Serializable {
         return ownerId;
     }
 
+    @Override
     public void setOwnerId(User ownerId) {
         this.ownerId = ownerId;
     }
@@ -102,6 +106,7 @@ public class Takeover implements Serializable {
         return gameId;
     }
 
+    @Override
     public void setGameId(Game gameId) {
         this.gameId = gameId;
     }
@@ -133,10 +138,27 @@ public class Takeover implements Serializable {
         }
         return true;
     }
-
+    
+    @Override
+    public int getIdTypeOfAction() {
+        return 8;
+    }
+    
     @Override
     public String toString() {
-        return "fsc.model.Takeover[ id=" + id + " ]";
+        String result = "przechwyt [";
+        if(getId() != null)
+            result += getId();
+        result += "]: ";
+        if(getPlayerId() != null)
+            result += getPlayerId();
+        
+        return result;
     }
+    
+    @Override
+    public String getActionName() {
+        return "przechwyt";
+    } 
     
 }

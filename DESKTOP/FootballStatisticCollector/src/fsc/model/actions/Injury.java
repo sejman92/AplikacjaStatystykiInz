@@ -8,6 +8,7 @@ package fsc.model.actions;
 import fsc.model.Game;
 import fsc.model.Player;
 import fsc.model.User;
+import fsc.model.interfaces.IAction;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
@@ -42,7 +43,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Injury.findByTime", query = "SELECT i FROM Injury i WHERE i.time = :time"),
     @NamedQuery(name = "Injury.findByDuration", query = "SELECT i FROM Injury i WHERE i.duration = :duration"),
     @NamedQuery(name = "Injury.findByKind", query = "SELECT i FROM Injury i WHERE i.kind = :kind")})
-public class Injury implements Serializable {
+public class Injury implements Serializable, IAction {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -179,10 +180,26 @@ public class Injury implements Serializable {
         }
         return true;
     }
-
+    
     @Override
-    public String toString() {
-        return "fsc.model.Injury[ id=" + id + " ]";
+    public int getIdTypeOfAction() {
+        return 9;
     }
     
+    @Override
+    public String toString() {
+        String result = "kontuzja [";
+        if(getId() != null)
+            result += getId();
+        result += "]: ";
+        if(getPlayerId() != null)
+            result += getPlayerId();
+        
+        return result;
+    }
+    
+    @Override
+    public String getActionName() {
+        return "kontuzja";
+    }    
 }

@@ -7,34 +7,46 @@ package fsc.controller;
 
 import fsc.model.actions.Passing;
 import fsc.model.Player;
+<<<<<<< SEJMAN_po_koniec_2_Sprintu:DESKTOP/FootballStatisticCollector/src/fsc/controller/Action.java
+=======
+import fsc.model.actions.Card;
+import fsc.model.actions.Corner;
+import fsc.model.actions.Defense;
+import fsc.model.actions.Faul;
+import fsc.model.actions.Injury;
+import fsc.model.actions.Penalty;
+>>>>>>> local:DESKTOP/FootballStatisticCollector/src/fsc/controller/ActionManager.java
 import fsc.model.actions.Shot;
+import fsc.model.actions.Takeover;
 import fsc.model.interfaces.IAction;
 import fsc.model.enums.PartsOfBody;
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.EntityTransaction;
-import javax.persistence.Persistence;
 
 /**
  *
  * @author Gruby
  */
-public class Action {
-    private static Action instance;
+public class ActionManager {
+    private static ActionManager instance;
     private final DatabaseManager databaseManager;
     private IAction action;
     private Player player;
+<<<<<<< SEJMAN_po_koniec_2_Sprintu:DESKTOP/FootballStatisticCollector/src/fsc/controller/Action.java
+=======
+    private Game game;
+    private String comment;
+>>>>>>> local:DESKTOP/FootballStatisticCollector/src/fsc/controller/ActionManager.java
     private PartsOfBody partOfBody;
     private int successful; //1 - success, -1 - unsuccess, 0 - unknown
     
-    private Action(){
+    private ActionManager(){
         databaseManager = DatabaseManager.getInstance();
+        comment = "";
         successful = 0;
     }
     
-    public static Action getInstance(){
+    public static ActionManager getInstance(){
         if(instance == null)
-            instance = new Action();
+            instance = new ActionManager();
         
         return instance;
     }
@@ -47,6 +59,17 @@ public class Action {
         this.player = player;
     }
     
+<<<<<<< SEJMAN_po_koniec_2_Sprintu:DESKTOP/FootballStatisticCollector/src/fsc/controller/Action.java
+=======
+    public void setGame(Game game){
+        this.game = game;
+    }
+    
+    public void setComment(String comment){
+        
+    }
+    
+>>>>>>> local:DESKTOP/FootballStatisticCollector/src/fsc/controller/ActionManager.java
     public void setPartOfBody(PartsOfBody partOfBody){
         this.partOfBody = partOfBody;
     }
@@ -60,6 +83,9 @@ public class Action {
     */
     IAction saveAction(){
         try {
+            action.setGameId(game);
+            action.setComment(comment);
+            //action.setOwnerId(game.getOwnerId());
             switch(action.getIdTypeOfAction())
             {
                 case 1:{
@@ -77,6 +103,47 @@ public class Action {
                     }                  
                     break;
                 }
+<<<<<<< SEJMAN_po_koniec_2_Sprintu:DESKTOP/FootballStatisticCollector/src/fsc/controller/Action.java
+=======
+                case 3:{
+                    ((Penalty)action).setPlayerId(player);
+                    break;
+                }
+                case 4:{
+                    ((Corner)action).setPlayerId(player);
+                    break;
+                }
+                case 5:{
+                    ((Defense)action).setPlayerId(player);
+                    break;
+                }
+                case 6:{
+                    if(successful > 0){
+                        ((Faul)action).setPlayerVictimId(player);
+                    } else if(successful < 0){
+                        ((Faul)action).setPlayerOfenderId(player);
+                    } 
+                    ((Faul)action).setGameId(game);
+                    break;
+                }
+                case 7: {
+                    ((Card)action).setPlayerId(player);
+                    break;
+                }
+                case 8: {
+                    ((Takeover)action).setPlayerId(player);
+                    break;
+                }
+                case 9: {
+                    ((Injury)action).setPlayerId(player);
+                    break;
+                }
+                case 10: {
+                    //((Swap)action).setPlayerId(player);
+                    break;
+                }
+                
+>>>>>>> local:DESKTOP/FootballStatisticCollector/src/fsc/controller/ActionManager.java
                 default:
                     System.out.println("bledny typ akcji");
                     return null;
@@ -95,6 +162,7 @@ public class Action {
     void cancelAction(){
         action = null;
         partOfBody = null;
+        comment = "";
         successful = 0;
     }
 

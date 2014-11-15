@@ -75,6 +75,7 @@ public class Card implements Serializable {
         this.id = id;
     }
 
+    @Override
     public Integer getId() {
         return id;
     }
@@ -103,6 +104,7 @@ public class Card implements Serializable {
         return comment;
     }
 
+    @Override
     public void setComment(String comment) {
         this.comment = comment;
     }
@@ -135,6 +137,7 @@ public class Card implements Serializable {
         return gameId;
     }
 
+    @Override
     public void setGameId(Game gameId) {
         this.gameId = gameId;
     }

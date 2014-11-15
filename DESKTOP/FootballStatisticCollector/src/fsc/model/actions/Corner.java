@@ -66,6 +66,7 @@ public class Corner implements Serializable {
         this.id = id;
     }
 
+    @Override
     public Integer getId() {
         return id;
     }
@@ -86,6 +87,7 @@ public class Corner implements Serializable {
         return comment;
     }
 
+    @Override
     public void setComment(String comment) {
         this.comment = comment;
     }
@@ -102,6 +104,7 @@ public class Corner implements Serializable {
         return gameId;
     }
 
+    @Override
     public void setGameId(Game gameId) {
         this.gameId = gameId;
     }

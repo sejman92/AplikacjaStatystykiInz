@@ -8,6 +8,7 @@ package fsc.model.actions;
 import fsc.model.Game;
 import fsc.model.Player;
 import fsc.model.User;
+import fsc.model.interfaces.IAction;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.Basic;
@@ -37,7 +38,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Swap.findAll", query = "SELECT s FROM Swap s"),
     @NamedQuery(name = "Swap.findById", query = "SELECT s FROM Swap s WHERE s.id = :id"),
     @NamedQuery(name = "Swap.findByInjuryId", query = "SELECT s FROM Swap s WHERE s.injuryId = :injuryId")})
-public class Swap implements Serializable {
+public class Swap implements Serializable, IAction {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -73,6 +74,7 @@ public class Swap implements Serializable {
         this.id = id;
     }
 
+    @Override
     public Integer getId() {
         return id;
     }
@@ -85,6 +87,7 @@ public class Swap implements Serializable {
         return comment;
     }
 
+    @Override
     public void setComment(String comment) {
         this.comment = comment;
     }
@@ -118,6 +121,7 @@ public class Swap implements Serializable {
         return gameId;
     }
 
+    @Override
     public void setGameId(Game gameId) {
         this.gameId = gameId;
     }
@@ -166,10 +170,24 @@ public class Swap implements Serializable {
         }
         return true;
     }
-
+    
     @Override
-    public String toString() {
-        return "fsc.model.Swap[ id=" + id + " ]";
+    public int getIdTypeOfAction() {
+        return 10;
     }
     
+    @Override
+    public String toString() {
+        String result = "zmiana [";
+        if(getId() != null)
+            result += getId();
+        result += "]: ";
+        
+        return result;
+    }
+    
+    @Override
+    public String getActionName() {
+        return "zmiana: ";
+    }    
 }

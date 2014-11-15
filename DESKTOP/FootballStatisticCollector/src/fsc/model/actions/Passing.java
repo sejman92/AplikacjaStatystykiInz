@@ -9,7 +9,6 @@ import fsc.model.Game;
 import fsc.model.Player;
 import fsc.model.User;
 import fsc.model.interfaces.IAction;
-import fsc.model.interfaces.IEntityElement;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Basic;
@@ -73,6 +72,7 @@ public class Passing implements Serializable, IAction {
         this.id = id;
     }
 
+    @Override
     public Integer getId() {
         return id;
     }
@@ -93,6 +93,7 @@ public class Passing implements Serializable, IAction {
         return comment;
     }
 
+    @Override
     public void setComment(String comment) {
         this.comment = comment;
     }
@@ -117,6 +118,7 @@ public class Passing implements Serializable, IAction {
         return gameId;
     }
 
+    @Override
     public void setGameId(Game gameId) {
         this.gameId = gameId;
     }

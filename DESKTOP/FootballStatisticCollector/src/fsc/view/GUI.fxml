@@ -400,7 +400,7 @@
 <children>
 <HBox maxHeight="1.7976931348623157E308" prefHeight="52.0" prefWidth="477.0" VBox.vgrow="ALWAYS">
 <children>
-<Button alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Wślizg" textAlignment="CENTER" HBox.hgrow="ALWAYS">
+<Button alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" prefHeight="38.0" prefWidth="0.0" text="Wślizg" textAlignment="CENTER" HBox.hgrow="ALWAYS">
 <padding>
 <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
 </padding>
@@ -408,7 +408,11 @@
 <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
 </HBox.margin>
 </Button>
+<<<<<<< SEJMAN_po_koniec_2_Sprintu
 <Button alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Obrona" textAlignment="CENTER" HBox.hgrow="ALWAYS">
+=======
+<Button alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#defenseBtClick" prefHeight="38.0" prefWidth="6.0" text="Obrona" textAlignment="CENTER" HBox.hgrow="ALWAYS">
+>>>>>>> local
 <HBox.margin>
 <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
 </HBox.margin>
@@ -416,7 +420,11 @@
 <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
 </padding>
 </Button>
+<<<<<<< SEJMAN_po_koniec_2_Sprintu
 <Button alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Faul" textAlignment="CENTER" HBox.hgrow="ALWAYS">
+=======
+<Button alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#faulBtClick" prefHeight="38.0" prefWidth="1.0" text="Faul" textAlignment="CENTER" HBox.hgrow="ALWAYS">
+>>>>>>> local
 <padding>
 <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
 </padding>
@@ -424,7 +432,7 @@
 <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
 </HBox.margin>
 </Button>
-<Button alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Aut" textAlignment="CENTER" HBox.hgrow="ALWAYS">
+<Button alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" prefHeight="38.0" prefWidth="0.0" text="Aut" textAlignment="CENTER" HBox.hgrow="ALWAYS">
 <HBox.margin>
 <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
 </HBox.margin>
@@ -432,6 +440,7 @@
 <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
 </padding>
 </Button>
+                              <Button fx:id="injuryBt" mnemonicParsing="false" onAction="#injuryBtClick" prefHeight="40.0" prefWidth="97.0" text="Kontuzja" />
 </children>
 <padding>
 <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
@@ -450,7 +459,7 @@
 <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
 </HBox.margin>
 </Button>
-<Button alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Zmiana" textAlignment="CENTER" HBox.hgrow="ALWAYS">
+<Button fx:id="swapBt" alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#swapBtClick" text="Zmiana" textAlignment="CENTER" HBox.hgrow="ALWAYS">
 <padding>
 <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
 </padding>
@@ -474,7 +483,7 @@
 <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
 </HBox.margin>
 </Button>
-<Button alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Przechwyt" textAlignment="CENTER" HBox.hgrow="ALWAYS">
+<Button fx:id="takeoverBt" alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#takeoverBtClick" text="Przechwyt" textAlignment="CENTER" HBox.hgrow="ALWAYS">
 <padding>
 <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
 </padding>

@@ -22,6 +22,17 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import fsc.model.Team;
 import fsc.model.User;
+<<<<<<< SEJMAN_po_koniec_2_Sprintu
+=======
+import fsc.model.actions.Card;
+import fsc.model.actions.Corner;
+import fsc.model.actions.Defense;
+import fsc.model.actions.Faul;
+import fsc.model.actions.Injury;
+import fsc.model.actions.Penalty;
+import fsc.model.actions.Swap;
+import fsc.model.actions.Takeover;
+>>>>>>> local
 import fsc.model.enums.Legs;
 import fsc.model.enums.PartsOfBody;
 import fsc.model.enums.Positions;
@@ -91,14 +102,14 @@ public class MainController implements Initializable {
    private Player selectedPlayerToAction;
    private Lineup lineup;
    private Match match;
-   private Action action;
+   private ActionManager action;
    private ObservableList<IAction>actionList;
    private Game game;
    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         databaseManager = DatabaseManager.getInstance();
-        action = Action.getInstance();
+        action = ActionManager.getInstance();
         // TODO 
         //there i ititialize conection with db and other stuff
         
@@ -110,6 +121,18 @@ public class MainController implements Initializable {
         //beginMatchTab.setDisable(false);
     }
     
+<<<<<<< SEJMAN_po_koniec_2_Sprintu
+=======
+    private void setSuccessButtonContent(){
+        if(faulButtonFlag){
+            this.successfullButton.setText("Był faulowany");
+            this.noSuccessfullButton.setText("Faulował");
+        } else {
+            this.successfullButton.setText("Celny");
+            this.noSuccessfullButton.setText("Niecelny");
+        }
+    }
+>>>>>>> local
     /*
     Add selected players to starting lineup
     if selected player is on starting lineup - do nothing
@@ -439,6 +462,37 @@ public class MainController implements Initializable {
         action.setPartOfBody(PartsOfBody.INNA);
         curInsertTA.setText(action.getInsert());
     }
+
+    /**
+     set action as injury
+     */
+    public void injuryBtClick(){
+        action.setAction(new Injury());
+        curInsertTA.setText(action.getInsert());
+        this.faulButtonFlag = false;
+        setSuccessButtonContent();
+    }
+    
+    /**
+     set action as swap
+     */
+    public void swapBtClick(){
+        action.setAction(new Swap());
+        curInsertTA.setText(action.getInsert());
+        this.faulButtonFlag = false;
+        setSuccessButtonContent();
+    }
+    
+    /**
+     set action as takeover
+     */
+    public void takeoverBtClick(){
+        action.setAction(new Takeover());
+        curInsertTA.setText(action.getInsert());
+        this.faulButtonFlag = false;
+        setSuccessButtonContent();        
+    }
+    
     
     /*
     mark as successful action
@@ -460,6 +514,12 @@ public class MainController implements Initializable {
     accept current action and add query to database 
     */
     public void acceptBtClick(){
+<<<<<<< SEJMAN_po_koniec_2_Sprintu
+=======
+        //action.setGame(gameManager.getGame(game.getId()));
+        action.setComment(commentTA.getText());
+        action.setGame(game);
+>>>>>>> local
         IAction result = action.saveAction();
         if(result != null){
             actionList.add(result);
@@ -468,6 +528,7 @@ public class MainController implements Initializable {
         }else
             curInsertTA.setText("nie dodano z powodu bledu");
         historyLV.setItems(actionList);
+        commentTA.setText("");
     }
     
     /*
@@ -475,6 +536,7 @@ public class MainController implements Initializable {
     */    
     public void cancelBtClick(){
         action.cancelAction();
+        commentTA.setText("");
         curInsertTA.setText("wycofano");
     }
 }
