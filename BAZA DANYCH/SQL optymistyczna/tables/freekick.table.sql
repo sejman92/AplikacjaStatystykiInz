@@ -1,5 +1,6 @@
  CREATE TABLE Freekick
  (
+	id INT PRIMARY KEY AUTO_INCREMENT,
 	player_id INT,
 	success BOOL,
 	game_id INT,
