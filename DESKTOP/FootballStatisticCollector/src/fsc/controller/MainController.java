@@ -22,11 +22,7 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import fsc.model.Team;
 import fsc.model.User;
-<<<<<<< HEAD
-=======
-<<<<<<< SEJMAN_po_koniec_2_Sprintu
-=======
->>>>>>> efeae28539a1a92211a29322728b6a73356edec1
+
 import fsc.model.actions.Card;
 import fsc.model.actions.Corner;
 import fsc.model.actions.Defense;
@@ -35,10 +31,7 @@ import fsc.model.actions.Injury;
 import fsc.model.actions.Penalty;
 import fsc.model.actions.Swap;
 import fsc.model.actions.Takeover;
-<<<<<<< HEAD
-=======
->>>>>>> local
->>>>>>> efeae28539a1a92211a29322728b6a73356edec1
+
 import fsc.model.enums.Legs;
 import fsc.model.enums.PartsOfBody;
 import fsc.model.enums.Positions;
@@ -130,11 +123,7 @@ public class MainController implements Initializable {
         //beginMatchTab.setDisable(false);
     }
     
-<<<<<<< HEAD
-=======
-<<<<<<< SEJMAN_po_koniec_2_Sprintu
-=======
->>>>>>> efeae28539a1a92211a29322728b6a73356edec1
+
     private void setSuccessButtonContent(){
         if(faulButtonFlag){
             this.successfullButton.setText("Był faulowany");
@@ -144,10 +133,6 @@ public class MainController implements Initializable {
             this.noSuccessfullButton.setText("Niecelny");
         }
     }
-<<<<<<< HEAD
-=======
->>>>>>> local
->>>>>>> efeae28539a1a92211a29322728b6a73356edec1
     /*
     Add selected players to starting lineup
     if selected player is on starting lineup - do nothing
@@ -576,18 +561,11 @@ public class MainController implements Initializable {
     accept current action and add query to database 
     */
     public void acceptBtClick(){
-<<<<<<< HEAD
+
         //action.setGame(gameManager.getGame(game.getId()));
         action.setComment(commentTA.getText());
         action.setGame(game);
-=======
-<<<<<<< SEJMAN_po_koniec_2_Sprintu
-=======
-        //action.setGame(gameManager.getGame(game.getId()));
-        action.setComment(commentTA.getText());
-        action.setGame(game);
->>>>>>> local
->>>>>>> efeae28539a1a92211a29322728b6a73356edec1
+
         IAction result = action.saveAction();
         if(result != null){
             actionList.add(result);

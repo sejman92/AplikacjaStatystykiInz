@@ -8,22 +8,13 @@ package fsc.controller;
 import fsc.model.Game;
 import fsc.model.actions.Passing;
 import fsc.model.Player;
-<<<<<<< HEAD
-=======
-<<<<<<< SEJMAN_po_koniec_2_Sprintu:DESKTOP/FootballStatisticCollector/src/fsc/controller/Action.java
-=======
->>>>>>> efeae28539a1a92211a29322728b6a73356edec1
+
 import fsc.model.actions.Card;
 import fsc.model.actions.Corner;
 import fsc.model.actions.Defense;
 import fsc.model.actions.Faul;
-<<<<<<< HEAD
-import fsc.model.actions.Penalty;
-=======
 import fsc.model.actions.Injury;
 import fsc.model.actions.Penalty;
->>>>>>> local:DESKTOP/FootballStatisticCollector/src/fsc/controller/ActionManager.java
->>>>>>> efeae28539a1a92211a29322728b6a73356edec1
 import fsc.model.actions.Shot;
 import fsc.model.actions.Takeover;
 import fsc.model.interfaces.IAction;
@@ -33,32 +24,25 @@ import fsc.model.enums.PartsOfBody;
  *
  * @author Gruby
  */
-public class ActionManager {
-    private static ActionManager instance;
+public class Action {
+    private static Action instance;
     private final DatabaseManager databaseManager;
     private IAction action;
     private Player player;
-<<<<<<< HEAD
-    private Game game;
-=======
-<<<<<<< SEJMAN_po_koniec_2_Sprintu:DESKTOP/FootballStatisticCollector/src/fsc/controller/Action.java
-=======
     private Game game;
     private String comment;
->>>>>>> local:DESKTOP/FootballStatisticCollector/src/fsc/controller/ActionManager.java
->>>>>>> efeae28539a1a92211a29322728b6a73356edec1
     private PartsOfBody partOfBody;
     private int successful; //1 - success, -1 - unsuccess, 0 - unknown
     
-    private ActionManager(){
+    private Action(){
         databaseManager = DatabaseManager.getInstance();
         comment = "";
         successful = 0;
     }
     
-    public static ActionManager getInstance(){
+    public static Action getInstance(){
         if(instance == null)
-            instance = new ActionManager();
+            instance = new Action();
         
         return instance;
     }
@@ -70,14 +54,6 @@ public class ActionManager {
     public void setPlayer(Player player){
         this.player = player;
     }
-<<<<<<< HEAD
-    public void setGame(Game game){
-        this.game = game;
-    }
-=======
-    
-<<<<<<< SEJMAN_po_koniec_2_Sprintu:DESKTOP/FootballStatisticCollector/src/fsc/controller/Action.java
-=======
     public void setGame(Game game){
         this.game = game;
     }
@@ -85,9 +61,7 @@ public class ActionManager {
     public void setComment(String comment){
         
     }
-    
->>>>>>> local:DESKTOP/FootballStatisticCollector/src/fsc/controller/ActionManager.java
->>>>>>> efeae28539a1a92211a29322728b6a73356edec1
+
     public void setPartOfBody(PartsOfBody partOfBody){
         this.partOfBody = partOfBody;
     }
@@ -123,32 +97,21 @@ public class ActionManager {
                     }                  
                     break;
                 }
-<<<<<<< HEAD
+
                 case 3:{
                     ((Penalty)action).setPlayerId(player);
                     ((Penalty)action).setGameId(game);
-=======
-<<<<<<< SEJMAN_po_koniec_2_Sprintu:DESKTOP/FootballStatisticCollector/src/fsc/controller/Action.java
-=======
-                case 3:{
-                    ((Penalty)action).setPlayerId(player);
->>>>>>> efeae28539a1a92211a29322728b6a73356edec1
                     break;
                 }
                 case 4:{
                     ((Corner)action).setPlayerId(player);
-<<<<<<< HEAD
                     ((Corner)action).setGameId(game);
-=======
->>>>>>> efeae28539a1a92211a29322728b6a73356edec1
                     break;
                 }
                 case 5:{
                     ((Defense)action).setPlayerId(player);
-<<<<<<< HEAD
                     ((Defense)action).setGameId(game);
-=======
->>>>>>> efeae28539a1a92211a29322728b6a73356edec1
+
                     break;
                 }
                 case 6:{
@@ -162,11 +125,7 @@ public class ActionManager {
                 }
                 case 7: {
                     ((Card)action).setPlayerId(player);
-<<<<<<< HEAD
                     ((Card)action).setGameId(game);
-                    break;
-                }
-=======
                     break;
                 }
                 case 8: {
@@ -181,9 +140,6 @@ public class ActionManager {
                     //((Swap)action).setPlayerId(player);
                     break;
                 }
-                
->>>>>>> local:DESKTOP/FootballStatisticCollector/src/fsc/controller/ActionManager.java
->>>>>>> efeae28539a1a92211a29322728b6a73356edec1
                 default:
                     System.out.println("bledny typ akcji");
                     return null;

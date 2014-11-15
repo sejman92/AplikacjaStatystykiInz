@@ -408,15 +408,7 @@
 <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
 </HBox.margin>
 </Button>
-<<<<<<< HEAD
 <Button alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#defenseBtClick" prefHeight="38.0" prefWidth="6.0" text="Obrona" textAlignment="CENTER" HBox.hgrow="ALWAYS">
-=======
-<<<<<<< SEJMAN_po_koniec_2_Sprintu
-<Button alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Obrona" textAlignment="CENTER" HBox.hgrow="ALWAYS">
-=======
-<Button alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#defenseBtClick" prefHeight="38.0" prefWidth="6.0" text="Obrona" textAlignment="CENTER" HBox.hgrow="ALWAYS">
->>>>>>> local
->>>>>>> efeae28539a1a92211a29322728b6a73356edec1
 <HBox.margin>
 <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
 </HBox.margin>
@@ -424,15 +416,7 @@
 <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
 </padding>
 </Button>
-<<<<<<< HEAD
 <Button alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#faulBtClick" prefHeight="38.0" prefWidth="1.0" text="Faul" textAlignment="CENTER" HBox.hgrow="ALWAYS">
-=======
-<<<<<<< SEJMAN_po_koniec_2_Sprintu
-<Button alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Faul" textAlignment="CENTER" HBox.hgrow="ALWAYS">
-=======
-<Button alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#faulBtClick" prefHeight="38.0" prefWidth="1.0" text="Faul" textAlignment="CENTER" HBox.hgrow="ALWAYS">
->>>>>>> local
->>>>>>> efeae28539a1a92211a29322728b6a73356edec1
 <padding>
 <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
 </padding>
