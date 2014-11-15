@@ -5,6 +5,7 @@
  */
 package fsc.controller;
 
+import fsc.controller.GlobalVariables;
 import fsc.model.Player;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -24,9 +25,11 @@ public class Lineup {
     public boolean isOnStartingLineup(Player p){
         return this.startingLineup.contains(p);
     }
+
     public boolean isOnReserveLineup(Player p){
         return this.reserveLineup.contains(p);
     }
+
     public void moveFromStartingToReserve(Player p){
         this.startingLineup.remove(p);
         this.reserveLineup.add(p);
@@ -35,8 +38,9 @@ public class Lineup {
         this.reserveLineup.remove(p);
         this.startingLineup.add(p);
     }
+
     public void insertIntoStartingLineup(Player p){
-        if(this.getStartingLineup().size()<11) 
+        if(this.getStartingLineup().size() < GlobalVariables.MAX_PLAYERS_IN_LINEUP)  //we cannot put more then 11 players in starting lineup
             this.getStartingLineup().add(p);
     }
     
@@ -52,7 +56,7 @@ public class Lineup {
         this.getReserveLineup().remove(p);
     }
     public boolean isCorrect(){
-        if(this.getStartingLineup().size()==11)
+        if(this.getStartingLineup().size() >= GlobalVariables.MIN_PLAYERS_IN_LINEUP) //game may start only when in starting lineup is min. 7 players
             return true;
         else
             return false;

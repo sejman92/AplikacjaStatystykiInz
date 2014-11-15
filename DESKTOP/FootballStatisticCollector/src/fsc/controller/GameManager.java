@@ -54,7 +54,7 @@ public class GameManager {
             }
         }
     }
-    public ObservableList<Game> getTeams(){
+    public ObservableList<Game> getGames(){
         return games = FXCollections.observableArrayList(em.createNamedQuery("Game.findAll").getResultList());
     }
     public Game getGame(int id){

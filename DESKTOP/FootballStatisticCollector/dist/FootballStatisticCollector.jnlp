@@ -11,11 +11,15 @@
   </resources>
   <resources>
     <j2se version="1.6+" href="http://java.sun.com/products/autodl/j2se"/>
+<<<<<<< HEAD
+    <jar href="FootballStatisticCollector.jar" size="65993" download="eager" />
+=======
 <<<<<<< SEJMAN_po_koniec_2_Sprintu
     <jar href="FootballStatisticCollector.jar" size="60681" download="eager" />
 =======
     <jar href="FootballStatisticCollector.jar" size="65993" download="eager" />
 >>>>>>> local
+>>>>>>> efeae28539a1a92211a29322728b6a73356edec1
     <jar href="lib/eclipselink.jar" size="8384130" download="eager" />
     <jar href="lib/hibernate-jpa-2.1-api-1.0.0.Final.jar" size="112634" download="eager" />
     <jar href="lib/javax.persistence_2.1.0.v201304241213.jar" size="160564" download="eager" />

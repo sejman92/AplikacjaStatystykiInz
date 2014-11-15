@@ -22,8 +22,11 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import fsc.model.Team;
 import fsc.model.User;
+<<<<<<< HEAD
+=======
 <<<<<<< SEJMAN_po_koniec_2_Sprintu
 =======
+>>>>>>> efeae28539a1a92211a29322728b6a73356edec1
 import fsc.model.actions.Card;
 import fsc.model.actions.Corner;
 import fsc.model.actions.Defense;
@@ -32,7 +35,10 @@ import fsc.model.actions.Injury;
 import fsc.model.actions.Penalty;
 import fsc.model.actions.Swap;
 import fsc.model.actions.Takeover;
+<<<<<<< HEAD
+=======
 >>>>>>> local
+>>>>>>> efeae28539a1a92211a29322728b6a73356edec1
 import fsc.model.enums.Legs;
 import fsc.model.enums.PartsOfBody;
 import fsc.model.enums.Positions;
@@ -74,8 +80,8 @@ public class MainController implements Initializable {
    @FXML private Button headBt;
    @FXML private Button chestBt;
    @FXML private Button otherBt;
-   @FXML private Button successfulBt;
-   @FXML private Button unsuccessfulBt;
+   @FXML private Button successfullButton;
+   @FXML private Button noSuccessfullButton;
    @FXML private Button acceptBt;   
    @FXML private Button cancelBt;
    @FXML private ListView historyLV;
@@ -99,6 +105,7 @@ public class MainController implements Initializable {
    private ObservableList<Positions>positions;
    private Team selectedTeam;
    private Player selectedPlayer;
+   private ObservableList<Player> selectedPlayers;
    private Player selectedPlayerToAction;
    private Lineup lineup;
    private Match match;
@@ -106,6 +113,7 @@ public class MainController implements Initializable {
    private ObservableList<IAction>actionList;
    private Game game;
    
+   private boolean faulButtonFlag;
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         databaseManager = DatabaseManager.getInstance();
@@ -118,11 +126,15 @@ public class MainController implements Initializable {
         teamsLV.setItems(databaseManager.getTeams());
         positionsLV.setItems(positions);
         lineup = new Lineup();
+        faulButtonFlag = false;
         //beginMatchTab.setDisable(false);
     }
     
+<<<<<<< HEAD
+=======
 <<<<<<< SEJMAN_po_koniec_2_Sprintu
 =======
+>>>>>>> efeae28539a1a92211a29322728b6a73356edec1
     private void setSuccessButtonContent(){
         if(faulButtonFlag){
             this.successfullButton.setText("Był faulowany");
@@ -132,7 +144,10 @@ public class MainController implements Initializable {
             this.noSuccessfullButton.setText("Niecelny");
         }
     }
+<<<<<<< HEAD
+=======
 >>>>>>> local
+>>>>>>> efeae28539a1a92211a29322728b6a73356edec1
     /*
     Add selected players to starting lineup
     if selected player is on starting lineup - do nothing
@@ -149,6 +164,7 @@ public class MainController implements Initializable {
                 lineup.moveFromReserveToStarting(selectedPlayer);
             }else{
                 lineup.insertIntoStartingLineup(selectedPlayer);
+                
             }
             startingLineupListView.setItems(lineup.getStartingLineup());
             
@@ -372,7 +388,7 @@ public class MainController implements Initializable {
     }
     
     /*
-    Dont lent pick 2 checkbox same same time
+    Dont let pick 2 checkbox at the same time
     */
     public void leftFootSelected(){
         rightFootCheckBox.setSelected(false);
@@ -386,14 +402,17 @@ public class MainController implements Initializable {
     
     */
     
-    /*
-    Fill cuntetnt in collect view - player lists and team name
-    */
+    
     public void startMatchBtClick(){
         this.game = new Game();
         this.gameManager = GameManager.getInstance();   
-        gameManager.saveGame(game);       
+        gameManager.saveGame(game);
+        setSuccessButtonContent();
+        
     }
+    /*
+    Fill content in collect view - player lists and team name
+    */
     public void fillContentCollectView(){
         if (this.match != null){
             teamNameCollectView.setText(this.match.getTeam().getName());
@@ -411,6 +430,8 @@ public class MainController implements Initializable {
     public void shotBtClick(){
         action.setAction(new Shot());
         curInsertTA.setText(action.getInsert());
+        this.faulButtonFlag = false;
+        setSuccessButtonContent();
     }
     
     /*
@@ -420,14 +441,53 @@ public class MainController implements Initializable {
     public void passingBtClick(){
         action.setAction(new Passing());
         curInsertTA.setText(action.getInsert());
+        this.faulButtonFlag = false;
+        setSuccessButtonContent();
     }
     
+    public void penaltyBtClick(){
+        action.setAction(new Penalty());
+        curInsertTA.setText(action.getInsert());
+        this.faulButtonFlag = false;
+        setSuccessButtonContent();
+    }
+    public void cornerBtClick(){
+        action.setAction(new Corner());
+        curInsertTA.setText(action.getInsert());
+        this.faulButtonFlag = false;
+        setSuccessButtonContent();
+    }
+    public void defenseBtClick(){
+        action.setAction(new Defense());
+        curInsertTA.setText(action.getInsert());
+        this.faulButtonFlag = false;
+        setSuccessButtonContent();
+    }
+    public void faulBtClick(){
+        action.setAction(new Faul());
+        curInsertTA.setText(action.getInsert());
+        this.faulButtonFlag = true;
+        setSuccessButtonContent();
+    }
+    public void yellowCardBtClick(){
+        action.setAction(new Card("ŻÓŁTA"));
+        curInsertTA.setText(action.getInsert() + " ŻÓŁTA");
+        this.faulButtonFlag = false;
+        setSuccessButtonContent();
+    }
+    public void redCardBtClick(){
+        action.setAction(new Card("CZERWONA"));
+        curInsertTA.setText(action.getInsert() + " CZERWONA");
+        this.faulButtonFlag = false;
+        setSuccessButtonContent();
+    }
     /*
     Add left foot in current action
     */
     public void leftFootBtClick(){
         action.setPartOfBody(PartsOfBody.LEWA_NOGA);
         curInsertTA.setText(action.getInsert());
+        
     }
 
     /*
@@ -498,28 +558,36 @@ public class MainController implements Initializable {
     mark as successful action
     */
     public void successfulBtClick(){
-        action.setSuccessful(1);
-        curInsertTA.setText(action.getInsert());
+
+            action.setSuccessful(1);
+            curInsertTA.setText(action.getInsert());
+
     }
 
     /*
     mark as unsuccessful action
     */
     public void unsuccessfulBtClick(){
-        action.setSuccessful(-1);
-        curInsertTA.setText(action.getInsert());
+            action.setSuccessful(-1);
+            curInsertTA.setText(action.getInsert());
     }
     
     /*
     accept current action and add query to database 
     */
     public void acceptBtClick(){
+<<<<<<< HEAD
+        //action.setGame(gameManager.getGame(game.getId()));
+        action.setComment(commentTA.getText());
+        action.setGame(game);
+=======
 <<<<<<< SEJMAN_po_koniec_2_Sprintu
 =======
         //action.setGame(gameManager.getGame(game.getId()));
         action.setComment(commentTA.getText());
         action.setGame(game);
 >>>>>>> local
+>>>>>>> efeae28539a1a92211a29322728b6a73356edec1
         IAction result = action.saveAction();
         if(result != null){
             actionList.add(result);

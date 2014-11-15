@@ -8,6 +8,7 @@ package fsc.model.actions;
 import fsc.model.Game;
 import fsc.model.Player;
 import fsc.model.User;
+import fsc.model.interfaces.IAction;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Basic;
@@ -37,7 +38,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Penalty.findAll", query = "SELECT p FROM Penalty p"),
     @NamedQuery(name = "Penalty.findById", query = "SELECT p FROM Penalty p WHERE p.id = :id"),
     @NamedQuery(name = "Penalty.findByTime", query = "SELECT p FROM Penalty p WHERE p.time = :time")})
-public class Penalty implements Serializable {
+public class Penalty implements Serializable, IAction{
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -149,8 +150,25 @@ public class Penalty implements Serializable {
     }
 
     @Override
+    public int getIdTypeOfAction(){
+        return 3;
+    }
+    
+    @Override
     public String toString() {
-        return "fsc.model.Penalty[ id=" + id + " ]";
+        String result = getActionName() + " [";
+        if(getId() != null)
+            result += getId();
+        result += "]: ";
+        if(getPlayerId()!= null)
+            result += getPlayerId() + " ";
+        return result;
+
+    }
+
+    @Override
+    public String getActionName() {
+        return "Rzut karny";
     }
     
 }

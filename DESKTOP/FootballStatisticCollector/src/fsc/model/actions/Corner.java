@@ -8,6 +8,7 @@ package fsc.model.actions;
 import fsc.model.Game;
 import fsc.model.Player;
 import fsc.model.User;
+import fsc.model.interfaces.IAction;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Basic;
@@ -37,7 +38,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Corner.findAll", query = "SELECT c FROM Corner c"),
     @NamedQuery(name = "Corner.findById", query = "SELECT c FROM Corner c WHERE c.id = :id"),
     @NamedQuery(name = "Corner.findByTime", query = "SELECT c FROM Corner c WHERE c.time = :time")})
-public class Corner implements Serializable {
+public class Corner implements Serializable, IAction {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -139,7 +140,23 @@ public class Corner implements Serializable {
 
     @Override
     public String toString() {
-        return "fsc.model.Corner[ id=" + id + " ]";
+        String result = this.getActionName() +"[";
+        if(getId() != null)
+            result += getId();
+        result += "]: ";
+        if(getPlayerId() != null)
+            result += getPlayerId() + " ";            
+        return result;
+    }
+
+    @Override
+    public int getIdTypeOfAction() {
+        return 4;
+    }
+
+    @Override
+    public String getActionName() {
+        return "Rzut rożny";
     }
     
 }

@@ -11,9 +11,9 @@ package fsc.model.enums;
  */
 public enum Positions {
     
-    BRAMKARZ,
-    OBROŃCA,
+    NAPASTNIK,
     POMOCNIK,
-    NAPASTNIK;
+    OBROŃCA,
+    BRAMKARZ;
     
 }

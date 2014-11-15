@@ -8,6 +8,7 @@ package fsc.model.actions;
 import fsc.model.Game;
 import fsc.model.Player;
 import fsc.model.User;
+import fsc.model.interfaces.IAction;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Basic;
@@ -38,7 +39,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Card.findById", query = "SELECT c FROM Card c WHERE c.id = :id"),
     @NamedQuery(name = "Card.findByTime", query = "SELECT c FROM Card c WHERE c.time = :time"),
     @NamedQuery(name = "Card.findByKind", query = "SELECT c FROM Card c WHERE c.kind = :kind")})
-public class Card implements Serializable {
+public class Card implements Serializable, IAction {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -70,7 +71,9 @@ public class Card implements Serializable {
 
     public Card() {
     }
-
+    public Card(String kind){
+        this.kind = kind;
+    }
     public Card(Integer id) {
         this.id = id;
     }
@@ -172,7 +175,25 @@ public class Card implements Serializable {
 
     @Override
     public String toString() {
-        return "fsc.model.Card[ id=" + id + " ]";
+        String result = this.getActionName() + " "; 
+        if(getKind() != null)
+            result += getKind() +"[";
+        if(getId() != null)
+            result += getId();
+        result += "]: ";
+        if(getPlayerId() != null)
+            result += getPlayerId() + " ";
+        return result;
+    }
+
+    @Override
+    public int getIdTypeOfAction() {
+        return 7;
+    }
+
+    @Override
+    public String getActionName() {
+         return "Kartka";
     }
     
 }

@@ -8,6 +8,7 @@ package fsc.model.actions;
 import fsc.model.Game;
 import fsc.model.Player;
 import fsc.model.User;
+import fsc.model.interfaces.IAction;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
@@ -41,7 +42,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Faul.findById", query = "SELECT f FROM Faul f WHERE f.id = :id"),
     @NamedQuery(name = "Faul.findByTime", query = "SELECT f FROM Faul f WHERE f.time = :time"),
     @NamedQuery(name = "Faul.findByCardId", query = "SELECT f FROM Faul f WHERE f.cardId = :cardId")})
-public class Faul implements Serializable {
+public class Faul implements Serializable, IAction {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -186,7 +187,26 @@ public class Faul implements Serializable {
 
     @Override
     public String toString() {
-        return "fsc.model.Faul[ id=" + id + " ]";
+        String result = this.getActionName() +"[";
+        if(getId() != null)
+            result += getId();
+        result += "]: ";
+        if(getPlayerOfenderId() != null)
+            result += getPlayerOfenderId() + " ";
+        else result += getPlayerVictimId() + " ";
+        return result;
+    }
+
+    @Override
+    public int getIdTypeOfAction() {
+         return 6;
+    }
+
+    @Override
+    public String getActionName() {
+         if( this.getPlayerOfenderId() == null){
+             return "Faulowany";
+         } else return "Faulował";
     }
     
 }
