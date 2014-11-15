@@ -1,6 +1,0 @@
-18.10.2014
-Koniec sprintu1
-
-Uzgodniliśmy zakres sprintu 2. Zmieniono też kilka priorytetów, które naszym zdaniem wymagały poprawy,
-tak żeby dobór zadań do sprintu był w miarę sensowny i logiczny.
-

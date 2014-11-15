@@ -1,6 +1,0 @@
-CREATE TABLE druzyna
-(
-	id INT PRIMARY KEY IDENTITY(1,1),
-	nazwa VARCHAR(256),
-	
-)
