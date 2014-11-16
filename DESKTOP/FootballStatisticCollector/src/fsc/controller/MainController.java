@@ -24,11 +24,9 @@ import fsc.model.Team;
 import fsc.model.User;
 
 import fsc.model.actions.Card;
-import fsc.model.actions.Corner;
 import fsc.model.actions.Defense;
 import fsc.model.actions.Faul;
 import fsc.model.actions.Injury;
-import fsc.model.actions.Penalty;
 import fsc.model.actions.Swap;
 import fsc.model.actions.Takeover;
 
@@ -500,16 +498,16 @@ public class MainController implements Initializable {
     }
     
     public void penaltyBtClick(){
-        action.setAction(new Penalty());
+        /*action.setAction(new Penalty());
         curInsertTA.setText(action.getInsert());
         this.faulButtonFlag = false;
-        setSuccessButtonContent();
+        setSuccessButtonContent();*/
     }
     public void cornerBtClick(){
-        action.setAction(new Corner());
+       /* action.setAction(new Corner());
         curInsertTA.setText(action.getInsert());
         this.faulButtonFlag = false;
-        setSuccessButtonContent();
+        setSuccessButtonContent();*/
     }
     public void defenseBtClick(){
         action.setAction(new Defense());
@@ -524,16 +522,16 @@ public class MainController implements Initializable {
         setSuccessButtonContent();
     }
     public void yellowCardBtClick(){
-        action.setAction(new Card("ŻÓŁTA"));
+       /* action.setAction(new Card("ŻÓŁTA"));
         curInsertTA.setText(action.getInsert() + " ŻÓŁTA");
         this.faulButtonFlag = false;
-        setSuccessButtonContent();
+        setSuccessButtonContent();*/
     }
     public void redCardBtClick(){
-        action.setAction(new Card("CZERWONA"));
+        /*action.setAction(new Card("CZERWONA"));
         curInsertTA.setText(action.getInsert() + " CZERWONA");
         this.faulButtonFlag = false;
-        setSuccessButtonContent();
+        setSuccessButtonContent();*/
     }
     /*
     Add left foot in current action

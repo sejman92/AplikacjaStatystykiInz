@@ -9,9 +9,7 @@ import fsc.model.Game;
 import fsc.model.Player;
 import fsc.model.User;
 import fsc.model.interfaces.IAction;
-import fsc.model.interfaces.IEntityElement;
 import java.io.Serializable;
-import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -23,23 +21,24 @@ import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
  * @author Mateusz
  */
 @Entity
-@Table(catalog = "fsmdb", name = "Shot",schema = "")
+@Table(catalog = "fsmdb",name = "Shot", schema = "")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Shot.findAll", query = "SELECT s FROM Shot s"),
     @NamedQuery(name = "Shot.findById", query = "SELECT s FROM Shot s WHERE s.id = :id"),
-    @NamedQuery(name = "Shot.findByPalce", query = "SELECT s FROM Shot s WHERE s.palce = :palce"),
-    @NamedQuery(name = "Shot.findBySuccess", query = "SELECT s FROM Shot s WHERE s.success = :success")})
+    @NamedQuery(name = "Shot.findBySuccess", query = "SELECT s FROM Shot s WHERE s.success = :success"),
+    @NamedQuery(name = "Shot.findByCorner", query = "SELECT s FROM Shot s WHERE s.corner = :corner"),
+    @NamedQuery(name = "Shot.findByFreekick", query = "SELECT s FROM Shot s WHERE s.freekick = :freekick"),
+    @NamedQuery(name = "Shot.findByPenalty", query = "SELECT s FROM Shot s WHERE s.penalty = :penalty"),
+    @NamedQuery(name = "Shot.findByBodyPart", query = "SELECT s FROM Shot s WHERE s.bodyPart = :bodyPart")})
 public class Shot implements Serializable, IAction {
     private static final long serialVersionUID = 1L;
     @Id
@@ -50,9 +49,13 @@ public class Shot implements Serializable, IAction {
     @Lob
     @Column(length = 65535)
     private String comment;
-    @Column(length = 50)
-    private String palce;
-    private Boolean success;
+    @Column(length = 20)
+    private String success;
+    private Boolean corner;
+    private Boolean freekick;
+    private Boolean penalty;
+    @Column(length = 20)
+    private String bodyPart;
     @JoinColumn(name = "owner_id", referencedColumnName = "id")
     @ManyToOne
     private User ownerId;
@@ -62,10 +65,6 @@ public class Shot implements Serializable, IAction {
     @JoinColumn(name = "player_id", referencedColumnName = "id")
     @ManyToOne
     private Player playerId;
-    @OneToMany(mappedBy = "shotId")
-    private List<Penalty> penaltyList;
-    @OneToMany(mappedBy = "shotId")
-    private List<Assist> assistList;
 
     public Shot() {
     }
@@ -74,7 +73,6 @@ public class Shot implements Serializable, IAction {
         this.id = id;
     }
 
-    @Override
     public Integer getId() {
         return id;
     }
@@ -87,25 +85,48 @@ public class Shot implements Serializable, IAction {
         return comment;
     }
 
-    @Override
     public void setComment(String comment) {
         this.comment = comment;
     }
 
-    public String getPalce() {
-        return palce;
-    }
-
-    public void setPalce(String palce) {
-        this.palce = palce;
-    }
-
-    public Boolean getSuccess() {
+    public String getSuccess() {
         return success;
     }
 
-    public void setSuccess(Boolean success) {
+    public void setSuccess(String success) {
         this.success = success;
+    }
+
+    public Boolean getCorner() {
+        return corner;
+    }
+
+    public void setCorner(Boolean corner) {
+        this.corner = corner;
+    }
+
+    public Boolean getFreekick() {
+        return freekick;
+    }
+
+    public void setFreekick(Boolean freekick) {
+        this.freekick = freekick;
+    }
+
+    public Boolean getPenalty() {
+        return penalty;
+    }
+
+    public void setPenalty(Boolean penalty) {
+        this.penalty = penalty;
+    }
+
+    public String getBodyPart() {
+        return bodyPart;
+    }
+
+    public void setBodyPart(String bodyPart) {
+        this.bodyPart = bodyPart;
     }
 
     public User getOwnerId() {
@@ -120,7 +141,6 @@ public class Shot implements Serializable, IAction {
         return gameId;
     }
 
-    @Override
     public void setGameId(Game gameId) {
         this.gameId = gameId;
     }
@@ -131,24 +151,6 @@ public class Shot implements Serializable, IAction {
 
     public void setPlayerId(Player playerId) {
         this.playerId = playerId;
-    }
-
-    @XmlTransient
-    public List<Penalty> getPenaltyList() {
-        return penaltyList;
-    }
-
-    public void setPenaltyList(List<Penalty> penaltyList) {
-        this.penaltyList = penaltyList;
-    }
-
-    @XmlTransient
-    public List<Assist> getAssistList() {
-        return assistList;
-    }
-
-    public void setAssistList(List<Assist> assistList) {
-        this.assistList = assistList;
     }
 
     @Override
@@ -170,16 +172,6 @@ public class Shot implements Serializable, IAction {
         }
         return true;
     }
-    
-    @Override
-    public int getIdTypeOfAction(){
-        return 1;
-    }
-    
-    @Override
-    public String getActionName(){
-        return "strzał";
-    }
 
     @Override
     public String toString() {
@@ -188,10 +180,18 @@ public class Shot implements Serializable, IAction {
             result += getId();
         result += "]: ";
         if(getPlayerId() != null)
-            result += getPlayerId() + " ";
-        if(getPalce() != null)
-            result += getPalce();
-               
+            result += getPlayerId() + " "; 
         return result;
-    }  
+    }
+
+    @Override
+    public int getIdTypeOfAction() {
+        return 1;
+    }
+
+    @Override
+    public String getActionName() {
+        return "strzał";
+    }
+    
 }

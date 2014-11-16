@@ -9,7 +9,6 @@
     <class>fsc.model.Access</class>
     <class>fsc.model.User</class>
     <class>fsc.model.Team</class>
-    <class>fsc.model.Participated_1</class>
     <class>fsc.model.actions.Corner</class>
     <class>fsc.model.actions.Assist</class>
     <class>fsc.model.actions.Card</class>

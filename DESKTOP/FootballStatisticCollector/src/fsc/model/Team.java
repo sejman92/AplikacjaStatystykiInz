@@ -8,8 +8,6 @@ package fsc.model;
 import fsc.model.interfaces.IEntityElement;
 import java.io.Serializable;
 import java.util.List;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -37,7 +35,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Team.findAll", query = "SELECT t FROM Team t"),
     @NamedQuery(name = "Team.findById", query = "SELECT t FROM Team t WHERE t.id = :id"),
     @NamedQuery(name = "Team.findByName", query = "SELECT t FROM Team t WHERE t.name = :name")})
-public class Team implements Serializable, IEntityElement {
+public class Team implements Serializable,IEntityElement {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -60,11 +58,10 @@ public class Team implements Serializable, IEntityElement {
     public Team(Integer id) {
         this.id = id;
     }
-    
-    public Team(String name){
+
+    public Team(String name) {
         this.name = name;
     }
-
     public Integer getId() {
         return id;
     }
@@ -81,10 +78,6 @@ public class Team implements Serializable, IEntityElement {
         this.name = name;
     }
 
-    public ObservableList<Player> getPlayerObservableList(){
-        return FXCollections.observableArrayList(playerList);
-    }
-    
     @XmlTransient
     public List<Player> getPlayerList() {
         return playerList;

@@ -10,11 +10,9 @@ import fsc.model.actions.Passing;
 import fsc.model.Player;
 
 import fsc.model.actions.Card;
-import fsc.model.actions.Corner;
 import fsc.model.actions.Defense;
 import fsc.model.actions.Faul;
 import fsc.model.actions.Injury;
-import fsc.model.actions.Penalty;
 import fsc.model.actions.Shot;
 import fsc.model.actions.Takeover;
 import fsc.model.interfaces.IAction;
@@ -84,7 +82,7 @@ public class Action {
                     ((Shot)action).setPlayerId(player);
                     ((Shot)action).setGameId(game);
                     if(partOfBody != null)
-                        ((Shot)action).setPalce(partOfBody.toString());
+                        ((Shot)action).setBodyPart(partOfBody.toString());
                     break;
                 }
                 case 2:{
@@ -98,16 +96,16 @@ public class Action {
                     break;
                 }
 
-                case 3:{
+                /*case 3:{
                     ((Penalty)action).setPlayerId(player);
                     ((Penalty)action).setGameId(game);
                     break;
-                }
-                case 4:{
+                }*/
+                /*case 4:{
                     ((Corner)action).setPlayerId(player);
                     ((Corner)action).setGameId(game);
                     break;
-                }
+                }*/
                 case 5:{
                     ((Defense)action).setPlayerId(player);
                     ((Defense)action).setGameId(game);
@@ -126,6 +124,7 @@ public class Action {
                 case 7: {
                     ((Card)action).setPlayerId(player);
                     ((Card)action).setGameId(game);
+                    //((Card)action).setKind(kind);
                     break;
                 }
                 case 8: {

@@ -400,14 +400,6 @@
 <children>
 <HBox maxHeight="1.7976931348623157E308" prefHeight="52.0" prefWidth="477.0" VBox.vgrow="ALWAYS">
 <children>
-<Button fx:id="tackleBt" alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" prefHeight="38.0" prefWidth="0.0" text="Wślizg" textAlignment="CENTER" HBox.hgrow="ALWAYS">
-<padding>
-<Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
-</padding>
-<HBox.margin>
-<Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
-</HBox.margin>
-</Button>
 <Button fx:id="defenseBt" alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#defenseBtClick" prefHeight="38.0" prefWidth="6.0" text="Obrona" textAlignment="CENTER" HBox.hgrow="ALWAYS">
 <HBox.margin>
 <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />

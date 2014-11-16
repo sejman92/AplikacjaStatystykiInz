@@ -32,7 +32,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author Mateusz
  */
 @Entity
-@Table(catalog = "fsmdb", name = "Takeover",schema = "")
+@Table(catalog = "fsmdb",name = "Takeover", schema = "")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Takeover.findAll", query = "SELECT t FROM Takeover t"),
@@ -67,7 +67,6 @@ public class Takeover implements Serializable, IAction {
         this.id = id;
     }
 
-    @Override
     public Integer getId() {
         return id;
     }
@@ -88,7 +87,6 @@ public class Takeover implements Serializable, IAction {
         return comment;
     }
 
-    @Override
     public void setComment(String comment) {
         this.comment = comment;
     }
@@ -97,7 +95,6 @@ public class Takeover implements Serializable, IAction {
         return ownerId;
     }
 
-    @Override
     public void setOwnerId(User ownerId) {
         this.ownerId = ownerId;
     }
@@ -106,7 +103,6 @@ public class Takeover implements Serializable, IAction {
         return gameId;
     }
 
-    @Override
     public void setGameId(Game gameId) {
         this.gameId = gameId;
     }
@@ -138,12 +134,7 @@ public class Takeover implements Serializable, IAction {
         }
         return true;
     }
-    
-    @Override
-    public int getIdTypeOfAction() {
-        return 8;
-    }
-    
+
     @Override
     public String toString() {
         String result = "przechwyt [";
@@ -152,13 +143,17 @@ public class Takeover implements Serializable, IAction {
         result += "]: ";
         if(getPlayerId() != null)
             result += getPlayerId();
-        
         return result;
     }
-    
+
+    @Override
+    public int getIdTypeOfAction() {
+        return 8;
+    }
+
     @Override
     public String getActionName() {
         return "przechwyt";
-    } 
+    }
     
 }

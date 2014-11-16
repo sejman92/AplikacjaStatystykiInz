@@ -5,17 +5,14 @@
  */
 package fsc.model;
 
-import fsc.model.actions.Corner;
 import fsc.model.actions.Takeover;
-import fsc.model.actions.Shot;
 import fsc.model.actions.Card;
-import fsc.model.actions.Assist;
-import fsc.model.actions.Swap;
-import fsc.model.actions.Injury;
-import fsc.model.actions.Faul;
 import fsc.model.actions.Passing;
+import fsc.model.actions.Injury;
+import fsc.model.actions.Shot;
+import fsc.model.actions.Swap;
+import fsc.model.actions.Faul;
 import fsc.model.actions.Defense;
-import fsc.model.actions.Penalty;
 import fsc.model.enums.Legs;
 import fsc.model.enums.Positions;
 import fsc.model.interfaces.IEntityElement;
@@ -41,7 +38,7 @@ import javax.xml.bind.annotation.XmlTransient;
  * @author Mateusz
  */
 @Entity
-@Table(catalog = "fsmdb", name = "Player",schema = "")
+@Table(catalog = "fsmdb",name = "Player", schema = "")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Player.findAll", query = "SELECT p FROM Player p"),
@@ -51,7 +48,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Player.findByNo", query = "SELECT p FROM Player p WHERE p.no = :no"),
     @NamedQuery(name = "Player.findByRole", query = "SELECT p FROM Player p WHERE p.role = :role"),
     @NamedQuery(name = "Player.findByPreferedLeg", query = "SELECT p FROM Player p WHERE p.preferedLeg = :preferedLeg"),
-    @NamedQuery(name = "Player.findByTeamId", query = "SELECT p from Player p WHERE p.teamId = :team_id")})
+    @NamedQuery(name = "Player.findByActive", query = "SELECT p FROM Player p WHERE p.active = :active")})
 public class Player implements Serializable, IEntityElement, Comparable<Player> {
     private static final long serialVersionUID = 1L;
     @Id
@@ -68,22 +65,20 @@ public class Player implements Serializable, IEntityElement, Comparable<Player> 
     private String role;
     @Column(name = "prefered_leg", length = 20)
     private String preferedLeg;
-    @OneToMany(mappedBy = "playerId")
-    private List<Shot> shotList;
+    @Column(length = 10)
+    private String active;
     @OneToMany(mappedBy = "playerId")
     private List<Injury> injuryList;
     @OneToMany(mappedBy = "playerId")
-    private List<Takeover> takeoverList;
+    private List<Shot> shotList;
     @OneToMany(mappedBy = "playerId")
-    private List<Corner> cornerList;
+    private List<Takeover> takeoverList;
     @JoinColumn(name = "team_id", referencedColumnName = "id", nullable = false)
     @ManyToOne(optional = false)
     private Team teamId;
     @JoinColumn(name = "owner_id", referencedColumnName = "id", nullable = false)
     @ManyToOne(optional = false)
     private User ownerId;
-    @OneToMany(mappedBy = "playerId")
-    private List<Penalty> penaltyList;
     @OneToMany(mappedBy = "playerOfenderId")
     private List<Faul> faulList;
     @OneToMany(mappedBy = "playerVictimId")
@@ -96,12 +91,8 @@ public class Player implements Serializable, IEntityElement, Comparable<Player> 
     private List<Swap> swapList;
     @OneToMany(mappedBy = "playerInId")
     private List<Swap> swapList1;
-    @OneToMany(mappedBy = "playerGettingId")
-    private List<Passing> passingList;
     @OneToMany(mappedBy = "playerPassingId")
-    private List<Passing> passingList1;
-    @OneToMany(mappedBy = "playerId")
-    private List<Assist> assistList;
+    private List<Passing> passingList;
     @OneToMany(mappedBy = "playerId")
     private List<Card> cardList;
 
@@ -143,6 +134,11 @@ public class Player implements Serializable, IEntityElement, Comparable<Player> 
     public void setNo(Integer no) {
         this.no = no;
     }
+
+    public String getRole() {
+        return role;
+    }
+    
     public Positions getPositions(){
         if(role == null){
             System.out.println("brak pozycji - oznaczono domyslnie jako bramkarz");
@@ -151,12 +147,12 @@ public class Player implements Serializable, IEntityElement, Comparable<Player> 
         return Positions.valueOf(role);
     }
 
-    public String getRole() {
-        return role;
-    }
-
     public void setRole(String role) {
         this.role = role;
+    }
+
+    public String getPreferedLeg() {
+        return preferedLeg;
     }
     
     public Legs getPreferedLegs(){
@@ -167,21 +163,16 @@ public class Player implements Serializable, IEntityElement, Comparable<Player> 
         return Legs.valueOf(preferedLeg);
     }
 
-    public String getPreferedLeg() {
-        return preferedLeg;
-    }
-
     public void setPreferedLeg(String preferedLeg) {
         this.preferedLeg = preferedLeg;
     }
 
-    @XmlTransient
-    public List<Shot> getShotList() {
-        return shotList;
+    public String getActive() {
+        return active;
     }
 
-    public void setShotList(List<Shot> shotList) {
-        this.shotList = shotList;
+    public void setActive(String active) {
+        this.active = active;
     }
 
     @XmlTransient
@@ -194,21 +185,21 @@ public class Player implements Serializable, IEntityElement, Comparable<Player> 
     }
 
     @XmlTransient
+    public List<Shot> getShotList() {
+        return shotList;
+    }
+
+    public void setShotList(List<Shot> shotList) {
+        this.shotList = shotList;
+    }
+
+    @XmlTransient
     public List<Takeover> getTakeoverList() {
         return takeoverList;
     }
 
     public void setTakeoverList(List<Takeover> takeoverList) {
         this.takeoverList = takeoverList;
-    }
-
-    @XmlTransient
-    public List<Corner> getCornerList() {
-        return cornerList;
-    }
-
-    public void setCornerList(List<Corner> cornerList) {
-        this.cornerList = cornerList;
     }
 
     public Team getTeamId() {
@@ -225,15 +216,6 @@ public class Player implements Serializable, IEntityElement, Comparable<Player> 
 
     public void setOwnerId(User ownerId) {
         this.ownerId = ownerId;
-    }
-
-    @XmlTransient
-    public List<Penalty> getPenaltyList() {
-        return penaltyList;
-    }
-
-    public void setPenaltyList(List<Penalty> penaltyList) {
-        this.penaltyList = penaltyList;
     }
 
     @XmlTransient
@@ -300,24 +282,6 @@ public class Player implements Serializable, IEntityElement, Comparable<Player> 
     }
 
     @XmlTransient
-    public List<Passing> getPassingList1() {
-        return passingList1;
-    }
-
-    public void setPassingList1(List<Passing> passingList1) {
-        this.passingList1 = passingList1;
-    }
-
-    @XmlTransient
-    public List<Assist> getAssistList() {
-        return assistList;
-    }
-
-    public void setAssistList(List<Assist> assistList) {
-        this.assistList = assistList;
-    }
-
-    @XmlTransient
     public List<Card> getCardList() {
         return cardList;
     }
@@ -325,7 +289,7 @@ public class Player implements Serializable, IEntityElement, Comparable<Player> 
     public void setCardList(List<Card> cardList) {
         this.cardList = cardList;
     }
-  
+
     @Override
     public int compareTo(Player p){
         if(no < p.getNo())
@@ -334,7 +298,7 @@ public class Player implements Serializable, IEntityElement, Comparable<Player> 
             return 1;
         return 0;
     }
-        
+    
     @Override
     public int hashCode() {
         int hash = 0;

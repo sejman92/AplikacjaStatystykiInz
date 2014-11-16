@@ -5,17 +5,14 @@
  */
 package fsc.model;
 
-import fsc.model.actions.Corner;
 import fsc.model.actions.Takeover;
-import fsc.model.actions.Shot;
 import fsc.model.actions.Card;
-import fsc.model.actions.Assist;
-import fsc.model.actions.Swap;
-import fsc.model.actions.Injury;
-import fsc.model.actions.Faul;
 import fsc.model.actions.Passing;
+import fsc.model.actions.Injury;
+import fsc.model.actions.Shot;
+import fsc.model.actions.Swap;
+import fsc.model.actions.Faul;
 import fsc.model.actions.Defense;
-import fsc.model.actions.Penalty;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.Basic;
@@ -37,7 +34,7 @@ import javax.xml.bind.annotation.XmlTransient;
  * @author Mateusz
  */
 @Entity
-@Table(catalog = "fsmdb", name = "User",schema = "")
+@Table(catalog = "fsmdb",name = "User", schema = "")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "User.findAll", query = "SELECT u FROM User u"),
@@ -62,13 +59,11 @@ public class User implements Serializable {
     @Column(length = 50)
     private String surname;
     @OneToMany(mappedBy = "ownerId")
-    private List<Shot> shotList;
-    @OneToMany(mappedBy = "ownerId")
     private List<Injury> injuryList;
     @OneToMany(mappedBy = "ownerId")
-    private List<Takeover> takeoverList;
+    private List<Shot> shotList;
     @OneToMany(mappedBy = "ownerId")
-    private List<Corner> cornerList;
+    private List<Takeover> takeoverList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "ownerId")
     private List<Player> playerList;
     @OneToMany(mappedBy = "ownerId")
@@ -78,21 +73,17 @@ public class User implements Serializable {
     @OneToMany(mappedBy = "ownerId")
     private List<Team> teamList;
     @OneToMany(mappedBy = "ownerId")
-    private List<Penalty> penaltyList;
-    @OneToMany(mappedBy = "ownerId")
     private List<Faul> faulList;
     @OneToMany(mappedBy = "ownerId")
     private List<Defense> defenseList;
     @OneToMany(mappedBy = "ownerId")
     private List<Participated> participatedList;
+    @OneToMany(mappedBy = "ownerId")
+    private List<Swap> swapList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "userId")
     private List<Access> accessList;
     @OneToMany(mappedBy = "ownerId")
-    private List<Swap> swapList;
-    @OneToMany(mappedBy = "ownerId")
     private List<Passing> passingList;
-    @OneToMany(mappedBy = "ownerId")
-    private List<Assist> assistList;
     @OneToMany(mappedBy = "ownerId")
     private List<Card> cardList;
 
@@ -144,15 +135,6 @@ public class User implements Serializable {
     }
 
     @XmlTransient
-    public List<Shot> getShotList() {
-        return shotList;
-    }
-
-    public void setShotList(List<Shot> shotList) {
-        this.shotList = shotList;
-    }
-
-    @XmlTransient
     public List<Injury> getInjuryList() {
         return injuryList;
     }
@@ -162,21 +144,21 @@ public class User implements Serializable {
     }
 
     @XmlTransient
+    public List<Shot> getShotList() {
+        return shotList;
+    }
+
+    public void setShotList(List<Shot> shotList) {
+        this.shotList = shotList;
+    }
+
+    @XmlTransient
     public List<Takeover> getTakeoverList() {
         return takeoverList;
     }
 
     public void setTakeoverList(List<Takeover> takeoverList) {
         this.takeoverList = takeoverList;
-    }
-
-    @XmlTransient
-    public List<Corner> getCornerList() {
-        return cornerList;
-    }
-
-    public void setCornerList(List<Corner> cornerList) {
-        this.cornerList = cornerList;
     }
 
     @XmlTransient
@@ -216,15 +198,6 @@ public class User implements Serializable {
     }
 
     @XmlTransient
-    public List<Penalty> getPenaltyList() {
-        return penaltyList;
-    }
-
-    public void setPenaltyList(List<Penalty> penaltyList) {
-        this.penaltyList = penaltyList;
-    }
-
-    @XmlTransient
     public List<Faul> getFaulList() {
         return faulList;
     }
@@ -252,15 +225,6 @@ public class User implements Serializable {
     }
 
     @XmlTransient
-    public List<Access> getAccessList() {
-        return accessList;
-    }
-
-    public void setAccessList(List<Access> accessList) {
-        this.accessList = accessList;
-    }
-
-    @XmlTransient
     public List<Swap> getSwapList() {
         return swapList;
     }
@@ -270,21 +234,21 @@ public class User implements Serializable {
     }
 
     @XmlTransient
+    public List<Access> getAccessList() {
+        return accessList;
+    }
+
+    public void setAccessList(List<Access> accessList) {
+        this.accessList = accessList;
+    }
+
+    @XmlTransient
     public List<Passing> getPassingList() {
         return passingList;
     }
 
     public void setPassingList(List<Passing> passingList) {
         this.passingList = passingList;
-    }
-
-    @XmlTransient
-    public List<Assist> getAssistList() {
-        return assistList;
-    }
-
-    public void setAssistList(List<Assist> assistList) {
-        this.assistList = assistList;
     }
 
     @XmlTransient

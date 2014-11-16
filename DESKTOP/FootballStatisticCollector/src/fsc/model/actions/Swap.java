@@ -32,7 +32,7 @@ import javax.xml.bind.annotation.XmlTransient;
  * @author Mateusz
  */
 @Entity
-@Table(catalog = "fsmdb", name = "Swap",schema = "")
+@Table(catalog = "fsmdb",name = "Swap", schema = "")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Swap.findAll", query = "SELECT s FROM Swap s"),
@@ -74,7 +74,6 @@ public class Swap implements Serializable, IAction {
         this.id = id;
     }
 
-    @Override
     public Integer getId() {
         return id;
     }
@@ -87,7 +86,6 @@ public class Swap implements Serializable, IAction {
         return comment;
     }
 
-    @Override
     public void setComment(String comment) {
         this.comment = comment;
     }
@@ -121,7 +119,6 @@ public class Swap implements Serializable, IAction {
         return gameId;
     }
 
-    @Override
     public void setGameId(Game gameId) {
         this.gameId = gameId;
     }
@@ -170,24 +167,24 @@ public class Swap implements Serializable, IAction {
         }
         return true;
     }
-    
-    @Override
-    public int getIdTypeOfAction() {
-        return 10;
-    }
-    
+
     @Override
     public String toString() {
         String result = "zmiana [";
         if(getId() != null)
             result += getId();
         result += "]: ";
-        
         return result;
     }
-    
+
+    @Override
+    public int getIdTypeOfAction() {
+        return 10;
+    }
+
     @Override
     public String getActionName() {
         return "zmiana: ";
-    }    
+    }
+    
 }

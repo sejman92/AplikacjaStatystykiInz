@@ -67,7 +67,6 @@ public class Defense implements Serializable, IAction {
         this.id = id;
     }
 
-    @Override
     public Integer getId() {
         return id;
     }
@@ -88,7 +87,6 @@ public class Defense implements Serializable, IAction {
         return comment;
     }
 
-    @Override
     public void setComment(String comment) {
         this.comment = comment;
     }
@@ -105,7 +103,6 @@ public class Defense implements Serializable, IAction {
         return gameId;
     }
 
-    @Override
     public void setGameId(Game gameId) {
         this.gameId = gameId;
     }

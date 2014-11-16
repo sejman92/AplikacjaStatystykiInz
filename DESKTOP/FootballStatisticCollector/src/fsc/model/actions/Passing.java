@@ -38,7 +38,10 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Passing.findAll", query = "SELECT p FROM Passing p"),
     @NamedQuery(name = "Passing.findById", query = "SELECT p FROM Passing p WHERE p.id = :id"),
     @NamedQuery(name = "Passing.findByTime", query = "SELECT p FROM Passing p WHERE p.time = :time"),
-    @NamedQuery(name = "Passing.findBySuccessful", query = "SELECT p FROM Passing p WHERE p.successful = :successful")})
+    @NamedQuery(name = "Passing.findBySuccessful", query = "SELECT p FROM Passing p WHERE p.successful = :successful"),
+    @NamedQuery(name = "Passing.findByAssist", query = "SELECT p FROM Passing p WHERE p.assist = :assist"),
+    @NamedQuery(name = "Passing.findByCorner", query = "SELECT p FROM Passing p WHERE p.corner = :corner"),
+    @NamedQuery(name = "Passing.findByFreekick", query = "SELECT p FROM Passing p WHERE p.freekick = :freekick")})
 public class Passing implements Serializable, IAction {
     private static final long serialVersionUID = 1L;
     @Id
@@ -52,15 +55,15 @@ public class Passing implements Serializable, IAction {
     @Column(length = 65535)
     private String comment;
     private Boolean successful;
+    private Boolean assist;
+    private Boolean corner;
+    private Boolean freekick;
     @JoinColumn(name = "owner_id", referencedColumnName = "id")
     @ManyToOne
     private User ownerId;
     @JoinColumn(name = "game_id", referencedColumnName = "id")
     @ManyToOne
     private Game gameId;
-    @JoinColumn(name = "player_getting_id", referencedColumnName = "id")
-    @ManyToOne
-    private Player playerGettingId;
     @JoinColumn(name = "player_passing_id", referencedColumnName = "id")
     @ManyToOne
     private Player playerPassingId;
@@ -72,7 +75,6 @@ public class Passing implements Serializable, IAction {
         this.id = id;
     }
 
-    @Override
     public Integer getId() {
         return id;
     }
@@ -93,7 +95,6 @@ public class Passing implements Serializable, IAction {
         return comment;
     }
 
-    @Override
     public void setComment(String comment) {
         this.comment = comment;
     }
@@ -104,6 +105,30 @@ public class Passing implements Serializable, IAction {
 
     public void setSuccessful(Boolean successful) {
         this.successful = successful;
+    }
+
+    public Boolean getAssist() {
+        return assist;
+    }
+
+    public void setAssist(Boolean assist) {
+        this.assist = assist;
+    }
+
+    public Boolean getCorner() {
+        return corner;
+    }
+
+    public void setCorner(Boolean corner) {
+        this.corner = corner;
+    }
+
+    public Boolean getFreekick() {
+        return freekick;
+    }
+
+    public void setFreekick(Boolean freekick) {
+        this.freekick = freekick;
     }
 
     public User getOwnerId() {
@@ -118,17 +143,8 @@ public class Passing implements Serializable, IAction {
         return gameId;
     }
 
-    @Override
     public void setGameId(Game gameId) {
         this.gameId = gameId;
-    }
-
-    public Player getPlayerGettingId() {
-        return playerGettingId;
-    }
-
-    public void setPlayerGettingId(Player playerGettingId) {
-        this.playerGettingId = playerGettingId;
     }
 
     public Player getPlayerPassingId() {
@@ -158,16 +174,6 @@ public class Passing implements Serializable, IAction {
         }
         return true;
     }
-    
-    @Override
-    public int getIdTypeOfAction(){
-        return 2;
-    }
-    
-    @Override
-    public String getActionName(){
-        return "podanie";
-    }
 
     @Override
     public String toString() {
@@ -182,9 +188,18 @@ public class Passing implements Serializable, IAction {
                 result += "celne";
             else
                 result += "niecelne";
-        }
-               
+        }      
         return result;
+    }
+
+    @Override
+    public int getIdTypeOfAction() {
+        return 2;
+    }
+
+    @Override
+    public String getActionName() {
+        return "podanie";
     }
     
 }

@@ -81,7 +81,6 @@ public class Faul implements Serializable, IAction {
         this.id = id;
     }
 
-    @Override
     public Integer getId() {
         return id;
     }
@@ -102,7 +101,6 @@ public class Faul implements Serializable, IAction {
         return comment;
     }
 
-    @Override
     public void setComment(String comment) {
         this.comment = comment;
     }
@@ -151,7 +149,6 @@ public class Faul implements Serializable, IAction {
         return gameId;
     }
 
-    @Override
     public void setGameId(Game gameId) {
         this.gameId = gameId;
     }
@@ -199,12 +196,12 @@ public class Faul implements Serializable, IAction {
 
     @Override
     public int getIdTypeOfAction() {
-         return 6;
+        return 6;
     }
 
     @Override
     public String getActionName() {
-         if( this.getPlayerOfenderId() == null){
+        if( this.getPlayerOfenderId() == null){
              return "Faulowany";
          } else return "Faulował";
     }

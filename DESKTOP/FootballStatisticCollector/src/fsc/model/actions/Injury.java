@@ -40,9 +40,7 @@ import javax.xml.bind.annotation.XmlTransient;
 @NamedQueries({
     @NamedQuery(name = "Injury.findAll", query = "SELECT i FROM Injury i"),
     @NamedQuery(name = "Injury.findById", query = "SELECT i FROM Injury i WHERE i.id = :id"),
-    @NamedQuery(name = "Injury.findByTime", query = "SELECT i FROM Injury i WHERE i.time = :time"),
-    @NamedQuery(name = "Injury.findByDuration", query = "SELECT i FROM Injury i WHERE i.duration = :duration"),
-    @NamedQuery(name = "Injury.findByKind", query = "SELECT i FROM Injury i WHERE i.kind = :kind")})
+    @NamedQuery(name = "Injury.findByTime", query = "SELECT i FROM Injury i WHERE i.time = :time")})
 public class Injury implements Serializable, IAction {
     private static final long serialVersionUID = 1L;
     @Id
@@ -52,9 +50,6 @@ public class Injury implements Serializable, IAction {
     private Integer id;
     @Temporal(TemporalType.TIME)
     private Date time;
-    private Integer duration;
-    @Column(length = 250)
-    private String kind;
     @Lob
     @Column(length = 65535)
     private String comment;
@@ -94,22 +89,6 @@ public class Injury implements Serializable, IAction {
 
     public void setTime(Date time) {
         this.time = time;
-    }
-
-    public Integer getDuration() {
-        return duration;
-    }
-
-    public void setDuration(Integer duration) {
-        this.duration = duration;
-    }
-
-    public String getKind() {
-        return kind;
-    }
-
-    public void setKind(String kind) {
-        this.kind = kind;
     }
 
     public String getComment() {
@@ -180,12 +159,7 @@ public class Injury implements Serializable, IAction {
         }
         return true;
     }
-    
-    @Override
-    public int getIdTypeOfAction() {
-        return 9;
-    }
-    
+
     @Override
     public String toString() {
         String result = "kontuzja [";
@@ -197,9 +171,15 @@ public class Injury implements Serializable, IAction {
         
         return result;
     }
-    
+
+    @Override
+    public int getIdTypeOfAction() {
+        return 9;
+    }
+
     @Override
     public String getActionName() {
         return "kontuzja";
-    }    
+    }
+    
 }

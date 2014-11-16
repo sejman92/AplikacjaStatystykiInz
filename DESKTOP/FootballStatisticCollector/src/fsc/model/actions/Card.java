@@ -71,14 +71,11 @@ public class Card implements Serializable, IAction {
 
     public Card() {
     }
-    public Card(String kind){
-        this.kind = kind;
-    }
+
     public Card(Integer id) {
         this.id = id;
     }
 
-    @Override
     public Integer getId() {
         return id;
     }
@@ -107,7 +104,6 @@ public class Card implements Serializable, IAction {
         return comment;
     }
 
-    @Override
     public void setComment(String comment) {
         this.comment = comment;
     }
@@ -140,7 +136,6 @@ public class Card implements Serializable, IAction {
         return gameId;
     }
 
-    @Override
     public void setGameId(Game gameId) {
         this.gameId = gameId;
     }
@@ -193,7 +188,7 @@ public class Card implements Serializable, IAction {
 
     @Override
     public String getActionName() {
-         return "Kartka";
+        return "Kartka";
     }
     
 }

@@ -1,0 +1,18 @@
+15.11.2014
+Koniec sprintu2
+
+Podczas rozmowy na Skypi'e przedstawiłem zespołowi opinię klienta na temat aplikacji ( szczegóły w notatce).
+Podsumowaliśmy sprint. Niestety nie udało nam się wykonać wszystkich zadań jakie wybraliśmy do tego sprintu. Spowodowane było to przede wszystkim usunięciem przez Wojtka brancha, na który Mateusz umieścił commity z kilkoma feature'ami. Całą sobotę ( 15.11) spędzili Oni na walce o przywrócenie zaimplementowanych zmian. Na szczęście się udało, jednak nie starczyło czasu na implementację wszystkich zadań. Przeniesiemy je automatycznie do następnego sprintu. 
+Kuba wykonał świetną robotę - robiąc wszystkie zadania jakie były na androida. Wyraził też obawy, że prawdopodobnie nie uda się nam połączyć androida z bazą danych. Dołożymy starań, żeby tak nie było, ale uzgodniliśmy, że w przypadki porażki - Android zostanie osobną aplikacją, ale będzie oferował eksport danych do pliku(pdf, doc) i możliwość wysłania go na pocztę. 
+
+Zmiany w Bazie danych dla Desktopu:
+
+Asysta -> flaga w podaniu
+Rożny -> flaga w podaniu i strzale
+Rzut wolny -> flaga do podania i strzału
+Score -> usunięcie score ( string)
+Injury -> usuniecie duration i kind
+Passing -> usunięcie getting id, type(char 20);
+Karny -> flaga do strzału
+Shot -> zmiana palce na bodyPart
+
