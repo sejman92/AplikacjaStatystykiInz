@@ -4,9 +4,12 @@ CREATE TABLE Shot
     player_id INT,
     game_id INT,
     comment TEXT,
-    palce CHAR(50),
+    bodyPart CHAR(20),
 	success CHAR(20),
     owner_id INT,
+	corner BOOL,
+	freekick BOOL,
+	penalty BOOL,
 	FOREIGN KEY (player_id)
 	REFERENCES Player(id),
 	FOREIGN KEY (game_id)
