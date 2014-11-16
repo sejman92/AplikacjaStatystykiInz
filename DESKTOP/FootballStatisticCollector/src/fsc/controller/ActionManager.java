@@ -16,6 +16,7 @@ import fsc.model.actions.Injury;
 
 import fsc.model.actions.Shot;
 import fsc.model.actions.Takeover;
+import fsc.model.enums.Kicks;
 import fsc.model.interfaces.IAction;
 import fsc.model.enums.PartsOfBody;
 
@@ -32,11 +33,12 @@ public class ActionManager {
     private String comment;
     private PartsOfBody partOfBody;
     private int successful; //1 - success, -1 - unsuccess, 0 - unknown
-    
+    private Kicks kickType; //set kickType for specified actions
     private ActionManager(){
         databaseManager = DatabaseManager.getInstance();
         comment = "";
         successful = 0;
+        kickType = Kicks.NONE;
     }
     
     public static ActionManager getInstance(){
@@ -65,6 +67,9 @@ public class ActionManager {
     public void setPartOfBody(PartsOfBody partOfBody){
         this.partOfBody = partOfBody;
     }
+    public void setKickType(Kicks kick){
+        this.kickType = kick;
+    }
     
     public void setSuccessful(int successful){
         this.successful = successful;
@@ -82,8 +87,8 @@ public class ActionManager {
             {
                 case 1:{
                     ((Shot)action).setPlayerId(player);
-                    if(partOfBody != null)
-                        ((Shot)action).setBodyPart(partOfBody.toString());
+                    if(partOfBody != null) ((Shot)action).setBodyPart(partOfBody.toString());
+                    setShotKickTypeBool((Shot)action);
                     break;
                 }
                 case 2:{
@@ -92,7 +97,8 @@ public class ActionManager {
                         ((Passing)action).setSuccessful(true);
                     }else if(successful < 0){
                         ((Passing)action).setSuccessful(false);
-                    }                  
+                    }
+                    setPassKickTypeBool((Passing)action);                  
                     break;
                 }
                 /*case 3:{
@@ -167,12 +173,52 @@ public class ActionManager {
             result += partOfBody + " ";
         if(successful > 0){
             if( action.getIdTypeOfAction()== 6 ) result += "faulowany"; //check it is faul or other action
-            else result += "celne";
+            else result += "celne ";
         }
         else if(successful < 0){
             if( action.getIdTypeOfAction() == 6) result += "faulował"; //check it is faul or other action
-            else result += "niecelne";
+            else result += "niecelne ";
         }
+        if( this.kickType != Kicks.NONE) result += kickTypeName();
         return result;
+    }
+
+    private void setShotKickTypeBool(Shot shot) {
+        if( this.kickType == Kicks.CORNER){
+            shot.setFreekick(Boolean.FALSE);
+            shot.setPenalty(Boolean.FALSE);
+            shot.setCorner(Boolean.TRUE);
+        } else if ( this.kickType == Kicks.FREE){
+            shot.setFreekick(Boolean.TRUE);
+            shot.setPenalty(Boolean.FALSE);
+            shot.setCorner(Boolean.FALSE);
+        } else if ( this.kickType == Kicks.PENALTY){
+            shot.setFreekick(Boolean.FALSE);
+            shot.setPenalty(Boolean.TRUE);
+            shot.setCorner(Boolean.FALSE);
+        } else {
+            shot.setFreekick(Boolean.FALSE);
+            shot.setPenalty(Boolean.FALSE);
+            shot.setCorner(Boolean.FALSE);
+        }
+    }
+
+    private void setPassKickTypeBool(Passing passing) {
+        if( this.kickType == Kicks.CORNER){
+            passing.setFreekick(Boolean.FALSE);
+            passing.setCorner(Boolean.TRUE);
+        } else if ( this.kickType == Kicks.FREE){
+            passing.setFreekick(Boolean.TRUE);
+            passing.setCorner(Boolean.FALSE);
+        }  else {
+            passing.setFreekick(Boolean.FALSE);
+            passing.setCorner(Boolean.FALSE);
+        }
+    }
+    private String kickTypeName(){
+        if( this.kickType == Kicks.CORNER) return "Rzut rożny";
+        if( this.kickType == Kicks.FREE) return "Rzut wolny";
+        if( this.kickType == Kicks.PENALTY) return "Rzut karny";
+        else return "";
     }
 }

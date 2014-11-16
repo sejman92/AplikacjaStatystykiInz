@@ -30,6 +30,7 @@ import fsc.model.actions.Injury;
 import fsc.model.actions.Swap;
 import fsc.model.actions.Takeover;
 
+import fsc.model.enums.Kicks;
 import fsc.model.enums.Legs;
 import fsc.model.enums.PartsOfBody;
 import fsc.model.enums.Positions;
@@ -121,7 +122,7 @@ public class MainController implements Initializable {
    private ActionManager action;
    private ObservableList<IAction>actionList;
    private Game game;
-   
+   private Kicks kickType;
    private boolean faulButtonFlag;
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -136,6 +137,7 @@ public class MainController implements Initializable {
         positionsLV.setItems(positions);
         lineup = new Lineup();
         faulButtonFlag = false;
+        kickType = Kicks.NONE; //just initialize kicktype
         //beginMatchTab.setDisable(false);
     }
     
@@ -481,6 +483,7 @@ public class MainController implements Initializable {
     
     public void shotBtClick(){
         action.setAction(new Shot());
+        action.setKickType(this.kickType);
         curInsertTA.setText(action.getInsert());
         this.faulButtonFlag = false;
         setSuccessButtonContent();
@@ -492,22 +495,35 @@ public class MainController implements Initializable {
     
     public void passingBtClick(){
         action.setAction(new Passing());
+        action.setKickType(kickType);
         curInsertTA.setText(action.getInsert());
         this.faulButtonFlag = false;
         setSuccessButtonContent();
     }
     
     public void penaltyBtClick(){
-        /*action.setAction(new Penalty());
+        if( this.kickType == Kicks.PENALTY) this.kickType = Kicks.NONE;
+        else this.kickType = Kicks.PENALTY;
+        action.setKickType(kickType);
         curInsertTA.setText(action.getInsert());
         this.faulButtonFlag = false;
-        setSuccessButtonContent();*/
+        setSuccessButtonContent();
     }
     public void cornerBtClick(){
-       /* action.setAction(new Corner());
+        if( this.kickType == Kicks.CORNER) this.kickType = Kicks.NONE;
+        else this.kickType = Kicks.CORNER;
+        action.setKickType(kickType);
         curInsertTA.setText(action.getInsert());
         this.faulButtonFlag = false;
-        setSuccessButtonContent();*/
+        setSuccessButtonContent();
+    }
+    public void freeKickBtClick(){
+        if( this.kickType == Kicks.FREE) this.kickType = Kicks.NONE;
+        else this.kickType = Kicks.FREE;
+        action.setKickType(kickType);
+        curInsertTA.setText(action.getInsert());
+        this.faulButtonFlag = false;
+        setSuccessButtonContent();
     }
     public void defenseBtClick(){
         action.setAction(new Defense());
@@ -522,16 +538,16 @@ public class MainController implements Initializable {
         setSuccessButtonContent();
     }
     public void yellowCardBtClick(){
-       /* action.setAction(new Card("ŻÓŁTA"));
+        action.setAction(new Card("ŻÓŁTA"));
         curInsertTA.setText(action.getInsert() + " ŻÓŁTA");
         this.faulButtonFlag = false;
-        setSuccessButtonContent();*/
+        setSuccessButtonContent();
     }
     public void redCardBtClick(){
-        /*action.setAction(new Card("CZERWONA"));
+        action.setAction(new Card("CZERWONA"));
         curInsertTA.setText(action.getInsert() + " CZERWONA");
         this.faulButtonFlag = false;
-        setSuccessButtonContent();*/
+        setSuccessButtonContent();
     }
     /*
     Add left foot in current action

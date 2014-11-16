@@ -7,6 +7,7 @@ package fsc.model.interfaces;
 
 import fsc.model.Game;
 import fsc.model.User;
+import fsc.model.enums.Kicks;
 
 /**
  *
@@ -18,4 +19,5 @@ public interface IAction extends IEntityElement{
     public void setGameId(Game gameId); //set game, which the action belongs
     public void setComment(String comment); //set comment to the action
     public String getActionName(); //get polish name of the action
+    
 }

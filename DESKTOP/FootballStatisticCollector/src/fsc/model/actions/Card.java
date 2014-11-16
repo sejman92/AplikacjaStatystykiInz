@@ -75,7 +75,11 @@ public class Card implements Serializable, IAction {
     public Card(Integer id) {
         this.id = id;
     }
-
+    
+    public Card(String kind){
+        this.kind = kind;
+    }
+    
     public Integer getId() {
         return id;
     }

@@ -175,12 +175,15 @@ public class Shot implements Serializable, IAction {
 
     @Override
     public String toString() {
-        String result = "strzał [";
+        String result = "Strzał [";
         if(getId() != null)
             result += getId();
         result += "]: ";
         if(getPlayerId() != null)
             result += getPlayerId() + " "; 
+        if(this.getCorner()) result += "Rzut rożny ";
+        if(this.getPenalty()) result += "Rzut karny ";
+        if(this.getFreekick()) result += "Rzut wolny ";
         return result;
     }
 

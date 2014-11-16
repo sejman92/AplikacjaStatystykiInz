@@ -185,10 +185,12 @@ public class Passing implements Serializable, IAction {
             result += getPlayerPassingId() + " ";
         if(getSuccessful()!=null){
             if(getSuccessful())            
-                result += "celne";
+                result += "celne ";
             else
-                result += "niecelne";
-        }      
+                result += "niecelne ";
+        }
+        if(this.getCorner()) result += "Rzut rożny ";
+        if(this.getFreekick()) result += "Rzut wolny ";
         return result;
     }
 
@@ -199,7 +201,7 @@ public class Passing implements Serializable, IAction {
 
     @Override
     public String getActionName() {
-        return "podanie";
+        return "Podanie ";
     }
     
 }
