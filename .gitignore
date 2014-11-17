@@ -13,3 +13,5 @@ DESKTOP/FootballStatisticCollector/build/classes/fsc/controller/MainController.c
 DESKTOP/FootballStatisticCollector/build/classes/fsc/model/actions/Injury.class
 DESKTOP/FootballStatisticCollector/build/classes/fsc/model/actions/Swap.class
 DESKTOP/FootballStatisticCollector/build/classes/fsc/model/actions/Takeover.class
+DESKTOP/FootballStatisticCollector/build/classes/fsc/model/actions/Passing.class
+DESKTOP/FootballStatisticCollector/build/classes/fsc/model/actions/Shot.class
