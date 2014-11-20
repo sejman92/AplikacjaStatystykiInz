@@ -101,14 +101,6 @@ public class ActionManager {
                     setPassKickTypeBool((Passing)action);                  
                     break;
                 }
-                /*case 3:{
-                    ((Penalty)action).setPlayerId(player);
-                    break;
-                }*/
-                /*case 4:{
-                    ((Corner)action).setPlayerId(player);
-                    break;
-                }*/
                 case 5:{
                     ((Defense)action).setPlayerId(player);
                     break;
