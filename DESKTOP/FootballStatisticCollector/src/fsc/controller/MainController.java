@@ -60,7 +60,10 @@ public class MainController implements Initializable {
    @FXML private Button createPlayerBt;
    @FXML private Button editSelectedPlayerBt;
    @FXML private Button removeSelectedPlayerBt;
-   @FXML private Button addToStartingLineup;
+   @FXML private Button addToStartingLineupButton;
+   @FXML private Button removeFromStartingLineupButton;
+   @FXML private Button addToReserveLineupButton;
+   @FXML private Button removeFromReserveLineupButton;
    @FXML private Button loadLineupButton;
    @FXML private CheckBox leftFootCheckBox;
    @FXML private CheckBox rightFootCheckBox;
@@ -115,7 +118,7 @@ public class MainController implements Initializable {
    private ObservableList<Positions>positions;
    private Team selectedTeam;
    private Player selectedPlayer;
-   private ObservableList<Player> selectedPlayers;
+   private ObservableList<Player> areNotSelectedToLineup;
    private Player selectedPlayerToAction;
    private Lineup lineup;
    private Match match;
@@ -207,22 +210,25 @@ public class MainController implements Initializable {
         try{
             selectedPlayer = (Player) playersListViewTeamManager.getSelectionModel().getSelectedItem();
             if(selectedPlayer == null)
-                return;
-            if(lineup.isOnStartingLineup(selectedPlayer))
-                return;
-            else if(lineup.isOnReserveLineup(selectedPlayer)){
-                lineup.moveFromReserveToStarting(selectedPlayer);
-            }else{
-                lineup.insertIntoStartingLineup(selectedPlayer);
-                
+                return;      
+            if( lineup.getStartingLineup().size() < GlobalVariables.MAX_PLAYERS_IN_LINEUP){
+                lineup.insertIntoStartingLineup(selectedPlayer); 
+                areNotSelectedToLineup.remove(selectedPlayer);
+                playersListViewTeamManager.setItems(areNotSelectedToLineup);
             }
+            
             startingLineupListView.setItems(lineup.getStartingLineup());
             
             if(lineup.isCorrect())
+            {
                 loadLineupButton.setDisable(false);
+            }
             else
+            {
                 loadLineupButton.setDisable(true);
-                
+                //addToStartingLineupButton.setDisable(false);
+            }
+            setAddRemoveButtonEnabling();
         }catch(Exception e){
             System.out.println("Add to starting lineup");
             System.out.println(e.getCause());
@@ -239,18 +245,13 @@ public class MainController implements Initializable {
             selectedPlayer = (Player) playersListViewTeamManager.getSelectionModel().getSelectedItem();
             if(selectedPlayer == null)
                 return;
-            if(lineup.isOnReserveLineup(selectedPlayer))
-                return;
-            else if (lineup.isOnStartingLineup(selectedPlayer)){
-                lineup.moveFromStartingToReserve(selectedPlayer);
-            }else{
-                lineup.insertIntoReserveLineup(selectedPlayer);
-            }
+            
+            lineup.insertIntoReserveLineup(selectedPlayer);
+            areNotSelectedToLineup.remove(selectedPlayer);
+            playersListViewTeamManager.setItems(areNotSelectedToLineup);
+            
             reserveLineupListView.setItems(lineup.getReserveLineup());
-            if( lineup.isCorrect())
-                loadLineupButton.setDisable(false);
-            else
-                loadLineupButton.setDisable(true);
+            setAddRemoveButtonEnabling();
         }catch(Exception e)
         {
             System.out.println("Add to reserve lineup");
@@ -266,10 +267,16 @@ public class MainController implements Initializable {
             selectedPlayer  = (Player) startingLineupListView.getSelectionModel().getSelectedItem();
             if(selectedPlayer == null) return;
             lineup.getStartingLineup().remove(selectedPlayer);
+            areNotSelectedToLineup.add(selectedPlayer); //move player to players list
             if(lineup.isCorrect())
+            {
                 loadLineupButton.setDisable(false);
+            }
             else
+            {
                 loadLineupButton.setDisable(true);
+            }
+            setAddRemoveButtonEnabling();
         } catch (Exception e){
             System.out.println("Remove from starting lineup");
             System.out.println(e.getCause());
@@ -285,10 +292,8 @@ public class MainController implements Initializable {
             selectedPlayer  = (Player) reserveLineupListView.getSelectionModel().getSelectedItem();
             if(selectedPlayer == null) return;
             lineup.getReserveLineup().remove(selectedPlayer);
-            if(lineup.isCorrect())
-                loadLineupButton.setDisable(false);
-            else
-                loadLineupButton.setDisable(true);
+            areNotSelectedToLineup.add(selectedPlayer); //move player to players list   
+            setAddRemoveButtonEnabling();
         } catch (Exception e){
             System.out.println("Remove from reserve lineup");
             System.out.println(e.getCause());
@@ -323,8 +328,9 @@ public class MainController implements Initializable {
     Took selected item in TeamSLV and fill players wich is in selected team
     */
     public void teamsLVClick(){
-        selectedTeam = (Team) teamsLV.getSelectionModel().getSelectedItem();     
-        playersListViewTeamManager.setItems(databaseManager.findPlayersFromTeam(selectedTeam));
+        selectedTeam = (Team) teamsLV.getSelectionModel().getSelectedItem();
+        areNotSelectedToLineup = databaseManager.findPlayersFromTeam(selectedTeam);
+        playersListViewTeamManager.setItems(areNotSelectedToLineup);
         nameTeamTF.setText(selectedTeam.getName());
     }
     
@@ -347,6 +353,8 @@ public class MainController implements Initializable {
                 leftFootCheckBox.setSelected(false);
                 rightFootCheckBox.setSelected(false);
             }
+            //enable or disable add/remove to/from starting lineup button
+            setAddRemoveButtonEnabling();
         }
     }
     
@@ -396,18 +404,24 @@ public class MainController implements Initializable {
             player.setTeamId(selectedTeam);
             player.setOwnerId(new User(1));
             
-            databaseManager.saveEntityElement(player);
-            playersListViewTeamManager.setItems(databaseManager.findPlayersFromTeam(selectedTeam));
+            if (databaseManager.saveEntityElement(player)!= null){
+                areNotSelectedToLineup.add(player);
+                playersListViewTeamManager.setItems(areNotSelectedToLineup);
+            }
+            //playersListViewTeamManager.setItems(databaseManager.findPlayersFromTeam(selectedTeam));
         }
         catch(Exception e){
             System.out.println("wyjatek createPlayer");
             System.out.println(e.getCause());
         }
     }
-    
+    /*
+    When we choose player and want edit his data
+    */
     public void editSelectedPlayerBtClick(){
         selectedPlayer = (Player) playersListViewTeamManager.getSelectionModel().getSelectedItem();
         if(selectedPlayer != null){
+            areNotSelectedToLineup.remove(selectedPlayer); //remove selected item from listView
             selectedPlayer.setName(namePlayerTF.getText());
             selectedPlayer.setSurname(surnamePlayerTF.getText());
             
@@ -420,15 +434,25 @@ public class MainController implements Initializable {
                 selectedPlayer.setPreferedLeg(Legs.PRAWA.toString());
             
             databaseManager.saveEntityElement(selectedPlayer);
-            playersListViewTeamManager.setItems(databaseManager.findPlayersFromTeam(selectedTeam));
+            areNotSelectedToLineup.add(selectedPlayer); //add changed item to list :D
+            playersListViewTeamManager.setItems(areNotSelectedToLineup);
+            
+            //playersListViewTeamManager.setItems(databaseManager.findPlayersFromTeam(selectedTeam));
         }
     }
- 
+    /*
+    when we select player and want delete him
+    */
     public void removeSelectedPlayerBtClick(){
         selectedPlayer = (Player) playersListViewTeamManager.getSelectionModel().getSelectedItem();
         if(selectedPlayer != null){
+            
             databaseManager.removeEntityElement(selectedPlayer);
-            playersListViewTeamManager.setItems(databaseManager.findPlayersFromTeam(selectedTeam));
+            areNotSelectedToLineup = databaseManager.findPlayersFromTeam(selectedTeam);
+            areNotSelectedToLineup.removeAll(this.startingLineupListView.getItems());
+            areNotSelectedToLineup.removeAll(this.reserveLineupListView.getItems());
+            playersListViewTeamManager.setItems(areNotSelectedToLineup);
+
         }
         else
             System.out.println("player to remove was not selected");
@@ -442,6 +466,26 @@ public class MainController implements Initializable {
     }
     public void rightFootSelected(){
         leftFootCheckBox.setSelected(false);
+    }
+    
+    private void setAddRemoveButtonEnabling() {
+        if (this.playersListViewTeamManager.getItems().isEmpty())
+        {
+            this.addToReserveLineupButton.setDisable(true);
+            this.addToStartingLineupButton.setDisable(true);
+        }
+        else 
+        {
+            this.addToReserveLineupButton.setDisable(false);
+            this.addToStartingLineupButton.setDisable(false);
+        }
+        if( this.lineup.getStartingLineup().size() < GlobalVariables.MAX_PLAYERS_IN_LINEUP ) this.addToStartingLineupButton.setDisable(false);
+        else this.addToStartingLineupButton.setDisable(true);
+        if( this.lineup.getStartingLineup().isEmpty()) this.removeFromStartingLineupButton.setDisable(true);
+        else this.removeFromStartingLineupButton.setDisable(false);
+        if( this.lineup.getReserveLineup().isEmpty()) this.removeFromReserveLineupButton.setDisable(true);
+        else this.removeFromReserveLineupButton.setDisable(false);
+        
     }
     
     /*
@@ -689,4 +733,5 @@ public class MainController implements Initializable {
         commentTA.setText("");
         curInsertTA.setText("wycofano");
     }
+
 }
