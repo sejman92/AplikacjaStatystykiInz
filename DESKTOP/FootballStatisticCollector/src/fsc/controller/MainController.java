@@ -35,9 +35,18 @@ import fsc.model.enums.Kicks;
 import fsc.model.enums.Legs;
 import fsc.model.enums.PartsOfBody;
 import fsc.model.enums.Positions;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import javafx.animation.Animation;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TextArea;
+import javafx.util.Duration;
 
 /**
  *
@@ -97,7 +106,7 @@ public class MainController implements Initializable {
    @FXML private Button stopMatchBt;
    @FXML private Button goalPositiveBt;
    @FXML private Button goalNegativeBt;
-   
+   @FXML private Button pauseMatchBt;
    @FXML private ListView historyLV;
    @FXML private TextArea commentTA;
    @FXML private TextArea curInsertTA;   
@@ -129,9 +138,11 @@ public class MainController implements Initializable {
    private Game game;
    private Kicks kickType;
    private boolean faulButtonFlag;
+   private boolean paused; //is game time paused
+   private Timeline timeline; //it is timer event handler or somthing like that
    private int numberOfsubstitions;
    
-    @Override
+
     public void initialize(URL url, ResourceBundle rb) {
         databaseManager = DatabaseManager.getInstance();
         actionManager = ActionManager.getInstance();
@@ -144,6 +155,7 @@ public class MainController implements Initializable {
         positionsLV.setItems(positions);
         lineup = new Lineup();
         faulButtonFlag = false;
+        paused = false;
         kickType = Kicks.NONE; //just initialize kicktype
         //beginMatchTab.setDisable(false);
     }
@@ -509,12 +521,25 @@ public class MainController implements Initializable {
         this.gameManager = GameManager.getInstance();   
         gameManager.saveGame(game);
         setSuccessButtonContent();
-        
+        startTimer();
+
+    }
+    public void pauseMatchBtClick(){
+        if (paused){
+            timeline.play();
+            this.pauseMatchBt.setText("Pauza");
+            paused = false;
+        } else {
+            timeline.pause();
+            this.pauseMatchBt.setText("Wznów");
+            paused = true;
+        }  
     }
     
     public void stopMatchBtClick(){
         this.disableAllButtonInCollectView();
         this.gameManager.saveGame(game);   
+        timeline.stop();
     }
     /*
     Fill content in collect view - player lists and team name
@@ -753,4 +778,22 @@ public class MainController implements Initializable {
         curInsertTA.setText("wycofano");
     }
 
+    private void startTimer() {
+        this.timer.setText("00:00");
+        timeline = new Timeline(new KeyFrame(Duration.seconds(1),new TimerEventHandler(this.timer)));
+        timeline.setCycleCount(Animation.INDEFINITE); 
+        timeline.play();
+    }
+    private int getCurrentMinute(){
+        int time = 0;
+        String [] t = timer.getText().split(":");
+        time = Integer.parseInt(t[0]);
+        return ++time;
+    }
+    private int getCurrentSecond(){
+        int time = 0;
+        String [] t = timer.getText().split(":");
+        time = Integer.parseInt(t[1]);
+        return time;
+    }
 }
