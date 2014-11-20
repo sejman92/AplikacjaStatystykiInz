@@ -2,20 +2,6 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group>
-            <file>file:/D:/STUDIA/Projekt/AplikacjaStatystykiInz/DESKTOP/FootballStatisticCollector/src/fsc/model/enums/Kicks.java</file>
-            <file>file:/D:/STUDIA/Projekt/AplikacjaStatystykiInz/DESKTOP/FootballStatisticCollector/src/fsc/model/actions/Passing.java</file>
-            <file>file:/D:/STUDIA/Projekt/AplikacjaStatystykiInz/DESKTOP/FootballStatisticCollector/src/fsc/model/interfaces/IEntityElement.java</file>
-            <file>file:/D:/STUDIA/Projekt/AplikacjaStatystykiInz/DESKTOP/FootballStatisticCollector/src/fsc/controller/MainController.java</file>
-            <file>file:/D:/STUDIA/Projekt/AplikacjaStatystykiInz/DESKTOP/FootballStatisticCollector/src/fsc/view/GUI.fxml</file>
-            <file>file:/D:/STUDIA/Projekt/AplikacjaStatystykiInz/DESKTOP/FootballStatisticCollector/src/fsc/model/actions/Shot.java</file>
-            <file>file:/D:/STUDIA/Projekt/AplikacjaStatystykiInz/DESKTOP/FootballStatisticCollector/src/fsc/controller/ActionManager.java</file>
-            <file>file:/D:/STUDIA/Projekt/AplikacjaStatystykiInz/DESKTOP/FootballStatisticCollector/src/fsc/model/interfaces/IAction.java</file>
-            <file>file:/D:/STUDIA/Projekt/AplikacjaStatystykiInz/DESKTOP/FootballStatisticCollector/src/fsc/model/actions/Card.java</file>
-            <file>file:/D:/STUDIA/Projekt/AplikacjaStatystykiInz/DESKTOP/FootballStatisticCollector/src/fsc/model/Access.java</file>
-            <file>file:/D:/STUDIA/Projekt/AplikacjaStatystykiInz/DESKTOP/FootballStatisticCollector/src/fsc/model/enums/Legs.java</file>
-            <file>file:/D:/STUDIA/Projekt/AplikacjaStatystykiInz/DESKTOP/FootballStatisticCollector/src/META-INF/persistence.xml</file>
-            <file>file:/D:/STUDIA/Projekt/AplikacjaStatystykiInz/DESKTOP/FootballStatisticCollector/src/fsc/controller/FootbalStatisticCollector.java</file>
-        </group>
+        <group/>
     </open-files>
 </project-private>

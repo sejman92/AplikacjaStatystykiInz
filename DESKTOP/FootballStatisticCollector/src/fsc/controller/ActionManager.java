@@ -15,6 +15,7 @@ import fsc.model.actions.Faul;
 import fsc.model.actions.Injury;
 
 import fsc.model.actions.Shot;
+import fsc.model.actions.Swap;
 import fsc.model.actions.Takeover;
 import fsc.model.enums.Kicks;
 import fsc.model.interfaces.IAction;
@@ -29,6 +30,7 @@ public class ActionManager {
     private final DatabaseManager databaseManager;
     private IAction action;
     private Player player;
+    private Player reservePlayer;
     private Game game;
     private String comment;
     private PartsOfBody partOfBody;
@@ -54,6 +56,10 @@ public class ActionManager {
     
     public void setPlayer(Player player){
         this.player = player;
+    }
+    
+    public void setReservePlayer(Player reservePlayer){
+        this.reservePlayer = reservePlayer;
     }
     
     public void setGame(Game game){
@@ -135,7 +141,8 @@ public class ActionManager {
                     break;
                 }
                 case 10: {
-                    //((Swap)action).setPlayerId(player);
+                    ((Swap)action).setPlayerOutId(player);
+                    ((Swap)action).setPlayerInId(reservePlayer);
                     break;
                 }
                 
@@ -158,6 +165,11 @@ public class ActionManager {
         partOfBody = null;
         comment = "";
         successful = 0;
+        if(action instanceof Swap)
+        {
+            player = null;
+            reservePlayer = null;
+        }
     }
 
     /*
@@ -167,6 +179,8 @@ public class ActionManager {
         String result = "";
         if(action != null)
             result += action.getActionName() + ": ";
+        if(reservePlayer != null && action instanceof Swap)
+            result += "wchodzi " + reservePlayer + " za ";
         if(player != null)
             result += player + " ";
         if(partOfBody != null)

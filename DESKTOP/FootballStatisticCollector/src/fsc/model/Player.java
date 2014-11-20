@@ -313,6 +313,7 @@ public class Player implements Serializable, IEntityElement, Comparable<Player> 
         if (!(object instanceof Player)) {
             return false;
         }
+        
         Player other = (Player) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;

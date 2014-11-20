@@ -5,6 +5,7 @@
  */
 package fsc.controller;
 
+import static fsc.controller.GlobalVariables.MAX_SUBSTITIONS;
 import fsc.model.Game;
 import fsc.model.interfaces.IAction;
 import fsc.model.actions.Passing;
@@ -120,17 +121,20 @@ public class MainController implements Initializable {
    private Player selectedPlayer;
    private ObservableList<Player> areNotSelectedToLineup;
    private Player selectedPlayerToAction;
+   private Player selectedReservePlayerToAction;
    private Lineup lineup;
    private Match match;
-   private ActionManager action;
+   private ActionManager actionManager;
    private ObservableList<IAction>actionList;
    private Game game;
    private Kicks kickType;
    private boolean faulButtonFlag;
+   private int numberOfsubstitions;
+   
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         databaseManager = DatabaseManager.getInstance();
-        action = ActionManager.getInstance();
+        actionManager = ActionManager.getInstance();
         // TODO 
         //there i ititialize conection with db and other stuff
         
@@ -361,16 +365,16 @@ public class MainController implements Initializable {
     public void playersStartListCollectViewClick(){
         selectedPlayerToAction = (Player) playersStartListCollectView.getSelectionModel().getSelectedItem();
         if (selectedPlayerToAction != null){
-            action.setPlayer(selectedPlayerToAction);
-            curInsertTA.setText(action.getInsert());
+            actionManager.setPlayer(selectedPlayerToAction);
+            curInsertTA.setText(actionManager.getInsert());
         }
     }
     
     public void playersReserveListCollectViewClick(){
-        selectedPlayerToAction = (Player) playersReserveListCollectView.getSelectionModel().getSelectedItem();
-        if (selectedPlayerToAction != null){
-            action.setPlayer(selectedPlayerToAction);
-            curInsertTA.setText(action.getInsert());
+        selectedReservePlayerToAction = (Player) playersReserveListCollectView.getSelectionModel().getSelectedItem();
+        if (selectedReservePlayerToAction != null){
+            actionManager.setReservePlayer(selectedReservePlayerToAction);
+            curInsertTA.setText(actionManager.getInsert());
         }       
     }
     
@@ -452,7 +456,11 @@ public class MainController implements Initializable {
             areNotSelectedToLineup.removeAll(this.startingLineupListView.getItems());
             areNotSelectedToLineup.removeAll(this.reserveLineupListView.getItems());
             playersListViewTeamManager.setItems(areNotSelectedToLineup);
-
+            
+            selectedPlayerToAction = null;
+            selectedReservePlayerToAction = null;
+            actionManager.setPlayer(null);
+            actionManager.setReservePlayer(null);
         }
         else
             System.out.println("player to remove was not selected");
@@ -526,9 +534,9 @@ public class MainController implements Initializable {
     */
     
     public void shotBtClick(){
-        action.setAction(new Shot());
-        action.setKickType(this.kickType);
-        curInsertTA.setText(action.getInsert());
+        actionManager.setAction(new Shot());
+        actionManager.setKickType(this.kickType);
+        curInsertTA.setText(actionManager.getInsert());
         this.faulButtonFlag = false;
         setSuccessButtonContent();
     }
@@ -538,9 +546,9 @@ public class MainController implements Initializable {
     */
     
     public void passingBtClick(){
-        action.setAction(new Passing());
-        action.setKickType(kickType);
-        curInsertTA.setText(action.getInsert());
+        actionManager.setAction(new Passing());
+        actionManager.setKickType(kickType);
+        curInsertTA.setText(actionManager.getInsert());
         this.faulButtonFlag = false;
         setSuccessButtonContent();
     }
@@ -548,48 +556,48 @@ public class MainController implements Initializable {
     public void penaltyBtClick(){
         if( this.kickType == Kicks.PENALTY) this.kickType = Kicks.NONE;
         else this.kickType = Kicks.PENALTY;
-        action.setKickType(kickType);
-        curInsertTA.setText(action.getInsert());
+        actionManager.setKickType(kickType);
+        curInsertTA.setText(actionManager.getInsert());
         this.faulButtonFlag = false;
         setSuccessButtonContent();
     }
     public void cornerBtClick(){
         if( this.kickType == Kicks.CORNER) this.kickType = Kicks.NONE;
         else this.kickType = Kicks.CORNER;
-        action.setKickType(kickType);
-        curInsertTA.setText(action.getInsert());
+        actionManager.setKickType(kickType);
+        curInsertTA.setText(actionManager.getInsert());
         this.faulButtonFlag = false;
         setSuccessButtonContent();
     }
     public void freeKickBtClick(){
         if( this.kickType == Kicks.FREE) this.kickType = Kicks.NONE;
         else this.kickType = Kicks.FREE;
-        action.setKickType(kickType);
-        curInsertTA.setText(action.getInsert());
+        actionManager.setKickType(kickType);
+        curInsertTA.setText(actionManager.getInsert());
         this.faulButtonFlag = false;
         setSuccessButtonContent();
     }
     public void defenseBtClick(){
-        action.setAction(new Defense());
-        curInsertTA.setText(action.getInsert());
+        actionManager.setAction(new Defense());
+        curInsertTA.setText(actionManager.getInsert());
         this.faulButtonFlag = false;
         setSuccessButtonContent();
     }
     public void faulBtClick(){
-        action.setAction(new Faul());
-        curInsertTA.setText(action.getInsert());
+        actionManager.setAction(new Faul());
+        curInsertTA.setText(actionManager.getInsert());
         this.faulButtonFlag = true;
         setSuccessButtonContent();
     }
     public void yellowCardBtClick(){
-        action.setAction(new Card("ŻÓŁTA"));
-        curInsertTA.setText(action.getInsert() + " ŻÓŁTA");
+        actionManager.setAction(new Card("ŻÓŁTA"));
+        curInsertTA.setText(actionManager.getInsert() + " ŻÓŁTA");
         this.faulButtonFlag = false;
         setSuccessButtonContent();
     }
     public void redCardBtClick(){
-        action.setAction(new Card("CZERWONA"));
-        curInsertTA.setText(action.getInsert() + " CZERWONA");
+        actionManager.setAction(new Card("CZERWONA"));
+        curInsertTA.setText(actionManager.getInsert() + " CZERWONA");
         this.faulButtonFlag = false;
         setSuccessButtonContent();
     }
@@ -597,8 +605,8 @@ public class MainController implements Initializable {
     Add left foot in current action
     */
     public void leftFootBtClick(){
-        action.setPartOfBody(PartsOfBody.LEWA_NOGA);
-        curInsertTA.setText(action.getInsert());
+        actionManager.setPartOfBody(PartsOfBody.LEWA_NOGA);
+        curInsertTA.setText(actionManager.getInsert());
         
     }
 
@@ -606,24 +614,24 @@ public class MainController implements Initializable {
     Add right foot in current action
     */
     public void rightFootBtClick(){
-        action.setPartOfBody(PartsOfBody.PRAWA_NOGA);
-        curInsertTA.setText(action.getInsert());        
+        actionManager.setPartOfBody(PartsOfBody.PRAWA_NOGA);
+        curInsertTA.setText(actionManager.getInsert());        
     }
         
     /*
     Add head in current action
     */  
     public void headBtClick(){
-        action.setPartOfBody(PartsOfBody.GŁOWA);
-        curInsertTA.setText(action.getInsert());
+        actionManager.setPartOfBody(PartsOfBody.GŁOWA);
+        curInsertTA.setText(actionManager.getInsert());
     }
     
     /*
     Add chest in current action
     */            
     public void chestBtClick(){        
-        action.setPartOfBody(PartsOfBody.KLATKA);
-        curInsertTA.setText(action.getInsert());
+        actionManager.setPartOfBody(PartsOfBody.KLATKA);
+        curInsertTA.setText(actionManager.getInsert());
     }
     
     /*
@@ -631,16 +639,16 @@ public class MainController implements Initializable {
     */
                 
     public void otherBtClick(){
-        action.setPartOfBody(PartsOfBody.INNA);
-        curInsertTA.setText(action.getInsert());
+        actionManager.setPartOfBody(PartsOfBody.INNA);
+        curInsertTA.setText(actionManager.getInsert());
     }
 
     /**
      set action as injury
      */
     public void injuryBtClick(){
-        action.setAction(new Injury());
-        curInsertTA.setText(action.getInsert());
+        actionManager.setAction(new Injury());
+        curInsertTA.setText(actionManager.getInsert());
         this.faulButtonFlag = false;
         setSuccessButtonContent();
     }
@@ -649,8 +657,8 @@ public class MainController implements Initializable {
      set action as swap
      */
     public void swapBtClick(){
-        action.setAction(new Swap());
-        curInsertTA.setText(action.getInsert());
+        actionManager.setAction(new Swap());
+        curInsertTA.setText(actionManager.getInsert());
         this.faulButtonFlag = false;
         setSuccessButtonContent();
     }
@@ -659,8 +667,8 @@ public class MainController implements Initializable {
      set action as takeover
      */
     public void takeoverBtClick(){
-        action.setAction(new Takeover());
-        curInsertTA.setText(action.getInsert());
+        actionManager.setAction(new Takeover());
+        curInsertTA.setText(actionManager.getInsert());
         this.faulButtonFlag = false;
         setSuccessButtonContent();        
     }
@@ -670,18 +678,16 @@ public class MainController implements Initializable {
     mark as successful action
     */
     public void successfulBtClick(){
-
-        action.setSuccessful(1);
-        curInsertTA.setText(action.getInsert());
-
+        actionManager.setSuccessful(1);
+        curInsertTA.setText(actionManager.getInsert());
     }
 
     /*
     mark as unsuccessful action
     */
     public void unsuccessfulBtClick(){
-        action.setSuccessful(-1);
-        curInsertTA.setText(action.getInsert());
+        actionManager.setSuccessful(-1);
+        curInsertTA.setText(actionManager.getInsert());
     }
     
     /*
@@ -697,9 +703,9 @@ public class MainController implements Initializable {
     insert successfull shot and mark it as goal.
     */
     public void goalPositiveBtClick(){
-        action.setSuccessful(1);
-        action.setAction(new Shot());
-        curInsertTA.setText(action.getInsert() + "ZDOBYTA BRAMKA!!!");
+        actionManager.setSuccessful(1);
+        actionManager.setAction(new Shot());
+        curInsertTA.setText(actionManager.getInsert() + "ZDOBYTA BRAMKA!!!");
         this.game.setScoredGoals(this.game.getScoredGoals()+1);
         gameManager.saveGame(game);
         this.faulButtonFlag = false;
@@ -711,13 +717,26 @@ public class MainController implements Initializable {
     public void acceptBtClick(){
 
         //action.setGame(gameManager.getGame(game.getId()));
-        action.setComment(commentTA.getText());
-        action.setGame(game);
+        actionManager.setComment(commentTA.getText());
+        actionManager.setGame(game);
 
-        IAction result = action.saveAction();
+        IAction result = actionManager.saveAction();
         if(result != null){
             actionList.add(result);
-            action.cancelAction();
+            if(result instanceof Swap){
+                lineup.removeFromStartingLineup(((Swap)result).getPlayerOutId());
+                lineup.moveFromReserveToStarting(((Swap)result).getPlayerInId());
+                playersStartListCollectView.setItems(lineup.getStartingLineup());
+                playersReserveListCollectView.setItems(lineup.getReserveLineup());
+                selectedPlayerToAction = null;
+                selectedReservePlayerToAction = null;
+                
+                if(++numberOfsubstitions >= MAX_SUBSTITIONS){
+                    swapBt.setDisable(true);
+                    playersReserveListCollectView.setDisable(true);
+                }          
+            }
+            actionManager.cancelAction();
             curInsertTA.setText("dodano");
         }else
             curInsertTA.setText("nie dodano z powodu bledu");
@@ -729,7 +748,7 @@ public class MainController implements Initializable {
     reset current action
     */    
     public void cancelBtClick(){
-        action.cancelAction();
+        actionManager.cancelAction();
         commentTA.setText("");
         curInsertTA.setText("wycofano");
     }

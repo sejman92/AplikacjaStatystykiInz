@@ -7,6 +7,7 @@ package fsc.model;
 
 import fsc.model.interfaces.IEntityElement;
 import java.io.Serializable;
+import java.util.Collections;
 import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;

@@ -5,7 +5,6 @@
  */
 package fsc.controller;
 
-import fsc.controller.GlobalVariables;
 import fsc.model.Player;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;

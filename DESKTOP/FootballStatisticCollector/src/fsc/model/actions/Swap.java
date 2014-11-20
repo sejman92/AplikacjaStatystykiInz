@@ -173,7 +173,12 @@ public class Swap implements Serializable, IAction {
         String result = "zmiana [";
         if(getId() != null)
             result += getId();
-        result += "]: ";
+        result += "]: wchodzi ";
+        if(getPlayerInId() != null)
+            result += getPlayerInId().toString()+ " za ";
+        if(getPlayerOutId() != null)
+            result += getPlayerOutId().toString();
+        
         return result;
     }
 
