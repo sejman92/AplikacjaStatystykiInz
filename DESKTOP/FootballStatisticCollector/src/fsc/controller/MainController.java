@@ -41,10 +41,13 @@ import java.util.Calendar;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TextArea;
 import javafx.util.Duration;
@@ -142,16 +145,22 @@ public class MainController implements Initializable {
    private boolean paused; //is game time paused
    private Timeline timeline; //it is timer event handler or somthing like that
    private int numberOfsubstitions;
-   
-   @FXML private ChoiceBox teamsBCAnalize;
+   /*
+   ANALYZE params
+   */
+   @FXML private ChoiceBox teamsCBAnalize;
    @FXML private ChoiceBox matchesBCAnalize;
    @FXML private ListView playersLVAnalize;
    
    private Team selectedTeamAnalize;
    private Match selectedMatchAnalize;
    private Player selectedPlayerAnalize;
-   
-
+   private ObservableList<Player> playersListAnalize;
+   private ObservableList<Game> matchesListAnalize;
+   private ObservableList<Team> teamsListAnalize;
+   /*
+   ANALYZE PARAMS FINISH
+   */
    @Override
     public void initialize(URL url, ResourceBundle rb) {
         databaseManager = DatabaseManager.getInstance();
@@ -162,6 +171,7 @@ public class MainController implements Initializable {
         positions = FXCollections.observableArrayList(Positions.values());
         actionList = FXCollections.observableArrayList();
         teamsLV.setItems(databaseManager.getTeams());
+        
         positionsLV.setItems(positions);
         lineup = new Lineup();
         faulButtonFlag = false;
@@ -806,7 +816,14 @@ public class MainController implements Initializable {
         time = Integer.parseInt(t[1]);
         return time;
     }
+    /*
     
+    
+    ANALYZE CONTROLL
+    
+    
+    
+    */
     public void playersLVAnalizeClick(){
         selectedPlayerAnalize = (Player) playersLVAnalize.getSelectionModel().getSelectedItem();
     }
@@ -818,4 +835,17 @@ public class MainController implements Initializable {
     public void loadAs2BtClick(){
         
     }
+    /*
+    There we initialize params for analyze views
+    */
+    public void analizeTabClick(){
+        teamsListAnalize = databaseManager.getTeams();
+        teamsCBAnalize.setItems(teamsListAnalize);
+        teamsCBAnalize.setValue(teamsListAnalize.get(0));
+        teamsCBAnalize.getSelectionModel().selectedIndexProperty().addListener(
+                new TeamsListAnalizeChangeListener(teamsListAnalize,playersListAnalize,matchesListAnalize));
+        this.playersLVAnalize.setItems(playersListAnalize);
+        //this.playersLVAnalize = databaseManager.findPlayersFromTeam();
+    }
+  
 }
