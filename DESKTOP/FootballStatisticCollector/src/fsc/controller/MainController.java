@@ -44,6 +44,7 @@ import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.CheckBox;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TextArea;
 import javafx.util.Duration;
@@ -142,7 +143,16 @@ public class MainController implements Initializable {
    private Timeline timeline; //it is timer event handler or somthing like that
    private int numberOfsubstitions;
    
+   @FXML private ChoiceBox teamsBCAnalize;
+   @FXML private ChoiceBox matchesBCAnalize;
+   @FXML private ListView playersLVAnalize;
+   
+   private Team selectedTeamAnalize;
+   private Match selectedMatchAnalize;
+   private Player selectedPlayerAnalize;
+   
 
+   @Override
     public void initialize(URL url, ResourceBundle rb) {
         databaseManager = DatabaseManager.getInstance();
         actionManager = ActionManager.getInstance();
@@ -795,5 +805,17 @@ public class MainController implements Initializable {
         String [] t = timer.getText().split(":");
         time = Integer.parseInt(t[1]);
         return time;
+    }
+    
+    public void playersLVAnalizeClick(){
+        selectedPlayerAnalize = (Player) playersLVAnalize.getSelectionModel().getSelectedItem();
+    }
+    
+    public void loadAs1BtClick(){
+        
+    }
+    
+    public void loadAs2BtClick(){
+        
     }
 }

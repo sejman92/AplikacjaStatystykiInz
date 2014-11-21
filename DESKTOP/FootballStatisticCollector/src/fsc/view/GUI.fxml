@@ -48,9 +48,9 @@
 <NumberAxis minorTickCount="1" side="LEFT" upperBound="10.0" />
 </yAxis>
 </BarChart>
-<ChoiceBox layoutX="22.0" layoutY="53.0" prefWidth="150.0" />
-<ChoiceBox layoutX="22.0" layoutY="141.0" prefWidth="150.0" />
-<ListView layoutX="22.0" layoutY="226.0" prefHeight="442.0" prefWidth="150.0" />
+<ChoiceBox fx:id="teamsCBAnalize" layoutX="22.0" layoutY="53.0" prefWidth="150.0" />
+<ChoiceBox fx:id="matchesCBAnalize" layoutX="22.0" layoutY="141.0" prefWidth="150.0" />
+<ListView fx:id="playersLVAnalize" layoutX="22.0" layoutY="226.0" onMouseClicked="#playersLVAnalizeClick" prefHeight="332.0" prefWidth="150.0" />
 <GridPane alignment="CENTER" gridLinesVisible="true" layoutX="193.0" layoutY="21.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="431.0" prefWidth="557.0">
 <columnConstraints>
 <ColumnConstraints hgrow="ALWAYS" maxWidth="272.0" minWidth="10.0" prefWidth="138.0" />
@@ -146,6 +146,30 @@
 <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
 </padding>
 </Label>
+                        <Label fx:id="score1LbAnalize" prefHeight="47.0" prefWidth="210.0" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                        <Label fx:id="accurateShots1LbAnalize" prefHeight="47.0" prefWidth="210.0" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                        <Label fx:id="inaccurateShots1LbAnalize" prefHeight="47.0" prefWidth="210.0" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                        <Label fx:id="passes1LbAnalize" prefHeight="47.0" prefWidth="210.0" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                        <Label fx:id="AccuracyPasses1LbAnalize" prefHeight="47.0" prefWidth="210.0" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                        <Label fx:id="yellowCards1LbAnalize" prefHeight="47.0" prefWidth="210.0" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+                        <Label fx:id="redCards1LbAnalize" prefHeight="47.0" prefWidth="210.0" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+                        <Label fx:id="fauls1LbAnalize" prefHeight="47.0" prefWidth="210.0" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="8" />
+                        <Label fx:id="takeover1LbAnalize" prefHeight="47.0" prefWidth="210.0" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="9" />
+                        <Label fx:id="freekicks1LbAnalize" prefHeight="47.0" prefWidth="210.0" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="10" />
+                        <Label fx:id="corners1LbAnalize" prefHeight="47.0" prefWidth="210.0" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="11" />
+                        <Label fx:id="penalties1LbAnalize" prefHeight="47.0" prefWidth="210.0" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="12" />
+                        <Label fx:id="score1LbAnalize" prefHeight="66.0" prefWidth="210.0" text="Label" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                        <Label fx:id="accurateShots2LbAnalize" prefHeight="36.0" prefWidth="210.0" text="Label" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+                        <Label fx:id="inaccurateShots2LbAnalize" prefHeight="47.0" prefWidth="210.0" text="Label" GridPane.columnIndex="2" GridPane.rowIndex="3" />
+                        <Label fx:id="passes2LbAnalize" prefHeight="47.0" prefWidth="210.0" text="Label" GridPane.columnIndex="2" GridPane.rowIndex="4" />
+                        <Label fx:id="AccuracyPasses2LbAnalize" prefHeight="47.0" prefWidth="210.0" text="Label" GridPane.columnIndex="2" GridPane.rowIndex="5" />
+                        <Label fx:id="yellowCards2LbAnalize" prefHeight="47.0" prefWidth="210.0" text="Label" GridPane.columnIndex="2" GridPane.rowIndex="6" />
+                        <Label fx:id="redCards2LbAnalize" prefHeight="47.0" prefWidth="210.0" text="Label" GridPane.columnIndex="2" GridPane.rowIndex="7" />
+                        <Label fx:id="fauls2LbAnalize" prefHeight="47.0" prefWidth="210.0" text="Label" GridPane.columnIndex="2" GridPane.rowIndex="8" />
+                        <Label fx:id="takeover2LbAnalize" prefHeight="47.0" prefWidth="210.0" text="Label" GridPane.columnIndex="2" GridPane.rowIndex="9" />
+                        <Label fx:id="freekicks2LbAnalize" prefHeight="47.0" prefWidth="210.0" text="Label" GridPane.columnIndex="2" GridPane.rowIndex="10" />
+                        <Label fx:id="corners2LbAnalize" prefHeight="47.0" prefWidth="210.0" text="Label" GridPane.columnIndex="2" GridPane.rowIndex="11" />
+                        <Label fx:id="penalties2LbAnalize" prefHeight="47.0" prefWidth="210.0" text="Label" GridPane.columnIndex="2" GridPane.rowIndex="12" />
 </children>
 <padding>
 <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
@@ -167,6 +191,8 @@
 <Button alignment="CENTER" contentDisplay="CENTER" layoutX="216.0" layoutY="556.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="174.0" text="Dodaj wybranego zawodnika" textAlignment="CENTER" />
 <Button alignment="CENTER" contentDisplay="CENTER" layoutX="216.0" layoutY="588.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="174.0" text="Usuń wybranego zawodnika" textAlignment="CENTER" />
 <Button alignment="CENTER" contentDisplay="CENTER" layoutX="562.0" layoutY="643.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="108.0" text="Porównaj" textAlignment="CENTER" />
+                  <Button layoutX="24.0" layoutY="588.0" mnemonicParsing="false" onAction="#loadAs1BtClick" prefHeight="25.0" prefWidth="152.0" text="Załaduj jako pierwszy" />
+                  <Button layoutX="24.0" layoutY="619.0" mnemonicParsing="false" onAction="#loadAs2BtClick" prefHeight="25.0" prefWidth="151.0" text="Załaduj jako drugi" />
 </children></AnchorPane>
 </content>
 </Tab>
