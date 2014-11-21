@@ -1,6 +1,9 @@
 package pl.gda.pg.eti.kio.project.footballstatistivcollector.entities.actions;
 
+import pl.gda.pg.eti.kio.project.footballstatisticcollector.database.DatabaseManager;
+
 public class Faul extends Action {
+	private int id;
 	private int game_id;
 	private int player_victim_id;
 	private int player_ofender_id;
@@ -11,8 +14,9 @@ public class Faul extends Action {
 	private Card card;
 	private Injury injury;
 	
-	public Faul(int game_id, int player_victim_id, int player_ofender_id, int time, String comment,int card_id, int injury_id)
+	public Faul(int id, int game_id, int player_victim_id, int player_ofender_id, int time, String comment,int card_id, int injury_id)
 	{
+		this.id=id;
 		this.game_id=game_id;
 		this.player_victim_id=player_victim_id;
 		this.player_ofender_id=player_ofender_id;
@@ -35,7 +39,7 @@ public class Faul extends Action {
 	public int getGame_id() {
 		return game_id;
 	}
-
+	@Override
 	public void setGame_id(int game_id) {
 		this.game_id = game_id;
 	}
@@ -102,6 +106,28 @@ public class Faul extends Action {
 
 	public void setInjury(Injury injury) {
 		this.injury = injury;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	@Override
+	public int addToDataBase(DatabaseManager dbm) {
+		if(injury!=null)
+			injury_id=dbm.addInjury(game_id, player_victim_id, time, comment);
+		else
+			injury_id=0;
+		if(card!=null)
+			card_id=dbm.addCard(game_id, player_ofender_id, time, card.getKind(), comment);
+		else
+			card_id=0;
+		id=dbm.addFaul(game_id, player_victim_id, player_ofender_id, time, comment, card_id, injury_id);
+		return id;
 	}
 	
 

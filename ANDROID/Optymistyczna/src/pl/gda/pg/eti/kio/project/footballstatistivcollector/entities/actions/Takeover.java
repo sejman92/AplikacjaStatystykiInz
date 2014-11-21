@@ -1,5 +1,7 @@
 package pl.gda.pg.eti.kio.project.footballstatistivcollector.entities.actions;
 
+import pl.gda.pg.eti.kio.project.footballstatisticcollector.database.DatabaseManager;
+
 public class Takeover extends Action {
 	private int id;
 	private int game_id;
@@ -34,7 +36,7 @@ public class Takeover extends Action {
 	public int getGame_id() {
 		return game_id;
 	}
-
+	@Override
 	public void setGame_id(int game_id) {
 		this.game_id = game_id;
 	}
@@ -61,6 +63,12 @@ public class Takeover extends Action {
 
 	public void setComment(String comment) {
 		this.comment = comment;
+	}
+
+	@Override
+	public int addToDataBase(DatabaseManager dbm) {
+		id=dbm.addTakeover(game_id, player_id, time, comment);
+		return id;
 	}
 	
 }

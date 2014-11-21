@@ -3,17 +3,16 @@ package pl.gda.pg.eti.kio.project.footballstatisticcollector.activities;
 import java.util.LinkedList;
 import java.util.List;
 
+import pl.gda.pg.eti.kio.project.footballstatisticcollector.database.DatabaseManager;
 import pl.gda.pg.eti.kio.project.footballstatisticcollector.focus.Focus;
+import pl.gda.pg.eti.kio.project.footballstatistivcollector.entities.Game;
 import pl.gda.pg.eti.kio.project.footballstatistivcollector.entities.Player;
 import pl.gda.pg.eti.kio.project.footballstatistivcollector.entities.actions.Action;
 import pl.gda.pg.eti.kio.project.footballstatistivcollector.entities.actions.Card;
-import pl.gda.pg.eti.kio.project.footballstatistivcollector.entities.actions.Corner;
 import pl.gda.pg.eti.kio.project.footballstatistivcollector.entities.actions.Defense;
 import pl.gda.pg.eti.kio.project.footballstatistivcollector.entities.actions.Faul;
-import pl.gda.pg.eti.kio.project.footballstatistivcollector.entities.actions.Freekick;
 import pl.gda.pg.eti.kio.project.footballstatistivcollector.entities.actions.Injury;
 import pl.gda.pg.eti.kio.project.footballstatistivcollector.entities.actions.Passing;
-import pl.gda.pg.eti.kio.project.footballstatistivcollector.entities.actions.Penalty;
 import pl.gda.pg.eti.kio.project.footballstatistivcollector.entities.actions.Shot;
 import pl.gda.pg.eti.kio.project.footballstatistivcollector.entities.actions.Swap;
 import pl.gda.pg.eti.kio.project.footballstatistivcollector.entities.actions.Takeover;
@@ -23,6 +22,7 @@ import android.os.SystemClock;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Intent;
+import android.database.SQLException;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
@@ -32,13 +32,17 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.Chronometer;
+import android.widget.CompoundButton;
+import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.AdapterView.OnItemClickListener;
 
 public class GameActivity extends Activity {
 
+	DatabaseManager dbm = new DatabaseManager(this);
 	String enemy_name, time, place, date;
 	long ctime;
 	int lost_goals, scored_goals;
@@ -47,6 +51,7 @@ public class GameActivity extends Activity {
 	List<Action> action_list;
 	ArrayAdapter<Player> list_adapter;
 	ArrayAdapter<Player> list_adapter_backup;
+	TextView score;
 	
 	int swaped=-1;
 	int to_swap=-1;
@@ -58,11 +63,13 @@ public class GameActivity extends Activity {
 		
 		lost_goals=scored_goals=0;
 		
-		refresh_player_lists();
+		refreshPlayerLists();
 		
 		action_list= new LinkedList<Action>();
 		chronometer =(Chronometer) findViewById(R.id.chronometer1);
+		score = (TextView)findViewById(R.id.textView1);
 		chronometer.setTextSize(50);
+		score.setTextSize(50);
 		ctime=0;
 		Intent input_intent=getIntent();
 		Bundle input_bundle = input_intent.getExtras();
@@ -73,31 +80,21 @@ public class GameActivity extends Activity {
 		this.setTitle(Focus.focused_team.getName()+" vs. "+enemy_name);
 	}
 	
-	private void refresh_player_lists()
+	private void refreshPlayerLists()
 	{
 		String[] player_list= new String[Focus.main_players_for_focused_game.size()];
 		String[] player_list_backup = new String[Focus.backup_players_for_focused_game.size()];
 		for(int i=0;i<Focus.main_players_for_focused_game.size();i++)
-		{
-			/*if(to_swap!=-1)
-				player_list[i]=Focus.main_players_for_focused_game.get(i).getNr()+"  "+Focus.main_players_for_focused_game.get(i).getName()+" "+Focus.main_players_for_focused_game.get(i).getSurname()+" wybrany";
-			else*/
 				player_list[i]=Focus.main_players_for_focused_game.get(i).getNr()+"  "+Focus.main_players_for_focused_game.get(i).getName()+" "+Focus.main_players_for_focused_game.get(i).getSurname();
-		}
 		list_adapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1,player_list );
 		
 		for(int i=0;i<Focus.backup_players_for_focused_game.size();i++)
-		{
-			/*if(swaped!=-1)
-				player_list_backup[i]=Focus.backup_players_for_focused_game.get(i).getNr()+" "+Focus.backup_players_for_focused_game.get(i).getName()+" "+Focus.backup_players_for_focused_game.get(i).getSurname()+" wybrany";
-			else*/
 				player_list_backup[i]=Focus.backup_players_for_focused_game.get(i).getNr()+" "+Focus.backup_players_for_focused_game.get(i).getName()+" "+Focus.backup_players_for_focused_game.get(i).getSurname();
-		}
 		list_adapter_backup = new ArrayAdapter(this, android.R.layout.simple_list_item_1,player_list_backup);
 		
 	}
 	
-	public void begin_game(View v)
+	public void beginGame(View v)
 	{
 		if(!play)
 		{
@@ -106,13 +103,43 @@ public class GameActivity extends Activity {
 			play=true;
 		}
 	}
-	public void end_game(View v)
+	public void endGame(View v)
 	{
 		
-			ctime=chronometer.getBase()-SystemClock.elapsedRealtime();
-			chronometer.stop();
-			play=false;
-			Toast.makeText(this, String.valueOf(ctime/-60000+1) , Toast.LENGTH_SHORT).show();
+			final Dialog dialog = new Dialog(GameActivity.this);
+			dialog.setContentView(R.layout.end_game_dialog);
+			dialog.setTitle("koniec gry");
+			
+			final Button yes =(Button) dialog.findViewById(R.id.button2);
+			final Button cancel = (Button) dialog.findViewById(R.id.button1);
+			final EditText comment = (EditText) dialog.findViewById(R.id.editText1);
+			
+			OnClickListener listener = new OnClickListener()
+			{
+				@Override
+				public void onClick(View arg0) {
+					dialog.dismiss();
+					endOfGame(comment.getText().toString());
+					Intent result = new Intent();
+					setResult(RESULT_OK, result);
+					Focus.game_ended=true;
+					finish();
+					
+				}
+				
+			};
+			OnClickListener listener2 = new OnClickListener()
+			{
+				@Override
+				public void onClick(View v) {
+					dialog.dismiss();
+					
+				}				
+			};
+			
+			yes.setOnClickListener(listener);
+			cancel.setOnClickListener(listener2);
+			dialog.show();
 	}	
 	public void pause(View v)
 	{
@@ -123,6 +150,40 @@ public class GameActivity extends Activity {
 			Toast.makeText(this, String.valueOf(ctime/-60000+1), Toast.LENGTH_SHORT).show();
 			chronometer.stop();
 		}
+	}
+	
+	private void endOfGame(String comment)
+	{
+		int game_id;
+		DatabaseManager dbm = new DatabaseManager(this);
+		dbm.beginTransaction();
+		Game game = new Game(date, place, lost_goals, scored_goals, enemy_name,comment);
+		game_id=dbm.addGame(game, Focus.main_players_for_focused_game, Focus.backup_players_for_focused_game, Focus.focused_team.getId());
+		game.setId(game_id);
+		for(Action action : action_list)
+		{
+			
+			action.setGame_id(game_id);
+			try
+			{
+				action.addToDataBase(dbm);
+			}
+			catch(SQLException e)
+			{
+				dbm.rollback();
+				Toast.makeText(this, "Nie powiód³ siê zapis do bazy danych", Toast.LENGTH_LONG).show();
+				Log.d("badatase error", e.getMessage());
+				return;
+			}
+		}
+		dbm.commit();
+		dbm.close();
+	}
+	
+	public void enemyGoal(View v)
+	{
+		this.lost_goals++;
+		score.setText(String.valueOf(scored_goals)+":"+String.valueOf(lost_goals));
 	}
 	
 	public void shot(View v)
@@ -145,46 +206,78 @@ public class GameActivity extends Activity {
 			@Override
 	        public void onItemClick(AdapterView<?> parent, View v, int position, long id) 
 	        {
-				String success="pudlo";
+				String success="missed";
 				int idp;
 				if(box.isChecked())
 				{
 					success="goal";
-					box2.setChecked(false);
-					box3.setChecked(false);
-					box4.setChecked(false);
 					scored_goals++;
+					score.setText(String.valueOf(scored_goals)+":"+String.valueOf(lost_goals));
 				}
 				if(box2.isChecked())
-				{
-					success="post";
-					box.setChecked(false);
-					box3.setChecked(false);
-					box4.setChecked(false);
-				}
+					success="pole";
 				if(box3.isChecked())
-				{
-					success="saved";
-					box.setChecked(false);
-					box2.setChecked(false);
-					box4.setChecked(false);
-				}
+					success="save";
 				if(box4.isChecked())
-				{
-					success="miss";
-					box.setChecked(false);
-					box3.setChecked(false);
-					box2.setChecked(false);
-				}
-				
+					success="missed";
+								
 	        	idp=Focus.main_players_for_focused_game.get(position).getId();
 	        	Shot shot = new Shot(idp, edit.getText().toString(), (int)ctime/-60000+1, success );
 	    		action_list.add(shot);
 	    		Log.d("shot", idp+" "+edit.getText().toString()+" "+String.valueOf(ctime/-60000+1)+" "+success);
 	    		dialog.dismiss();
 	        }
+		};		
+		OnCheckedChangeListener listener_box = new OnCheckedChangeListener()
+		{
+			@Override
+			public void onCheckedChanged(CompoundButton arg0, boolean arg1) {
+				box2.setChecked(false);
+				box3.setChecked(false);
+				box4.setChecked(false);
+				
+			}
+			
 		};
+		OnCheckedChangeListener listener_box2 = new OnCheckedChangeListener()
+		{
+			@Override
+			public void onCheckedChanged(CompoundButton arg0, boolean arg1) {
+				box.setChecked(false);
+				box2.setChecked(false);
+				box4.setChecked(false);
+				
+			}
+			
+		};
+		OnCheckedChangeListener listener_box3 = new OnCheckedChangeListener()
+		{
+			@Override
+			public void onCheckedChanged(CompoundButton arg0, boolean arg1) {
+				box.setChecked(false);
+				box2.setChecked(false);
+				box3.setChecked(false);
+				
+			}
+			
+		};
+		OnCheckedChangeListener listener_box4 = new OnCheckedChangeListener()
+		{
+			@Override
+			public void onCheckedChanged(CompoundButton arg0, boolean arg1) {
+				box2.setChecked(false);
+				box3.setChecked(false);
+				box4.setChecked(false);
+				
+			}
+			
+		};
+		
 		view_Player_List.setOnItemClickListener(listner);
+		box.setOnCheckedChangeListener(listener_box);
+		box2.setOnCheckedChangeListener(listener_box2);
+		box3.setOnCheckedChangeListener(listener_box3);
+		box4.setOnCheckedChangeListener(listener_box4);
 		dialog.show();
 		
 	}
@@ -202,6 +295,7 @@ public class GameActivity extends Activity {
 
 		final EditText edit = (EditText) dialog.findViewById(R.id.editText1);
 		final CheckBox box = (CheckBox) dialog.findViewById(R.id.checkBox1);
+		final CheckBox box2 = (CheckBox) dialog.findViewById(R.id.checkBox2);
 		
 		OnItemClickListener listner = new OnItemClickListener(){
 			@Override
@@ -216,6 +310,8 @@ public class GameActivity extends Activity {
 	        	idp=Focus.main_players_for_focused_game.get(position).getId();
 	        	comm=edit.getText().toString();
 	        	Passing passing = new Passing(idp, (int)ctime/-60000+1, success, comm);
+	        	if(box2.isChecked())
+					passing.setAssist(1);
 	    		action_list.add(passing);
 	    		Log.d("passing", idp+" "+String.valueOf(ctime/-60000+1)+" "+success+" "+comm);
 	    		dialog.dismiss();
@@ -249,22 +345,11 @@ public class GameActivity extends Activity {
 				Injury injury=null;
 				int idpo,idpv;
 				if(box.isChecked())
-				{
 					card = new Card(Focus.main_players_for_focused_game.get(position).getId(),(int)ctime/-60000+1,"yellow",edit.getText().toString());
-					box2.setChecked(false);
-					box4.setChecked(false);
-				}
 				if(box4.isChecked())
-				{
 					card = new Card(Focus.main_players_for_focused_game.get(position).getId(),(int)ctime/-60000+1,"red",edit.getText().toString());
-					box2.setChecked(false);
-					box.setChecked(false);
-				}
 				if(box2.isChecked())
-				{
 					injury = new Injury(Focus.main_players_for_focused_game.get(position).getId(), (int)ctime/-60000+1, edit.getText().toString());
-					box.setChecked(false);
-				}
 				if(!box3.isChecked())
 				{
 					idpo=Focus.main_players_for_focused_game.get(position).getId();
@@ -362,7 +447,7 @@ public class GameActivity extends Activity {
 					to_swap=0;
 					Log.d("swap", String.valueOf(swap.getPlayer_in_id())+" "+String.valueOf(swap.getPlayer_out_id())+" "+String.valueOf(ctime/-60000+1));
 					dialog.dismiss();
-					refresh_player_lists();
+					refreshPlayerLists();
 				}
 
 			}
@@ -404,11 +489,17 @@ public class GameActivity extends Activity {
 	        	
 	        	if(success==1)
 	        	{
-	        		shot = new Shot(idp, comm, (int)ctime/-60000+1, "goal");
 	        		scored_goals++;
+	        		score.setText(String.valueOf(scored_goals)+":"+String.valueOf(lost_goals));
+	        		shot = new Shot(idp, comm, (int)ctime/-60000+1, "goal");
 	        	}
-	        	Penalty penalty = new Penalty(idp, (int)ctime/-60000+1, comm, success,shot);
-	    		action_list.add(penalty);
+	        	else
+	        	{
+	        		shot = new Shot(idp, comm, (int)ctime/-60000+1, "saved");
+	        	}
+
+	        	shot.setPenalty(1);
+	    		action_list.add(shot);
 	    		if(success==0)
 	    			Log.d("penalty", idp+" "+String.valueOf(ctime/-60000+1)+comm+" "+String.valueOf(success));
 	    		else
@@ -431,6 +522,7 @@ public class GameActivity extends Activity {
 		view_Player_List.setAdapter(list_adapter);
 		
 		final EditText edit = (EditText) dialog.findViewById(R.id.editText1);
+		final CheckBox box = (CheckBox) dialog.findViewById(R.id.checkBox1);
 		
 		OnItemClickListener listner = new OnItemClickListener(){
 			@Override
@@ -438,10 +530,17 @@ public class GameActivity extends Activity {
 	        {
 				int idp;
 				String comm;
+				int success;
+				if(box.isChecked())
+					success=1;
+				else
+					success=0;
 	        	idp=Focus.main_players_for_focused_game.get(position).getId();
 	        	comm=edit.getText().toString();
-	        	Corner corner = new Corner(idp, (int)ctime/-60000+1, comm);
-	    		action_list.add(corner);
+	        	Passing passing = new Passing(idp, (int)ctime/-60000+1,success, comm);
+	        	passing.setAssist(success);
+	        	passing.setCorner(1);
+	    		action_list.add(passing);
 	    		Log.d("corner", idp+" "+String.valueOf(ctime/-60000+1)+comm);
 	    		dialog.dismiss();
 	        }
@@ -546,7 +645,7 @@ public class GameActivity extends Activity {
 	        	comm=edit.getText().toString();
 	        	Defense defense = new Defense(idp, (int)ctime/-60000+1, comm);
 	    		action_list.add(defense);
-	    		Log.d("passing", idp+" "+String.valueOf(ctime/-60000+1)+comm);
+	    		Log.d("defense", idp+" "+String.valueOf(ctime/-60000+1)+comm);
 	    		dialog.dismiss();
 	        }
 		};
@@ -566,36 +665,84 @@ public class GameActivity extends Activity {
 		
 		final EditText edit = (EditText) dialog.findViewById(R.id.editText1);
 		final CheckBox box = (CheckBox) dialog.findViewById(R.id.checkBox1);
+		final CheckBox box2 = (CheckBox) dialog.findViewById(R.id.checkBox2);
 		
 		OnItemClickListener listner = new OnItemClickListener(){
 			@Override
 	        public void onItemClick(AdapterView<?> parent, View v, int position, long id) 
 	        {
-				int idp, success;
+				int idp, goal, assist;
 				String comm;
 				Shot shot=null;
 				if(box.isChecked())
-					success=1;
+				{
+					goal=1;
+					scored_goals++;
+					score.setText(String.valueOf(scored_goals)+":"+String.valueOf(lost_goals));
+				}
 				else
-					success=0;
+					goal=0;
+				if(box2.isChecked())
+					assist=1;
+				else
+					assist=0;
 	        	idp=Focus.main_players_for_focused_game.get(position).getId();
 	        	comm=edit.getText().toString();
 	        	
-	        	if(success==1)
+	        	if(goal==1)
 	        	{
-	        		shot = new Shot(idp, comm, (int)ctime/-60000+1, "goal");
+	        		shot = new Shot(idp, comm,(int)ctime/-60000+1,"goal" );
+	        		shot.setFreekick(1);
 	        		scored_goals++;
+	        		action_list.add(shot);
 	        	}
-	        	Freekick freekick = new Freekick(idp, (int)ctime/-60000+1, comm, success,shot);
-	    		action_list.add(freekick);
-	    		if(success==0)
-	    			Log.d("freekick", idp+" "+String.valueOf(ctime/-60000+1)+comm+" "+String.valueOf(success));
+	        	else
+	        	{
+	        		shot = new Shot(idp, comm,(int)ctime/-60000+1,"goal" );
+	        		shot.setFreekick(0);
+	        		action_list.add(shot);
+	        	}
+	        	if(assist==1)
+	        	{
+	        		Passing passing = new Passing(idp,(int)ctime/-60000+1,0,comm);
+	        		passing.setFreekick(1);
+	        		passing.setAssist(assist);
+	        		action_list.add(passing);
+	        	}
+	        	
+	    		
+	    		if(goal==0)
+	    			Log.d("freekick", idp+" "+String.valueOf(ctime/-60000+1)+comm+" "+String.valueOf(goal));
 	    		else
-	    			Log.d("freekick", idp+" "+String.valueOf(ctime/-60000+1)+comm+" "+String.valueOf(success)+" "+shot.getSucces());
+	    			Log.d("freekick", idp+" "+String.valueOf(ctime/-60000+1)+comm+" "+String.valueOf(goal)+" "+shot.getSucces());
 	    		dialog.dismiss();
 	        }
 		};
+		OnCheckedChangeListener listener_box1 = new OnCheckedChangeListener()
+		{
+
+			@Override
+			public void onCheckedChanged(CompoundButton arg0, boolean arg1) {
+				if(box.isChecked())
+					box2.setChecked(false);
+				
+			}
+
+		};
+		OnCheckedChangeListener listener_box2 = new OnCheckedChangeListener()
+		{
+
+			@Override
+			public void onCheckedChanged(CompoundButton arg0, boolean arg1) {
+				if(box2.isChecked())
+					box.setChecked(false);
+				
+			}
+
+		};
 		view_Player_List.setOnItemClickListener(listner);
+		box.setOnCheckedChangeListener(listener_box1);
+		box2.setOnCheckedChangeListener(listener_box2);
 		dialog.show();
 	}
 	

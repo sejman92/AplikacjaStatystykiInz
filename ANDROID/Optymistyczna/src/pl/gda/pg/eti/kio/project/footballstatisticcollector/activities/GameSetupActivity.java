@@ -64,21 +64,23 @@ public class GameSetupActivity extends Activity {
 		intent.putExtra("place", place.getText().toString());
 		startActivity(intent);	
 	}
-	
+
 	@Override
 	public void onResume()
 	{
 		super.onResume();
 		setContentView(R.layout.activity_game_setupactivity);
 		
-		if(Focus.game_ended==true)
+		if(Focus.game_ended)
 		{
+			Focus.clearLists();
 			Focus.game_ended=false;
 			finish();
 		}
 
 	}
 
+	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.

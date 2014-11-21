@@ -1,7 +1,10 @@
 package pl.gda.pg.eti.kio.project.footballstatistivcollector.entities.actions;
 
+import pl.gda.pg.eti.kio.project.footballstatisticcollector.database.DatabaseManager;
+
 public class Defense extends Action {
 
+	private int id;
 	private int game_id;
 	private int player_id;
 	private int time;
@@ -14,8 +17,9 @@ public class Defense extends Action {
 		this.player_id=player_id;
 	}
 	
-	public Defense(int game_id, int player_id, int time, String comment)
+	public Defense(int id, int game_id, int player_id, int time, String comment)
 	{
+		this.id=id;
 		this.game_id=game_id;
 		this.comment=comment;
 		this.time=time;
@@ -26,7 +30,7 @@ public class Defense extends Action {
 	public int getGame_id() {
 		return game_id;
 	}
-
+	@Override
 	public void setGame_id(int game_id) {
 		this.game_id = game_id;
 	}
@@ -53,6 +57,20 @@ public class Defense extends Action {
 
 	public void setComment(String comment) {
 		this.comment = comment;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	@Override
+	public int addToDataBase(DatabaseManager dbm) {
+		id=dbm.addDefense(game_id, player_id, time, comment);
+		return id;
 	}
 	
 }

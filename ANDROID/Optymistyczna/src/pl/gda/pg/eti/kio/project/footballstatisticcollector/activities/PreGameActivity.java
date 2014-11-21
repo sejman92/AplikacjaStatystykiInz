@@ -91,12 +91,23 @@ public class PreGameActivity extends Activity {
 				intent.putExtra("palce", place);
 				intent.putExtra("date",date);
 				intent.putExtra("time",time);
-				startActivity(intent);
+				startActivityForResult(intent,1);
 			}	
 		}
 		else
 			Toast.makeText(this,"z³e dane", Toast.LENGTH_SHORT).show();
 	}
+	
+	protected void onActivityResult(int requestCode, int resultCode,Intent data) 
+	{
+        if (requestCode == 1) 
+        {
+            if (resultCode == RESULT_OK) {
+            	Focus.clearLists();
+                finish();
+            }
+        }
+    }
 	
 	public void chose_players(View v)
 	{

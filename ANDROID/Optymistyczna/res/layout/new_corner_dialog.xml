@@ -20,13 +20,18 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:layout_marginLeft="71dp"
+        android:layout_alignParentRight="true"
         android:ems="10"
         android:hint="komentarz"
-        android:inputType="textMultiLine" >
+        android:inputType="textMultiLine" />
 
-        <requestFocus />
-    </EditText>
+    <CheckBox
+        android:id="@+id/checkBox1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/editText1"
+        android:layout_alignBottom="@+id/editText1"
+        android:layout_alignParentLeft="true"
+        android:text="asysta" />
     
 </RelativeLayout>

@@ -14,7 +14,7 @@ public class Focus {
 	static public List<Player> main_players_for_focused_game;
 	static public List<Player> backup_players_for_focused_game;
 	static public List<Player> swaped_players_for_focused_game;
-	static public String enemy_name_for_new_game;
+	//static public String enemy_name_for_new_game;
 	static public boolean game_ended=false;
 		
 
@@ -35,5 +35,12 @@ public class Focus {
 			if(list.get(i).getId()==id )
 				return list.remove(list.get(i));
 		return false;	
+	}
+
+	static public void clearLists()
+	{
+		main_players_for_focused_game.clear();
+		backup_players_for_focused_game.clear();
+		swaped_players_for_focused_game.clear();
 	}
 }

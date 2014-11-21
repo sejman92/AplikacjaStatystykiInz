@@ -1,23 +1,21 @@
 package pl.gda.pg.eti.kio.project.footballstatistivcollector.entities.actions;
 
+import pl.gda.pg.eti.kio.project.footballstatisticcollector.database.DatabaseManager;
+
 public class Injury extends Action {
+	private int id;
 	private int game_id;
 	private int player_id;
 	private int time;
-	private int duration;
-	private String kind;
-	private int faul_id;
 	private String comment;
 	private Faul faul;
 	
-	public Injury(int game_id, int player_id, int time, int duration, String kind, int faul_id, String comment)
+	public Injury(int id, int game_id, int player_id, int time, String comment)
 	{
+		this.id=id;
 		this.game_id=game_id;
 		this.player_id=player_id;
 		this.time=time;
-		this.duration=duration;
-		this.kind=kind;
-		this.faul_id=faul_id;
 		this.comment=comment;
 	}
 	
@@ -31,7 +29,7 @@ public class Injury extends Action {
 	public int getGame_id() {
 		return game_id;
 	}
-
+	@Override
 	public void setGame_id(int game_id) {
 		this.game_id = game_id;
 	}
@@ -52,30 +50,6 @@ public class Injury extends Action {
 		this.time = time;
 	}
 
-	public int getDuration() {
-		return duration;
-	}
-
-	public void setDuration(int duration) {
-		this.duration = duration;
-	}
-
-	public String getKind() {
-		return kind;
-	}
-
-	public void setKind(String kind) {
-		this.kind = kind;
-	}
-
-	public int getFaul_id() {
-		return faul_id;
-	}
-
-	public void setFaul_id(int faul_id) {
-		this.faul_id = faul_id;
-	}
-
 	public String getComment() {
 		return comment;
 	}
@@ -90,6 +64,20 @@ public class Injury extends Action {
 
 	public void setFaul(Faul faul) {
 		this.faul = faul;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	@Override
+	public int addToDataBase(DatabaseManager dbm) {
+		id= dbm.addInjury(game_id, player_id, time, comment);
+		return id;
 	}
 	
 

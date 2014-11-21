@@ -1,7 +1,10 @@
 package pl.gda.pg.eti.kio.project.footballstatistivcollector.entities.actions;
 
+import pl.gda.pg.eti.kio.project.footballstatisticcollector.database.DatabaseManager;
+
 public class Card extends Action {
 	
+	private int id;
 	private int game_id;
 	private int player_id;
 	private int time;
@@ -16,8 +19,9 @@ public class Card extends Action {
 		this.comment=comment;
 	}
 
-	public Card(int game_id,int player_id, int time, String kind, String comment)
+	public Card(int id, int game_id,int player_id, int time, String kind, String comment)
 	{
+		this.id=id;
 		this.game_id=game_id;
 		this.player_id=player_id;
 		this.time=time;
@@ -28,6 +32,7 @@ public class Card extends Action {
 	public int getGame_id() {
 		return game_id;
 	}
+	@Override
 	public void setGame_id(int game_id) {
 		this.game_id = game_id;
 	}
@@ -54,6 +59,20 @@ public class Card extends Action {
 	}
 	public void setComment(String comment) {
 		this.comment = comment;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	@Override
+	public int addToDataBase(DatabaseManager dbm) {
+		id=dbm.addCard(game_id, player_id, time, kind, comment);
+		return id;
 	}
 
 	

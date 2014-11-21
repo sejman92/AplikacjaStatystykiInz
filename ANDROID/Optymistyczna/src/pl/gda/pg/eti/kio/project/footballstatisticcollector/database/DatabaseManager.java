@@ -3,13 +3,15 @@ package pl.gda.pg.eti.kio.project.footballstatisticcollector.database;
 import java.util.LinkedList;
 import java.util.List;
 
+import pl.gda.pg.eti.kio.project.footballstatistivcollector.entities.Game;
 import pl.gda.pg.eti.kio.project.footballstatistivcollector.entities.Player;
 import pl.gda.pg.eti.kio.project.footballstatistivcollector.entities.Team;
 import pl.gda.pg.eti.kio.project.footballstatistivcollector.entities.actions.Card;
+import pl.gda.pg.eti.kio.project.footballstatistivcollector.entities.actions.Defense;
 import pl.gda.pg.eti.kio.project.footballstatistivcollector.entities.actions.Faul;
 import pl.gda.pg.eti.kio.project.footballstatistivcollector.entities.actions.Injury;
 import pl.gda.pg.eti.kio.project.footballstatistivcollector.entities.actions.Swap;
-import pl.gda.pg.eti.kio.project.footballstatistivcollector.entities.actions.Takeover;
+
 
 
 import android.content.ContentValues;
@@ -21,15 +23,17 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
 public class DatabaseManager extends SQLiteOpenHelper{
+	//SQLiteDatabase db = getWritableDatabase();
 
 	public DatabaseManager(Context context) {
 		super(context, "baza_danych.db", null,1);
+		//QLiteDatabase db = getWritableDatabase();
 		
 	}
 
 	@Override
 	public void onCreate(SQLiteDatabase db) {
-		String[] creaty = new String[16];
+		String[] creaty = new String[12];
 		creaty[0]="CREATE TABLE Team "+
 			"( "+
 				"ID INTEGER PRIMARY KEY AUTOINCREMENT, "+
@@ -49,7 +53,6 @@ public class DatabaseManager extends SQLiteOpenHelper{
 				"ID INTEGER PRIMARY KEY AUTOINCREMENT,"+
 				"data TEXT,"+
 				"place TEXT,"+
-				"result TEXT,"+
 				"lost_goals INTEGER,"+
 				"scored_goals INTEGER,"+
 				"oponent TEXT,"+
@@ -73,18 +76,13 @@ public class DatabaseManager extends SQLiteOpenHelper{
 					"player_id INTEGERT, "+
 					"success TEXT,"+
 					"time INTEGER,"+
+					"corner INTEGER,"+
+					"freekick INTEGER,"+
+					"penalty INTEGER,"+
 					"game_id INTEGER,"+
 					"comment TEXT"+
 					")";
-		creaty[6]="CREATE TABLE Assist"+
-				"("+
-					"ID INTEGER PRIMARY KEY AUTOINCREMENT,"+
-					"shot_id INTEGER, "+
-					"player_id INTEGER,"+
-					"game_id INTEGER,"+
-					"comment TEXT"+
-					")";
-		creaty[7]="CREATE TABLE Faul"+
+		creaty[6]="CREATE TABLE Faul"+
 				"("+
 					"ID INTEGER PRIMARY KEY AUTOINCREMENT,"+
 					"game_id INTEGER,"+
@@ -95,17 +93,18 @@ public class DatabaseManager extends SQLiteOpenHelper{
 					"injury_id INTEGER,"+
 					"card_id INTEGER"+
 					")	";
-		creaty[8]="CREATE TABLE Card"+
+		creaty[7]="CREATE TABLE Card"+
 				"("+
 					"ID INTEGER PRIMARY KEY AUTOINCREMENT,"+
 					"game_id INTEGER,"+
 					"player_id INTEGER,"+
 					"time INTEGER,"+
 					"kind TEXT,"+
+					"swap_id INTEGER,"+
 					"comment TEXT,"+
 					"faul_id INTEGER"+
 					")";
-		creaty[9]="CREATE TABLE Swap"+
+		creaty[8]="CREATE TABLE Swap"+
 				"("+
 					"ID INTEGER PRIMARY KEY AUTOINCREMENT,"+
 					"game_id INTEGER,"+
@@ -115,19 +114,16 @@ public class DatabaseManager extends SQLiteOpenHelper{
 					"injury_id INTEGER,"+
 					"comment INTEGER"+
 					")";
-		creaty[10]="CREATE TABLE Injury"+
+		creaty[9]="CREATE TABLE Injury"+
 				"("+
 					"ID INTEGER PRIMARY KEY AUTOINCREMENT,"+
 					"player_id INTEGER,"+
 					"game_id INTEGER, "+
 					"swap_id INTEGER,"+
 					"time INTEGER,"+
-					"duration INTEGER,"+
-					"kind TEXT,"+
-					"faul_id INTEGER,"+
 					"comment TEXT"+
 					")";
-		creaty[11]="CREATE TABLE Defense"+
+		creaty[10]="CREATE TABLE Defense"+
 				"("+
 					"ID INTEGER PRIMARY KEY AUTOINCREMENT,"+
 					"player_id INTEGER,"+
@@ -135,15 +131,18 @@ public class DatabaseManager extends SQLiteOpenHelper{
 					"time INTEGER,"+
 					"comment TEXT"+
 					")";
-		creaty[12]="CREATE TABLE Passing"+
+		creaty[11]="CREATE TABLE Passing"+
 				"("+
 					"ID INTEGER PRIMARY KEY AUTOINCREMENT,"+
 					"game_id INTEGER,"+
 					"player_id INTEGER,"+
 					"success INTEGER,"+
 					"time INTEGER,"+
+					"assist INTEGER,"+
+					"corner INTEGER,"+
+					"freekick INTEGER,"+
 					"comment TEXT)";
-		creaty[13]="CREATE TABLE Takeover"+
+		creaty[12]="CREATE TABLE Takeover"+
 				"("+
 					"ID INTEGER PRIMARY KEY AUTOINCREMENT,"+
 					"player_id INTEGER,"+
@@ -151,24 +150,8 @@ public class DatabaseManager extends SQLiteOpenHelper{
 					"time INTEGER,"+
 					"comment TEXT"+
 					")";
-		creaty[14]="CREATE TABLE Corner"+
-				"("+
-					"ID INTEGER PRIMARY KEY AUTOINCREMENT,"+
-					"player_id INTEGER,"+
-					"game_id INTEGER,"+
-					"time INTEGER,"+
-					"comment TEXT)";
-		creaty[15]="CREATE TABLE Penalty"+
-				"("+
-					"ID INTEGER PRIMARY KEY AUTOINCREMENT,"+
-					"player_id INTEGER,"+
-					"game_id INTEGER,"+
-					"time INTEGER,"+
-					"comment TEXT,"+
-					"shot_id INTEGER,"+
-					"success INTEGER)";
 		
-		for(int i=0;i<16;i++)
+		for(int i=0;i<12;i++)
 		{
 			try
 			{ 
@@ -342,21 +325,21 @@ public class DatabaseManager extends SQLiteOpenHelper{
 		}
 	}
 	
-	public int addGame(String date, String place, int lost_goals, int scored_goals, String oponent, String comment, List<Player> players_list, int team_id)
+	public int addGame(Game game, List<Player> players_list, List<Player>swaped_players_list, int team_id)
 	{
 		int game_id=0;
 		SQLiteDatabase db = getWritableDatabase();
 		try
 		{
 			ContentValues values = new ContentValues();
-			values.put("data", date);
-			values.put("place", place);
-			values.put("result", scored_goals+":"+lost_goals);
-			values.put("lost_goals",lost_goals);
-			values.put("scored_goals",scored_goals);
-			values.put("oponent", oponent);
-			values.put("comment",comment);
+			values.put("data", game.getDate());
+			values.put("place", game.getPlace());
+			values.put("lost_goals",game.getLost_goals());
+			values.put("scored_goals",game.getScored_goals());
+			values.put("oponent", game.getOponent());
+			values.put("comment",game.getComment());
 			game_id=(int) db.insertOrThrow("Game", null, values);
+			Log.d("Baza Game", "dodano gre");
 			
 		}catch(SQLException e)
 		{
@@ -368,7 +351,8 @@ public class DatabaseManager extends SQLiteOpenHelper{
 			ContentValues values = new ContentValues();
 			values.put("team_id", team_id);
 			values.put("game_id", game_id);
-			db.insertOrThrow("Played", null, values);			
+			db.insertOrThrow("Played", null, values);	
+			Log.d("Baza Game", "druzyne do gry");
 		}catch(SQLException e)
 		{
 			Log.d("Baza.Played", e.getMessage().toString() );
@@ -383,17 +367,35 @@ public class DatabaseManager extends SQLiteOpenHelper{
 				values.put("game_id", game_id);
 				values.put("player_id",players_list.get(i).getId());
 				db.insertOrThrow("Participated", null, values);
+				Log.d("Baza Game", "dodano gracza do gry");
 			}
 		}catch(SQLException e)
 		{
 			Log.d("Baza.Participated", e.getMessage().toString() );
 		
 		}
+		
+		try
+		{
+			for(int i=0;i<swaped_players_list.size();i++)
+			{
+				ContentValues values = new ContentValues();
+				values.put("game_id", game_id);
+				values.put("player_id",swaped_players_list.get(i).getId());
+				db.insertOrThrow("Participated", null, values);
+				Log.d("Baza Game", "dodano graczy do gry");
+			}
+		}catch(SQLException e)
+		{
+			Log.d("Baza.Participated", e.getMessage().toString() );	
+		}
+		
 		return game_id;
 	}
 	
-	public void addShot(int game_id, String comment, int time, int player_id)
+	public int addShot(int game_id, int player_id, int time, String comment, String success, int penalty, int corner, int freekick )
 	{
+		int id=-1;
 		SQLiteDatabase db = getWritableDatabase();
 		try
 		{
@@ -401,206 +403,219 @@ public class DatabaseManager extends SQLiteOpenHelper{
 			values.put("game_id", game_id);
 			values.put("player_id", player_id);
 			values.put("time", time);
-			values.put("comment",comment);
-			db.insertOrThrow("Shot", null, values);
+			values.put("success", success);
+			values.put("comment", comment);
+			values.put("penalty", penalty);
+			values.put("corner", corner);
+			values.put("freekick", freekick);
+			id=(int)db.insertOrThrow("Shot", null, values);
+			Log.d("shot", "dodano rekord");
 		}catch(SQLException e)
 		{
-			Log.d("blad", e.toString());
+			Log.d("blad shot", e.toString());
 		}
+		return id;
 	}
 	
-	public void addPassing(int game_id, int player_id, int time, int success, String comment)
+	public int addPassing(int game_id, int player_id, int time, int success, String comment, int assist, int corner, int freekick)
 	{
+		int id = -1;
 		SQLiteDatabase db = getWritableDatabase();
 		try
 		{
 			ContentValues values = new ContentValues();
-			values.put("game_id", game_id);
+			values.put("game_id",game_id);
 			values.put("player_id", player_id);
 			values.put("time", time);
-			values.put("comment",comment);
+			values.put("comment", comment);
 			values.put("success", success);
-			db.insertOrThrow("Passing", null, values);
+			values.put("corner", corner);
+			values.put("assist", assist);
+			values.put("freekick",freekick);
+			id=(int)db.insertOrThrow("Passing", null, values);
+			Log.d("passing", "dodano rekord");
 		}catch(SQLException e)
 		{
-			Log.d("blad", e.toString());
+			Log.d("blad passing", e.toString());
 		}
+		return id;
 	}
 
-	public void addDefense(int game_id, int player_id, String comment, int time)
+	public int addDefense(int game_id, int player_id, int time, String comment)
 	{
+		int id=-1;
 		SQLiteDatabase db = getWritableDatabase();
 		try
 		{
 			ContentValues values = new ContentValues();
 			values.put("game_id", game_id);
 			values.put("player_id", player_id);
-			values.put("time", time);
+			values.put("time",time);
 			values.put("comment",comment);
-			db.insertOrThrow("Defense", null, values);
+			id=(int)db.insertOrThrow("Defense", null, values);
+			Log.d("defense", "dodano rekord");
 		}catch(SQLException e)
 		{
-			Log.d("blad", e.toString());
+			Log.d("blad defense", e.toString());
 		}
+		return id;
 	}
 	
-	public void addCorner(int game_id, int player_id, String comment, int time)
+	public int addCard(int game_id,int player_id, int time, String kind, String comment)
 	{
+		int id = -1;
 		SQLiteDatabase db = getWritableDatabase();
 		try
 		{
 			ContentValues values = new ContentValues();
-			values.put("game_id", game_id);
+			values.put("game_id",game_id);
+			values.put("player_id", player_id);
+			values.put("time", time);
+			values.put("comment",comment );
+			values.put("kind",kind);
+			id = (int)db.insertOrThrow("Card", null, values);
+			Log.d("card", "dodano rekord");
+		}catch(SQLException e)
+		{
+			Log.d("blad card", e.toString());
+		}
+		return id;
+	}
+	
+	public int addFaul(int game_id, int player_victim_id, int player_ofender_id, int time, String comment,int card_id, int injury_id)
+	{
+		int id = -1;
+		SQLiteDatabase db = getWritableDatabase();
+		try
+		{
+			ContentValues values = new ContentValues();
+			values.put("game_id",game_id);
+			values.put("player_victim_id", player_victim_id);
+			values.put("player_ofender_id", player_ofender_id);
+			values.put("time", time);
+			values.put("comment",comment );
+			values.put("card_id",card_id);
+			values.put("injury_id",injury_id);
+			id=(int)db.insertOrThrow("Faul", null, values);
+			Log.d("faul", "dodano rekord");
+		}catch(SQLException e)
+		{
+			Log.d("blad", e.toString());
+		}
+		return id;
+	}
+	
+	public int addInjury(int game_id, int player_id, int time, String comment)
+	{
+		int id = -1;
+		SQLiteDatabase db = getWritableDatabase();
+		try
+		{
+			ContentValues values = new ContentValues();
+			values.put("game_id",game_id);
 			values.put("player_id", player_id);
 			values.put("time", time);
 			values.put("comment",comment);
-			db.insertOrThrow("Corner", null, values);
+			id=(int)db.insertOrThrow("Injury", null, values);
+			Log.d("injury", "dodano rekord");
 		}catch(SQLException e)
 		{
 			Log.d("blad", e.toString());
 		}
+		return id;
 	}
-	
-	public void addPenalty(int game_id, int player_id, String comment, int time, int success, int shot_id)
+		
+	public int addTakeover(int game_id, int player_id, int time, String comment)
 	{
+		int id =-1;
 		SQLiteDatabase db = getWritableDatabase();
 		try
 		{
 			ContentValues values = new ContentValues();
-			values.put("game_id", game_id);
+			values.put("game_id",game_id);
 			values.put("player_id", player_id);
 			values.put("time", time);
 			values.put("comment",comment);
-			values.put("success", success);
-			values.put("shot_id",shot_id);
-			db.insertOrThrow("Penalty", null, values);
+			id = (int)db.insertOrThrow("Injury", null, values);
+			Log.d("takeover", "dodano rekord");
 		}catch(SQLException e)
 		{
-			Log.d("blad", e.toString());
+			Log.d("blad takeover", e.toString());
 		}
+		return id;
 	}
 	
-	public void addCard(Card card)
+	public int addSwap(int game_id, int player_in_id, int player_out_id, int time, String comment)
 	{
+		int id =-1;
 		SQLiteDatabase db = getWritableDatabase();
 		try
 		{
 			ContentValues values = new ContentValues();
-			values.put("game_id",card.getGame_id());
-			values.put("player_id", card.getPlayer_id());
-			values.put("time", card.getTime());
-			values.put("comment",card.getComment() );
-			values.put("kind",card.getKind());
-			db.insertOrThrow("Card", null, values);
-		}catch(SQLException e)
-		{
-			Log.d("blad", e.toString());
-		}
-	}
-	
-	public void addFaul(Faul faul)
-	{
-		SQLiteDatabase db = getWritableDatabase();
-		try
-		{
-			ContentValues values = new ContentValues();
-			values.put("game_id",faul.getGame_id());
-			values.put("player_victim_id", faul.getPlayer_victim_id());
-			values.put("player_ofender_id", faul.getPlayer_ofender_id());
-			values.put("time", faul.getTime());
-			values.put("comment",faul.getComment() );
-			values.put("card_id",faul.getCard_id());
-			values.put("injury_id",faul.getInjury_id());
-			db.insertOrThrow("Faul", null, values);
-		}catch(SQLException e)
-		{
-			Log.d("blad", e.toString());
-		}
-	}
-	
-	public void addInjury(Injury injury)
-	{
-		SQLiteDatabase db = getWritableDatabase();
-		try
-		{
-			ContentValues values = new ContentValues();
-			values.put("game_id",injury.getGame_id());
-			values.put("player_id", injury.getPlayer_id());
-			values.put("time", injury.getTime());
-			values.put("comment",injury.getComment());
-			values.put("faul_id|", injury.getFaul_id());
-			values.put("kind", injury.getKind());
-			values.put("duration", injury.getDuration());
-			db.insertOrThrow("Injury", null, values);
-		}catch(SQLException e)
-		{
-			Log.d("blad", e.toString());
-		}
-	}
-	
-	public void addFreekick(int game_id, int player_id, String comment, int time, int success, int shot_id)
-	{
-		SQLiteDatabase db = getWritableDatabase();
-		try
-		{
-			ContentValues values = new ContentValues();
-			values.put("game_id", game_id);
-			values.put("player_id", player_id);
+			values.put("game_id",game_id);
+			values.put("player_in_id", player_in_id);
+			values.put("player_out_id", player_out_id);
 			values.put("time", time);
 			values.put("comment",comment);
-			values.put("success", success);
-			values.put("shot_id",shot_id);
-			db.insertOrThrow("Freekick", null, values);
+			id = (int)db.insertOrThrow("Swap", null, values);
+			Log.d("dwap","dodano rekord");
 		}catch(SQLException e)
 		{
 			Log.d("blad", e.toString());
 		}
+		return id;
 	}
-	
-	public void addTakeover(Takeover takeover)
+		
+	public void beginTransaction()
 	{
 		SQLiteDatabase db = getWritableDatabase();
-		try
-		{
-			ContentValues values = new ContentValues();
-			values.put("game_id",takeover.getGame_id());
-			values.put("player_id", takeover.getPlayer_id());
-			values.put("time", takeover.getTime());
-			values.put("comment",takeover.getComment());
-			db.insertOrThrow("Injury", null, values);
-		}catch(SQLException e)
-		{
-			Log.d("blad", e.toString());
-		}
+		db.beginTransaction();
 	}
 	
-	public void addSwap(Swap swap)
+	public void commit()
 	{
 		SQLiteDatabase db = getWritableDatabase();
-		try
-		{
-			ContentValues values = new ContentValues();
-			values.put("game_id",swap.getGame_id());
-			values.put("player_in_id", swap.getPlayer_in_id());
-			values.put("player_out_id", swap.getPlayer_out_id());
-			values.put("time", swap.getTime());
-			values.put("comment",swap.getComment());
-			db.insertOrThrow("Swap", null, values);
-		}catch(SQLException e)
-		{
-			Log.d("blad", e.toString());
-		}
+		db.setTransactionSuccessful();
+		db.endTransaction();
 	}
 	
-	@Override
-	public void onUpgrade(SQLiteDatabase db, int old, int NEW) {
-		String query = "";
+	public void rollback()
+	{
+		SQLiteDatabase db = getWritableDatabase();
+		db.endTransaction();
+	}
+
+	public void zmiany()
+	{
+		SQLiteDatabase db = getWritableDatabase();
+		String query="DROP TABLE Passing";
+		String query2="CREATE TABLE Passing"+
+				"("+
+					"ID INTEGER PRIMARY KEY AUTOINCREMENT,"+
+					"game_id INTEGER,"+
+					"player_id INTEGER,"+
+					"success INTEGER,"+
+					"time INTEGER,"+
+					"assist INTEGER,"+
+					"corner INTEGER,"+
+					"freekick INTEGER,"+
+					"comment TEXT)";
 		try{
 			db.execSQL(query);
-			
 		}catch(SQLException e)
 		{
-			Log.d("Penalty", e.getMessage());
+			Log.d("nie pyklo","dupa");
 		}
+		try{
+			db.execSQL(query2);
+		}catch(SQLException e)
+		{
+			Log.d("nie pyklo","dupa2");
+		}
+	}
+	@Override
+	public void onUpgrade(SQLiteDatabase dbo, int old, int NEW) {
+
+			
 	}
 }

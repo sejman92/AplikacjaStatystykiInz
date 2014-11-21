@@ -1,5 +1,7 @@
 package pl.gda.pg.eti.kio.project.footballstatistivcollector.entities.actions;
 
+import pl.gda.pg.eti.kio.project.footballstatisticcollector.database.DatabaseManager;
+
 public class Swap extends Action {
 	private int id;
 	private int game_id;
@@ -36,7 +38,7 @@ public class Swap extends Action {
 	public int getGame_id() {
 		return game_id;
 	}
-
+	@Override
 	public void setGame_id(int game_id) {
 		this.game_id = game_id;
 	}
@@ -71,6 +73,12 @@ public class Swap extends Action {
 
 	public void setComment(String comment) {
 		this.comment = comment;
+	}
+
+	@Override
+	public int addToDataBase(DatabaseManager dbm) {
+		id=dbm.addSwap(game_id, player_in_id, player_out_id, time, comment);
+		return id;
 	}
 
 }
