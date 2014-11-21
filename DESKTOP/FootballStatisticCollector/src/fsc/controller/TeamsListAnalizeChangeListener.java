@@ -19,22 +19,38 @@ import javafx.collections.ObservableList;
  * @author Mateusz
  */
 class TeamsListAnalizeChangeListener implements ChangeListener {
+    private static TeamsListAnalizeChangeListener instance;
     private ObservableList<Player> players;
     private ObservableList<Team> teams;
     private ObservableList<Game> games;
     private Team selectedTeam;
     
-   TeamsListAnalizeChangeListener(ObservableList<Team> teamsListAnalize, ObservableList<Player> playersListAnalize, ObservableList<Game> matchesListAnalize) {
-           players = playersListAnalize;
-           teams = teamsListAnalize;
-           games = matchesListAnalize;
-       }
+       
+    private TeamsListAnalizeChangeListener(ObservableList<Team> teamsListAnalize,
+            ObservableList<Player> playersListAnalize,
+            ObservableList<Game> gamesListAnalize){
+           
+        players = playersListAnalize;   
+        teams = teamsListAnalize;
+        games = gamesListAnalize;   
+    }
+    
+    public static TeamsListAnalizeChangeListener getInstance(
+            ObservableList<Team> teams,
+            ObservableList<Player> players,
+            ObservableList<Game> games){
+        if(instance == null){
+            instance = new TeamsListAnalizeChangeListener(teams, players, games);
+        }
+        
+        return instance;
+    }
 
-       @Override
-       public void changed(ObservableValue observable, Object oldValue, Object newValue) {
-           int selectedId = (int)newValue;
-           selectedTeam = teams.get(selectedId);
-           players = FXCollections.observableArrayList(selectedTeam.getPlayerList());
-       }
+    @Override
+    public void changed(ObservableValue observable, Object oldValue, Object newValue) {
+        int selectedId = (int)newValue;
+        selectedTeam = teams.get(selectedId);
+        //players = FXCollections.observableArrayList(selectedTeam.getPlayerList());
+    }
     
 }

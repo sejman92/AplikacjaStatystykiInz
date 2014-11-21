@@ -13,6 +13,7 @@ import fsc.model.actions.Shot;
 import fsc.model.actions.Swap;
 import fsc.model.actions.Faul;
 import fsc.model.actions.Defense;
+import fsc.model.interfaces.IEntityElement;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.Basic;
@@ -43,7 +44,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "User.findByPassword", query = "SELECT u FROM User u WHERE u.password = :password"),
     @NamedQuery(name = "User.findByName", query = "SELECT u FROM User u WHERE u.name = :name"),
     @NamedQuery(name = "User.findBySurname", query = "SELECT u FROM User u WHERE u.surname = :surname")})
-public class User implements Serializable {
+public class User implements Serializable, IEntityElement {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -7,6 +7,7 @@ package fsc.controller;
 
 import static fsc.controller.GlobalVariables.MAX_SUBSTITIONS;
 import fsc.model.Game;
+import fsc.model.Played;
 import fsc.model.interfaces.IAction;
 import fsc.model.actions.Passing;
 import fsc.model.Player;
@@ -145,18 +146,19 @@ public class MainController implements Initializable {
    private boolean paused; //is game time paused
    private Timeline timeline; //it is timer event handler or somthing like that
    private int numberOfsubstitions;
+   User owner;
    /*
    ANALYZE params
    */
    @FXML private ChoiceBox teamsCBAnalize;
-   @FXML private ChoiceBox matchesBCAnalize;
+   @FXML private ChoiceBox gamesCBAnalize;
    @FXML private ListView playersLVAnalize;
    
    private Team selectedTeamAnalize;
-   private Match selectedMatchAnalize;
+   private Game selectedGameAnalize;
    private Player selectedPlayerAnalize;
    private ObservableList<Player> playersListAnalize;
-   private ObservableList<Game> matchesListAnalize;
+   private ObservableList<Game> gamesListAnalize;
    private ObservableList<Team> teamsListAnalize;
    /*
    ANALYZE PARAMS FINISH
@@ -167,6 +169,8 @@ public class MainController implements Initializable {
         actionManager = ActionManager.getInstance();
         // TODO 
         //there i ititialize conection with db and other stuff
+        owner = new User(1);
+        databaseManager.saveEntityElement(owner);
         
         positions = FXCollections.observableArrayList(Positions.values());
         actionList = FXCollections.observableArrayList();
@@ -438,7 +442,7 @@ public class MainController implements Initializable {
             else 
                 player.setPreferedLeg(Legs.PRAWA.toString());
             player.setTeamId(selectedTeam);
-            player.setOwnerId(new User(1));
+            player.setOwnerId(owner);
             
             if (databaseManager.saveEntityElement(player)!= null){
                 areNotSelectedToLineup.add(player);
@@ -536,10 +540,19 @@ public class MainController implements Initializable {
     
     public void startMatchBtClick(){
         this.game = new Game();
+        this.game.setOwnerId(owner);
         this.game.setScoredGoals(0);
         this.game.setLostGoals(0);
         this.gameManager = GameManager.getInstance();   
         gameManager.saveGame(game);
+        
+        Played played = new Played();
+        played.setOwnerId(owner);
+        played.setTeamId(selectedTeam.getId());//zmiana optem na referencje... do poprawy jeszcze potem ! zeby dawalo druzyne zaladowana i nie zmienilo jej jezeli druzyna sie zmieni
+        played.setGameId(game);
+        
+        databaseManager.saveEntityElement(played);
+        
         setSuccessButtonContent();
         startTimer();
 
@@ -842,9 +855,14 @@ public class MainController implements Initializable {
         teamsListAnalize = databaseManager.getTeams();
         teamsCBAnalize.setItems(teamsListAnalize);
         teamsCBAnalize.setValue(teamsListAnalize.get(0));
-        teamsCBAnalize.getSelectionModel().selectedIndexProperty().addListener(
-                new TeamsListAnalizeChangeListener(teamsListAnalize,playersListAnalize,matchesListAnalize));
-        this.playersLVAnalize.setItems(playersListAnalize);
+        //teamsCBAnalize.getSelectionModel().selectedIndexProperty().addListener(
+                //TeamsListAnalizeChangeListener.getInstance(teamsListAnalize,playersListAnalize,gamesListAnalize));
+        
+        selectedTeamAnalize = (Team)teamsCBAnalize.getSelectionModel().getSelectedItem();
+            
+        gamesCBAnalize.setItems(databaseManager.findGamesForTeam(selectedTeamAnalize));
+        
+        //this.playersLVAnalize.setItems(playersListAnalize);
         //this.playersLVAnalize = databaseManager.findPlayersFromTeam();
     }
   

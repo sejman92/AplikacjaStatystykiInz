@@ -5,6 +5,7 @@
  */
 package fsc.model;
 
+import fsc.model.interfaces.IEntityElement;
 import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -30,7 +31,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Played.findAll", query = "SELECT p FROM Played p"),
     @NamedQuery(name = "Played.findById", query = "SELECT p FROM Played p WHERE p.id = :id"),
     @NamedQuery(name = "Played.findByTeamId", query = "SELECT p FROM Played p WHERE p.teamId = :teamId")})
-public class Played implements Serializable {
+public class Played implements Serializable, IEntityElement {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

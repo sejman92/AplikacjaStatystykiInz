@@ -5,6 +5,9 @@
  */
 package fsc.controller;
 
+import fsc.model.Game;
+import fsc.model.Participated;
+import fsc.model.Played;
 import fsc.model.Player;
 import fsc.model.Team;
 import fsc.model.interfaces.IEntityElement;
@@ -76,6 +79,7 @@ public class DatabaseManager {
             }
         }
     }
+    
     public ObservableList<Team> getTeams(){
         return FXCollections.observableArrayList(em.createNamedQuery("Team.findAll").getResultList());
     }
@@ -84,8 +88,32 @@ public class DatabaseManager {
         return em.find(Team.class, id);
     }
     
+    public ObservableList<Game> findGamesForTeam(Team team){
+        ObservableList<Played>playedList = FXCollections.observableArrayList(em.createNamedQuery("Played.findByTeamId").setParameter("teamId", team.getId()).getResultList());
+        
+        ObservableList<Game>games = FXCollections.observableArrayList();
+        
+        for(Played p: playedList){
+            games.add(p.getGameId());
+        }
+        
+        return games;
+    }
+    
     public ObservableList<Player> findPlayersFromTeam(Team team) {
         return FXCollections.observableArrayList(em.createNamedQuery("Player.findByTeamId").setParameter("team_id", team).getResultList());
+    }
+    
+    public ObservableList<Player> findPlayersFromGame(Game game) {
+        ObservableList<Participated>participatedList = FXCollections.observableArrayList(em.createNamedQuery("Participated.findByGameId").setParameter("gameId", game).getResultList());
+        
+        ObservableList<Player>players = FXCollections.observableArrayList();
+        
+        for(Participated p: participatedList){
+            players.add(p.getPlayerId());
+        }
+        
+        return players;
     }
     
     public List<Player> findAllPlayers() {

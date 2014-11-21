@@ -28,7 +28,9 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Participated.findAll", query = "SELECT p FROM Participated p"),
-    @NamedQuery(name = "Participated.findById", query = "SELECT p FROM Participated p WHERE p.id = :id")})
+    @NamedQuery(name = "Participated.findById", query = "SELECT p FROM Participated p WHERE p.id = :id"),
+    @NamedQuery(name = "Participated.findByGameId", query = "SELECT p FROM Participated p WHERE p.gameId = :gameId")
+})
 public class Participated implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
