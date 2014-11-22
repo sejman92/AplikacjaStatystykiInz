@@ -151,10 +151,9 @@ public class MainController implements Initializable {
    /*
    ANALYZE params
    */
-   @FXML private ChoiceBox teamsCBAnalize;
-   @FXML private ChoiceBox gamesCBAnalize;
+   @FXML private ComboBox teamsCBAnalize;
+   @FXML private ComboBox gamesCBAnalize;
    @FXML private ListView playersLVAnalize;
-   
    private Team selectedTeamAnalize;
    private Game selectedGameAnalize;
    private Player selectedPlayerAnalize;
@@ -881,16 +880,11 @@ public class MainController implements Initializable {
     */
     public void analizeTabClick(){
         teamsListAnalize = databaseManager.getTeams();
-        teamsCBAnalize.setItems(teamsListAnalize);
-        teamsCBAnalize.setValue(teamsListAnalize.get(0));
-        //teamsCBAnalize.getSelectionModel().selectedIndexProperty().addListener(
-                //TeamsListAnalizeChangeListener.getInstance(teamsListAnalize,playersListAnalize,gamesListAnalize));
+        if ( teamsListAnalize!= null)   {
+            teamsCBAnalize.setItems(teamsListAnalize);
+        } else {
+            teamsCBAnalize.setValue("NIE MA DRUZYN");
+        }
         
-        selectedTeamAnalize = (Team)teamsCBAnalize.getSelectionModel().getSelectedItem();
-            
-        gamesCBAnalize.setItems(databaseManager.findGamesForTeam(selectedTeamAnalize));
-        
-        //this.playersLVAnalize.setItems(playersListAnalize);
-        //this.playersLVAnalize = databaseManager.findPlayersFromTeam();
     }
 }

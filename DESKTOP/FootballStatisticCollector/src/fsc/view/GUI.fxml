@@ -732,11 +732,6 @@
 <NumberAxis minorTickCount="1" side="LEFT" upperBound="10.0" />
 </yAxis>
 </BarChart>
-<ChoiceBox fx:id="teamsCBAnalize" layoutX="22.0" layoutY="53.0" onMouseClicked="#teamsCBAnalizeClick" prefWidth="150.0">
-                     <opaqueInsets>
-                        <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
-                     </opaqueInsets></ChoiceBox>
-<ChoiceBox fx:id="gamesCBAnalize" layoutX="22.0" layoutY="141.0" onMouseClicked="#gamesCBAnalizeClick" prefWidth="150.0" />
 <ListView fx:id="playersLVAnalize" layoutX="22.0" layoutY="226.0" onMouseClicked="#playersLVAnalizeClick" prefHeight="332.0" prefWidth="150.0" />
 <GridPane alignment="CENTER" gridLinesVisible="true" layoutX="193.0" layoutY="21.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="431.0" prefWidth="557.0">
 <columnConstraints>
@@ -868,7 +863,6 @@
 <Font size="18.0" />
 </font>
 </Label>
-<ChoiceBox layoutX="430.0" layoutY="472.0" prefHeight="25.0" prefWidth="240.0" />
 <Label layoutX="216.0" layoutY="518.0" text="Wybrani zawodnicy:">
 <font>
 <Font size="18.0" />
@@ -876,7 +870,7 @@
 </Label>
 <ListView layoutX="430.0" layoutY="518.0" prefHeight="101.0" prefWidth="240.0" />
 <Button alignment="CENTER" contentDisplay="CENTER" layoutX="562.0" layoutY="643.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="108.0" text="Porównaj" textAlignment="CENTER" />
-                  <VBox layoutX="22.0" layoutY="594.0" prefHeight="74.0" prefWidth="150.0">
+                  <VBox layoutX="22.0" layoutY="569.0" prefHeight="74.0" prefWidth="150.0">
                      <children>
                         <Button alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#loadAs1BtClick" text="Załaduj jako pierwszy" VBox.vgrow="ALWAYS">
                            <opaqueInsets>
@@ -902,7 +896,7 @@
                         </Button>
                      </children>
                   </VBox>
-                  <VBox layoutX="206.0" layoutY="594.0" prefHeight="74.0" prefWidth="179.0">
+                  <VBox layoutX="206.0" layoutY="569.0" prefHeight="74.0" prefWidth="179.0">
                      <children>
       <Button alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Dodaj wybranego zawodnika" textAlignment="CENTER" VBox.vgrow="ALWAYS">
                            <padding>
@@ -922,6 +916,9 @@
                         </Button>
                      </children>
                   </VBox>
+                  <ComboBox fx:id="teamsCBAnalize" layoutX="24.0" layoutY="53.0" onAction="#teamsCBAnalizeClick" prefWidth="150.0" />
+                  <ComboBox fx:id="gamesCBAnalize" layoutX="24.0" layoutY="133.0" onAction="#gamesCBAnalizeClick" prefWidth="150.0" />
+                  <ComboBox layoutX="430.0" layoutY="472.0" prefHeight="25.0" prefWidth="240.0" />
 </children></AnchorPane>
 </content>
 </Tab>
