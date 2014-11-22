@@ -17,9 +17,11 @@ import fsc.model.actions.Injury;
 import fsc.model.actions.Shot;
 import fsc.model.actions.Swap;
 import fsc.model.actions.Takeover;
+import fsc.model.enums.ColorOfCard;
 import fsc.model.enums.Kicks;
 import fsc.model.interfaces.IAction;
 import fsc.model.enums.PartsOfBody;
+import fsc.model.enums.SuccessOfShot;
 
 /**
  *
@@ -36,6 +38,9 @@ public class ActionManager {
     private PartsOfBody partOfBody;
     private int successful; //1 - success, -1 - unsuccess, 0 - unknown
     private Kicks kickType; //set kickType for specified actions
+    private ColorOfCard colorOfCard;
+    private SuccessOfShot successOfShot;
+    
     private ActionManager(){
         databaseManager = DatabaseManager.getInstance();
         comment = "";
@@ -81,6 +86,14 @@ public class ActionManager {
         this.successful = successful;
     }
     
+    public void setColorOfCard(ColorOfCard colorOfCard){
+        this.colorOfCard = colorOfCard;
+    }
+    
+    public void setSuccessOfShot(SuccessOfShot successOfShot){
+        this.successOfShot = successOfShot;
+    }
+    
     /*
     accept current action and add query to database 
     */
@@ -88,13 +101,16 @@ public class ActionManager {
         try {
             action.setGameId(game);
             action.setComment(comment);
-            //action.setOwnerId(game.getOwnerId());
+            action.setOwnerId(game.getOwnerId());
             switch(action.getIdTypeOfAction())
             {
                 case 1:{
                     ((Shot)action).setPlayerId(player);
-                    if(partOfBody != null) ((Shot)action).setBodyPart(partOfBody.toString());
+                    if(partOfBody != null)
+                        ((Shot)action).setBodyPart(partOfBody.toString());
                     setShotKickTypeBool((Shot)action);
+                    if(successOfShot != null)
+                        ((Shot)action).setSuccess(successOfShot.toString());
                     break;
                 }
                 case 2:{
@@ -122,6 +138,7 @@ public class ActionManager {
                 }
                 case 7: {
                     ((Card)action).setPlayerId(player);
+                    ((Card)action).setKind(colorOfCard.toString());
                     break;
                 }
                 case 8: {
@@ -157,11 +174,15 @@ public class ActionManager {
         partOfBody = null;
         comment = "";
         successful = 0;
-        if(action instanceof Swap)
-        {
+        if(colorOfCard != null && colorOfCard.equals(ColorOfCard.CZERWONA)){
+            player = null;
+        }
+        if(action instanceof Swap){
             player = null;
             reservePlayer = null;
         }
+        colorOfCard = null;
+        successOfShot = null;
     }
 
     /*

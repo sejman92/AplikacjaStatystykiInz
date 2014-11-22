@@ -70,6 +70,7 @@ public class Card implements Serializable, IAction {
     private Player playerId;
 
     public Card() {
+        
     }
 
     public Card(Integer id) {

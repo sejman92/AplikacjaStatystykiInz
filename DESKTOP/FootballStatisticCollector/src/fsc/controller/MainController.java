@@ -32,11 +32,13 @@ import fsc.model.actions.Faul;
 import fsc.model.actions.Injury;
 import fsc.model.actions.Swap;
 import fsc.model.actions.Takeover;
+import fsc.model.enums.ColorOfCard;
 
 import fsc.model.enums.Kicks;
 import fsc.model.enums.Legs;
 import fsc.model.enums.PartsOfBody;
 import fsc.model.enums.Positions;
+import fsc.model.enums.SuccessOfShot;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -684,13 +686,15 @@ public class MainController implements Initializable {
         setSuccessButtonContent();
     }
     public void yellowCardBtClick(){
-        actionManager.setAction(new Card("ŻÓŁTA"));
+        actionManager.setAction(new Card());
+        actionManager.setColorOfCard(ColorOfCard.ŻÓŁTA);
         curInsertTA.setText(actionManager.getInsert() + " ŻÓŁTA");
         this.faulButtonFlag = false;
         setSuccessButtonContent();
     }
     public void redCardBtClick(){
-        actionManager.setAction(new Card("CZERWONA"));
+        actionManager.setAction(new Card());
+        actionManager.setColorOfCard(ColorOfCard.CZERWONA);
         curInsertTA.setText(actionManager.getInsert() + " CZERWONA");
         this.faulButtonFlag = false;
         setSuccessButtonContent();
@@ -797,7 +801,7 @@ public class MainController implements Initializable {
     insert successfull shot and mark it as goal.
     */
     public void goalPositiveBtClick(){
-        actionManager.setSuccessful(1);
+        actionManager.setSuccessOfShot(SuccessOfShot.GOL);
         actionManager.setAction(new Shot());
         curInsertTA.setText(actionManager.getInsert() + "ZDOBYTA BRAMKA!!!");
         this.game.setScoredGoals(this.game.getScoredGoals()+1);
@@ -836,7 +840,12 @@ public class MainController implements Initializable {
                     swapBt.setDisable(true);
                     playersReserveListCollectView.setDisable(true);
                 }          
+            }else if(result instanceof Card){
+                if(((Card)result).getKind().equals(ColorOfCard.CZERWONA)){
+                    lineup.removeFromStartingLineup(((Card)result).getPlayerId());
+                }
             }
+                
             actionManager.cancelAction();
             curInsertTA.setText("dodano");
         }else
@@ -881,12 +890,12 @@ public class MainController implements Initializable {
     
     */
     
-    public void teamsCBAnalizeClick(){
+    public void teamsCBAnalizeAction(){
         selectedTeamAnalize = (Team)teamsCBAnalize.getSelectionModel().getSelectedItem();    
         gamesCBAnalize.setItems(databaseManager.findGamesForTeam(selectedTeamAnalize));
     }
     
-    public void gamesCBAnalizeClick(){
+    public void gamesCBAnalizeAction(){
         selectedGameAnalize = (Game)gamesCBAnalize.getSelectionModel().getSelectedItem();
         playersLVAnalize.setItems(databaseManager.findPlayersForGame(selectedGameAnalize));        
     }
@@ -895,22 +904,58 @@ public class MainController implements Initializable {
         selectedPlayerAnalize = (Player) playersLVAnalize.getSelectionModel().getSelectedItem();
     }
     
-    public void loadAs1BtClick(){
-        score1LbAnalize.setText(selectedGameAnalize.getScoredGoals().toString());
-        shots1LbAnalize.setText(String.valueOf(selectedGameAnalize.getShotList().size()));
-        accurateShots1LbAnalize.setText(String.valueOf(selectedGameAnalize.getAccurateShotList().size()));
-        passes1LbAnalize.setText(String.valueOf(selectedGameAnalize.getPassingList().size()));
-        accuracyPasses1LbAnalize.setText(String.valueOf(selectedGameAnalize.getAccuracyPasses()));
-        yellowCards1LbAnalize.setText(String.valueOf(selectedGameAnalize.getYellowCards().size()));
-        redCards1LbAnalize.setText(String.valueOf(selectedGameAnalize.getRedCards().size()));
-        fauls1LbAnalize.setText(String.valueOf(selectedGameAnalize.getFaulList().size()));
-        takeover1LbAnalize.setText(String.valueOf(selectedGameAnalize.getTakeoverList().size()));
-        freekicks1LbAnalize.setText(String.valueOf(selectedGameAnalize.getNumberOfFreeKicks()));
-        corners1LbAnalize.setText(String.valueOf(selectedGameAnalize.getNumberOfCorners()));
-        penalties1LbAnalize.setText(String.valueOf(selectedGameAnalize.getNumberOfPenalties()));
+    public void loadTeamAs1BtClick(){
+        if(selectedGameAnalize != null){
+            score1LbAnalize.setText(selectedGameAnalize.getScoredGoals().toString());
+            shots1LbAnalize.setText(String.valueOf(selectedGameAnalize.getShotList().size()));
+            accurateShots1LbAnalize.setText(String.valueOf(selectedGameAnalize.getAccurateShotList().size()));
+            passes1LbAnalize.setText(String.valueOf(selectedGameAnalize.getPassingList().size()));
+            accuracyPasses1LbAnalize.setText(String.valueOf(selectedGameAnalize.getAccuracyPasses()));
+            yellowCards1LbAnalize.setText(String.valueOf(selectedGameAnalize.getYellowCards().size()));
+            redCards1LbAnalize.setText(String.valueOf(selectedGameAnalize.getRedCards().size()));
+            fauls1LbAnalize.setText(String.valueOf(selectedGameAnalize.getFaulList().size()));
+            takeover1LbAnalize.setText(String.valueOf(selectedGameAnalize.getTakeoverList().size()));
+            freekicks1LbAnalize.setText(String.valueOf(selectedGameAnalize.getNumberOfFreeKicks()));
+            corners1LbAnalize.setText(String.valueOf(selectedGameAnalize.getNumberOfCorners()));
+            penalties1LbAnalize.setText(String.valueOf(selectedGameAnalize.getNumberOfPenalties()));
+        }
+    }
+   
+    public void loadTeamAs2BtClick(){
+        if(selectedGameAnalize != null){
+            score2LbAnalize.setText(selectedGameAnalize.getScoredGoals().toString());
+            shots2LbAnalize.setText(String.valueOf(selectedGameAnalize.getShotList().size()));
+            accurateShots2LbAnalize.setText(String.valueOf(selectedGameAnalize.getAccurateShotList().size()));
+            passes2LbAnalize.setText(String.valueOf(selectedGameAnalize.getPassingList().size()));
+            accuracyPasses2LbAnalize.setText(String.valueOf(selectedGameAnalize.getAccuracyPasses()));
+            yellowCards2LbAnalize.setText(String.valueOf(selectedGameAnalize.getYellowCards().size()));
+            redCards2LbAnalize.setText(String.valueOf(selectedGameAnalize.getRedCards().size()));
+            fauls2LbAnalize.setText(String.valueOf(selectedGameAnalize.getFaulList().size()));
+            takeover2LbAnalize.setText(String.valueOf(selectedGameAnalize.getTakeoverList().size()));
+            freekicks2LbAnalize.setText(String.valueOf(selectedGameAnalize.getNumberOfFreeKicks()));
+            corners2LbAnalize.setText(String.valueOf(selectedGameAnalize.getNumberOfCorners()));
+            penalties2LbAnalize.setText(String.valueOf(selectedGameAnalize.getNumberOfPenalties()));
+        }
     }
     
-    public void loadAs2BtClick(){
+    public void loadPlayerAs1BtClick(){
+        if(selectedPlayerAnalize != null){
+            score1LbAnalize.setText(String.valueOf(selectedGameAnalize.getGoalsPlayer(selectedPlayerAnalize).size()));
+            shots1LbAnalize.setText(String.valueOf(selectedGameAnalize.getShotsPlayer(selectedPlayerAnalize).size()));
+            accurateShots1LbAnalize.setText(String.valueOf(selectedGameAnalize.getAccurateShotsPlayer(selectedPlayerAnalize).size()));
+            passes1LbAnalize.setText(String.valueOf(selectedGameAnalize.getPassesPlayer(selectedPlayerAnalize).size()));
+            accuracyPasses1LbAnalize.setText(String.valueOf(selectedGameAnalize.getAccuracyPassesPlayer(selectedPlayerAnalize)));
+            yellowCards1LbAnalize.setText(String.valueOf(selectedGameAnalize.getYellowCardsPlayer(selectedPlayerAnalize).size()));
+            redCards1LbAnalize.setText(String.valueOf(selectedGameAnalize.getRedCardsPlayer(selectedPlayerAnalize).size()));
+            fauls1LbAnalize.setText(String.valueOf(selectedGameAnalize.getFaulsPlayer(selectedPlayerAnalize).size()));
+            takeover1LbAnalize.setText(String.valueOf(selectedGameAnalize.getTakeoversPlayer(selectedPlayerAnalize).size()));
+            freekicks1LbAnalize.setText(String.valueOf(selectedGameAnalize.getNumberOfFreekicksPlayer(selectedPlayerAnalize)));
+            corners1LbAnalize.setText(String.valueOf(selectedGameAnalize.getNumberOfCornersPlayer(selectedPlayerAnalize)));
+            penalties1LbAnalize.setText(String.valueOf(selectedGameAnalize.getNumberOfPenaltiesPlayer(selectedPlayerAnalize)));
+        }
+    }
+    
+    public void loadPlayerAs2BtClick(){
         if(selectedPlayerAnalize != null){
             score2LbAnalize.setText(String.valueOf(selectedGameAnalize.getGoalsPlayer(selectedPlayerAnalize).size()));
             shots2LbAnalize.setText(String.valueOf(selectedGameAnalize.getShotsPlayer(selectedPlayerAnalize).size()));
