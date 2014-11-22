@@ -105,7 +105,7 @@ public class DatabaseManager {
     }
     
     public ObservableList<Player> findPlayersForGame(Game game) {
-        ObservableList<Participated>participatedList = FXCollections.observableArrayList(em.createNamedQuery("Participated.findByGameId").setParameter("gameId", game).getResultList());
+        ObservableList<Participated>participatedList = FXCollections.observableArrayList(game.getParticipatedList());
         
         ObservableList<Player>players = FXCollections.observableArrayList();
         
@@ -123,4 +123,6 @@ public class DatabaseManager {
     public Player findPlayer(int id) {
         return em.find(Player.class, id);
     }
+    
+    //Analize
 }

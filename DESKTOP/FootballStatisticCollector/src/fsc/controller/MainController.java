@@ -160,6 +160,33 @@ public class MainController implements Initializable {
    private ObservableList<Player> playersListAnalize;
    private ObservableList<Game> gamesListAnalize;
    private ObservableList<Team> teamsListAnalize;
+   
+   @FXML private Label score1LbAnalize;
+   @FXML private Label shots1LbAnalize;
+   @FXML private Label accurateShots1LbAnalize;
+   @FXML private Label passes1LbAnalize;
+   @FXML private Label accuracyPasses1LbAnalize;
+   @FXML private Label yellowCards1LbAnalize;
+   @FXML private Label redCards1LbAnalize;
+   @FXML private Label fauls1LbAnalize;
+   @FXML private Label takeover1LbAnalize;
+   @FXML private Label freekicks1LbAnalize;
+   @FXML private Label corners1LbAnalize;
+   @FXML private Label penalties1LbAnalize;
+   
+   @FXML private Label score2LbAnalize;
+   @FXML private Label shots2LbAnalize;
+   @FXML private Label accurateShots2LbAnalize;
+   @FXML private Label passes2LbAnalize;
+   @FXML private Label accuracyPasses2LbAnalize;
+   @FXML private Label yellowCards2LbAnalize;
+   @FXML private Label redCards2LbAnalize;
+   @FXML private Label fauls2LbAnalize;
+   @FXML private Label takeover2LbAnalize;
+   @FXML private Label freekicks2LbAnalize;
+   @FXML private Label corners2LbAnalize;
+   @FXML private Label penalties2LbAnalize;
+   
    /*
    ANALYZE PARAMS FINISH
    */
@@ -869,18 +896,42 @@ public class MainController implements Initializable {
     }
     
     public void loadAs1BtClick(){
-
+        score1LbAnalize.setText(selectedGameAnalize.getScoredGoals().toString());
+        shots1LbAnalize.setText(String.valueOf(selectedGameAnalize.getShotList().size()));
+        accurateShots1LbAnalize.setText(String.valueOf(selectedGameAnalize.getAccurateShotList().size()));
+        passes1LbAnalize.setText(String.valueOf(selectedGameAnalize.getPassingList().size()));
+        accuracyPasses1LbAnalize.setText(String.valueOf(selectedGameAnalize.getAccuracyPasses()));
+        yellowCards1LbAnalize.setText(String.valueOf(selectedGameAnalize.getYellowCards().size()));
+        redCards1LbAnalize.setText(String.valueOf(selectedGameAnalize.getRedCards().size()));
+        fauls1LbAnalize.setText(String.valueOf(selectedGameAnalize.getFaulList().size()));
+        takeover1LbAnalize.setText(String.valueOf(selectedGameAnalize.getTakeoverList().size()));
+        freekicks1LbAnalize.setText(String.valueOf(selectedGameAnalize.getNumberOfFreeKicks()));
+        corners1LbAnalize.setText(String.valueOf(selectedGameAnalize.getNumberOfCorners()));
+        penalties1LbAnalize.setText(String.valueOf(selectedGameAnalize.getNumberOfPenalties()));
     }
     
     public void loadAs2BtClick(){
-
+        if(selectedPlayerAnalize != null){
+            score2LbAnalize.setText(String.valueOf(selectedGameAnalize.getGoalsPlayer(selectedPlayerAnalize).size()));
+            shots2LbAnalize.setText(String.valueOf(selectedGameAnalize.getShotsPlayer(selectedPlayerAnalize).size()));
+            accurateShots2LbAnalize.setText(String.valueOf(selectedGameAnalize.getAccurateShotsPlayer(selectedPlayerAnalize).size()));
+            passes2LbAnalize.setText(String.valueOf(selectedGameAnalize.getPassesPlayer(selectedPlayerAnalize).size()));
+            accuracyPasses2LbAnalize.setText(String.valueOf(selectedGameAnalize.getAccuracyPassesPlayer(selectedPlayerAnalize)));
+            yellowCards2LbAnalize.setText(String.valueOf(selectedGameAnalize.getYellowCardsPlayer(selectedPlayerAnalize).size()));
+            redCards2LbAnalize.setText(String.valueOf(selectedGameAnalize.getRedCardsPlayer(selectedPlayerAnalize).size()));
+            fauls2LbAnalize.setText(String.valueOf(selectedGameAnalize.getFaulsPlayer(selectedPlayerAnalize).size()));
+            takeover2LbAnalize.setText(String.valueOf(selectedGameAnalize.getTakeoversPlayer(selectedPlayerAnalize).size()));
+            freekicks2LbAnalize.setText(String.valueOf(selectedGameAnalize.getNumberOfFreekicksPlayer(selectedPlayerAnalize)));
+            corners2LbAnalize.setText(String.valueOf(selectedGameAnalize.getNumberOfCornersPlayer(selectedPlayerAnalize)));
+            penalties2LbAnalize.setText(String.valueOf(selectedGameAnalize.getNumberOfPenaltiesPlayer(selectedPlayerAnalize)));
+        }
     }
     /*
     There we initialize params for analyze views
     */
     public void analizeTabClick(){
         teamsListAnalize = databaseManager.getTeams();
-        if ( teamsListAnalize!= null)   {
+        if (!teamsListAnalize.isEmpty())   {
             teamsCBAnalize.setItems(teamsListAnalize);
         } else {
             teamsCBAnalize.setValue("NIE MA DRUZYN");

@@ -13,7 +13,10 @@ import fsc.model.actions.Shot;
 import fsc.model.actions.Swap;
 import fsc.model.actions.Faul;
 import fsc.model.actions.Defense;
+import fsc.model.enums.ColorOfCard;
+import fsc.model.enums.SuccessOfShot;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.Basic;
@@ -128,10 +131,6 @@ public class Game implements Serializable {
         this.lostGoals = lostGoals;
     }
 
-    public Integer getScoredGoals() {
-        return scoredGoals;
-    }
-
     public void setScoredGoals(Integer scoredGoals) {
         this.scoredGoals = scoredGoals;
     }
@@ -153,18 +152,8 @@ public class Game implements Serializable {
         this.injuryList = injuryList;
     }
 
-    @XmlTransient
-    public List<Shot> getShotList() {
-        return shotList;
-    }
-
     public void setShotList(List<Shot> shotList) {
         this.shotList = shotList;
-    }
-
-    @XmlTransient
-    public List<Takeover> getTakeoverList() {
-        return takeoverList;
     }
 
     public void setTakeoverList(List<Takeover> takeoverList) {
@@ -186,11 +175,6 @@ public class Game implements Serializable {
 
     public void setPlayedList(List<Played> playedList) {
         this.playedList = playedList;
-    }
-
-    @XmlTransient
-    public List<Faul> getFaulList() {
-        return faulList;
     }
 
     public void setFaulList(List<Faul> faulList) {
@@ -223,12 +207,7 @@ public class Game implements Serializable {
     public void setSwapList(List<Swap> swapList) {
         this.swapList = swapList;
     }
-
-    @XmlTransient
-    public List<Passing> getPassingList() {
-        return passingList;
-    }
-
+    
     public void setPassingList(List<Passing> passingList) {
         this.passingList = passingList;
     }
@@ -237,7 +216,7 @@ public class Game implements Serializable {
     public List<Card> getCardList() {
         return cardList;
     }
-
+    
     public void setCardList(List<Card> cardList) {
         this.cardList = cardList;
     }
@@ -267,4 +246,269 @@ public class Game implements Serializable {
         return this.getOponent() + " gra_nr: "+ this.getId();
     }
     
+    //Team analize
+    
+    public Integer getScoredGoals() {
+        return scoredGoals;
+    }
+    
+    public List<Shot> getGoalList() {
+        List<Shot>goals = new ArrayList();
+        for(Shot s: getShotList()){
+            if(s.getSuccess() != null && s.getSuccess().equals(SuccessOfShot.GOL.toString()))
+                goals.add(s);
+        }
+        return goals;
+    }
+        
+    @XmlTransient
+    public List<Shot> getShotList() {
+        return shotList;
+    }
+   
+    public List<Shot> getAccurateShotList() {
+        List<Shot>accurateShots = getGoalList();
+        
+        for(Shot s: getShotList()){
+            if(s.getSuccess()!=null && s.getSuccess().equals(SuccessOfShot.CELNY))
+                accurateShots.add(s);
+        }
+        return accurateShots;
+    }
+    
+    @XmlTransient
+    public List<Passing> getPassingList() {
+        return passingList;
+    }
+    
+    public List<Passing> getAccuratePassesList(){
+        List<Passing>accuratePasses = new ArrayList();
+        
+        for(Passing p: getPassingList()){
+            if(p.getSuccessful())
+                accuratePasses.add(p);
+        }
+        return accuratePasses;
+    }
+
+    public double getAccuracyPasses() {
+        if(getPassingList().isEmpty())
+            return 0;
+        return (100*getAccuratePassesList().size())/getPassingList().size();
+    }
+    
+    public List<Card> getYellowCards() {
+        List<Card>yellowCards = new ArrayList();
+        
+        for(Card c: getCardList()){
+            if(c.getKind() != null && c.getKind().equals(ColorOfCard.ŻÓŁTA))
+                yellowCards.add(c);
+        }
+        return yellowCards;
+    }
+    
+    public List<Card> getRedCards() {
+        List<Card>redCards = new ArrayList();
+        
+        for(Card c: getCardList()){
+            if(c.getKind() != null && c.getKind().equals(ColorOfCard.CZERWONA))
+                redCards.add(c);
+        }
+        return redCards;
+    }
+    
+    @XmlTransient
+    public List<Faul> getFaulList() {
+        return faulList;
+    }
+    
+    @XmlTransient
+    public List<Takeover> getTakeoverList() {
+        return takeoverList;
+    }
+    
+    public int getNumberOfFreeKicks(){
+        int numberOfFreeKicks = 0;
+        
+        for(Shot s: getShotList()){
+            if(s.getFreekick())
+                numberOfFreeKicks++;
+        }
+        
+        for(Passing p: getPassingList()){
+            if(p.getFreekick())
+                numberOfFreeKicks++;
+        }
+        
+        return numberOfFreeKicks;
+    }
+    
+    public int getNumberOfCorners(){
+        int numberOfCorners = 0;
+        
+        for(Shot s: getShotList()){
+            if(s.getCorner())
+                numberOfCorners++;
+        }
+        
+        for(Passing p: getPassingList()){
+            if(p.getCorner())
+                numberOfCorners++;
+        }
+        
+        return numberOfCorners;
+    }
+    
+    public int getNumberOfPenalties(){
+        int numberOfPenalties = 0;
+        
+        for(Shot s: getShotList()){
+            if(s.getPenalty())
+                numberOfPenalties++;
+        }
+        
+        return numberOfPenalties;
+    }
+      
+    //Player analize
+     
+    public List<Shot> getGoalsPlayer(Player player){
+        List<Shot>goals = new ArrayList();
+        
+        for(Shot g: getGoalList()){
+            if(g.getPlayerId().equals(player))
+                goals.add(g);
+        }
+        return goals;
+    }
+    
+    public List<Shot> getShotsPlayer(Player player){
+        List<Shot>shots = new ArrayList();
+        
+        for(Shot s: getShotList()){
+            if(s.getPlayerId().equals(player))
+                shots.add(s);
+        }
+        return shots;
+    }
+    
+    public List<Shot> getAccurateShotsPlayer(Player player){
+        List<Shot>accurateShots = new ArrayList();
+        
+        for(Shot s: getAccurateShotList()){
+            if(s.getPlayerId().equals(player))
+                accurateShots.add(s);
+        }
+        return accurateShots;
+    }
+    
+    public List<Passing> getPassesPlayer(Player player){
+        List<Passing>passes = new ArrayList();
+        
+        for(Passing p: getPassingList()){
+            if(p.getPlayerPassingId().equals(player))
+                passes.add(p);
+        }
+        return passes;
+    }
+    
+    public List<Passing> getAccuratePassesPlayer(Player player){
+        List<Passing>accuratePasses = new ArrayList();
+        
+        for(Passing p: getAccuratePassesList()){
+            if(p.getPlayerPassingId().equals(player))
+                accuratePasses.add(p);
+        }
+        return accuratePasses;
+    }
+    
+    public double getAccuracyPassesPlayer(Player player){
+        if(getPassesPlayer(player).isEmpty())
+            return 0;
+        return (100*getAccuratePassesPlayer(player).size())/getPassesPlayer(player).size();
+    }
+    
+    public List<Card> getYellowCardsPlayer(Player player){
+        List<Card>yellowCards = new ArrayList();
+        
+        for(Card c: getYellowCards()){
+            if(c.getPlayerId().equals(player))
+                yellowCards.add(c);
+        }
+        return yellowCards;
+    }
+ 
+    public List<Card> getRedCardsPlayer(Player player){
+        List<Card>redCards = new ArrayList();
+        
+        for(Card c: getRedCards()){
+            if(c.getPlayerId().equals(player))
+                redCards.add(c);
+        }
+        return redCards;
+    }
+  
+    public List<Faul> getFaulsPlayer(Player player){
+        List<Faul>fauls = new ArrayList();
+        
+        for(Faul f: getFaulList()){
+            if(f.getPlayerVictimId()!= null && f.getPlayerVictimId().equals(player))
+                fauls.add(f);
+        }
+        return fauls;
+    }
+    
+    public List<Takeover> getTakeoversPlayer(Player player){
+        List<Takeover>takeovers = new ArrayList();
+        
+        for(Takeover t: getTakeoverList()){
+            if(t.getPlayerId().equals(player))
+                takeovers.add(t);
+        }
+        return takeovers;
+    }
+    
+    public int getNumberOfFreekicksPlayer(Player player){
+        int numberOfFreeKicks = 0;
+        
+        for(Shot s: getShotList()){
+            if(s.getCorner() && s.getPlayerId().equals(player))
+                numberOfFreeKicks++;
+        }
+        
+        for(Passing p: getPassingList()){
+            if(p.getCorner() && p.getPlayerPassingId().equals(player))
+                numberOfFreeKicks++;
+        }
+        
+        return numberOfFreeKicks;
+    }
+    
+    public int getNumberOfCornersPlayer(Player player){
+        int numberOfCorners = 0;
+        
+        for(Shot s: getShotList()){
+            if(s.getCorner() && s.getPlayerId().equals(player))
+                numberOfCorners++;
+        }
+        
+        for(Passing p: getPassingList()){
+            if(p.getCorner() && p.getPlayerPassingId().equals(player))
+                numberOfCorners++;
+        }
+        
+        return numberOfCorners;
+    }
+    
+    public int getNumberOfPenaltiesPlayer(Player player){
+        int numberOfPenalties = 0;
+        
+        for(Shot s: getShotList()){
+            if(s.getCorner() && s.getPlayerId().equals(player))
+                numberOfPenalties++;
+        }
+        
+        return numberOfPenalties;
+    }
+        
 }
