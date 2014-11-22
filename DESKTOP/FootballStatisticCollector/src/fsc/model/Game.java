@@ -264,7 +264,7 @@ public class Game implements Serializable {
 
     @Override
     public String toString() {
-        return "fsc.model.Game[ id=" + id + " ]";
+        return this.getOponent() + " gra_nr: "+ this.getId();
     }
     
 }
