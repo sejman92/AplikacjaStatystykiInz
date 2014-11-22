@@ -732,11 +732,11 @@
 <NumberAxis minorTickCount="1" side="LEFT" upperBound="10.0" />
 </yAxis>
 </BarChart>
-<ChoiceBox fx:id="teamsCBAnalize" layoutX="22.0" layoutY="53.0" prefWidth="150.0">
+<ChoiceBox fx:id="teamsCBAnalize" layoutX="22.0" layoutY="53.0" onMouseClicked="#teamsCBAnalizeClick" prefWidth="150.0">
                      <opaqueInsets>
                         <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
                      </opaqueInsets></ChoiceBox>
-<ChoiceBox fx:id="gamesCBAnalize" layoutX="22.0" layoutY="141.0" prefWidth="150.0" />
+<ChoiceBox fx:id="gamesCBAnalize" layoutX="22.0" layoutY="141.0" onMouseClicked="#gamesCBAnalizeClick" prefWidth="150.0" />
 <ListView fx:id="playersLVAnalize" layoutX="22.0" layoutY="226.0" onMouseClicked="#playersLVAnalizeClick" prefHeight="332.0" prefWidth="150.0" />
 <GridPane alignment="CENTER" gridLinesVisible="true" layoutX="193.0" layoutY="21.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="431.0" prefWidth="557.0">
 <columnConstraints>

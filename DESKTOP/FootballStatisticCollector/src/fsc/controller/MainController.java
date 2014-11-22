@@ -7,6 +7,7 @@ package fsc.controller;
 
 import static fsc.controller.GlobalVariables.MAX_SUBSTITIONS;
 import fsc.model.Game;
+import fsc.model.Participated;
 import fsc.model.Played;
 import fsc.model.interfaces.IAction;
 import fsc.model.actions.Passing;
@@ -553,9 +554,18 @@ public class MainController implements Initializable {
         
         databaseManager.saveEntityElement(played);
         
+        Participated participated;
+        
+        for(Player p: lineup.getStartingLineup()){
+            participated = new Participated();
+            participated.setOwnerId(owner);
+            participated.setGameId(game);
+            participated.setPlayerId(p);
+            databaseManager.saveEntityElement(participated);
+        }
+        
         setSuccessButtonContent();
         startTimer();
-
     }
     public void pauseMatchBtClick(){
         if (paused){
@@ -784,6 +794,13 @@ public class MainController implements Initializable {
             if(result instanceof Swap){
                 lineup.removeFromStartingLineup(((Swap)result).getPlayerOutId());
                 lineup.moveFromReserveToStarting(((Swap)result).getPlayerInId());
+                
+                Participated participated = new Participated();
+                participated.setOwnerId(owner);
+                participated.setGameId(game);
+                participated.setPlayerId(((Swap)result).getPlayerInId());
+                databaseManager.saveEntityElement(participated);
+                
                 playersStartListCollectView.setItems(lineup.getStartingLineup());
                 playersReserveListCollectView.setItems(lineup.getReserveLineup());
                 selectedPlayerToAction = null;
@@ -837,16 +854,27 @@ public class MainController implements Initializable {
     
     
     */
+    
+    public void teamsCBAnalizeClick(){
+        selectedTeamAnalize = (Team)teamsCBAnalize.getSelectionModel().getSelectedItem();    
+        gamesCBAnalize.setItems(databaseManager.findGamesForTeam(selectedTeamAnalize));
+    }
+    
+    public void gamesCBAnalizeClick(){
+        selectedGameAnalize = (Game)gamesCBAnalize.getSelectionModel().getSelectedItem();
+        playersLVAnalize.setItems(databaseManager.findPlayersForGame(selectedGameAnalize));        
+    }
+    
     public void playersLVAnalizeClick(){
         selectedPlayerAnalize = (Player) playersLVAnalize.getSelectionModel().getSelectedItem();
     }
     
     public void loadAs1BtClick(){
-        
+
     }
     
     public void loadAs2BtClick(){
-        
+
     }
     /*
     There we initialize params for analyze views
@@ -865,5 +893,4 @@ public class MainController implements Initializable {
         //this.playersLVAnalize.setItems(playersListAnalize);
         //this.playersLVAnalize = databaseManager.findPlayersFromTeam();
     }
-  
 }
