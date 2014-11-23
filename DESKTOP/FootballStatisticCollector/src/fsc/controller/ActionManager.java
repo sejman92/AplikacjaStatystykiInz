@@ -199,14 +199,19 @@ public class ActionManager {
         if(partOfBody != null)
             result += partOfBody + " ";
         if(successful > 0){
-            if( action.getIdTypeOfAction()== 6 ) result += "faulowany"; //check it is faul or other action
-            else result += "celne ";
+            if( action instanceof Faul)
+                result += "faulowany"; //check it is faul or other action
+            else
+                result += "celne ";
         }
         else if(successful < 0){
-            if( action.getIdTypeOfAction() == 6) result += "faulował"; //check it is faul or other action
-            else result += "niecelne ";
+            if( action instanceof Faul)
+                result += "faulował"; //check it is faul or other action
+            else
+                result += "niecelne ";
         }
-        if( this.kickType != Kicks.NONE) result += kickTypeName();
+        if( this.kickType != Kicks.NONE)
+            result += kickTypeName();
         return result;
     }
 

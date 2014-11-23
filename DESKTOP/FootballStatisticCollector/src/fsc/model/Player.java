@@ -49,7 +49,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Player.findByRole", query = "SELECT p FROM Player p WHERE p.role = :role"),
     @NamedQuery(name = "Player.findByPreferedLeg", query = "SELECT p FROM Player p WHERE p.preferedLeg = :preferedLeg"),
     @NamedQuery(name = "Player.findByActive", query = "SELECT p FROM Player p WHERE p.active = :active"),
-    @NamedQuery(name = "Player.findByTeamId", query = "SELECT p FROM Player p WHERE p.teamId = :team_id")})
+    @NamedQuery(name = "Player.findByTeamId", query = "SELECT p FROM Player p WHERE p.teamId = :teamId")})
 public class Player implements Serializable, IEntityElement, Comparable<Player> {
     private static final long serialVersionUID = 1L;
     @Id

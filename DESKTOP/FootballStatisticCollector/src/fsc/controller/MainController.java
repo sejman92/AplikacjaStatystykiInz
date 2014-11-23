@@ -132,7 +132,6 @@ public class MainController implements Initializable {
    @FXML private Tab beginMatchTab;
    
    private DatabaseManager databaseManager;
-   private GameManager gameManager;
    private ObservableList<Positions>positions;
    private Team selectedTeam;
    private Player selectedPlayer;
@@ -571,9 +570,8 @@ public class MainController implements Initializable {
         this.game = new Game();
         this.game.setOwnerId(owner);
         this.game.setScoredGoals(0);
-        this.game.setLostGoals(0);
-        this.gameManager = GameManager.getInstance();   
-        gameManager.saveGame(game);
+        this.game.setLostGoals(0);  
+        databaseManager.saveEntityElement(game);
         
         Played played = new Played();
         played.setOwnerId(owner);
@@ -609,7 +607,7 @@ public class MainController implements Initializable {
     
     public void stopMatchBtClick(){
         this.disableAllButtonInCollectView();
-        this.gameManager.saveGame(game);   
+        databaseManager.saveEntityElement(game);   
         timeline.stop();
     }
     /*
@@ -793,7 +791,6 @@ public class MainController implements Initializable {
     */
     public void goalNegativeBtClick(){
         this.game.setLostGoals(this.game.getLostGoals()+1);
-        gameManager.saveGame(game);
         this.faulButtonFlag = false;
         setSuccessButtonContent();
     }
@@ -805,7 +802,6 @@ public class MainController implements Initializable {
         actionManager.setAction(new Shot());
         curInsertTA.setText(actionManager.getInsert() + "ZDOBYTA BRAMKA!!!");
         this.game.setScoredGoals(this.game.getScoredGoals()+1);
-        gameManager.saveGame(game);
         this.faulButtonFlag = false;
         setSuccessButtonContent();
     }
@@ -891,15 +887,22 @@ public class MainController implements Initializable {
     */
     
     public void teamsCBAnalizeAction(){
-        selectedTeamAnalize = (Team)teamsCBAnalize.getSelectionModel().getSelectedItem();    
-        gamesCBAnalize.setItems(databaseManager.findGamesForTeam(selectedTeamAnalize));
+        selectedTeamAnalize = (Team)teamsCBAnalize.getSelectionModel().getSelectedItem();
+        if(selectedTeamAnalize != null){
+            gamesCBAnalize.setItems(databaseManager.findGamesForTeam(selectedTeamAnalize));
+        }else{
+            gamesCBAnalize.setItems(null);
+        }
     }
     
     public void gamesCBAnalizeAction(){
         selectedGameAnalize = (Game)gamesCBAnalize.getSelectionModel().getSelectedItem();
-        playersLVAnalize.setItems(databaseManager.findPlayersForGame(selectedGameAnalize));        
+        if(selectedGameAnalize != null){
+            playersLVAnalize.setItems(databaseManager.findPlayersForGame(selectedGameAnalize));        
+        }else{
+            playersLVAnalize.setItems(null);
+        }
     }
-    
     public void playersLVAnalizeClick(){
         selectedPlayerAnalize = (Player) playersLVAnalize.getSelectionModel().getSelectedItem();
     }

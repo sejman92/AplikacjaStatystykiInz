@@ -101,11 +101,11 @@ public class DatabaseManager {
     }
     
     public ObservableList<Player> findPlayersFromTeam(Team team) {
-        return FXCollections.observableArrayList(em.createNamedQuery("Player.findByTeamId").setParameter("team_id", team).getResultList());
+        return FXCollections.observableArrayList(em.createNamedQuery("Player.findByTeamId").setParameter("teamId", team).getResultList());
     }
     
     public ObservableList<Player> findPlayersForGame(Game game) {
-        ObservableList<Participated>participatedList = FXCollections.observableArrayList(game.getParticipatedList());
+        ObservableList<Participated>participatedList = FXCollections.observableArrayList(em.createNamedQuery("Participated.findByGameId").setParameter("gameId", game).getResultList());
         
         ObservableList<Player>players = FXCollections.observableArrayList();
         
@@ -124,5 +124,10 @@ public class DatabaseManager {
         return em.find(Player.class, id);
     }
     
-    //Analize
+    public ObservableList<Game> getGames(){
+        return FXCollections.observableArrayList(em.createNamedQuery("Game.findAll").getResultList());
+    }
+    public Game getGame(int id){
+        return em.find(Game.class, id);
+    }
 }

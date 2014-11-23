@@ -894,8 +894,8 @@
                               <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
                            </padding>
                         </Button>
-                        <Button mnemonicParsing="false" onAction="#loadPlayerAs1BtClick" prefHeight="43.0" prefWidth="166.0" text="Zawodnik do lewej tabeli" />
-                        <Button mnemonicParsing="false" onAction="#loadPlayerAs2BtClick" prefHeight="43.0" prefWidth="168.0" text="Zawodnik do prawej tabeli" />
+                        <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#loadPlayerAs1BtClick" prefHeight="43.0" prefWidth="166.0" text="Zawodnik do lewej tabeli" />
+                        <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#loadPlayerAs2BtClick" prefHeight="43.0" prefWidth="168.0" text="Zawodnik do prawej tabeli" />
                      </children>
                   </VBox>
                   <VBox layoutX="206.0" layoutY="569.0" prefHeight="74.0" prefWidth="179.0">

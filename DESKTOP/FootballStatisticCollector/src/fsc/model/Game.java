@@ -15,6 +15,7 @@ import fsc.model.actions.Faul;
 import fsc.model.actions.Defense;
 import fsc.model.enums.ColorOfCard;
 import fsc.model.enums.SuccessOfShot;
+import fsc.model.interfaces.IEntityElement;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
@@ -51,7 +52,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Game.findByLostGoals", query = "SELECT g FROM Game g WHERE g.lostGoals = :lostGoals"),
     @NamedQuery(name = "Game.findByScoredGoals", query = "SELECT g FROM Game g WHERE g.scoredGoals = :scoredGoals"),
     @NamedQuery(name = "Game.findByOponent", query = "SELECT g FROM Game g WHERE g.oponent = :oponent")})
-public class Game implements Serializable {
+public class Game implements Serializable, IEntityElement {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
