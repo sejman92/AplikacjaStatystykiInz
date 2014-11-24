@@ -10,7 +10,9 @@ import fsc.model.Participated;
 import fsc.model.Played;
 import fsc.model.Player;
 import fsc.model.Team;
+import fsc.model.User;
 import fsc.model.interfaces.IEntityElement;
+import java.util.ArrayList;
 import java.util.List;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -127,7 +129,18 @@ public class DatabaseManager {
     public ObservableList<Game> getGames(){
         return FXCollections.observableArrayList(em.createNamedQuery("Game.findAll").getResultList());
     }
+    
     public Game getGame(int id){
         return em.find(Game.class, id);
+    }
+    
+    //Logintab element's method
+    public User getUser(String login){
+        List<User>users = new ArrayList<>(em.createNamedQuery("User.findByLogin").setParameter("login", login).getResultList());
+        
+        if(users.isEmpty())
+            return null;
+        
+        return users.get(0);
     }
 }

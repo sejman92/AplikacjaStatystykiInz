@@ -52,6 +52,7 @@ import javafx.event.EventHandler;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.PasswordField;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TextArea;
 import javafx.util.Duration;
@@ -62,6 +63,35 @@ import javafx.util.Duration;
  */
 
 public class MainController implements Initializable {
+    
+   //LoginTab elements
+   
+    private LoginTabController loginTabControler;
+    
+    @FXML Tab loginTab;
+    
+    @FXML TextField loginLoginTF;
+    @FXML PasswordField passwordLoginPF;
+    
+    @FXML Label loginLoginWarningLb;
+    @FXML Label passwordLoginWarningLb;
+    
+    @FXML TextField loginRegisterTF;
+    @FXML TextField nameRegisterTF;
+    @FXML TextField surnameRegisterTF;
+    @FXML PasswordField passwordRegisterPF;
+    @FXML PasswordField repeatPasswordRegisterPF;
+    
+    @FXML Label loginRegisterWarningLb;
+    @FXML Label nameRegisterWarningLb;
+    @FXML Label surnameRegisterWarningLb;
+    @FXML Label passwordRegisterWarningLb;
+    @FXML Label repeatPasswordRegisterWarningLb;
+    
+    @FXML Button loginBt;
+    @FXML Button registerBt;
+    
+    //Other Tabs elements
     
    @FXML private Label timer;
    @FXML private Label teamNameCollectView;
@@ -193,6 +223,7 @@ public class MainController implements Initializable {
    */
    @Override
     public void initialize(URL url, ResourceBundle rb) {
+        loginTabControler = LoginTabController.getInstance(this);
         databaseManager = DatabaseManager.getInstance();
         actionManager = ActionManager.getInstance();
         // TODO 
@@ -983,7 +1014,16 @@ public class MainController implements Initializable {
             teamsCBAnalize.setItems(teamsListAnalize);
         } else {
             teamsCBAnalize.setValue("NIE MA DRUZYN");
-        }
-        
+        }     
+    }
+    
+    
+    //LoginTab element's actions
+    
+    public void loginBtClick(){
+        loginTabControler.loginBtClick();
+    }
+    public void registerBtClick(){
+        loginTabControler.registerBtClick();
     }
 }
