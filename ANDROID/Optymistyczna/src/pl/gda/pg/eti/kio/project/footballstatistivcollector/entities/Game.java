@@ -9,7 +9,7 @@ public class Game {
 	private String oponent;
 	private String comment;
 	
-	public Game(int id,String date, String place, int lost_goals,int scored_goals, String oponent)
+	public Game(int id,String date, String place, int lost_goals,int scored_goals, String oponent,String comment)
 	{
 		this.id=id;
 		this.date=date;
@@ -17,6 +17,7 @@ public class Game {
 		this.lost_goals=lost_goals;
 		this.scored_goals=scored_goals;
 		this.oponent=oponent;
+		this.comment=comment;
 	}
 	
 	public Game(String date, String place, int lost_goals, int scored_goals, String oponent, String comment)

@@ -43,4 +43,9 @@ public class Focus {
 		backup_players_for_focused_game.clear();
 		swaped_players_for_focused_game.clear();
 	}
+
+	static public Player getFocusedPlayer()
+	{
+		return focused_player;
+	}
 }

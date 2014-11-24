@@ -12,5 +12,6 @@
     <string name="title_activity_chose_players_for_game">ChosePlayersForGameActivity</string>
     <string name="title_activity_game">GameActivity</string>
     <string name="title_activity_pre_game">PreGameActivity</string>
+    <string name="title_activity_player_stats">PlayerStatsActivity</string>
 
 </resources>

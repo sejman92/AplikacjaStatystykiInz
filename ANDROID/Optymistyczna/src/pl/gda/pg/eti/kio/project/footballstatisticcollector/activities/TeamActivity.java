@@ -37,7 +37,7 @@ public class TeamActivity extends Activity {
         {
         	Focus.focused_player=listPlayer.get(position);
         	
-        	Intent intent = new Intent(TeamActivity.this,PlayerActivity.class);
+        	Intent intent = new Intent(TeamActivity.this,PlayerStatsActivity.class);
         	startActivity(intent);
         }
 	};
