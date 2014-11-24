@@ -23,6 +23,11 @@ public class LoginTabController {
     
     private final String LACK_OF_USER_IN_DATABASE = "Brak użytkownika w bazie danych";
     private final String BAD_PASSWORD = "Blędne hasło";
+    private final String LOGIN_SUCCESS = "Zalogowano";
+    private final String LOGOUT_SUCCESS = "Wylogowano";
+    private final String REGISTER_SUCCESS = "Utworzono konto";
+    private final String LOGIN_BT_TEXT_1 = "Zaloguj";
+    private final String LOGIN_BT_TEXT_2 = "Wyloguj";
     
     private LoginTabController(MainController mc){
         this.mc=mc;
@@ -63,8 +68,16 @@ public class LoginTabController {
     }
     
     public void loginBtClick(){
+        mc.infoLoginLb.setText(null);
+        mc.infoRegisterLb.setText(null);
         mc.loginLoginWarningLb.setText(null);
         mc.passwordLoginWarningLb.setText(null);
+        
+        if(mc.owner != null){
+            mc.owner = null;        
+            disableButtonsWhenLoggedIn(false);
+            return;
+        }
 
         String login = mc.loginLoginTF.getText();
         String password = mc.passwordLoginPF.getText();
@@ -88,18 +101,42 @@ public class LoginTabController {
         
         dbm.saveEntityElement(user);
         mc.owner = user;
+        disableButtonsWhenLoggedIn(true);
     }
     
     public void registerBtClick(){
-        if(registerFieldsAreCorrect()){
+        mc.infoLoginLb.setText(null);
+        mc.infoRegisterLb.setText(null);
+        if(registerFieldsAreCorrect() && dbm.getUser(mc.loginRegisterTF.getText()) == null){
             User user = new User();
             user.setLogin(mc.loginRegisterTF.getText());
             user.setName(mc.nameRegisterTF.getText());
             user.setSurname(mc.surnameRegisterTF.getText());
             user.setPassword(mc.passwordRegisterPF.getText());
             dbm.saveEntityElement(user);
-            System.out.println("Stworzono usera");
+            mc.infoRegisterLb.setText(REGISTER_SUCCESS);
             //user.setPassword(Hashing.sha256().hashString(mc.nameRegisterTF.getText(), Charsets.UTF_8).toString());
+        }
+    }
+    
+    private void disableButtonsWhenLoggedIn(boolean isLoggedIn){
+        mc.teamsManagerTab.setDisable(!isLoggedIn);
+        mc.analizeTab.setDisable(!isLoggedIn);
+        mc.loginLoginTF.setDisable(isLoggedIn);
+        mc.passwordLoginPF.setDisable(isLoggedIn);
+        mc.loginRegisterTF.setDisable(isLoggedIn);
+        mc.nameRegisterTF.setDisable(isLoggedIn);
+        mc.surnameRegisterTF.setDisable(isLoggedIn);
+        mc.passwordRegisterPF.setDisable(isLoggedIn);
+        mc.repeatPasswordRegisterPF.setDisable(isLoggedIn);
+        mc.registerBt.setDisable(isLoggedIn);
+        if(isLoggedIn){
+            mc.loginBt.setText(LOGIN_BT_TEXT_2);
+            mc.infoLoginLb.setText(LOGIN_SUCCESS);
+        }else{
+            mc.loginBt.setText(LOGIN_BT_TEXT_1);
+            mc.infoLoginLb.setText(LOGOUT_SUCCESS);
+            mc.beginMatchTab.setDisable(true);
         }
     }
 }

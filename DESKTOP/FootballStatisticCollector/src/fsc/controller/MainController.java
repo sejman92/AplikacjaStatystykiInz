@@ -91,7 +91,13 @@ public class MainController implements Initializable {
     @FXML Button loginBt;
     @FXML Button registerBt;
     
+    @FXML Label infoLoginLb;
+    @FXML Label infoRegisterLb;
+    
     //Other Tabs elements
+    
+    @FXML Tab teamsManagerTab;
+    @FXML Tab analizeTab;
     
    @FXML private Label timer;
    @FXML private Label teamNameCollectView;
@@ -159,7 +165,7 @@ public class MainController implements Initializable {
    @FXML private ListView playersInLV;
    @FXML private ListView startingLineupListView;
    @FXML private ListView reserveLineupListView;
-   @FXML private Tab beginMatchTab;
+   @FXML Tab beginMatchTab;
    
    private DatabaseManager databaseManager;
    private ObservableList<Positions>positions;
@@ -228,12 +234,12 @@ public class MainController implements Initializable {
         actionManager = ActionManager.getInstance();
         // TODO 
         //there i ititialize conection with db and other stuff
-        owner = new User(1);
-        databaseManager.saveEntityElement(owner);
+        //owner = new User(1);
+        //databaseManager.saveEntityElement(owner);
         
         positions = FXCollections.observableArrayList(Positions.values());
         actionList = FXCollections.observableArrayList();
-        teamsLV.setItems(databaseManager.getTeams());
+        teamsLV.setItems(databaseManager.getTeams(owner));
         
         positionsLV.setItems(positions);
         lineup = new Lineup();
@@ -413,24 +419,34 @@ public class MainController implements Initializable {
     Create new team and insert into database
     */     
     public void createTeamBtClick(){
-        databaseManager.saveEntityElement(new Team(nameTeamTF.getText()));
-        teamsLV.setItems(databaseManager.getTeams());
+        Team team = new Team();
+        team.setOwnerId(owner);
+        team.setName(nameTeamTF.getText());
+        databaseManager.saveEntityElement(team);
+        teamsLV.setItems(databaseManager.getTeams(owner));
+        selectedTeamDisableButtons();
     }
     
     public void editSelectedTeamBtClick(){
-        selectedTeam.setName(nameTeamTF.getText());
-        databaseManager.saveEntityElement(selectedTeam);
-        teamsLV.setItems(databaseManager.getTeams());
+        selectedTeamDisableButtons();
+        if(selectedTeam != null){
+            selectedTeam.setName(nameTeamTF.getText());
+            databaseManager.saveEntityElement(selectedTeam);
+        }
+        teamsLV.setItems(databaseManager.getTeams(owner));
     }
     
     /*
     Took selected item in TeamSLV and fill players wich is in selected team
     */
     public void teamsLVClick(){
-        selectedTeam = (Team) teamsLV.getSelectionModel().getSelectedItem();
-        areNotSelectedToLineup = databaseManager.findPlayersFromTeam(selectedTeam);
-        playersListViewTeamManager.setItems(areNotSelectedToLineup);
-        nameTeamTF.setText(selectedTeam.getName());
+        selectedTeamDisableButtons();
+        if(selectedTeam != null){
+            nameTeamTF.setText(selectedTeam.getName());
+            areNotSelectedToLineup = databaseManager.findPlayersFromTeam(selectedTeam);
+            playersListViewTeamManager.setItems(areNotSelectedToLineup);
+        }
+        selectedTeamDisableButtons();
     }
     
     public void playersListViewTeamManagerClick(){
@@ -474,11 +490,10 @@ public class MainController implements Initializable {
     }
     
     public void removeSelectedTeamBtClick(){              
-        selectedTeam = (Team) teamsLV.getSelectionModel().getSelectedItem();
+        selectedTeamDisableButtons();
         if(selectedTeam != null){
             databaseManager.removeEntityElement(selectedTeam);           
-            teamsLV.setItems(databaseManager.getTeams());
-            selectedTeam = null;
+            teamsLV.setItems(databaseManager.getTeams(owner));
             playersListViewTeamManager.setItems(null);
         }
     }
@@ -489,6 +504,7 @@ public class MainController implements Initializable {
     public void createPlayerBtClick(){
         try{
             Player player = new Player();
+            player.setOwnerId(owner);
             player.setName(namePlayerTF.getText());
             player.setSurname(surnamePlayerTF.getText());
             player.setNo(Integer.parseInt(noPlayerTF.getText()));
@@ -1009,21 +1025,29 @@ public class MainController implements Initializable {
     There we initialize params for analyze views
     */
     public void analizeTabClick(){
-        teamsListAnalize = databaseManager.getTeams();
-        if (!teamsListAnalize.isEmpty())   {
-            teamsCBAnalize.setItems(teamsListAnalize);
-        } else {
-            teamsCBAnalize.setValue("NIE MA DRUZYN");
-        }     
+        teamsCBAnalize.setItems(databaseManager.getTeams(owner));             
     }
     
+    public void selectedTeamDisableButtons(){
+        selectedTeam = (Team) teamsLV.getSelectionModel().getSelectedItem();
+        if(selectedTeam == null){
+            editSelectedTeamBt.setDisable(true);
+            removeSelectedTeamBt.setDisable(true);
+        }else{
+            editSelectedTeamBt.setDisable(false);
+            removeSelectedTeamBt.setDisable(false);
+        }
+
+    }
     
     //LoginTab element's actions
     
     public void loginBtClick(){
         loginTabControler.loginBtClick();
+        teamsLV.setItems(databaseManager.getTeams(owner));
     }
     public void registerBtClick(){
         loginTabControler.registerBtClick();
     }
+    
 }

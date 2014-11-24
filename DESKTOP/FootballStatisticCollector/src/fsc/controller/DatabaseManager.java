@@ -82,8 +82,20 @@ public class DatabaseManager {
         }
     }
     
-    public ObservableList<Team> getTeams(){
+    public ObservableList<Team> getAllTeams(){
         return FXCollections.observableArrayList(em.createNamedQuery("Team.findAll").getResultList());
+    }
+    
+    public ObservableList<Team> getTeams(User owner){
+        ObservableList<Team> teams = FXCollections.observableArrayList();
+        
+        for(Team t: getAllTeams()){
+            if(t.getOwnerId() != null && t.getOwnerId().equals(owner)){
+                teams.add(t);
+            }
+        }
+        
+        return teams;
     }
     
     public Team getTeam(int id){

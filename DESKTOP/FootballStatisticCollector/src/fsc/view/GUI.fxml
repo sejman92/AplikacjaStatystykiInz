@@ -27,6 +27,7 @@
                       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                     </rowConstraints>
                      <children>
                         <TextField fx:id="loginLoginTF" prefHeight="12.0" prefWidth="100.0" GridPane.columnIndex="1" />
@@ -39,6 +40,7 @@
                            <font>
                               <Font name="System Bold" size="14.0" />
                            </font></Button>
+                        <Label fx:id="infoLoginLb" alignment="CENTER" prefHeight="46.0" prefWidth="100.0" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                      </children>
                   </GridPane>
                   <GridPane layoutX="100" layoutY="300">
@@ -51,6 +53,7 @@
                       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -76,6 +79,7 @@
                               <Font name="System Bold" size="14.0" />
                            </font>
                         </Button>
+                        <Label fx:id="infoRegisterLb" alignment="CENTER" prefHeight="77.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="6" />
                      </children>
                   </GridPane>
                   <Label alignment="CENTER" layoutX="175" layoutY="55" prefHeight="35.0" prefWidth="151.0" text="Logowanie" textAlignment="CENTER" textFill="#668bcc">
@@ -92,7 +96,7 @@
             </AnchorPane>
         </content>
       </Tab>
-<Tab text="Zarządzaj drużynami">
+<Tab fx:id="teamsManagerTab" disable="true" text="Zarządzaj drużynami">
 <content>
 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
 <children>
@@ -776,7 +780,7 @@
 </Pane>
 </content>
 </Tab>
-<Tab onSelectionChanged="#analizeTabClick" text="Analiza">
+<Tab fx:id="analizeTab" disable="true" onSelectionChanged="#analizeTabClick" text="Analiza">
 <content>
 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
 <children>
