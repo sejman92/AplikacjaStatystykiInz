@@ -14,8 +14,10 @@ public class Focus {
 	static public List<Player> main_players_for_focused_game;
 	static public List<Player> backup_players_for_focused_game;
 	static public List<Player> swaped_players_for_focused_game;
-	//static public String enemy_name_for_new_game;
 	static public boolean game_ended=false;
+	static public Player focused_player_for_compare1=null;
+	static public Player focused_player_for_compare2=null;
+	static public Game focused_game_for_compare=null;
 		
 
 	

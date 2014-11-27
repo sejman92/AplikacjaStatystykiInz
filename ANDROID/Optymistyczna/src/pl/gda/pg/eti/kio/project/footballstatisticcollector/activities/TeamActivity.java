@@ -53,6 +53,12 @@ public class TeamActivity extends Activity {
        // refresh_player_list();
 	}
 	
+	public void comparePlayers(View v)
+	{
+		Intent intent = new Intent(TeamActivity.this,ComparePlayersActivity.class);
+		startActivity(intent);
+	}
+	
 	@Override
 	public void onResume()
 	{

@@ -58,6 +58,30 @@
             android:name="pl.gda.pg.eti.kio.project.footballstatisticcollector.activities.PlayerStatsActivity"
             android:label="@string/title_activity_player_stats" >
         </activity>
+        <activity
+            android:name="pl.gda.pg.eti.kio.project.footballstatisticcollector.activities.ComparePlayersActivity"
+            android:label="@string/title_activity_compare_players" >
+        </activity>
+        <activity
+            android:name="pl.gda.pg.eti.kio.project.footballstatisticcollector.activities.ChosePlayersForCompareActivity"
+            android:label="@string/title_activity_chose_players_for_compare" >
+        </activity>
+        <activity
+            android:name="pl.gda.pg.eti.kio.project.footballstatisticcollector.activities.ChoseGameForCompareActivity"
+            android:label="@string/title_activity_chose_game_for_compare" >
+        </activity>
+        <activity
+            android:name="pl.gda.pg.eti.kio.project.footballstatisticcollector.activities.ChosingPlayersForCompare"
+            android:label="@string/title_activity_chosing_players_for_compare" >
+        </activity>
+        <activity
+            android:name="pl.gda.pg.eti.kio.project.footballstatisticcollector.activities.ChosingGameForCompare"
+            android:label="@string/title_activity_chosing_game_for_compare" >
+        </activity>
+        <activity
+            android:name="pl.gda.pg.kio.project.footballstatisticcollector.ComparingPlayersActivity"
+            android:label="@string/title_activity_comparing_players" >
+        </activity>
     </application>
 
 </manifest>

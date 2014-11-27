@@ -13,5 +13,11 @@
     <string name="title_activity_game">GameActivity</string>
     <string name="title_activity_pre_game">PreGameActivity</string>
     <string name="title_activity_player_stats">PlayerStatsActivity</string>
+    <string name="title_activity_compare_players">ComparePlayersActivity</string>
+    <string name="title_activity_chose_players_for_compare">ChosePlayersForCompareActivity</string>
+    <string name="title_activity_chose_game_for_compare">ChoseGameForCompareActivity</string>
+    <string name="title_activity_chosing_players_for_compare">ChosingPlayersForCompare</string>
+    <string name="title_activity_chosing_game_for_compare">ChosingGameForCompare</string>
+    <string name="title_activity_comparing_players">ComparingPlayersActivity</string>
 
 </resources>

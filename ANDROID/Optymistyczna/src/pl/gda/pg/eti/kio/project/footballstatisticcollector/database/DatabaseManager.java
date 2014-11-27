@@ -477,6 +477,21 @@ public class DatabaseManager extends SQLiteOpenHelper{
 		}
 		return games;
 	}
+	public List<Game> getGamesForPlayers(int player1_id, int player2_id)
+	{
+		List<Game> games1=new LinkedList<Game>();
+		List<Game> games2=new LinkedList<Game>();
+		List<Game> games=new LinkedList<Game>();
+		
+		games1=getGamesForPlayer(player1_id);
+		games2=getGamesForPlayer(player2_id);
+		for(Game g : games1)
+			for(Game h : games2)
+				if(h.getId()==g.getId())
+					games.add(g);
+		
+		return games;
+	}
 	
 	public int addShot(int game_id, int player_id, int time, String comment, String success, int penalty, int corner, int freekick )
 	{
