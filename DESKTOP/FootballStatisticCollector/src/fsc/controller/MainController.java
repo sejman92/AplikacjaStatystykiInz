@@ -33,6 +33,7 @@ import fsc.model.actions.Injury;
 import fsc.model.actions.Swap;
 import fsc.model.actions.Takeover;
 import fsc.model.enums.ColorOfCard;
+import fsc.model.enums.CompareCriteria;
 
 import fsc.model.enums.Kicks;
 import fsc.model.enums.Legs;
@@ -41,7 +42,9 @@ import fsc.model.enums.Positions;
 import fsc.model.enums.SuccessOfShot;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -49,6 +52,7 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.scene.chart.BarChart;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ComboBox;
@@ -190,7 +194,11 @@ public class MainController implements Initializable {
    */
    @FXML private ComboBox teamsCBAnalize;
    @FXML private ComboBox gamesCBAnalize;
+   @FXML private ComboBox criteriaCBAnalize;
+   @FXML private ListView toComparePlayersLV;
    @FXML private ListView playersLVAnalize;
+   @FXML private BarChart barChartAnalyze;
+   
    private Team selectedTeamAnalize;
    private Game selectedGameAnalize;
    private Player selectedPlayerAnalize;
@@ -227,6 +235,7 @@ public class MainController implements Initializable {
    /*
    ANALYZE PARAMS FINISH
    */
+   private AnalizeController AC;
    @Override
     public void initialize(URL url, ResourceBundle rb) {
         loginTabControler = LoginTabController.getInstance(this);
@@ -238,6 +247,7 @@ public class MainController implements Initializable {
         //databaseManager.saveEntityElement(owner);
         
         positions = FXCollections.observableArrayList(Positions.values());
+        
         actionList = FXCollections.observableArrayList();
         teamsLV.setItems(databaseManager.getTeams(owner));
         
@@ -247,6 +257,7 @@ public class MainController implements Initializable {
         paused = false;
         kickType = Kicks.NONE; //just initialize kicktype
         //beginMatchTab.setDisable(false);
+        AC = new AnalizeController(barChartAnalyze);
     }
     
 
@@ -654,7 +665,8 @@ public class MainController implements Initializable {
     
     public void stopMatchBtClick(){
         this.disableAllButtonInCollectView();
-        databaseManager.saveEntityElement(game);   
+        databaseManager.saveEntityElement(game);
+        game = databaseManager.getGame(game.getId());
         timeline.stop();
     }
     /*
@@ -860,7 +872,7 @@ public class MainController implements Initializable {
         //action.setGame(gameManager.getGame(game.getId()));
         actionManager.setComment(commentTA.getText());
         actionManager.setGame(game);
-
+        
         IAction result = actionManager.saveAction();
         if(result != null){
             actionList.add(result);
@@ -891,10 +903,12 @@ public class MainController implements Initializable {
                 
             actionManager.cancelAction();
             curInsertTA.setText("dodano");
+            
         }else
             curInsertTA.setText("nie dodano z powodu bledu");
         historyLV.setItems(actionList);
         commentTA.setText("");
+        //game = databaseManager.getGame(game.getId()); //refresh game objectssejman
     }
     
     /*
@@ -1021,11 +1035,20 @@ public class MainController implements Initializable {
             penalties2LbAnalize.setText(String.valueOf(selectedGameAnalize.getNumberOfPenaltiesPlayer(selectedPlayerAnalize)));
         }
     }
+    public void criteriaCBClick(){
+        this.AC.setSelectedCriteria((CompareCriteria) criteriaCBAnalize.getSelectionModel().getSelectedItem());
+        this.AC.setChartTitle(AC.getSelectedCriteria().toString());
+        this.barChartAnalyze = this.AC.getChart();
+        System.out.println(this.barChartAnalyze.getTitle());
+    }
     /*
     There we initialize params for analyze views
     */
     public void analizeTabClick(){
-        teamsCBAnalize.setItems(databaseManager.getTeams(owner));             
+        teamsCBAnalize.setItems(databaseManager.getTeams(owner));
+        this.criteriaCBAnalize.setItems(AC.getCriteriaList());
+        this.barChartAnalyze = new BarChart<Number,String>(AC.getxAxis(), AC.getyAxis());
+        //this.barChartAnalyze.getData().addAll(AC.getSeries());
     }
     
     public void selectedTeamDisableButtons(){
@@ -1039,7 +1062,52 @@ public class MainController implements Initializable {
         }
 
     }
-    
+    public void addToComparePlayerBt(){
+        Player sel = (Player) playersLVAnalize.getSelectionModel().getSelectedItem();
+        AC.addPlayerToSelected(sel);
+        this.toComparePlayersLV.setItems(AC.getSelectedPlayers());
+    }
+    public void removeToComparePlayerBt(){
+        Player p = (Player) toComparePlayersLV.getSelectionModel().getSelectedItem();
+        AC.removePlayerFromSelected(p);
+        this.toComparePlayersLV.setItems(AC.getSelectedPlayers());
+    }
+    public void compareBtClick(){
+        List<Integer> value = new ArrayList();
+        List<String> plName = new ArrayList();
+        for( Player p :AC.getSelectedPlayers()){
+            switch (AC.getSelectedCriteria()){
+                case Strzał:
+                    List<Shot> s = selectedGameAnalize.getShotsPlayer(p);
+                    value.add(s.size());
+                    break;
+                case Podanie:
+                    List<Passing> pass = selectedGameAnalize.getPassesPlayer(p);
+                    value.add(pass.size());
+                    break;
+                case Faul:
+                    List<Faul> f = selectedGameAnalize.getFaulsPlayer(p);
+                    value.add(f.size());
+                    break;
+                case Karny:
+                    value.add(selectedGameAnalize.getNumberOfPenaltiesPlayer(p));
+                    break;
+                case Wolny:
+                    value.add(selectedGameAnalize.getNumberOfFreekicksPlayer(p));
+                    break;
+                case Obrona:
+                    value.add(selectedGameAnalize.getNumberOfDefensesPlayer(p));
+                    break;
+                default:
+                    value.add(999);
+                    break;
+            }
+            plName.add(p.getSurname() + " " + p.getName());
+        }
+        AC.addSeries(AC.getSelectedCriteria().toString(), value, plName);
+        this.barChartAnalyze.getData().addAll(AC.getSeries());
+        this.barChartAnalyze = AC.getChart();
+    }
     //LoginTab element's actions
     
     public void loginBtClick(){

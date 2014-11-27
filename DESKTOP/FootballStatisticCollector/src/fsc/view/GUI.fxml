@@ -808,16 +808,16 @@
 <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
 </padding>
 </Label>
-<BarChart layoutX="745.0" layoutY="10.0" prefHeight="313.0" prefWidth="521.0">
+<BarChart fx:id="barChartAnalyze" alternativeRowFillVisible="false" barGap="2.0" categoryGap="2.0" horizontalGridLinesVisible="false" horizontalZeroLineVisible="false" layoutX="711.0" legendSide="LEFT" prefHeight="651.0" prefWidth="563.0" titleSide="BOTTOM" verticalGridLinesVisible="false" verticalZeroLineVisible="false">
 <xAxis>
-<CategoryAxis side="BOTTOM" />
+<CategoryAxis label="Zawodnik" prefHeight="17.0" prefWidth="470.0" />
 </xAxis>
 <yAxis>
 <NumberAxis minorTickCount="1" side="LEFT" upperBound="10.0" />
 </yAxis>
 </BarChart>
 <ListView fx:id="playersLVAnalize" layoutX="22.0" layoutY="226.0" onMouseClicked="#playersLVAnalizeClick" prefHeight="260.0" prefWidth="150.0" />
-<GridPane alignment="CENTER" gridLinesVisible="true" layoutX="193.0" layoutY="21.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="431.0" prefWidth="557.0">
+<GridPane alignment="CENTER" gridLinesVisible="true" layoutX="193.0" layoutY="22.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="430.0" prefWidth="502.0">
 <columnConstraints>
 <ColumnConstraints hgrow="ALWAYS" maxWidth="272.0" minWidth="10.0" prefWidth="138.0" />
 <ColumnConstraints hgrow="SOMETIMES" maxWidth="397.0" minWidth="10.0" prefWidth="215.0" />
@@ -941,7 +941,6 @@
 <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
 </padding>
 </GridPane>
-<PieChart layoutX="788.0" layoutY="323.0" prefHeight="348.0" prefWidth="435.0" title="Wykres kołowy" />
 <Label layoutX="216.0" layoutY="471.0" text="Kryterium porównania: ">
 <font>
 <Font size="18.0" />
@@ -952,8 +951,8 @@
 <Font size="18.0" />
 </font>
 </Label>
-<ListView layoutX="430.0" layoutY="518.0" prefHeight="101.0" prefWidth="240.0" />
-<Button alignment="CENTER" contentDisplay="CENTER" layoutX="562.0" layoutY="643.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="108.0" text="Porównaj" textAlignment="CENTER" />
+<ListView fx:id="toComparePlayersLV" layoutX="430.0" layoutY="518.0" prefHeight="101.0" prefWidth="240.0" />
+<Button alignment="CENTER" contentDisplay="CENTER" layoutX="562.0" layoutY="643.0" mnemonicParsing="false" onAction="#compareBtClick" prefHeight="25.0" prefWidth="108.0" text="Porównaj" textAlignment="CENTER" />
                   <VBox layoutX="15.0" layoutY="500.0" prefHeight="171.0" prefWidth="157.0">
                      <children>
                         <Button alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#loadTeamAs1BtClick" prefHeight="0.0" prefWidth="148.0" text="Drużyna do lewej tabeli" VBox.vgrow="ALWAYS">
@@ -984,7 +983,7 @@
                   </VBox>
                   <VBox layoutX="206.0" layoutY="569.0" prefHeight="74.0" prefWidth="179.0">
                      <children>
-      <Button alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Dodaj wybranego zawodnika" textAlignment="CENTER" VBox.vgrow="ALWAYS">
+      <Button alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#addToComparePlayerBt" text="Dodaj wybranego zawodnika" textAlignment="CENTER" VBox.vgrow="ALWAYS">
                            <padding>
                               <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
                            </padding>
@@ -992,7 +991,7 @@
                               <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
                            </VBox.margin>
                         </Button>
-      <Button alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Usuń wybranego zawodnika" textAlignment="CENTER" VBox.vgrow="ALWAYS">
+      <Button alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#removeToComparePlayerBt" text="Usuń wybranego zawodnika" textAlignment="CENTER" VBox.vgrow="ALWAYS">
                            <VBox.margin>
                               <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
                            </VBox.margin>
@@ -1004,7 +1003,7 @@
                   </VBox>
                   <ComboBox fx:id="teamsCBAnalize" layoutX="24.0" layoutY="53.0" onAction="#teamsCBAnalizeAction" prefWidth="150.0" />
                   <ComboBox fx:id="gamesCBAnalize" layoutX="24.0" layoutY="133.0" onAction="#gamesCBAnalizeAction" prefWidth="150.0" />
-                  <ComboBox layoutX="430.0" layoutY="472.0" prefHeight="25.0" prefWidth="240.0" />
+                  <ComboBox fx:id="criteriaCBAnalize" layoutX="430.0" layoutY="472.0" onAction="#criteriaCBClick" prefHeight="25.0" prefWidth="240.0" />
 </children></AnchorPane>
 </content>
 </Tab>

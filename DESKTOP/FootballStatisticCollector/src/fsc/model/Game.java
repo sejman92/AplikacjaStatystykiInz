@@ -512,4 +512,16 @@ public class Game implements Serializable, IEntityElement {
         return numberOfPenalties;
     }
         
+    public int getNumberOfDefenses(){
+        return this.defenseList.size();
+    }
+    
+    public int getNumberOfDefensesPlayer(Player player){
+        int numberOfDefenses = 0;
+        for (Defense d: defenseList){
+            if(d.getPlayerId().getId() == player.getId())
+                numberOfDefenses++;
+        }
+        return numberOfDefenses;
+    }
 }

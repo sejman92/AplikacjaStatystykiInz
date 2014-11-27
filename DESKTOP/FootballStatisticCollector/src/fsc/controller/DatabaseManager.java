@@ -11,6 +11,7 @@ import fsc.model.Played;
 import fsc.model.Player;
 import fsc.model.Team;
 import fsc.model.User;
+import fsc.model.actions.Shot;
 import fsc.model.interfaces.IEntityElement;
 import java.util.ArrayList;
 import java.util.List;
@@ -129,7 +130,10 @@ public class DatabaseManager {
         
         return players;
     }
-    
+    /*public List<Shot> findShotsByPlayerInGame(Player player, Game game){
+        
+        return em.createNamedQuery("Shot.findByPlayerAndGame").setParameter("gameId", game).setParameter("playerId", player).getResultList();
+    }*/
     public List<Player> findAllPlayers() {
         return FXCollections.observableArrayList(em.createNamedQuery("Player.findAll").getResultList());
     }
