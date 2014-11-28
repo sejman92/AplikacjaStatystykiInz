@@ -26,11 +26,10 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
 public class DatabaseManager extends SQLiteOpenHelper{
-	//SQLiteDatabase db = getWritableDatabase();
+
 
 	public DatabaseManager(Context context) {
 		super(context, "baza_danych.db", null,1);
-		//QLiteDatabase db = getWritableDatabase();
 		
 	}
 
@@ -202,7 +201,6 @@ public class DatabaseManager extends SQLiteOpenHelper{
 		SQLiteDatabase db = getWritableDatabase();
 		try
 		{
-			//db.rawQuery("INSERT INTO druzyna (nazwa) VALUES ('"+name+"') ;",null);
 			ContentValues wartosci = new ContentValues();
 			wartosci.put("name", name);
 			db.insertOrThrow("Team", null, wartosci);
@@ -249,14 +247,10 @@ public class DatabaseManager extends SQLiteOpenHelper{
 			String[] columns={"ID", "name", "surname", "number", "role", "team_id"};
 			String[] args={String.valueOf(team_id)};
 			cursor = db.query("Player", columns, "team_id=?", args, null, null, null);
-			//db.close();
 			while(cursor.moveToNext())
 			{
-				//Player player=new Player(cursor.getInt(0),cursor.getString(1),cursor.getString(2), cursor.getInt(3), cursor.getString(4), cursor.getInt(5));
-				//list.add(getPlayer(cursor.getInt(0)));
 				id_list.add(cursor.getInt(0));
 			}
-			//db.close();
 			for(int i : id_list)
 			{
 				list.add(getPlayer(i));
