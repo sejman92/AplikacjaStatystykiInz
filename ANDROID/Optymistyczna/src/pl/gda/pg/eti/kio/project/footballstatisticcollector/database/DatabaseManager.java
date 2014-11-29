@@ -12,7 +12,6 @@ import pl.gda.pg.eti.kio.project.footballstatistivcollector.entities.actions.Fau
 import pl.gda.pg.eti.kio.project.footballstatistivcollector.entities.actions.Injury;
 import pl.gda.pg.eti.kio.project.footballstatistivcollector.entities.actions.Passing;
 import pl.gda.pg.eti.kio.project.footballstatistivcollector.entities.actions.Shot;
-import pl.gda.pg.eti.kio.project.footballstatistivcollector.entities.actions.Swap;
 import pl.gda.pg.eti.kio.project.footballstatistivcollector.entities.actions.Takeover;
 
 
@@ -35,7 +34,7 @@ public class DatabaseManager extends SQLiteOpenHelper{
 
 	@Override
 	public void onCreate(SQLiteDatabase db) {
-		String[] creaty = new String[12];
+		String[] creaty = new String[13];
 		creaty[0]="CREATE TABLE Team "+
 			"( "+
 				"ID INTEGER PRIMARY KEY AUTOINCREMENT, "+
@@ -153,7 +152,7 @@ public class DatabaseManager extends SQLiteOpenHelper{
 					"comment TEXT"+
 					")";
 		
-		for(int i=0;i<12;i++)
+		for(int i=0;i<13;i++)
 		{
 			try
 			{ 
