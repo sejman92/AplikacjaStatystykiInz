@@ -33,7 +33,7 @@ public class AnalizeController {
     /*
     * default constructor
     */
-    public AnalizeController(BarChart bc){
+    public AnalizeController(){
         this.selectedPlayers = FXCollections.observableArrayList();
         this.criteriaList = getDeclaredCriteria();
         this.xAxis = new NumberAxis();
@@ -61,11 +61,13 @@ public class AnalizeController {
     }
     public void addSeries(String name, List<Integer> value, List<String> playerName){
         XYChart.Series s = new XYChart.Series();
-        s.setName(name);
         for(int i = 0; i<value.size(); i++){
+            
             XYChart.Data d = new XYChart.Data((Number)value.get(i), playerName.get(i));
             s.getData().add(d);
+            series.add(s);
         }
+        
         getChart().getData().add(s);
     }
     

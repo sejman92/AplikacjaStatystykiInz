@@ -52,13 +52,20 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.scene.Scene;
 import javafx.scene.chart.BarChart;
+import javafx.scene.chart.CategoryAxis;
+import javafx.scene.chart.NumberAxis;
+import javafx.scene.chart.XYChart;
+import javafx.scene.chart.XYChart.Series;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TextArea;
+import javafx.scene.layout.StackPane;
+import javafx.stage.Stage;
 import javafx.util.Duration;
 
 /**
@@ -197,7 +204,7 @@ public class MainController implements Initializable {
    @FXML private ComboBox criteriaCBAnalize;
    @FXML private ListView toComparePlayersLV;
    @FXML private ListView playersLVAnalize;
-   @FXML private BarChart barChartAnalyze;
+   @FXML private BarChart barChartAnalize;
    
    private Team selectedTeamAnalize;
    private Game selectedGameAnalize;
@@ -257,7 +264,7 @@ public class MainController implements Initializable {
         paused = false;
         kickType = Kicks.NONE; //just initialize kicktype
         //beginMatchTab.setDisable(false);
-        AC = new AnalizeController(barChartAnalyze);
+       AC = new AnalizeController();
     }
     
 
@@ -874,6 +881,7 @@ public class MainController implements Initializable {
         actionManager.setGame(game);
         
         IAction result = actionManager.saveAction();
+        game = databaseManager.getGame(game.getId()); 
         if(result != null){
             actionList.add(result);
             if(result instanceof Swap){
@@ -900,7 +908,7 @@ public class MainController implements Initializable {
                     lineup.removeFromStartingLineup(((Card)result).getPlayerId());
                 }
             }
-                
+             
             actionManager.cancelAction();
             curInsertTA.setText("dodano");
             
@@ -1038,8 +1046,7 @@ public class MainController implements Initializable {
     public void criteriaCBClick(){
         this.AC.setSelectedCriteria((CompareCriteria) criteriaCBAnalize.getSelectionModel().getSelectedItem());
         this.AC.setChartTitle(AC.getSelectedCriteria().toString());
-        this.barChartAnalyze = this.AC.getChart();
-        System.out.println(this.barChartAnalyze.getTitle());
+
     }
     /*
     There we initialize params for analyze views
@@ -1047,8 +1054,7 @@ public class MainController implements Initializable {
     public void analizeTabClick(){
         teamsCBAnalize.setItems(databaseManager.getTeams(owner));
         this.criteriaCBAnalize.setItems(AC.getCriteriaList());
-        this.barChartAnalyze = new BarChart<Number,String>(AC.getxAxis(), AC.getyAxis());
-        //this.barChartAnalyze.getData().addAll(AC.getSeries());
+
     }
     
     public void selectedTeamDisableButtons(){
@@ -1073,6 +1079,7 @@ public class MainController implements Initializable {
         this.toComparePlayersLV.setItems(AC.getSelectedPlayers());
     }
     public void compareBtClick(){
+        
         List<Integer> value = new ArrayList();
         List<String> plName = new ArrayList();
         for( Player p :AC.getSelectedPlayers()){
@@ -1105,8 +1112,28 @@ public class MainController implements Initializable {
             plName.add(p.getSurname() + " " + p.getName());
         }
         AC.addSeries(AC.getSelectedCriteria().toString(), value, plName);
-        this.barChartAnalyze.getData().addAll(AC.getSeries());
-        this.barChartAnalyze = AC.getChart();
+        //BarChart barChart = getNewChart();
+        StackPane secondLay = new StackPane();
+        XYChart.Series series1 = getSeries(AC.getSelectedCriteria());
+        series1.setName("Shot");
+        
+        NumberAxis x = new NumberAxis();
+        CategoryAxis y = new CategoryAxis();
+        BarChart<Number, String> bc = new BarChart<Number, String>(x,y);
+        
+        bc.setTitle("Porównanie");
+        //bc.getData().retainAll();
+        //Player p = (Player) this.toComparePlayersLV.getSelectionModel().getSelectedItem();
+        //series1.getData().add(new XYChart.Data(p.getNo(),p.getName()));
+        /*for ( Series s : AC.getSeries()){
+            bc.getData().add(s);
+        }*/
+        bc.getData().add(series1);
+        secondLay.getChildren().add(bc);     
+        Scene sScene = new Scene(secondLay, 400,300);
+        Stage sSt = new Stage();
+        sSt.setScene(sScene);
+        sSt.show();
     }
     //LoginTab element's actions
     
@@ -1116,6 +1143,27 @@ public class MainController implements Initializable {
     }
     public void registerBtClick(){
         loginTabControler.registerBtClick();
+    }
+
+    private BarChart<Number,String> getNewChart() {
+        NumberAxis x = new NumberAxis();
+        CategoryAxis y = new CategoryAxis();
+        BarChart<Number, String> bc = new BarChart<Number, String>(x,y);
+        bc.setTitle("Porównanie");
+        for ( Series s : AC.getSeries()){
+            bc.getData().add(s);
+        }
+        return bc;
+    }
+
+    private Series getSeries(CompareCriteria selectedCriteria) {
+        XYChart.Series series = new XYChart.Series();
+        series.setName(selectedCriteria.toString());
+        ObservableList<Player> l = this.toComparePlayersLV.getItems();
+        for( Player p : l){
+            series.getData().add(new XYChart.Data(p.getNo(), p.getName()));       
+        }
+        return series;
     }
     
 }

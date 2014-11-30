@@ -163,6 +163,7 @@ public class ActionManager {
             System.out.println("blad w akcji");
             return null;
         }
+        
         return (IAction) databaseManager.saveEntityElement(action);
     }
     
