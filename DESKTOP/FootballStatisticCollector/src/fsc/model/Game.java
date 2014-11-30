@@ -244,7 +244,7 @@ public class Game implements Serializable, IEntityElement {
 
     @Override
     public String toString() {
-        return this.getOponent() + " gra_nr: "+ this.getId();
+        return this.getOponent()+ " " +this.getDate();
     }
     
     //Team analize

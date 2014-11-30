@@ -177,10 +177,11 @@ public class Passing implements Serializable, IAction {
 
     @Override
     public String toString() {
-        String result = getActionName() + " [";
-        if(getId() != null)
-            result += getId();
-        result += "]: ";
+       // String result = this.time.toString() + " ";
+        String result = getActionName() + " ";
+        //if(getId() != null)
+        //    result += getId();
+        //result += "]: ";
         if(getPlayerPassingId()!= null)
             result += getPlayerPassingId() + " ";
         if(getSuccessful()!=null){

@@ -162,10 +162,11 @@ public class Injury implements Serializable, IAction {
 
     @Override
     public String toString() {
-        String result = "kontuzja [";
-        if(getId() != null)
-            result += getId();
-        result += "]: ";
+        //String result = this.time.toString() + " ";
+        String result = this.getActionName() + " ";
+        //if(getId() != null)
+        //    result += getId();
+        //result += "]: ";
         if(getPlayerId() != null)
             result += getPlayerId();
         
@@ -179,7 +180,7 @@ public class Injury implements Serializable, IAction {
 
     @Override
     public String getActionName() {
-        return "kontuzja";
+        return "Kontuzja";
     }
     
 }

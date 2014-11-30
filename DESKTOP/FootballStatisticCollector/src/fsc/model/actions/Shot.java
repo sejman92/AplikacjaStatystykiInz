@@ -175,10 +175,12 @@ public class Shot implements Serializable, IAction {
 
     @Override
     public String toString() {
-        String result = "Strzał [";
-        if(getId() != null)
-            result += getId();
-        result += "]: ";
+        ///TODO PO DODANIU CZASU
+        //String result = this.time.toString() + " ";
+        String result = this.getActionName() + " ";
+        //if(getId() != null)
+        //    result += getId();
+        //result += "]: ";
         if(getPlayerId() != null)
             result += getPlayerId() + " "; 
         if(this.getCorner()) result += "Rzut rożny ";
@@ -194,7 +196,7 @@ public class Shot implements Serializable, IAction {
 
     @Override
     public String getActionName() {
-        return "strzał";
+        return "Strzał";
     }
     
 }

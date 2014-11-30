@@ -175,12 +175,13 @@ public class Card implements Serializable, IAction {
 
     @Override
     public String toString() {
+        //String result = this.time.toString() + " ";
         String result = this.getActionName() + " "; 
         if(getKind() != null)
-            result += getKind() +"[";
-        if(getId() != null)
-            result += getId();
-        result += "]: ";
+            result += getKind();// +"[";
+        //if(getId() != null)
+          //  result += getId();
+        //result += "]: ";
         if(getPlayerId() != null)
             result += getPlayerId() + " ";
         return result;

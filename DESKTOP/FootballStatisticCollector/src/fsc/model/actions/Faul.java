@@ -184,10 +184,11 @@ public class Faul implements Serializable, IAction {
 
     @Override
     public String toString() {
-        String result = this.getActionName() +"[";
-        if(getId() != null)
-            result += getId();
-        result += "]: ";
+        //String result = this.time.toString() + " ";
+        String result = this.getActionName() + " ";
+        //if(getId() != null)
+        //    result += getId();
+        //result += "]: ";
         if(getPlayerOfenderId() != null)
             result += getPlayerOfenderId() + " ";
         else result += getPlayerVictimId() + " ";

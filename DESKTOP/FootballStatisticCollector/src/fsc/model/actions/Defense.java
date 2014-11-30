@@ -137,10 +137,11 @@ public class Defense implements Serializable, IAction {
 
     @Override
     public String toString() {
+        //String result = this.time.toString() + " ";
         String result = this.getActionName() +"[";
-        if(getId() != null)
-            result += getId();
-        result += "]: ";
+        //if(getId() != null)
+        //    result += getId();
+        //result += "]: ";
         if(getPlayerId() != null)
             result += getPlayerId() + " ";            
         return result;

@@ -170,14 +170,16 @@ public class Swap implements Serializable, IAction {
 
     @Override
     public String toString() {
-        String result = "zmiana [";
-        if(getId() != null)
-            result += getId();
-        result += "]: wchodzi ";
+        //todo after added time field
+        //String result = this.time.toString() + " ";
+        String result = this.getActionName() + " ";
+        //if(getId() != null)
+        //    result += getId();
+        result += " wchodzi ";
         if(getPlayerInId() != null)
-            result += getPlayerInId().toString()+ " za ";
+            result += getPlayerInId()+ " za ";
         if(getPlayerOutId() != null)
-            result += getPlayerOutId().toString();
+            result += getPlayerOutId();
         
         return result;
     }
@@ -189,7 +191,7 @@ public class Swap implements Serializable, IAction {
 
     @Override
     public String getActionName() {
-        return "zmiana: ";
+        return "Zmiana: ";
     }
     
 }

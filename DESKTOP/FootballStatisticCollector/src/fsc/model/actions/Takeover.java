@@ -137,10 +137,11 @@ public class Takeover implements Serializable, IAction {
 
     @Override
     public String toString() {
-        String result = "przechwyt [";
-        if(getId() != null)
-            result += getId();
-        result += "]: ";
+        //String result = this.time.toString() + " ";
+        String result = this.getActionName() + " ";
+        //if(getId() != null)
+        //    result += getId();
+        //result += "]: ";
         if(getPlayerId() != null)
             result += getPlayerId();
         return result;
@@ -153,7 +154,7 @@ public class Takeover implements Serializable, IAction {
 
     @Override
     public String getActionName() {
-        return "przechwyt";
+        return "Przechwyt";
     }
     
 }

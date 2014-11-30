@@ -165,6 +165,7 @@ public class MainController implements Initializable {
    @FXML private ListView historyLV;
    @FXML private TextArea commentTA;
    @FXML private TextArea curInsertTA;   
+   @FXML private TextField matchNameTF;
    
    @FXML private ListView playersStartListCollectView;
    @FXML private ListView playersReserveListCollectView;
@@ -292,8 +293,6 @@ public class MainController implements Initializable {
         this.noSuccessfullButton.setDisable(true);
         this.acceptBt.setDisable(true);   
         this.cancelBt.setDisable(true);
-        this.flatPassBt.setDisable(true);
-        this.crossPassBt.setDisable(true);
         this.freeKickBt.setDisable(true);
         this.cornerKickBt.setDisable(true);
         this.penaltyKickBt.setDisable(true);
@@ -635,7 +634,8 @@ public class MainController implements Initializable {
         this.game = new Game();
         this.game.setOwnerId(owner);
         this.game.setScoredGoals(0);
-        this.game.setLostGoals(0);  
+        this.game.setLostGoals(0);
+        this.game.setOponent(matchNameTF.getText());
         databaseManager.saveEntityElement(game);
         
         Played played = new Played();
@@ -879,7 +879,7 @@ public class MainController implements Initializable {
         //action.setGame(gameManager.getGame(game.getId()));
         actionManager.setComment(commentTA.getText());
         actionManager.setGame(game);
-        
+        actionManager.setTime(getCurrentMinute());
         IAction result = actionManager.saveAction();
         game = databaseManager.getGame(game.getId()); 
         if(result != null){
@@ -934,13 +934,13 @@ public class MainController implements Initializable {
         timeline.setCycleCount(Animation.INDEFINITE); 
         timeline.play();
     }
-    private int getCurrentMinute(){
+    public int getCurrentMinute(){
         int time = 0;
         String [] t = timer.getText().split(":");
         time = Integer.parseInt(t[0]);
         return ++time;
     }
-    private int getCurrentSecond(){
+    public int getCurrentSecond(){
         int time = 0;
         String [] t = timer.getText().split(":");
         time = Integer.parseInt(t[1]);

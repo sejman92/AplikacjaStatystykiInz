@@ -7,7 +7,8 @@ bugi:
 zeby te transienty sie ogarnely)
 2. w Played powinna byc referencja do teamu zamiast Integera (po zamianie dostosowac odpowiednie rzeczy)
 3. trzeba jakos nazywac mecz i gdzies umieszczac jego wynik
-
+4. SHOT NIE MA TIME'u!!!!!!!!!! W SWAP TEŻ!!!!!!!!
+5. We wszystkich akcjach zmienić czas na int'a (  a nie Date z sql)
 
 propozycje(rzeczy do zrobienia)
 1. mozna by dodawac strate - na zasadzie nagacji przechwytu

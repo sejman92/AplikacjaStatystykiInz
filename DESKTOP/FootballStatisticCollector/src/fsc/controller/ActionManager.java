@@ -22,6 +22,8 @@ import fsc.model.enums.Kicks;
 import fsc.model.interfaces.IAction;
 import fsc.model.enums.PartsOfBody;
 import fsc.model.enums.SuccessOfShot;
+import fsc.controller.MainController;
+import java.sql.Date;
 
 /**
  *
@@ -40,7 +42,7 @@ public class ActionManager {
     private Kicks kickType; //set kickType for specified actions
     private ColorOfCard colorOfCard;
     private SuccessOfShot successOfShot;
-    
+    private int time;
     private ActionManager(){
         databaseManager = DatabaseManager.getInstance();
         comment = "";
@@ -74,7 +76,9 @@ public class ActionManager {
     public void setComment(String comment){
         
     }
-    
+    public void setTime(Integer minute){
+        this.time = minute;
+    }
     public void setPartOfBody(PartsOfBody partOfBody){
         this.partOfBody = partOfBody;
     }
@@ -102,6 +106,7 @@ public class ActionManager {
             action.setGameId(game);
             action.setComment(comment);
             action.setOwnerId(game.getOwnerId());
+            
             switch(action.getIdTypeOfAction())
             {
                 case 1:{
@@ -111,6 +116,7 @@ public class ActionManager {
                     setShotKickTypeBool((Shot)action);
                     if(successOfShot != null)
                         ((Shot)action).setSuccess(successOfShot.toString());
+                    //todo: time
                     break;
                 }
                 case 2:{
@@ -120,11 +126,14 @@ public class ActionManager {
                     }else if(successful < 0){
                         ((Passing)action).setSuccessful(false);
                     }
-                    setPassKickTypeBool((Passing)action);                  
+                    setPassKickTypeBool((Passing)action);
+                    //((Passing)action).setTime(new Date(time));
+                    
                     break;
                 }
                 case 5:{
                     ((Defense)action).setPlayerId(player);
+                   // ((Defense)action).setTime(new Date(time));
                     break;
                 }
                 case 6:{
@@ -134,24 +143,29 @@ public class ActionManager {
                         ((Faul)action).setPlayerOfenderId(player);
                     } 
                     ((Faul)action).setGameId(game);
+                    //((Faul)action).setTime(new Date(time));
                     break;
                 }
                 case 7: {
                     ((Card)action).setPlayerId(player);
                     ((Card)action).setKind(colorOfCard.toString());
+                    //((Card)action).setTime(new Date(time));
                     break;
                 }
                 case 8: {
                     ((Takeover)action).setPlayerId(player);
+                    ((Takeover)action).setTime(new Date(time));
                     break;
                 }
                 case 9: {
                     ((Injury)action).setPlayerId(player);
+                    //((Injury)action).setTime(new Date(time));
                     break;
                 }
                 case 10: {
                     ((Swap)action).setPlayerOutId(player);
                     ((Swap)action).setPlayerInId(reservePlayer);
+                    //TODO TIME
                     break;
                 }
                 
