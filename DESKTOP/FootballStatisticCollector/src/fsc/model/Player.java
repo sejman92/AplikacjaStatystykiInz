@@ -51,7 +51,6 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Player.findByActive", query = "SELECT p FROM Player p WHERE p.active = :active"),
     @NamedQuery(name = "Player.findByTeamId", query = "SELECT p FROM Player p WHERE p.teamId = :teamId")})
 public class Player implements Serializable, IEntityElement, Comparable<Player> {
-    private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
@@ -64,10 +63,11 @@ public class Player implements Serializable, IEntityElement, Comparable<Player> 
     private Integer no;
     @Column(length = 20)
     private String role;
-    @Column(name = "prefered_leg", length = 20)
-    private String preferedLeg;
     @Column(length = 10)
     private String active;
+    private static final long serialVersionUID = 1L;
+    @Column(name = "prefered_leg", length = 20)
+    private String preferedLeg;
     @OneToMany(mappedBy = "playerId")
     private List<Injury> injuryList;
     @OneToMany(mappedBy = "playerId")
@@ -325,5 +325,4 @@ public class Player implements Serializable, IEntityElement, Comparable<Player> 
     public String toString() {
         return (this.no).toString() + " " + this.name + " " + this.surname ;
     }
-    
 }

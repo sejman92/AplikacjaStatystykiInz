@@ -116,7 +116,7 @@ public class ActionManager {
                     setShotKickTypeBool((Shot)action);
                     if(successOfShot != null)
                         ((Shot)action).setSuccess(successOfShot.toString());
-                    //todo: time
+                    ((Shot)action).setTime(time);
                     break;
                 }
                 case 2:{
@@ -127,13 +127,13 @@ public class ActionManager {
                         ((Passing)action).setSuccessful(false);
                     }
                     setPassKickTypeBool((Passing)action);
-                    //((Passing)action).setTime(new Date(time));
+                    ((Passing)action).setTime(time);
                     
                     break;
                 }
                 case 5:{
                     ((Defense)action).setPlayerId(player);
-                   // ((Defense)action).setTime(new Date(time));
+                    ((Defense)action).setTime(time);
                     break;
                 }
                 case 6:{
@@ -143,29 +143,29 @@ public class ActionManager {
                         ((Faul)action).setPlayerOfenderId(player);
                     } 
                     ((Faul)action).setGameId(game);
-                    //((Faul)action).setTime(new Date(time));
+                    ((Faul)action).setTime(time);
                     break;
                 }
                 case 7: {
                     ((Card)action).setPlayerId(player);
                     ((Card)action).setKind(colorOfCard.toString());
-                    //((Card)action).setTime(new Date(time));
+                    ((Card)action).setTime(time);
                     break;
                 }
                 case 8: {
                     ((Takeover)action).setPlayerId(player);
-                    ((Takeover)action).setTime(new Date(time));
+                    ((Takeover)action).setTime(time);
                     break;
                 }
                 case 9: {
                     ((Injury)action).setPlayerId(player);
-                    //((Injury)action).setTime(new Date(time));
+                    ((Injury)action).setTime(time);
                     break;
                 }
                 case 10: {
                     ((Swap)action).setPlayerOutId(player);
                     ((Swap)action).setPlayerInId(reservePlayer);
-                    //TODO TIME
+                    ((Swap)action).setTime(time);
                     break;
                 }
                 

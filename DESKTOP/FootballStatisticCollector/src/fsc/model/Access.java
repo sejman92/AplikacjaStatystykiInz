@@ -30,12 +30,12 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Access.findAll", query = "SELECT a FROM Access a"),
     @NamedQuery(name = "Access.findById", query = "SELECT a FROM Access a WHERE a.id = :id")})
 public class Access implements Serializable {
-    private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(nullable = false)
     private Integer id;
+    private static final long serialVersionUID = 1L;
     @JoinColumn(name = "team_id", referencedColumnName = "id", nullable = false)
     @ManyToOne(optional = false)
     private Team teamId;
@@ -98,5 +98,4 @@ public class Access implements Serializable {
     public String toString() {
         return "fsc.model.Access[ id=" + id + " ]";
     }
-    
 }

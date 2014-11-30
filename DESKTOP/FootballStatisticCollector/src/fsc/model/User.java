@@ -45,7 +45,6 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "User.findByName", query = "SELECT u FROM User u WHERE u.name = :name"),
     @NamedQuery(name = "User.findBySurname", query = "SELECT u FROM User u WHERE u.surname = :surname")})
 public class User implements Serializable, IEntityElement {
-    private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
@@ -59,6 +58,7 @@ public class User implements Serializable, IEntityElement {
     private String name;
     @Column(length = 50)
     private String surname;
+    private static final long serialVersionUID = 1L;
     @OneToMany(mappedBy = "ownerId")
     private List<Injury> injuryList;
     @OneToMany(mappedBy = "ownerId")

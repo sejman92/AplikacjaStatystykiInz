@@ -43,14 +43,12 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Passing.findByCorner", query = "SELECT p FROM Passing p WHERE p.corner = :corner"),
     @NamedQuery(name = "Passing.findByFreekick", query = "SELECT p FROM Passing p WHERE p.freekick = :freekick")})
 public class Passing implements Serializable, IAction {
-    private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(nullable = false)
     private Integer id;
-    @Temporal(TemporalType.TIME)
-    private Date time;
+    private Integer time;
     @Lob
     @Column(length = 65535)
     private String comment;
@@ -58,6 +56,7 @@ public class Passing implements Serializable, IAction {
     private Boolean assist;
     private Boolean corner;
     private Boolean freekick;
+    private static final long serialVersionUID = 1L;
     @JoinColumn(name = "owner_id", referencedColumnName = "id")
     @ManyToOne
     private User ownerId;
@@ -83,11 +82,11 @@ public class Passing implements Serializable, IAction {
         this.id = id;
     }
 
-    public Date getTime() {
+    public Integer getTime() {
         return time;
     }
 
-    public void setTime(Date time) {
+    public void setTime(Integer time) {
         this.time = time;
     }
 
@@ -177,11 +176,8 @@ public class Passing implements Serializable, IAction {
 
     @Override
     public String toString() {
-       // String result = this.time.toString() + " ";
-        String result = getActionName() + " ";
-        //if(getId() != null)
-        //    result += getId();
-        //result += "]: ";
+        String result = this.time.toString() + "min: ";
+        result += getActionName() + " ";
         if(getPlayerPassingId()!= null)
             result += getPlayerPassingId() + " ";
         if(getSuccessful()!=null){

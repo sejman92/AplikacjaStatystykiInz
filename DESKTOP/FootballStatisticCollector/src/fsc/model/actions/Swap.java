@@ -39,7 +39,6 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Swap.findById", query = "SELECT s FROM Swap s WHERE s.id = :id"),
     @NamedQuery(name = "Swap.findByInjuryId", query = "SELECT s FROM Swap s WHERE s.injuryId = :injuryId")})
 public class Swap implements Serializable, IAction {
-    private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
@@ -48,6 +47,8 @@ public class Swap implements Serializable, IAction {
     @Lob
     @Column(length = 65535)
     private String comment;
+    private Integer time;
+    private static final long serialVersionUID = 1L;
     @Column(name = "injury_id")
     private Integer injuryId;
     @OneToMany(mappedBy = "swapId")
@@ -90,6 +91,20 @@ public class Swap implements Serializable, IAction {
         this.comment = comment;
     }
 
+    /**
+     * @return the time
+     */
+    public Integer getTime() {
+        return time;
+    }
+
+    /**
+     * @param time the time to set
+     */
+    public void setTime(Integer time) {
+        this.time = time;
+    }
+    
     public Integer getInjuryId() {
         return injuryId;
     }
@@ -170,11 +185,8 @@ public class Swap implements Serializable, IAction {
 
     @Override
     public String toString() {
-        //todo after added time field
-        //String result = this.time.toString() + " ";
-        String result = this.getActionName() + " ";
-        //if(getId() != null)
-        //    result += getId();
+        String result = this.time.toString() + "min: ";
+        result += this.getActionName() + " ";
         result += " wchodzi ";
         if(getPlayerInId() != null)
             result += getPlayerInId()+ " za ";
@@ -193,5 +205,7 @@ public class Swap implements Serializable, IAction {
     public String getActionName() {
         return "Zmiana: ";
     }
+
     
+
 }

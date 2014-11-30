@@ -40,7 +40,6 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Shot.findByPenalty", query = "SELECT s FROM Shot s WHERE s.penalty = :penalty"),
     @NamedQuery(name = "Shot.findByBodyPart", query = "SELECT s FROM Shot s WHERE s.bodyPart = :bodyPart")})
 public class Shot implements Serializable, IAction {
-    private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
@@ -56,6 +55,8 @@ public class Shot implements Serializable, IAction {
     private Boolean penalty;
     @Column(length = 20)
     private String bodyPart;
+    private Integer time;
+    private static final long serialVersionUID = 1L;
     @JoinColumn(name = "owner_id", referencedColumnName = "id")
     @ManyToOne
     private User ownerId;
@@ -129,6 +130,14 @@ public class Shot implements Serializable, IAction {
         this.bodyPart = bodyPart;
     }
 
+    public Integer getTime() {
+        return time;
+    }
+
+    public void setTime(Integer time) {
+        this.time = time;
+    }
+    
     public User getOwnerId() {
         return ownerId;
     }
@@ -175,12 +184,8 @@ public class Shot implements Serializable, IAction {
 
     @Override
     public String toString() {
-        ///TODO PO DODANIU CZASU
-        //String result = this.time.toString() + " ";
-        String result = this.getActionName() + " ";
-        //if(getId() != null)
-        //    result += getId();
-        //result += "]: ";
+        String result = this.time.toString() + "min: ";
+        result += this.getActionName() + " ";
         if(getPlayerId() != null)
             result += getPlayerId() + " "; 
         if(this.getCorner()) result += "Rzut rożny ";
@@ -198,5 +203,5 @@ public class Shot implements Serializable, IAction {
     public String getActionName() {
         return "Strzał";
     }
-    
+
 }

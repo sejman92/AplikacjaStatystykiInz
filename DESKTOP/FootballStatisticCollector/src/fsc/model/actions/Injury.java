@@ -42,17 +42,16 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Injury.findById", query = "SELECT i FROM Injury i WHERE i.id = :id"),
     @NamedQuery(name = "Injury.findByTime", query = "SELECT i FROM Injury i WHERE i.time = :time")})
 public class Injury implements Serializable, IAction {
-    private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(nullable = false)
     private Integer id;
-    @Temporal(TemporalType.TIME)
-    private Date time;
+    private Integer time;
     @Lob
     @Column(length = 65535)
     private String comment;
+    private static final long serialVersionUID = 1L;
     @JoinColumn(name = "swap_id", referencedColumnName = "id")
     @ManyToOne
     private Swap swapId;
@@ -83,11 +82,11 @@ public class Injury implements Serializable, IAction {
         this.id = id;
     }
 
-    public Date getTime() {
+    public Integer getTime() {
         return time;
     }
 
-    public void setTime(Date time) {
+    public void setTime(Integer time) {
         this.time = time;
     }
 
@@ -162,11 +161,9 @@ public class Injury implements Serializable, IAction {
 
     @Override
     public String toString() {
-        //String result = this.time.toString() + " ";
-        String result = this.getActionName() + " ";
-        //if(getId() != null)
-        //    result += getId();
-        //result += "]: ";
+        String result = this.time.toString() + "min: ";
+        result += this.getActionName() + " ";
+
         if(getPlayerId() != null)
             result += getPlayerId();
         

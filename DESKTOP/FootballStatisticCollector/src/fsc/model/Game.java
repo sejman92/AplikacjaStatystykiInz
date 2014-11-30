@@ -55,7 +55,6 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Game.findByScoredGoals", query = "SELECT g FROM Game g WHERE g.scoredGoals = :scoredGoals"),
     @NamedQuery(name = "Game.findByOponent", query = "SELECT g FROM Game g WHERE g.oponent = :oponent")})
 public class Game implements Serializable, IEntityElement {
-    private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
@@ -65,12 +64,13 @@ public class Game implements Serializable, IEntityElement {
     private Date date;
     @Column(length = 150)
     private String place;
+    @Column(length = 150)
+    private String oponent;
+    private static final long serialVersionUID = 1L;
     @Column(name = "lost_goals")
     private Integer lostGoals;
     @Column(name = "scored_goals")
     private Integer scoredGoals;
-    @Column(length = 150)
-    private String oponent;
     @OneToMany(mappedBy = "gameId")
     private List<Injury> injuryList;
     @OneToMany(mappedBy = "gameId")
@@ -529,4 +529,5 @@ public class Game implements Serializable, IEntityElement {
         }
         return numberOfDefenses;
     }
+
 }

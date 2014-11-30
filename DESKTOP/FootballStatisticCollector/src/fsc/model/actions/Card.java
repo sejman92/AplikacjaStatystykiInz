@@ -40,19 +40,18 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Card.findByTime", query = "SELECT c FROM Card c WHERE c.time = :time"),
     @NamedQuery(name = "Card.findByKind", query = "SELECT c FROM Card c WHERE c.kind = :kind")})
 public class Card implements Serializable, IAction {
-    private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(nullable = false)
     private Integer id;
-    @Temporal(TemporalType.TIME)
-    private Date time;
     @Column(length = 250)
     private String kind;
     @Lob
     @Column(length = 65535)
     private String comment;
+    private Integer time;
+    private static final long serialVersionUID = 1L;
     @JoinColumn(name = "faul_id", referencedColumnName = "id")
     @ManyToOne
     private Faul faulId;
@@ -89,14 +88,6 @@ public class Card implements Serializable, IAction {
         this.id = id;
     }
 
-    public Date getTime() {
-        return time;
-    }
-
-    public void setTime(Date time) {
-        this.time = time;
-    }
-
     public String getKind() {
         return kind;
     }
@@ -113,6 +104,14 @@ public class Card implements Serializable, IAction {
         this.comment = comment;
     }
 
+    public Integer getTime() {
+        return time;
+    }
+
+    public void setTime(Integer time) {
+        this.time = time;
+    }
+    
     public Faul getFaulId() {
         return faulId;
     }
@@ -175,13 +174,10 @@ public class Card implements Serializable, IAction {
 
     @Override
     public String toString() {
-        //String result = this.time.toString() + " ";
-        String result = this.getActionName() + " "; 
+        String result = this.time.toString() + "min: ";
+        result += this.getActionName() + " "; 
         if(getKind() != null)
-            result += getKind();// +"[";
-        //if(getId() != null)
-          //  result += getId();
-        //result += "]: ";
+            result += getKind();
         if(getPlayerId() != null)
             result += getPlayerId() + " ";
         return result;
@@ -196,5 +192,5 @@ public class Card implements Serializable, IAction {
     public String getActionName() {
         return "Kartka";
     }
-    
+
 }

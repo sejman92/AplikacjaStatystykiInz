@@ -43,17 +43,16 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Faul.findByTime", query = "SELECT f FROM Faul f WHERE f.time = :time"),
     @NamedQuery(name = "Faul.findByCardId", query = "SELECT f FROM Faul f WHERE f.cardId = :cardId")})
 public class Faul implements Serializable, IAction {
-    private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(nullable = false)
     private Integer id;
-    @Temporal(TemporalType.TIME)
-    private Date time;
+    private Integer time;
     @Lob
     @Column(length = 65535)
     private String comment;
+    private static final long serialVersionUID = 1L;
     @Column(name = "card_id")
     private Integer cardId;
     @JoinColumn(name = "injury_id", referencedColumnName = "id")
@@ -89,11 +88,11 @@ public class Faul implements Serializable, IAction {
         this.id = id;
     }
 
-    public Date getTime() {
+    public Integer getTime() {
         return time;
     }
 
-    public void setTime(Date time) {
+    public void setTime(Integer time) {
         this.time = time;
     }
 
@@ -184,11 +183,8 @@ public class Faul implements Serializable, IAction {
 
     @Override
     public String toString() {
-        //String result = this.time.toString() + " ";
-        String result = this.getActionName() + " ";
-        //if(getId() != null)
-        //    result += getId();
-        //result += "]: ";
+        String result = this.time.toString() + "min: ";
+        result += this.getActionName() + " ";
         if(getPlayerOfenderId() != null)
             result += getPlayerOfenderId() + " ";
         else result += getPlayerVictimId() + " ";
@@ -206,5 +202,5 @@ public class Faul implements Serializable, IAction {
              return "Faulowany";
          } else return "Faulował";
     }
-    
+  
 }

@@ -6,7 +6,7 @@ bugi:
 (naprawione, ale wtedy nie dodaje statystyk od razu - prawdopodobnie trzeba jakos przeladowac klase Game,
 zeby te transienty sie ogarnely)
 2. w Played powinna byc referencja do teamu zamiast Integera (po zamianie dostosowac odpowiednie rzeczy)
-3. trzeba jakos nazywac mecz i gdzies umieszczac jego wynik
+3. trzeba jakos nazywac mecz i gdzies umieszczac jego wynik (done)
 4. SHOT NIE MA TIME'u!!!!!!!!!! W SWAP TEŻ!!!!!!!!
 5. We wszystkich akcjach zmienić czas na int'a (  a nie Date z sql)
 
@@ -21,3 +21,4 @@ propozycje(rzeczy do zrobienia)
 8. jak wykorzystamy komentarze?
 9. jak wykorzystamy minuty meczow
 10. czas akcji akcji zmienic na integer
+11. Koniec połowy

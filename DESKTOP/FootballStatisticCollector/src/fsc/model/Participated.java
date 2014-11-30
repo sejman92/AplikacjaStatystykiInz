@@ -32,12 +32,12 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Participated.findById", query = "SELECT p FROM Participated p WHERE p.id = :id"),
     @NamedQuery(name = "Participated.findByGameId", query = "SELECT p FROM Participated p WHERE p.gameId = :gameId")})
 public class Participated implements Serializable, IEntityElement {
-    private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(nullable = false)
     private Integer id;
+    private static final long serialVersionUID = 1L;
     @JoinColumn(name = "owner_id", referencedColumnName = "id")
     @ManyToOne
     private User ownerId;
@@ -110,6 +110,5 @@ public class Participated implements Serializable, IEntityElement {
     @Override
     public String toString() {
         return "fsc.model.Participated[ id=" + id + " ]";
-    }
-    
+    }   
 }

@@ -37,7 +37,6 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Team.findById", query = "SELECT t FROM Team t WHERE t.id = :id"),
     @NamedQuery(name = "Team.findByName", query = "SELECT t FROM Team t WHERE t.name = :name")})
 public class Team implements Serializable,IEntityElement {
-    private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
@@ -45,6 +44,7 @@ public class Team implements Serializable,IEntityElement {
     private Integer id;
     @Column(length = 100)
     private String name;
+    private static final long serialVersionUID = 1L;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "teamId")
     private List<Player> playerList;
     @JoinColumn(name = "owner_id", referencedColumnName = "id")
@@ -129,5 +129,5 @@ public class Team implements Serializable,IEntityElement {
     public String toString() {
         return this.name;
     }
-    
+
 }

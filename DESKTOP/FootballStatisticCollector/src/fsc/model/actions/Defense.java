@@ -39,17 +39,16 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Defense.findById", query = "SELECT d FROM Defense d WHERE d.id = :id"),
     @NamedQuery(name = "Defense.findByTime", query = "SELECT d FROM Defense d WHERE d.time = :time")})
 public class Defense implements Serializable, IAction {
-    private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(nullable = false)
     private Integer id;
-    @Temporal(TemporalType.TIME)
-    private Date time;
     @Lob
     @Column(length = 65535)
     private String comment;
+    private Integer time;
+    private static final long serialVersionUID = 1L;
     @JoinColumn(name = "owner_id", referencedColumnName = "id")
     @ManyToOne
     private User ownerId;
@@ -75,11 +74,11 @@ public class Defense implements Serializable, IAction {
         this.id = id;
     }
 
-    public Date getTime() {
+    public Integer getTime() {
         return time;
     }
 
-    public void setTime(Date time) {
+    public void setTime(Integer time) {
         this.time = time;
     }
 
@@ -137,11 +136,8 @@ public class Defense implements Serializable, IAction {
 
     @Override
     public String toString() {
-        //String result = this.time.toString() + " ";
-        String result = this.getActionName() +"[";
-        //if(getId() != null)
-        //    result += getId();
-        //result += "]: ";
+        String result = this.time.toString() + "min: ";
+        result += this.getActionName() +" ";
         if(getPlayerId() != null)
             result += getPlayerId() + " ";            
         return result;
