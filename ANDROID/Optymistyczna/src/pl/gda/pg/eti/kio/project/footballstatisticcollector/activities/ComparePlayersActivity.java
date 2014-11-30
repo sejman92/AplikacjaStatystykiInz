@@ -90,7 +90,6 @@ public class ComparePlayersActivity extends Activity {
 	public void setValuesForNoGame()
 	{
 		name1.setText(Focus.focused_player_for_compare1.getName()+" "+Focus.focused_player_for_compare1.getSurname());
-		//name1.setText("sdfsdf");
 		name2.setText(Focus.focused_player_for_compare2.getName()+" "+Focus.focused_player_for_compare2.getSurname());
 		goals1.setText(String.valueOf(Focus.focused_player_for_compare1.getGoals()));
 		goals2.setText(String.valueOf(Focus.focused_player_for_compare2.getGoals()));

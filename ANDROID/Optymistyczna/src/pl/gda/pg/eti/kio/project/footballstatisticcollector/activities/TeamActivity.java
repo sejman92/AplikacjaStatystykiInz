@@ -46,11 +46,10 @@ public class TeamActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_team);
-        /*id = Focus.focused_team.getId();
+        id = Focus.focused_team.getId();
         name = Focus.focused_team.getName();
-        this.setTitle(name);*/
+        this.setTitle(name);
         
-       // refresh_player_list();
 	}
 	
 	public void comparePlayers(View v)
@@ -59,11 +58,16 @@ public class TeamActivity extends Activity {
 		startActivity(intent);
 	}
 	
+	public void compareGames(View v)
+	{
+		 Intent intent =  new Intent(TeamActivity.this,ChoseGamesForCompareActivity.class);
+		 startActivity(intent);
+	}
+	
 	@Override
 	public void onResume()
 	{
 		super.onResume();
-		setContentView(R.layout.activity_team);
 		id = Focus.focused_team.getId();
         name = Focus.focused_team.getName();
         this.setTitle(name);

@@ -12,6 +12,7 @@ import pl.gda.pg.eti.kio.project.footballstatistivcollector.entities.actions.Fau
 import pl.gda.pg.eti.kio.project.footballstatistivcollector.entities.actions.Injury;
 import pl.gda.pg.eti.kio.project.footballstatistivcollector.entities.actions.Passing;
 import pl.gda.pg.eti.kio.project.footballstatistivcollector.entities.actions.Shot;
+import pl.gda.pg.eti.kio.project.footballstatistivcollector.entities.actions.Swap;
 import pl.gda.pg.eti.kio.project.footballstatistivcollector.entities.actions.Takeover;
 
 
@@ -286,9 +287,6 @@ public class DatabaseManager extends SQLiteOpenHelper{
 			player.setInjuries(getInjuriesForPlayer(id));
 			player.setShots(getShotsForPlayer(id));
 			player.setTakeovers(getTakeoversForPlayer(id));
-			
-			
-			//return player;
 		}catch(SQLException e)
 		{
 			Log.d("Baza",e.toString());
@@ -355,9 +353,9 @@ public class DatabaseManager extends SQLiteOpenHelper{
 		}
 	}
 	
-	public int addGame(Game game, List<Player> players_list, List<Player>swaped_players_list, int team_id)
+	public int addGame(Game game, List<Player> players_list, List<Player>swaped_players_list, int team_id) throws Exception
 	{
-		int game_id=0;
+		int game_id=-1;
 		SQLiteDatabase db = getWritableDatabase();
 		try
 		{
@@ -369,6 +367,8 @@ public class DatabaseManager extends SQLiteOpenHelper{
 			values.put("oponent", game.getOponent());
 			values.put("comment",game.getComment());
 			game_id=(int) db.insertOrThrow("Game", null, values);
+			if(game_id==-1)
+				throw new Exception("game_id == -1");
 			Log.d("Baza Game", "dodano gre");
 			
 		}catch(SQLException e)
@@ -432,8 +432,40 @@ public class DatabaseManager extends SQLiteOpenHelper{
 			String columns_game[]={"ID","data","place","lost_goals","scored_goals","oponent","comment"};
 			String[] args2={String.valueOf(id)};
 			cursor=db.query("Game", columns_game, "ID=?", args2,null, null, null);
-			cursor.moveToNext();
-			game=new Game(cursor.getInt(0),cursor.getString(1),cursor.getString(2),cursor.getInt(3),cursor.getInt(4),cursor.getString(5),cursor.getString(6));
+			if(cursor.moveToNext())
+				game=new Game(cursor.getInt(0),cursor.getString(1),cursor.getString(2),cursor.getInt(3),cursor.getInt(4),cursor.getString(5),cursor.getString(6));
+		}catch(SQLException e)
+		{
+			Log.d("Baza game", e.getMessage().toString());
+		}
+		finally
+		{
+			cursor.close();
+		}
+		return game;
+	}
+	public Game getFullGameStats(int id)
+	{
+		SQLiteDatabase db = getReadableDatabase();
+		Cursor cursor=null;
+		Game game=null;
+		try
+		{
+			String columns_game[]={"ID","data","place","lost_goals","scored_goals","oponent","comment"};
+			String[] args2={String.valueOf(id)};
+			cursor=db.query("Game", columns_game, "ID=?", args2,null, null, null);
+			if(cursor.moveToNext())
+			{
+				game=new Game(cursor.getInt(0),cursor.getString(1),cursor.getString(2),cursor.getInt(3),cursor.getInt(4),cursor.getString(5),cursor.getString(6));
+				game.setPassings(getPassingsForGame(id));
+				game.setCards(getCardsForGame(id));
+				game.setDefense(getDefenseForGame(id));
+				game.setFauls(getFaulsForGame(id));
+				game.setInjuries(getInjuriesForGame(id));
+				game.setShots(getShotsForGame(id));
+				game.setTakeovers(getTakeoversForGame(id));
+				game.setSwaps(getSwapsForGame(id));
+			}
 		}catch(SQLException e)
 		{
 			Log.d("Baza game", e.getMessage().toString());
@@ -456,10 +488,10 @@ public class DatabaseManager extends SQLiteOpenHelper{
 		{
 			cursor = db.query("Participated", columns_participated, "player_id=?", args, null, null, null);
 		
-		while(cursor.moveToNext())
-			participated_list.add(cursor.getInt(2));
-		for(int i : participated_list)
-			games.add(getGame(i));
+			while(cursor.moveToNext())
+				participated_list.add(cursor.getInt(2));
+			for(int i : participated_list)
+				games.add(getGame(i));
 		}catch(SQLException e)
 		{
 			Log.d("Baza games",e.getMessage().toString());
@@ -483,6 +515,31 @@ public class DatabaseManager extends SQLiteOpenHelper{
 				if(h.getId()==g.getId())
 					games.add(g);
 		
+		return games;
+	}
+	public List<Game> getGamesForTeam(int team_id)
+	{
+		List<Game> games = new LinkedList<Game>();
+		SQLiteDatabase db = getReadableDatabase();
+		Cursor cursor=null;
+		String[] args={String.valueOf(team_id)};
+		List<Integer> played_list = new LinkedList<Integer>();
+		String[] columns_played={"ID","team_id","game_id"};
+		try
+		{
+			cursor = db.query("Played", columns_played, "team_id=?", args, null, null, null);
+			while(cursor.moveToNext())
+				played_list.add(cursor.getInt(2));
+			for(int i : played_list)
+				games.add(getGame(i));
+		}catch(SQLException e)
+		{
+			Log.d("Baza games",e.getMessage().toString());
+		}
+		finally
+		{
+			//cursor.close();
+		}
 		return games;
 	}
 	
@@ -541,6 +598,28 @@ public class DatabaseManager extends SQLiteOpenHelper{
 		try
 		{
 			cursor = db.query("Shot", columns, "player_id=?", args,null, null, null);
+			while(cursor.moveToNext())
+				shots.add(getShot(cursor.getInt(0)));
+		}catch(SQLException e)
+		{
+			Log.d("Baza shots",e.getMessage().toString());
+		}
+		finally
+		{
+			cursor.close();
+		}
+		return shots;
+	}
+	public List<Shot> getShotsForGame(int game_id)
+	{
+		List<Shot> shots=new LinkedList<Shot>();
+		SQLiteDatabase db = getReadableDatabase();
+		Cursor cursor=null;
+		String[] args={String.valueOf(game_id)};
+		String[] columns={"ID","player_id","success","time","corner","freekick","penalty","game_id","comment"};
+		try
+		{
+			cursor = db.query("Shot", columns, "game_id=?", args,null, null, null);
 			while(cursor.moveToNext())
 				shots.add(getShot(cursor.getInt(0)));
 		}catch(SQLException e)
@@ -621,6 +700,28 @@ public class DatabaseManager extends SQLiteOpenHelper{
 		}
 		return passings;
 	}
+	public List<Passing> getPassingsForGame(int game_id)
+	{
+		List<Passing> passings = new LinkedList<Passing>();
+		SQLiteDatabase db = getReadableDatabase();
+		Cursor cursor=null;
+		String[] args={String.valueOf(game_id)};
+		String[] columns={"ID","game_id","player_id","time","success","assist","corner","freekick","comment"};
+		try
+		{
+		cursor = db.query("Passing", columns, "game_id=?", args,null, null, null);
+		while(cursor.moveToNext())
+			passings.add(getPassing(cursor.getInt(0)));
+		}catch(SQLException e)
+		{
+			Log.d("Baza passings",e.getMessage().toString());
+		}
+		finally
+		{
+			cursor.close();
+		}
+		return passings;
+	}
 	
 	public int addDefense(int game_id, int player_id, int time, String comment)
 	{
@@ -673,6 +774,28 @@ public class DatabaseManager extends SQLiteOpenHelper{
 		try
 		{
 		cursor = db.query("Defense", columns, "player_id=?", args,null, null, null);
+		while(cursor.moveToNext())
+			defenses.add(getDefense(cursor.getInt(0)));
+		}catch(SQLException e)
+		{
+			Log.d("Baza defenses",e.getMessage().toString());
+		}
+		finally
+		{
+			cursor.close();
+		}
+		return defenses;
+	}
+	public List<Defense> getDefenseForGame(int game_id)
+	{
+		List<Defense> defenses = new LinkedList<Defense>();
+		SQLiteDatabase db = getReadableDatabase();
+		Cursor cursor=null;
+		String[] args={String.valueOf(game_id)};
+		String[] columns={"ID","player_id","game_id","time","comment"};
+		try
+		{
+		cursor = db.query("Defense", columns, "game_id=?", args,null, null, null);
 		while(cursor.moveToNext())
 			defenses.add(getDefense(cursor.getInt(0)));
 		}catch(SQLException e)
@@ -738,6 +861,28 @@ public class DatabaseManager extends SQLiteOpenHelper{
 		try
 		{
 		cursor = db.query("Card", columns, "player_id=?", args,null, null, null);
+		while(cursor.moveToNext())
+			cards.add(getCard(cursor.getInt(0)));
+		}catch(SQLException e)
+		{
+			Log.d("Baza cards", e.getMessage().toString());
+		}
+		finally
+		{
+			cursor.close();
+		}
+		return cards;
+	}
+	public List<Card> getCardsForGame(int game_id)
+	{
+		List<Card> cards = new LinkedList<Card>();
+		SQLiteDatabase db = getReadableDatabase();
+		Cursor cursor=null;
+		String[] args={String.valueOf(game_id)};
+		String[] columns={"ID","game_id","player_id","time","kind","comment"};
+		try
+		{
+		cursor = db.query("Card", columns, "game_id=?", args,null, null, null);
 		while(cursor.moveToNext())
 			cards.add(getCard(cursor.getInt(0)));
 		}catch(SQLException e)
@@ -820,6 +965,28 @@ public class DatabaseManager extends SQLiteOpenHelper{
 		}
 		return fauls;
 	}
+	public List<Faul> getFaulsForGame(int game_id)
+	{
+		List<Faul> fauls = new LinkedList<Faul>();
+		SQLiteDatabase db = getReadableDatabase();
+		Cursor cursor=null;
+		String[] args={String.valueOf(game_id)};
+		String[] columns={"ID","game_id","player_victim_id","player_ofender_id","time","comment","injury_id","card_id"};
+		try
+		{
+		cursor = db.query("Faul", columns, "game_id=?", args,null, null, null);
+		while(cursor.moveToNext())
+			fauls.add(getFaul(cursor.getInt(0)));
+		}catch(SQLException e)
+		{
+			Log.d("baza fauls",e.getMessage().toString());
+		}
+		finally
+		{
+			cursor.close();
+		}
+		return fauls;
+	}
 	
 	public int addInjury(int game_id, int player_id, int time, String comment)
 	{
@@ -872,6 +1039,28 @@ public class DatabaseManager extends SQLiteOpenHelper{
 		try
 		{
 		cursor = db.query("Injury", columns, "player_id=?", args,null, null, null);
+		while(cursor.moveToNext())
+			injuries.add(getInjury(cursor.getInt(0)));
+		}catch(SQLException e)
+		{
+			Log.d("baza injurya", e.getMessage().toString());
+		}
+		finally
+		{
+			cursor.close();
+		}
+		return injuries;
+	}
+	public List<Injury> getInjuriesForGame(int game_id)
+	{
+		List<Injury> injuries = new LinkedList<Injury>();
+		SQLiteDatabase db = getReadableDatabase();
+		Cursor cursor=null;
+		String[] args={String.valueOf(game_id)};
+		String[] columns={"ID","player_id","game_id","time","comment"};
+		try
+		{
+		cursor = db.query("Injury", columns, "game_id=?", args,null, null, null);
 		while(cursor.moveToNext())
 			injuries.add(getInjury(cursor.getInt(0)));
 		}catch(SQLException e)
@@ -948,6 +1137,28 @@ public class DatabaseManager extends SQLiteOpenHelper{
 		}
 		return takeovers;
 	}
+	public List<Takeover> getTakeoversForGame(int game_id)
+	{
+		List<Takeover> takeovers = new LinkedList<Takeover>();
+		SQLiteDatabase db = getReadableDatabase();
+		Cursor cursor=null;
+		String[] args={String.valueOf(game_id)};
+		String[] columns={"ID","player_id","game_id","time","comment"};
+		try
+		{
+		cursor = db.query("Takeover", columns, "game_id=?", args,null, null, null);
+		while(cursor.moveToNext())
+			takeovers.add(getTakeover(cursor.getInt(0)));
+		}catch(SQLException e)
+		{
+			Log.d("baza takeovers", e.getMessage().toString());
+		}
+		finally
+		{
+			cursor.close();
+		}
+		return takeovers;
+	}
 	
 	public int addSwap(int game_id, int player_in_id, int player_out_id, int time, String comment)
 	{
@@ -969,7 +1180,51 @@ public class DatabaseManager extends SQLiteOpenHelper{
 		}
 		return id;
 	}
-		
+	public Swap getSwap(int id)
+	{
+		SQLiteDatabase db = getReadableDatabase();
+		Cursor cursor=null;
+		Swap swap=null;
+		String[] args={String.valueOf(id)};
+		String[] columns={"ID","game_id","playerin_id","player_out_id","time","injury_id","comment"};
+		try
+		{
+			cursor = db.query("Swap", columns, "ID=?", args,null, null, null);
+			cursor.moveToNext();
+			swap = new Swap(cursor.getInt(0),cursor.getInt(1),cursor.getInt(2),cursor.getInt(3),cursor.getInt(4),cursor.getString(6));
+		}catch(SQLException e)
+		{
+			Log.d("Baza Takeover", e.getMessage().toString());
+		}
+		finally
+		{
+			cursor.close();
+		}
+		return swap;
+	}
+	public List<Swap> getSwapsForGame(int game_id)
+	{
+		List<Swap> swaps = new LinkedList<Swap>();
+		SQLiteDatabase db = getReadableDatabase();
+		Cursor cursor=null;
+		String[] args={String.valueOf(game_id)};
+		String[] columns={"ID","game_id","player_in_id","player_out_id","time","injury_id","comment"};
+		try
+		{
+		cursor = db.query("Swap", columns, "game_id=?", args,null, null, null);
+		while(cursor.moveToNext())
+			swaps.add(getSwap(cursor.getInt(0)));
+		}catch(SQLException e)
+		{
+			Log.d("baza swaps", e.getMessage().toString());
+		}
+		finally
+		{
+			cursor.close();
+		}
+		return swaps;
+	}
+	
 	public void beginTransaction()
 	{
 		SQLiteDatabase db = getWritableDatabase();
@@ -992,30 +1247,15 @@ public class DatabaseManager extends SQLiteOpenHelper{
 	public void zmiany()
 	{
 		SQLiteDatabase db = getWritableDatabase();
-		String query="DROP TABLE Passing";
-		String query2="CREATE TABLE Passing"+
-				"("+
-					"ID INTEGER PRIMARY KEY AUTOINCREMENT,"+
-					"game_id INTEGER,"+
-					"player_id INTEGER,"+
-					"success INTEGER,"+
-					"time INTEGER,"+
-					"assist INTEGER,"+
-					"corner INTEGER,"+
-					"freekick INTEGER,"+
-					"comment TEXT)";
+		String query="DELETE FROM Played WHERE game_id=0";
 		try{
 			db.execSQL(query);
+			Log.d("poszlo","poszlo");
 		}catch(SQLException e)
 		{
 			Log.d("nie pyklo","dupa");
 		}
-		try{
-			db.execSQL(query2);
-		}catch(SQLException e)
-		{
-			Log.d("nie pyklo","dupa2");
-		}
+		
 	}
 	@Override
 	public void onUpgrade(SQLiteDatabase dbo, int old, int NEW) {

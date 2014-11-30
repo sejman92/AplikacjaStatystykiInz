@@ -19,5 +19,7 @@
     <string name="title_activity_chosing_players_for_compare">ChosingPlayersForCompare</string>
     <string name="title_activity_chosing_game_for_compare">ChosingGameForCompare</string>
     <string name="title_activity_comparing_players">ComparingPlayersActivity</string>
+    <string name="title_activity_chose_games_for_compare">ChoseGamesForCompareActivity</string>
+    <string name="title_activity_compare_games">CompareGamesActivity</string>
 
 </resources>

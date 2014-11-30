@@ -158,7 +158,14 @@ public class GameActivity extends Activity {
 		DatabaseManager dbm = new DatabaseManager(this);
 		dbm.beginTransaction();
 		Game game = new Game(date, place, lost_goals, scored_goals, enemy_name,comment);
-		game_id=dbm.addGame(game, Focus.main_players_for_focused_game, Focus.backup_players_for_focused_game, Focus.focused_team.getId());
+		try
+		{
+			game_id=dbm.addGame(game, Focus.main_players_for_focused_game, Focus.backup_players_for_focused_game, Focus.focused_team.getId());
+		}catch(Exception e)
+		{
+			Toast.makeText(this, "Wyst¹pi³ b³¹d nie uda³o siê zapisaæ gry", Toast.LENGTH_LONG).show();
+			return;
+		}
 		game.setId(game_id);
 		for(Action action : action_list)
 		{

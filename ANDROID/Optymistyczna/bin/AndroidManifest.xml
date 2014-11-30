@@ -82,6 +82,14 @@
             android:name="pl.gda.pg.kio.project.footballstatisticcollector.ComparingPlayersActivity"
             android:label="@string/title_activity_comparing_players" >
         </activity>
+        <activity
+            android:name="pl.gda.pg.eti.kio.project.footballstatisticcollector.activities.ChoseGamesForCompareActivity"
+            android:label="@string/title_activity_chose_games_for_compare" >
+        </activity>
+        <activity
+            android:name="pl.gda.pg.eti.kio.project.footballstatisticcollector.activities.CompareGamesActivity"
+            android:label="@string/title_activity_compare_games" >
+        </activity>
     </application>
 
 </manifest>
