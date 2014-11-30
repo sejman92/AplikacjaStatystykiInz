@@ -17,6 +17,8 @@ import fsc.model.enums.ColorOfCard;
 import fsc.model.enums.SuccessOfShot;
 import fsc.model.interfaces.IEntityElement;
 import java.io.Serializable;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -244,7 +246,10 @@ public class Game implements Serializable, IEntityElement {
 
     @Override
     public String toString() {
-        return this.getOponent()+ " " +this.getDate();
+        DateFormat df = new SimpleDateFormat("dd-MM-yyyy");
+        if( this.getDate()!=null)
+            return this.getOponent()+ " " +  df.format(this.getDate());
+        else return this.getOponent();
     }
     
     //Team analize

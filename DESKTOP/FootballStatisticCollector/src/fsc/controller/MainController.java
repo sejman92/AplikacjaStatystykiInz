@@ -40,11 +40,14 @@ import fsc.model.enums.Legs;
 import fsc.model.enums.PartsOfBody;
 import fsc.model.enums.Positions;
 import fsc.model.enums.SuccessOfShot;
+import java.sql.Date;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Locale;
+import java.util.TimeZone;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -635,7 +638,8 @@ public class MainController implements Initializable {
         this.game.setOwnerId(owner);
         this.game.setScoredGoals(0);
         this.game.setLostGoals(0);
-        this.game.setOponent(matchNameTF.getText());
+        this.game.setOponent(matchNameTF.getText());       
+        this.game.setDate(new Date(Calendar.getInstance(Locale.getDefault()).getTimeInMillis()));
         databaseManager.saveEntityElement(game);
         
         Played played = new Played();
@@ -1169,4 +1173,13 @@ public class MainController implements Initializable {
         d = new XYChart.Data(val, p.getName()+" "+p.getSurname());
         return d;
     }
+
+    /*private java.sql.Date getCurrentDate() {
+
+        
+        //DateFormat dateFormat = DateFormat.getDateTimeInstance(java.text.DateFormat.SHORT, java.text.DateFormat.SHORT, Locale.getDefault() );
+        DateFormat df = new SimpleDateFormat("dd-MM-yyyy HH:mm");
+        df.setTimeZone(TimeZone.getTimeZone("Europe/Warsaw"));
+        
+    }*/
 }
