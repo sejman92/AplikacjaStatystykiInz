@@ -3,6 +3,7 @@ CREATE TABLE Shot
 	id INT PRIMARY KEY AUTO_INCREMENT,
     player_id INT,
     game_id INT,
+	time INT,
     comment TEXT,
     bodyPart CHAR(20),
 	success CHAR(20),

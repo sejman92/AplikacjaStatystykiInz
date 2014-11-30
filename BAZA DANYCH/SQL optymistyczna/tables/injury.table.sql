@@ -3,7 +3,7 @@ CREATE TABLE Injury
 	id INT PRIMARY KEY AUTO_INCREMENT,
         player_id INT,
         game_id INT,
-        time TIME, 
+        time INT, 
         comment TEXT,
         owner_id INT,
         swap_id INT,
