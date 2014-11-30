@@ -1083,39 +1083,14 @@ public class MainController implements Initializable {
         List<Integer> value = new ArrayList();
         List<String> plName = new ArrayList();
         for( Player p :AC.getSelectedPlayers()){
-            switch (AC.getSelectedCriteria()){
-                case Strzał:
-                    List<Shot> s = selectedGameAnalize.getShotsPlayer(p);
-                    value.add(s.size());
-                    break;
-                case Podanie:
-                    List<Passing> pass = selectedGameAnalize.getPassesPlayer(p);
-                    value.add(pass.size());
-                    break;
-                case Faul:
-                    List<Faul> f = selectedGameAnalize.getFaulsPlayer(p);
-                    value.add(f.size());
-                    break;
-                case Karny:
-                    value.add(selectedGameAnalize.getNumberOfPenaltiesPlayer(p));
-                    break;
-                case Wolny:
-                    value.add(selectedGameAnalize.getNumberOfFreekicksPlayer(p));
-                    break;
-                case Obrona:
-                    value.add(selectedGameAnalize.getNumberOfDefensesPlayer(p));
-                    break;
-                default:
-                    value.add(999);
-                    break;
-            }
+            
             plName.add(p.getSurname() + " " + p.getName());
         }
         AC.addSeries(AC.getSelectedCriteria().toString(), value, plName);
         //BarChart barChart = getNewChart();
         StackPane secondLay = new StackPane();
         XYChart.Series series1 = getSeries(AC.getSelectedCriteria());
-        series1.setName("Shot");
+        series1.setName(AC.getSelectedCriteria().toString());
         
         NumberAxis x = new NumberAxis();
         CategoryAxis y = new CategoryAxis();
@@ -1161,9 +1136,37 @@ public class MainController implements Initializable {
         series.setName(selectedCriteria.toString());
         ObservableList<Player> l = this.toComparePlayersLV.getItems();
         for( Player p : l){
-            series.getData().add(new XYChart.Data(p.getNo(), p.getName()));       
+            series.getData().add(getData(p, selectedCriteria));       
         }
         return series;
     }
-    
+    private XYChart.Data getData(Player p, CompareCriteria c){
+        XYChart.Data d;
+        int val = 0;
+        switch (c){
+                case Strzał:
+                    val = selectedGameAnalize.getShotsPlayer(p).size();
+                    break;
+                case Podanie:
+                    val = selectedGameAnalize.getPassesPlayer(p).size();
+                    break;
+                case Faul:
+                    val = selectedGameAnalize.getFaulsPlayer(p).size();
+                    break;
+                case Karny:
+                    val = selectedGameAnalize.getNumberOfPenaltiesPlayer(p);
+                    break;
+                case Wolny:
+                    val = selectedGameAnalize.getNumberOfFreekicksPlayer(p);
+                    break;
+                case Obrona:
+                    val = selectedGameAnalize.getNumberOfDefensesPlayer(p);
+                    break;
+                default:
+                    val = 0;
+                    break;
+            }
+        d = new XYChart.Data(val, p.getName()+" "+p.getSurname());
+        return d;
+    }
 }
