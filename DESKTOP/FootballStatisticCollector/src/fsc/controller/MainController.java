@@ -915,6 +915,7 @@ public class MainController implements Initializable {
              
             actionManager.cancelAction();
             curInsertTA.setText("dodano");
+            this.kickType = Kicks.NONE;
             
         }else
             curInsertTA.setText("nie dodano z powodu bledu");
@@ -1173,13 +1174,4 @@ public class MainController implements Initializable {
         d = new XYChart.Data(val, p.getName()+" "+p.getSurname());
         return d;
     }
-
-    /*private java.sql.Date getCurrentDate() {
-
-        
-        //DateFormat dateFormat = DateFormat.getDateTimeInstance(java.text.DateFormat.SHORT, java.text.DateFormat.SHORT, Locale.getDefault() );
-        DateFormat df = new SimpleDateFormat("dd-MM-yyyy HH:mm");
-        df.setTimeZone(TimeZone.getTimeZone("Europe/Warsaw"));
-        
-    }*/
 }
