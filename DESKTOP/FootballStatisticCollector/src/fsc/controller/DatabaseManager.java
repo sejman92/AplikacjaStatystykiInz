@@ -69,6 +69,22 @@ public class DatabaseManager {
 
     public void removeEntityElement(IEntityElement entityElement){
         try {
+            if(entityElement instanceof Player){
+                for(Participated p: findParticipatedListForPlayer((Player) entityElement)){
+                    removeEntityElement(p);
+                }    
+            }
+            if(entityElement instanceof Team){
+                for(Player p: findPlayersFromTeam((Team) entityElement)){
+                    removeEntityElement(p);
+                }
+                for(Played p: findPlayedListForTeam((Team) entityElement)){
+                    removeEntityElement(p);
+                }
+                for(Game g: findGamesForTeam((Team) entityElement)){
+                    removeEntityElement(g);
+                }   
+            }
             et.begin();
             entityElement = em.merge(entityElement);
             em.remove(entityElement);
@@ -103,8 +119,12 @@ public class DatabaseManager {
         return em.find(Team.class, id);
     }
     
+    public ObservableList<Played> findPlayedListForTeam(Team team){
+        return FXCollections.observableArrayList(em.createNamedQuery("Played.findByTeamId").setParameter("teamId", team.getId()).getResultList());
+    }
+    
     public ObservableList<Game> findGamesForTeam(Team team){
-        ObservableList<Played>playedList = FXCollections.observableArrayList(em.createNamedQuery("Played.findByTeamId").setParameter("teamId", team.getId()).getResultList());
+        ObservableList<Played>playedList = findPlayedListForTeam(team);
         
         ObservableList<Game>games = FXCollections.observableArrayList();
         
@@ -119,8 +139,16 @@ public class DatabaseManager {
         return FXCollections.observableArrayList(em.createNamedQuery("Player.findByTeamId").setParameter("teamId", team).getResultList());
     }
     
+    public ObservableList<Participated> findParticipatedListForGame(Game game){
+        return  FXCollections.observableArrayList(em.createNamedQuery("Participated.findByGameId").setParameter("gameId", game).getResultList());
+    }
+    
+    public ObservableList<Participated> findParticipatedListForPlayer(Player player){
+        return  FXCollections.observableArrayList(em.createNamedQuery("Participated.findByPlayerId").setParameter("playerId", player).getResultList());
+    }
+    
     public ObservableList<Player> findPlayersForGame(Game game) {
-        ObservableList<Participated>participatedList = FXCollections.observableArrayList(em.createNamedQuery("Participated.findByGameId").setParameter("gameId", game).getResultList());
+        ObservableList<Participated>participatedList = findParticipatedListForGame(game);
         
         ObservableList<Player>players = FXCollections.observableArrayList();
         
@@ -148,6 +176,11 @@ public class DatabaseManager {
     
     public Game getGame(int id){
         return em.find(Game.class, id);
+    }
+    
+    public IEntityElement refresh(IEntityElement elem){
+        em.refresh(elem);
+        return elem;
     }
     
     //Logintab element's method

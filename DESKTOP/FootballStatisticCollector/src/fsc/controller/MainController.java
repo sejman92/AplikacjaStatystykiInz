@@ -917,11 +917,12 @@ public class MainController implements Initializable {
             curInsertTA.setText("dodano");
             this.kickType = Kicks.NONE;
             
-        }else
+        }else{
             curInsertTA.setText("nie dodano z powodu bledu");
+        }
         historyLV.setItems(actionList);
         commentTA.setText("");
-        //game = databaseManager.getGame(game.getId()); //refresh game objectssejman
+        game = (Game) databaseManager.refresh(game);
     }
     
     /*
@@ -1087,7 +1088,7 @@ public class MainController implements Initializable {
         
         List<Integer> value = new ArrayList();
         List<String> plName = new ArrayList();
-        for( Player p :AC.getSelectedPlayers()){
+        for( Player p: AC.getSelectedPlayers()){
             
             plName.add(p.getSurname() + " " + p.getName());
         }

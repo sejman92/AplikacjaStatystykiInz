@@ -19,6 +19,7 @@ import fsc.model.interfaces.IEntityElement;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -68,11 +69,11 @@ public class Player implements Serializable, IEntityElement, Comparable<Player> 
     private static final long serialVersionUID = 1L;
     @Column(name = "prefered_leg", length = 20)
     private String preferedLeg;
-    @OneToMany(mappedBy = "playerId")
+    @OneToMany(mappedBy = "playerId", cascade = CascadeType.ALL)
     private List<Injury> injuryList;
-    @OneToMany(mappedBy = "playerId")
+    @OneToMany(mappedBy = "playerId", cascade = CascadeType.ALL)
     private List<Shot> shotList;
-    @OneToMany(mappedBy = "playerId")
+    @OneToMany(mappedBy = "playerId", cascade = CascadeType.ALL)
     private List<Takeover> takeoverList;
     @JoinColumn(name = "team_id", referencedColumnName = "id", nullable = false)
     @ManyToOne(optional = false)
@@ -80,21 +81,21 @@ public class Player implements Serializable, IEntityElement, Comparable<Player> 
     @JoinColumn(name = "owner_id", referencedColumnName = "id", nullable = false)
     @ManyToOne(optional = false)
     private User ownerId;
-    @OneToMany(mappedBy = "playerOfenderId")
+    @OneToMany(mappedBy = "playerOfenderId", cascade = CascadeType.ALL)
     private List<Faul> faulList;
-    @OneToMany(mappedBy = "playerVictimId")
+    @OneToMany(mappedBy = "playerVictimId", cascade = CascadeType.ALL)
     private List<Faul> faulList1;
-    @OneToMany(mappedBy = "playerId")
+    @OneToMany(mappedBy = "playerId", cascade = CascadeType.ALL)
     private List<Defense> defenseList;
-    @OneToMany(mappedBy = "playerId")
+    @OneToMany(mappedBy = "playerId", cascade = CascadeType.ALL)
     private List<Participated> participatedList;
-    @OneToMany(mappedBy = "playerOutId")
+    @OneToMany(mappedBy = "playerOutId", cascade = CascadeType.ALL)
     private List<Swap> swapList;
-    @OneToMany(mappedBy = "playerInId")
+    @OneToMany(mappedBy = "playerInId", cascade = CascadeType.ALL)
     private List<Swap> swapList1;
-    @OneToMany(mappedBy = "playerPassingId")
+    @OneToMany(mappedBy = "playerPassingId", cascade = CascadeType.ALL)
     private List<Passing> passingList;
-    @OneToMany(mappedBy = "playerId")
+    @OneToMany(mappedBy = "playerId", cascade = CascadeType.ALL)
     private List<Card> cardList;
 
     public Player() {

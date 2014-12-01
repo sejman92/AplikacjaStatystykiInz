@@ -23,6 +23,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -71,28 +72,28 @@ public class Game implements Serializable, IEntityElement {
     private Integer lostGoals;
     @Column(name = "scored_goals")
     private Integer scoredGoals;
-    @OneToMany(mappedBy = "gameId")
+    @OneToMany(mappedBy = "gameId", cascade = CascadeType.ALL)
     private List<Injury> injuryList;
-    @OneToMany(mappedBy = "gameId")
+    @OneToMany(mappedBy = "gameId", cascade = CascadeType.ALL)
     private List<Shot> shotList;
-    @OneToMany(mappedBy = "gameId")
+    @OneToMany(mappedBy = "gameId", cascade = CascadeType.ALL)
     private List<Takeover> takeoverList;
     @JoinColumn(name = "owner_id", referencedColumnName = "id")
     @ManyToOne
     private User ownerId;
-    @OneToMany(mappedBy = "gameId")
+    @OneToMany(mappedBy = "gameId", cascade = CascadeType.ALL)
     private List<Played> playedList;
-    @OneToMany(mappedBy = "gameId")
+    @OneToMany(mappedBy = "gameId", cascade = CascadeType.ALL)
     private List<Faul> faulList;
-    @OneToMany(mappedBy = "gameId")
+    @OneToMany(mappedBy = "gameId", cascade = CascadeType.ALL)
     private List<Defense> defenseList;
-    @OneToMany(mappedBy = "gameId")
+    @OneToMany(mappedBy = "gameId", cascade = CascadeType.ALL)
     private List<Participated> participatedList;
-    @OneToMany(mappedBy = "gameId")
+    @OneToMany(mappedBy = "gameId", cascade = CascadeType.ALL)
     private List<Swap> swapList;
-    @OneToMany(mappedBy = "gameId")
+    @OneToMany(mappedBy = "gameId", cascade = CascadeType.ALL)
     private List<Passing> passingList;
-    @OneToMany(mappedBy = "gameId")
+    @OneToMany(mappedBy = "gameId", cascade = CascadeType.ALL)
     private List<Card> cardList;
 
     public Game() {
@@ -289,9 +290,9 @@ public class Game implements Serializable, IEntityElement {
     
     public List<Passing> getAccuratePassesList(){
         List<Passing>accuratePasses = new ArrayList();
-        
+
         for(Passing p: getPassingList()){
-            if(p.getSuccessful())
+            if(p.getSuccessful() != null && p.getSuccessful())
                 accuratePasses.add(p);
         }
         return accuratePasses;
@@ -478,12 +479,12 @@ public class Game implements Serializable, IEntityElement {
         int numberOfFreeKicks = 0;
         
         for(Shot s: getShotList()){
-            if(s.getCorner() && s.getPlayerId().equals(player))
+            if(s.getFreekick() && s.getPlayerId().equals(player))
                 numberOfFreeKicks++;
         }
         
         for(Passing p: getPassingList()){
-            if(p.getCorner() && p.getPlayerPassingId().equals(player))
+            if(p.getFreekick() && p.getPlayerPassingId().equals(player))
                 numberOfFreeKicks++;
         }
         

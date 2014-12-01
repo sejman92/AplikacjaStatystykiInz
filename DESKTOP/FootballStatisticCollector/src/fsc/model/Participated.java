@@ -30,7 +30,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQueries({
     @NamedQuery(name = "Participated.findAll", query = "SELECT p FROM Participated p"),
     @NamedQuery(name = "Participated.findById", query = "SELECT p FROM Participated p WHERE p.id = :id"),
-    @NamedQuery(name = "Participated.findByGameId", query = "SELECT p FROM Participated p WHERE p.gameId = :gameId")})
+    @NamedQuery(name = "Participated.findByGameId", query = "SELECT p FROM Participated p WHERE p.gameId = :gameId"),
+    @NamedQuery(name = "Participated.findByPlayerId", query = "SELECT p FROM Participated p WHERE p.playerId = :playerId")})
 public class Participated implements Serializable, IEntityElement {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
