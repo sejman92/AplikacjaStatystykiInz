@@ -4,6 +4,7 @@ CREATE TABLE Swap
         player_in_id INT,
         player_out_id INT,
         game_id INT,
+		time INT,
         comment TEXT,
         injury_id INT,
         owner_id INT,

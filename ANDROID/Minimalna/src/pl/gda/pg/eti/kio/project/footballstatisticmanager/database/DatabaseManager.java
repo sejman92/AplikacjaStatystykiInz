@@ -1,8 +1,5 @@
 package pl.gda.pg.eti.kio.project.footballstatisticmanager.database;
 
-import java.io.BufferedReader;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -14,7 +11,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteDatabase.CursorFactory;
+
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
@@ -163,6 +160,7 @@ public class DatabaseManager extends SQLiteOpenHelper {
 		}
 		
 	}
+	
 	public List<Team> getAllTeams()
 	{
 		List<Team> list = new LinkedList<Team>();
@@ -216,6 +214,7 @@ public class DatabaseManager extends SQLiteOpenHelper {
 		deletePlayerByTeamId(id);
 		//TODO dodaæ usuniêcie wszystkich meczy dru¿yny, jak ju¿ bêdzie mo¿na dodawaæ mecze
 	}
+	
 	public List<Player> getAllPlayersFromTeam(int team_id)
 	{
 		List<Player> list = new LinkedList<Player>();
@@ -298,6 +297,62 @@ public class DatabaseManager extends SQLiteOpenHelper {
 		}
 		//TODO dodaæ usuniêcie wszystkich innych wydarzen zwi¹zanych z tym zawodnikiem
 	}
+
+	public int addPlayed(int team_id, int game_id, int owner)
+	{
+		int id=0;
+		try
+		{
+			SQLiteDatabase db = getWritableDatabase();
+			ContentValues values = new ContentValues();
+			values.put("id_druzyny", team_id);
+			values.put("id_meczu", game_id);
+			id = (int) db.insertOrThrow("rozegral", null, values);		
+		}catch(SQLException e)
+		{
+			Log.d("blad", e.toString());
+		}
+		return id;
+	}
+	
+	public int addParticipated(int game_id, int player_id, int owner)
+	{
+		int id=0;
+		SQLiteDatabase db = getWritableDatabase();
+		try
+		{
+			ContentValues values = new ContentValues();
+			values.put("id_zawodnika", player_id);
+			values.put("id_meczu", game_id);
+			id=(int) db.insertOrThrow("gral", null, values);
+		}catch(SQLException e)
+		{
+			Log.d("blad", e.toString());
+		}
+		return id;
+	}
+	
+	public int addGame(int team_id, String place, String enemy_name, String date, int result, int lost_goals, int scored_goals, int owner)
+	{
+		int id=0;
+		SQLiteDatabase db = getWritableDatabase();
+		try{
+			ContentValues values = new ContentValues();
+			values.put("id_maczu", team_id);
+			values.put("miejsce", place);
+			values.put("przeciwnik", enemy_name);
+			values.put("data",date);
+			values.put("wynik", result);
+			values.put("gole_stracone",lost_goals);
+			values.put("gole_zdobyte",scored_goals);
+			id = (int) db.insertOrThrow("mecz", null, values);
+		}catch (SQLException e)
+		{
+			Log.d("blad", e.getMessage().toString());
+		}
+		return id;
+	}
+	
 	@Override
 	public void onUpgrade(SQLiteDatabase db, int arg1, int arg2) {
 		// TODO Auto-generated method stub

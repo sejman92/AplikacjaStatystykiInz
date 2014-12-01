@@ -1,10 +1,8 @@
 package pl.gda.pg.eti.kio.project.footballstatisticmanager.entitycalss;
 
-import java.sql.Date;
-
 public class Game {
 	private int id;
-	private Date date;
+	private String date;
 	private String place;
 	private String score;
 	private int lost_goals;
@@ -12,7 +10,7 @@ public class Game {
 	private String oponent;
 	private int owner_id;
 	
-	public Game(int id,Date date, String place, String score, int lost_goals,int scored_goals, String oponent, int owner_id)
+	public Game(int id,String date, String place, String score, int lost_goals,int scored_goals, String oponent, int owner_id)
 	{
 		this.id=id;
 		this.date=date;
@@ -29,10 +27,10 @@ public class Game {
 	public void setId(int id) {
 		this.id = id;
 	}
-	public Date getDate() {
+	public String getDate() {
 		return date;
 	}
-	public void setDate(Date date) {
+	public void setDate(String date) {
 		this.date = date;
 	}
 	public String getPlace() {

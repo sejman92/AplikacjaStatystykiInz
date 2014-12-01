@@ -27,5 +27,15 @@
     <string name="gamesetup">Dodaj nowy mecz</string>
     <string name="enemy_team_name">Nazwa przeciwnika</string>
     <string name="title_activity_game_setup">Nowy mecz</string>
-
+    <string name="chose_players">Wybierz zawodników</string>
+    <string name="basic">podstawowy</string>
+    <string name="backup">rezerwowy</string>
+	<string name="ready">Gotowe</string>
+	<string name="not_enought_players">Za mało zawodników w podstawowym składzie</string>
+	<string name="begin_game">rozpocznij mecz</string>
+	<string name="place">Miejsce meczu</string>
+	<string name="write_enemy_name">Podaj nazwę przeciwnika</string>
+	<string name="game_time">aktuala godzina</string>
+	<string name="game_date">aktualna data</string>
+	<string name="preparing_game">Przygotowanie meczu</string>
 </resources>

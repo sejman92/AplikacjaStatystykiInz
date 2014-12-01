@@ -3,10 +3,14 @@ CREATE TABLE Shot
 	id INT PRIMARY KEY AUTO_INCREMENT,
     player_id INT,
     game_id INT,
+	time INT,
     comment TEXT,
-    palce CHAR(50),
-	success BOOL,
+    bodyPart CHAR(20),
+	success CHAR(20),
     owner_id INT,
+	corner BOOL,
+	freekick BOOL,
+	penalty BOOL,
 	FOREIGN KEY (player_id)
 	REFERENCES Player(id),
 	FOREIGN KEY (game_id)

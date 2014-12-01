@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <EditText
+        android:id="@+id/editText1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="nazwa" >
+
+        <requestFocus />
+    </EditText>
+
+    <Button
+        android:id="@+id/update_team_dialog_cancel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/editText1"
+        android:text="cofinj" />
+
+    <Button
+        android:id="@+id/update_team_dialog_update"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/update_team_dialog_cancel"
+        android:layout_alignBottom="@+id/update_team_dialog_cancel"
+        android:layout_alignParentRight="true"
+        android:text="Aktualizuj" />
+
+</RelativeLayout>

@@ -4,7 +4,7 @@ CREATE TABLE Faul
         game_id INT,
         player_victim_id INT,
         player_ofender_id INT,
-        time Time,
+        time INT,
         comment TEXT,
         owner_id INT,
         injury_id INT,

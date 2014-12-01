@@ -3,7 +3,7 @@ CREATE TABLE Card
 	id INT PRIMARY KEY AUTO_INCREMENT,
         player_id INT,
         game_id INT,
-        time TIME, 
+        time INT, 
         kind CHAR(250),
         comment TEXT,
         owner_id INT,

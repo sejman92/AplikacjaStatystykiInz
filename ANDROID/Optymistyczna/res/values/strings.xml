@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Football Statistic Collector</string>
+    <string name="action_settings">Settings</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="title_activity_teams">TeamsActivity</string>
+    <string name="title_activity_settings">SettingsActivity</string>
+    <string name="title_activity_team">TeamActivity</string>
+    <string name="title_activity_player">PlayerActivity</string>
+    <string name="title_activity_game_setupactivity">GameSetupactivity</string>
+    <string name="title_activity_chose_players_for_game">ChosePlayersForGameActivity</string>
+    <string name="title_activity_game">GameActivity</string>
+    <string name="title_activity_pre_game">PreGameActivity</string>
+    <string name="title_activity_player_stats">PlayerStatsActivity</string>
+    <string name="title_activity_compare_players">ComparePlayersActivity</string>
+    <string name="title_activity_chose_players_for_compare">ChosePlayersForCompareActivity</string>
+    <string name="title_activity_chose_game_for_compare">ChoseGameForCompareActivity</string>
+    <string name="title_activity_chosing_players_for_compare">ChosingPlayersForCompare</string>
+    <string name="title_activity_chosing_game_for_compare">ChosingGameForCompare</string>
+    <string name="title_activity_comparing_players">ComparingPlayersActivity</string>
+    <string name="title_activity_chose_games_for_compare">ChoseGamesForCompareActivity</string>
+    <string name="title_activity_compare_games">CompareGamesActivity</string>
+
+</resources>
