@@ -44,15 +44,7 @@ public class PlayerStatsActivity extends Activity {
 		fauls_on_player.setText(String.valueOf(Focus.focused_player.getFaulsOnPlayer()));
 		injuries.setText(String.valueOf(Focus.focused_player.getInjuries().size()));
 		
-		for(Shot s : Focus.focused_player.getShots())
-		{
-			if(s.getSucces()=="goal")
-				goals_i++;
-			else
-				missed_shots_i++;
-			if(s.getPenalty()==1)
-				penaltys_i++;
-		}
+
 		
 		goals.setText(String.valueOf(Focus.focused_player.getGoals()));
 		missed_shots.setText(String.valueOf(Focus.focused_player.getMissedShots()));
@@ -80,7 +72,7 @@ public class PlayerStatsActivity extends Activity {
 		
 		for(Card c : Focus.focused_player.getCards())
 		{
-			if(c.getKind()=="yellow")
+			if(c.getKind().equals("yellow"))
 				yellow_cards_i++;
 			else
 				red_cards_i++;

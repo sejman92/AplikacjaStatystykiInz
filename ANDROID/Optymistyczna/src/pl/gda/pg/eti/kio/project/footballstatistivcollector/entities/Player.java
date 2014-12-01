@@ -127,7 +127,7 @@ public class Player {
 	{
 		int goals=0;
 		for(Shot shot : shots)
-			if(shot.getSucces()=="goal")
+			if(shot.getSucces().equals("goal"))
 				goals++;
 		return goals;
 	}
@@ -135,7 +135,7 @@ public class Player {
 	{
 		int missed=0;
 		for(Shot shot : shots)
-			if(shot.getSucces()!="goal")
+			if(!shot.getSucces().equals("goal"))
 				missed++;
 		return missed;
 	}
@@ -143,7 +143,7 @@ public class Player {
 	{
 		int penalty=0;
 		for(Shot shot : shots)
-			if(shot.getSucces()=="goal"&& shot.getPenalty()==1)
+			if(shot.getSucces().equals("goal") && shot.getPenalty()==1)
 				penalty++;
 		return penalty;
 	}
@@ -191,7 +191,7 @@ public class Player {
 	{
 		int card=0;
 		for(Card c : cards)
-			if(c.getKind()=="yellow")
+			if(c.getKind().equals("yellow"))
 				card++;
 		return card;
 	}
@@ -199,7 +199,7 @@ public class Player {
 	{
 		int card=0;
 		for(Card c : cards)
-			if(c.getKind()=="red")
+			if(c.getKind().equals("red"))
 				card++;
 		return card;
 	}
@@ -224,7 +224,7 @@ public class Player {
 	{
 		int goals=0;
 		for(Shot shot : shots)
-			if(shot.getSucces()=="goal" && shot.getGame_id()==game_id)
+			if(shot.getSucces().equals("goal") && shot.getGame_id()==game_id)
 				goals++;
 		return goals;
 	}
@@ -232,7 +232,7 @@ public class Player {
 	{
 		int missed=0;
 		for(Shot shot : shots)
-			if(shot.getSucces()!="goal" && shot.getGame_id()==game_id)
+			if( (!shot.getSucces().equals("goal")) && shot.getGame_id()==game_id)
 				missed++;
 		return missed;
 	}
@@ -240,7 +240,7 @@ public class Player {
 	{
 		int penalty=0;
 		for(Shot shot : shots)
-			if(shot.getSucces()=="goal"&& shot.getPenalty()==1 && shot.getGame_id()==game_id)
+			if(shot.getSucces().equals("goal") && shot.getPenalty()==1 && shot.getGame_id()==game_id)
 				penalty++;
 		return penalty;
 	}
@@ -288,7 +288,7 @@ public class Player {
 	{
 		int card=0;
 		for(Card c : cards)
-			if(c.getKind()=="yellow" && c.getGame_id()==game_id)
+			if(c.getKind().equals("yellow") && c.getGame_id()==game_id)
 				card++;
 		return card;
 	}
@@ -296,7 +296,7 @@ public class Player {
 	{
 		int card=0;
 		for(Card c : cards)
-			if(c.getKind()=="red" && c.getGame_id()==game_id)
+			if(c.getKind().equals("red") && c.getGame_id()==game_id)
 				card++;
 		return card;
 	}

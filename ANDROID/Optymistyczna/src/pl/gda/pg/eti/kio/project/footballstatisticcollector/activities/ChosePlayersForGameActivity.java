@@ -27,6 +27,7 @@ public class ChosePlayersForGameActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_chose_players_for_game);
+		setTitle("Wybór zawodników");
 	}
 	
 	OnItemClickListener listner = new OnItemClickListener(){

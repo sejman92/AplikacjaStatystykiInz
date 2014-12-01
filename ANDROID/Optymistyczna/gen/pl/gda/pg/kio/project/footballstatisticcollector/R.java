@@ -26,15 +26,14 @@ public final class R {
         public static final int ic_launcher=0x7f020001;
     }
     public static final class id {
-        public static final int action_settings=0x7f080076;
-        public static final int add_player=0x7f080079;
+        public static final int add_player=0x7f080078;
         public static final int add_player_dialog_cancel_button=0x7f08006f;
         public static final int add_player_dialog_name_edittext=0x7f08006a;
         public static final int add_player_dialog_number_edittext=0x7f08006c;
         public static final int add_player_dialog_ok_button=0x7f08006e;
         public static final int add_player_dialog_role_edittext=0x7f08006d;
         public static final int add_player_dialog_surname_edittext=0x7f08006b;
-        public static final int add_team=0x7f08007b;
+        public static final int add_team=0x7f08007a;
         public static final int begin_game=0x7f080057;
         public static final int button1=0x7f080000;
         public static final int button10=0x7f080050;
@@ -62,8 +61,8 @@ public final class R {
         public static final int chronometer1=0x7f080049;
         public static final int date=0x7f080059;
         public static final int date_edittext=0x7f080063;
-        public static final int delete_player=0x7f080077;
-        public static final int delete_team=0x7f080078;
+        public static final int delete_player=0x7f080076;
+        public static final int delete_team=0x7f080077;
         public static final int dupadupa=0x7f080046;
         public static final int editText1=0x7f08005e;
         public static final int editText2=0x7f08005f;
@@ -147,7 +146,7 @@ public final class R {
         public static final int textView9=0x7f080023;
         public static final int time=0x7f080058;
         public static final int time_edittext=0x7f080064;
-        public static final int update_team=0x7f08007a;
+        public static final int update_team=0x7f080079;
         public static final int update_team_dialog_cancel=0x7f080074;
         public static final int update_team_dialog_update=0x7f080075;
     }

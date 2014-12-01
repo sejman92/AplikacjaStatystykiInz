@@ -35,6 +35,7 @@ public class ChoseGamesForCompareActivity extends Activity {
 		setContentView(R.layout.activity_chose_games_for_compare);
 		choises= new LinkedList<Integer>();
 		refreshGameList();
+		setTitle("Mecze do porównania");
 	}
 
 	public void refreshGameList()

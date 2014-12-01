@@ -34,6 +34,7 @@ public class ChosePlayersForCompareActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_chose_players_for_compare);
+		setTitle("Wybór zawodników");
 	}
 	
 	public void refreshPlayersLists()
