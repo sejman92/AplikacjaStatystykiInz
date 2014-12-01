@@ -197,7 +197,7 @@ public class GameActivity extends Activity {
 	{
 		final Dialog dialog = new Dialog(GameActivity.this);
 		dialog.setContentView(R.layout.new_shot_dialog);
-		dialog.setTitle("podanie");
+		dialog.setTitle("strza³");
 		
 		ListView view_Player_List = (ListView) dialog.findViewById(R.id.listView1);
 		view_Player_List.refreshDrawableState();
@@ -251,7 +251,7 @@ public class GameActivity extends Activity {
 			@Override
 			public void onCheckedChanged(CompoundButton arg0, boolean arg1) {
 				box.setChecked(false);
-				box2.setChecked(false);
+				box3.setChecked(false);
 				box4.setChecked(false);
 				
 			}
@@ -263,7 +263,7 @@ public class GameActivity extends Activity {
 			public void onCheckedChanged(CompoundButton arg0, boolean arg1) {
 				box.setChecked(false);
 				box2.setChecked(false);
-				box3.setChecked(false);
+				box4.setChecked(false);
 				
 			}
 			
@@ -274,7 +274,7 @@ public class GameActivity extends Activity {
 			public void onCheckedChanged(CompoundButton arg0, boolean arg1) {
 				box2.setChecked(false);
 				box3.setChecked(false);
-				box4.setChecked(false);
+				box.setChecked(false);
 				
 			}
 			
