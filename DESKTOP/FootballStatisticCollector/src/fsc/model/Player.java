@@ -13,6 +13,7 @@ import fsc.model.actions.Shot;
 import fsc.model.actions.Swap;
 import fsc.model.actions.Faul;
 import fsc.model.actions.Defense;
+import fsc.model.enums.KindsOfActive;
 import fsc.model.enums.Legs;
 import fsc.model.enums.Positions;
 import fsc.model.interfaces.IEntityElement;
@@ -50,7 +51,8 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Player.findByRole", query = "SELECT p FROM Player p WHERE p.role = :role"),
     @NamedQuery(name = "Player.findByPreferedLeg", query = "SELECT p FROM Player p WHERE p.preferedLeg = :preferedLeg"),
     @NamedQuery(name = "Player.findByActive", query = "SELECT p FROM Player p WHERE p.active = :active"),
-    @NamedQuery(name = "Player.findByTeamId", query = "SELECT p FROM Player p WHERE p.teamId = :teamId")})
+    @NamedQuery(name = "Player.findByTeamId", query = "SELECT p FROM Player p WHERE p.teamId = :teamId ORDER BY p.no ASC")
+})
 public class Player implements Serializable, IEntityElement, Comparable<Player> {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -175,6 +177,10 @@ public class Player implements Serializable, IEntityElement, Comparable<Player> 
 
     public void setActive(String active) {
         this.active = active;
+    }
+    
+    public void setActive(KindsOfActive kindOfActive) {
+        this.active = kindOfActive.toString();
     }
 
     @XmlTransient

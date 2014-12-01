@@ -3,16 +3,8 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/D:/STUDIA/Projekt/AplikacjaStatystykiInz/DESKTOP/FootballStatisticCollector/src/fsc/model/enums/SuccessOfShot.java</file>
-            <file>file:/D:/STUDIA/Projekt/AplikacjaStatystykiInz/DESKTOP/FootballStatisticCollector/src/fsc/model/actions/Takeover.java</file>
-            <file>file:/D:/STUDIA/Projekt/AplikacjaStatystykiInz/DESKTOP/FootballStatisticCollector/src/META-INF/errors.txt</file>
-            <file>file:/D:/STUDIA/Projekt/AplikacjaStatystykiInz/DESKTOP/FootballStatisticCollector/src/fsc/controller/DatabaseManager.java</file>
-            <file>file:/D:/STUDIA/Projekt/AplikacjaStatystykiInz/DESKTOP/FootballStatisticCollector/src/fsc/controller/MainController.java</file>
-            <file>file:/D:/STUDIA/Projekt/AplikacjaStatystykiInz/DESKTOP/FootballStatisticCollector/src/fsc/model/actions/Swap.java</file>
-            <file>file:/D:/STUDIA/Projekt/AplikacjaStatystykiInz/DESKTOP/FootballStatisticCollector/src/fsc/controller/AnalizeController.java</file>
-            <file>file:/D:/STUDIA/Projekt/AplikacjaStatystykiInz/DESKTOP/FootballStatisticCollector/src/fsc/model/actions/Shot.java</file>
-            <file>file:/D:/STUDIA/Projekt/AplikacjaStatystykiInz/DESKTOP/FootballStatisticCollector/src/fsc/controller/ActionManager.java</file>
-            <file>file:/D:/STUDIA/Projekt/AplikacjaStatystykiInz/DESKTOP/FootballStatisticCollector/src/fsc/model/Game.java</file>
+            <file>file:/C:/Users/ja/Documents/NetBeansProjects/AplikacjaStatystykiInz/DESKTOP/FootballStatisticCollector/src/fsc/controller/MainController.java</file>
+            <file>file:/C:/Users/ja/Documents/NetBeansProjects/AplikacjaStatystykiInz/DESKTOP/FootballStatisticCollector/src/fsc/controller/DatabaseManager.java</file>
         </group>
     </open-files>
 </project-private>

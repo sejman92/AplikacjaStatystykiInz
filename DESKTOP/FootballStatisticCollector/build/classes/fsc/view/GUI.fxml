@@ -143,7 +143,7 @@
 <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
 </padding>
 </Button>
-<Button fx:id="editSelectedTeamBt" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#editSelectedTeamBtClick" text="Aktualizuj drużynę" VBox.vgrow="ALWAYS">
+<Button fx:id="editSelectedTeamBt" disable="true" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#editSelectedTeamBtClick" text="Aktualizuj drużynę" VBox.vgrow="ALWAYS">
 <VBox.margin>
 <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
 </VBox.margin>
@@ -151,7 +151,7 @@
 <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
 </padding>
 </Button>
-<Button fx:id="removeSelectedTeamBt" alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#removeSelectedTeamBtClick" text="Usuń zaznaczoną" VBox.vgrow="ALWAYS">
+<Button fx:id="removeSelectedTeamBt" alignment="CENTER" contentDisplay="CENTER" disable="true" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#removeSelectedTeamBtClick" text="Usuń zaznaczoną" VBox.vgrow="ALWAYS">
 <VBox.margin>
 <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
 </VBox.margin>
@@ -290,7 +290,7 @@
 </GridPane>
 <HBox layoutX="227.0" layoutY="336.0" prefHeight="42.0" prefWidth="392.0">
 <children>
-<Button fx:id="removeSelectedPlayerBt" alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#removeSelectedPlayerBtClick" text="Usun zawodnika" textAlignment="CENTER" HBox.hgrow="ALWAYS">
+<Button fx:id="removeSelectedPlayerBt" alignment="CENTER" contentDisplay="CENTER" disable="true" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#removeSelectedPlayerBtClick" text="Usun zawodnika" textAlignment="CENTER" HBox.hgrow="ALWAYS">
 <HBox.margin>
 <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
 </HBox.margin>
@@ -298,7 +298,7 @@
 <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
 </padding>
 </Button>
-<Button fx:id="editSelectedPlayerBt" alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#editSelectedPlayerBtClick" text="Aktualizuj zawodnika" textAlignment="CENTER" HBox.hgrow="ALWAYS">
+<Button fx:id="editSelectedPlayerBt" alignment="CENTER" contentDisplay="CENTER" disable="true" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#editSelectedPlayerBtClick" text="Edytuj zawodnika" textAlignment="CENTER" HBox.hgrow="ALWAYS">
 <HBox.margin>
 <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
 </HBox.margin>
@@ -328,11 +328,6 @@
 </font>
 </Label>
 <ListView fx:id="reserveLineupListView" layoutX="980.0" layoutY="417.0" prefHeight="254.0" prefWidth="270.0" />
-<Button fx:id="loadLineupButton" alignment="CENTER" contentDisplay="CENTER" disable="true" layoutX="477.0" layoutY="612.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#loadLineupToMatch" prefHeight="52.0" prefWidth="142.0" text="Załaduj skład" textAlignment="CENTER">
-<padding>
-<Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
-</padding>
-</Button>
                   <VBox layoutX="925.0" layoutY="75.0" prefHeight="71.0" prefWidth="54.0">
                      <children>
       <Button fx:id="addToStartingLineupButton" alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#addToStartingLineupButtonClick" text="-&gt;" textAlignment="CENTER">
@@ -376,6 +371,18 @@
                         </Button>
                      </children>
                   </VBox>
+                  <Label fx:id="operationOnPlayerWarningTeamsManagerLb" alignment="CENTER" contentDisplay="CENTER" layoutX="242.0" layoutY="398.0" prefHeight="41.0" prefWidth="364.0" textAlignment="CENTER" />
+                  <ListView fx:id="formerPlayersLV" layoutX="229.0" layoutY="450.0" onMouseClicked="#formerPlayersLVClick" prefHeight="153.0" prefWidth="390.0" />
+                  <HBox layoutX="234.0" layoutY="612.0" prefHeight="60.0" prefWidth="381.0">
+                     <children>
+                        <Button fx:id="comeBackPlayerToTeamBt" disable="true" mnemonicParsing="false" onAction="#comeBackPlayerToTeamBtClick" prefHeight="60.0" prefWidth="202.0" text="Przywróć do zespołu" />
+      <Button fx:id="loadLineupButton" alignment="CENTER" contentDisplay="CENTER" disable="true" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#loadLineupToMatch" prefHeight="60.0" prefWidth="229.0" text="Załaduj skład" textAlignment="CENTER">
+      <padding>
+      <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+      </padding>
+      </Button>
+                     </children>
+                  </HBox>
 </children>
 <opaqueInsets>
 <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
@@ -606,15 +613,15 @@
 <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
 </HBox.margin>
 </Button>
-<Button fx:id="outBt" alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" prefHeight="38.0" prefWidth="0.0" text="Aut" textAlignment="CENTER" HBox.hgrow="ALWAYS">
-<HBox.margin>
-<Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
-</HBox.margin>
+                              <Button fx:id="injuryBt" mnemonicParsing="false" onAction="#injuryBtClick" prefHeight="40.0" prefWidth="97.0" text="Kontuzja" />
+<Button fx:id="takeoverBt" alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#takeoverBtClick" text="Przechwyt" textAlignment="CENTER" HBox.hgrow="ALWAYS">
 <padding>
 <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
 </padding>
+<HBox.margin>
+<Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
+</HBox.margin>
 </Button>
-                              <Button fx:id="injuryBt" mnemonicParsing="false" onAction="#injuryBtClick" prefHeight="40.0" prefWidth="97.0" text="Kontuzja" />
 </children>
 <padding>
 <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
@@ -650,14 +657,6 @@
 </HBox.margin>
 </Button>
 <Button fx:id="redCardBt" alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#redCardBtClick" text="Czerwona kartka" textAlignment="CENTER" HBox.hgrow="ALWAYS">
-<padding>
-<Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
-</padding>
-<HBox.margin>
-<Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
-</HBox.margin>
-</Button>
-<Button fx:id="takeoverBt" alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#takeoverBtClick" text="Przechwyt" textAlignment="CENTER" HBox.hgrow="ALWAYS">
 <padding>
 <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
 </padding>

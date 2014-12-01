@@ -1,4 +1,4 @@
-/*
+ /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
@@ -11,7 +11,7 @@ import fsc.model.Played;
 import fsc.model.Player;
 import fsc.model.Team;
 import fsc.model.User;
-import fsc.model.actions.Shot;
+import fsc.model.enums.KindsOfActive;
 import fsc.model.interfaces.IEntityElement;
 import java.util.ArrayList;
 import java.util.List;
@@ -134,16 +134,54 @@ public class DatabaseManager {
         return games;
     }
     
+    public ObservableList<Player> findFormerPlayersFromTeam(Team team) {
+        
+        ObservableList<Player>players = FXCollections.observableArrayList( em.createNamedQuery("Player.findByTeamId").setParameter("teamId", team).getResultList());
+        
+        ObservableList<Player>formerPlayers = FXCollections.observableArrayList();
+        
+        for(Player p: players){
+            
+            if(p.getActive() == null){
+                p.setActive(KindsOfActive.AKTYWNY);
+                saveEntityElement(p);
+            }
+            if(p.getActive().equals(KindsOfActive.NIEAKTYWNY.toString()) == true){
+                formerPlayers.add(p);
+            }
+        }
+        return formerPlayers;
+    }
+    
+        public ObservableList<Player> findActivePlayersFromTeam(Team team) {
+        
+        ObservableList<Player>players = FXCollections.observableArrayList( em.createNamedQuery("Player.findByTeamId").setParameter("teamId", team).getResultList());
+        
+        ObservableList<Player>activePlayers = FXCollections.observableArrayList();
+        
+        for(Player p: players){
+            
+            if(p.getActive() == null){
+                p.setActive(KindsOfActive.AKTYWNY);
+                saveEntityElement(p);
+            }
+            if(p.getActive().equals(KindsOfActive.AKTYWNY.toString()) == true){
+                activePlayers.add(p);
+            }
+        }
+        return activePlayers;
+    }
+    
     public ObservableList<Player> findPlayersFromTeam(Team team) {
         return FXCollections.observableArrayList(em.createNamedQuery("Player.findByTeamId").setParameter("teamId", team).getResultList());
     }
     
     public ObservableList<Participated> findParticipatedListForGame(Game game){
-        return  FXCollections.observableArrayList(em.createNamedQuery("Participated.findByGameId").setParameter("gameId", game).getResultList());
+        return FXCollections.observableArrayList(em.createNamedQuery("Participated.findByGameId").setParameter("gameId", game).getResultList());
     }
     
     public ObservableList<Participated> findParticipatedListForPlayer(Player player){
-        return  FXCollections.observableArrayList(em.createNamedQuery("Participated.findByPlayerId").setParameter("playerId", player).getResultList());
+        return FXCollections.observableArrayList(em.createNamedQuery("Participated.findByPlayerId").setParameter("playerId", player).getResultList());
     }
     
     public ObservableList<Player> findPlayersForGame(Game game) {
@@ -157,10 +195,16 @@ public class DatabaseManager {
         
         return players;
     }
-    /*public List<Shot> findShotsByPlayerInGame(Player player, Game game){
+    
+    public List<Integer> getPlayersNumbersFromTeam(Team team){
+        List<Integer>numbers = new ArrayList<>();
         
-        return em.createNamedQuery("Shot.findByPlayerAndGame").setParameter("gameId", game).setParameter("playerId", player).getResultList();
-    }*/
+        for(Player p: findPlayersFromTeam(team)){
+            numbers.add(p.getNo());
+        }
+        return numbers;
+    }
+
     public List<Player> findAllPlayers() {
         return FXCollections.observableArrayList(em.createNamedQuery("Player.findAll").getResultList());
     }
