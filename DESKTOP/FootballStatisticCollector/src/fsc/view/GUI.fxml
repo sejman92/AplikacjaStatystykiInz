@@ -408,7 +408,7 @@
 </padding>
 </ListView>
 <ListView fx:id="playersReserveListCollectView" layoutX="14.0" layoutY="340.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onMouseClicked="#playersReserveListCollectViewClick" prefHeight="119.0" prefWidth="200.0" VBox.vgrow="ALWAYS" />
-<Label fx:id="timer" alignment="CENTER" contentDisplay="CENTER" layoutX="30.0" layoutY="538.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="ZEGAR" textAlignment="CENTER" VBox.vgrow="ALWAYS">
+<Label fx:id="timer" alignment="CENTER" contentDisplay="CENTER" layoutX="30.0" layoutY="538.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="00:00" textAlignment="CENTER" VBox.vgrow="ALWAYS">
 <font>
 <Font size="54.0" />
 </font>
@@ -606,15 +606,15 @@
 <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
 </HBox.margin>
 </Button>
-<Button fx:id="outBt" alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" prefHeight="38.0" prefWidth="0.0" text="Aut" textAlignment="CENTER" HBox.hgrow="ALWAYS">
-<HBox.margin>
-<Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
-</HBox.margin>
+                              <Button fx:id="injuryBt" mnemonicParsing="false" onAction="#injuryBtClick" prefHeight="40.0" prefWidth="97.0" text="Kontuzja" />
+<Button fx:id="takeoverBt" alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#takeoverBtClick" text="Przechwyt" textAlignment="CENTER" HBox.hgrow="ALWAYS">
 <padding>
 <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
 </padding>
+<HBox.margin>
+<Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
+</HBox.margin>
 </Button>
-                              <Button fx:id="injuryBt" mnemonicParsing="false" onAction="#injuryBtClick" prefHeight="40.0" prefWidth="97.0" text="Kontuzja" />
 </children>
 <padding>
 <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
@@ -650,14 +650,6 @@
 </HBox.margin>
 </Button>
 <Button fx:id="redCardBt" alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#redCardBtClick" text="Czerwona kartka" textAlignment="CENTER" HBox.hgrow="ALWAYS">
-<padding>
-<Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
-</padding>
-<HBox.margin>
-<Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
-</HBox.margin>
-</Button>
-<Button fx:id="takeoverBt" alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#takeoverBtClick" text="Przechwyt" textAlignment="CENTER" HBox.hgrow="ALWAYS">
 <padding>
 <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
 </padding>
@@ -751,6 +743,54 @@
                               <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
                            </padding>
                         </Button>
+                     </children>
+                  </HBox>
+                  <HBox layoutX="360.0" layoutY="2.0" prefHeight="60.0" prefWidth="343.0">
+                     <children>
+                        <Label alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="58.0" prefWidth="213.0" text="Wynik: " HBox.hgrow="ALWAYS">
+                           <HBox.margin>
+                              <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
+                           </HBox.margin>
+                           <padding>
+                              <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
+                           </padding>
+                           <font>
+                              <Font size="34.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="goalScoredLb" alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="0" HBox.hgrow="ALWAYS">
+                           <HBox.margin>
+                              <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
+                           </HBox.margin>
+                           <padding>
+                              <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
+                           </padding>
+                           <font>
+                              <Font size="34.0" />
+                           </font>
+                        </Label>
+                        <Label alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="  :  " HBox.hgrow="ALWAYS">
+                           <font>
+                              <Font size="34.0" />
+                           </font>
+                           <HBox.margin>
+                              <Insets bottom="5.0" left="1.0" right="1.0" top="1.0" />
+                           </HBox.margin>
+                           <padding>
+                              <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
+                           </padding>
+                        </Label>
+                        <Label fx:id="goalLostLb" alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="0" HBox.hgrow="ALWAYS">
+                           <HBox.margin>
+                              <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
+                           </HBox.margin>
+                           <padding>
+                              <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
+                           </padding>
+                           <font>
+                              <Font size="34.0" />
+                           </font>
+                        </Label>
                      </children>
                   </HBox>
 </children>
@@ -871,12 +911,12 @@
 <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
 </padding>
 </Label>
-<Label alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Lewa tabela" GridPane.columnIndex="1">
+<Label fx:id="title1LbAnalize" alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Lewa tabela" GridPane.columnIndex="1">
 <padding>
 <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
 </padding>
 </Label>
-<Label alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Prawa tabela" GridPane.columnIndex="2">
+<Label fx:id="title2LbAnalize" alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Prawa tabela" GridPane.columnIndex="2">
 <padding>
 <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
 </padding>

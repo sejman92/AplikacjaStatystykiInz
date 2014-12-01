@@ -114,8 +114,14 @@ public class ActionManager {
                     if(partOfBody != null)
                         ((Shot)action).setBodyPart(partOfBody.toString());
                     setShotKickTypeBool((Shot)action);
-                    if(successOfShot != null)
-                        ((Shot)action).setSuccess(successOfShot.toString());
+                    if(successOfShot != null){
+                        if(successOfShot.equals(SuccessOfShot.GOL)){
+                            ((Shot)action).setSuccess(successOfShot.toString());
+                        } else {
+                            if( this.successful == 1) ((Shot)action).setSuccess(SuccessOfShot.CELNY.toString());
+                            else ((Shot)action).setSuccess((SuccessOfShot.NIECELNY.toString()));
+                        }
+                    }
                     ((Shot)action).setTime(time);
                     break;
                 }

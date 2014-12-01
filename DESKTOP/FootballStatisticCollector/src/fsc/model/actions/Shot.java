@@ -8,6 +8,7 @@ package fsc.model.actions;
 import fsc.model.Game;
 import fsc.model.Player;
 import fsc.model.User;
+import fsc.model.enums.Kicks;
 import fsc.model.interfaces.IAction;
 import java.io.Serializable;
 import javax.persistence.Basic;

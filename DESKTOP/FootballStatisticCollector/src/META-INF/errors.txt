@@ -9,6 +9,7 @@ zeby te transienty sie ogarnely)
 3. trzeba jakos nazywac mecz i gdzies umieszczac jego wynik (done)
 4. SHOT NIE MA TIME'u!!!!!!!!!! W SWAP TEŻ!!!!!!!!
 5. We wszystkich akcjach zmienić czas na int'a (  a nie Date z sql)
+6. pozbyć się success(int) a zostawic tylko na enumie
 
 propozycje(rzeczy do zrobienia)
 1. mozna by dodawac strate - na zasadzie nagacji przechwytu
@@ -22,3 +23,4 @@ propozycje(rzeczy do zrobienia)
 9. jak wykorzystamy minuty meczow
 10. czas akcji akcji zmienic na integer
 11. Koniec połowy
+12. Czyszczenie formsów po dodaniu zawodnika

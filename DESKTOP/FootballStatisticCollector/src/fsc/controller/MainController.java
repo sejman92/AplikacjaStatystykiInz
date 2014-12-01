@@ -115,7 +115,8 @@ public class MainController implements Initializable {
     
    @FXML private Label timer;
    @FXML private Label teamNameCollectView;
-   
+   @FXML private Label goalScoredLb;
+   @FXML private Label goalLostLb;
    @FXML private TextField nameTeamTF;
    @FXML private TextField namePlayerTF;
    @FXML private TextField surnamePlayerTF;
@@ -153,7 +154,6 @@ public class MainController implements Initializable {
    @FXML private Button cornerKickBt;
    @FXML private Button penaltyKickBt;
    @FXML private Button injuryBt;
-   @FXML private Button outBt;
    @FXML private Button faulBt;
    @FXML private Button defenseBt;
    @FXML private Button handBt;
@@ -217,6 +217,7 @@ public class MainController implements Initializable {
    private ObservableList<Game> gamesListAnalize;
    private ObservableList<Team> teamsListAnalize;
    
+   @FXML private Label title1LbAnalize;
    @FXML private Label score1LbAnalize;
    @FXML private Label shots1LbAnalize;
    @FXML private Label accurateShots1LbAnalize;
@@ -230,6 +231,7 @@ public class MainController implements Initializable {
    @FXML private Label corners1LbAnalize;
    @FXML private Label penalties1LbAnalize;
    
+   @FXML private Label title2LbAnalize;
    @FXML private Label score2LbAnalize;
    @FXML private Label shots2LbAnalize;
    @FXML private Label accurateShots2LbAnalize;
@@ -300,7 +302,6 @@ public class MainController implements Initializable {
         this.cornerKickBt.setDisable(true);
         this.penaltyKickBt.setDisable(true);
         this.injuryBt.setDisable(true);
-        this.outBt.setDisable(true);
         this.defenseBt.setDisable(true);
         this.faulBt.setDisable(true);
         this.handBt.setDisable(true);
@@ -317,7 +318,6 @@ public class MainController implements Initializable {
         this.passingBt.setDisable(false);
         this.defenseBt.setDisable(false);
         this.faulBt.setDisable(false);
-        this.outBt.setDisable(false);
         this.injuryBt.setDisable(false);
         this.handBt.setDisable(false);
         this.swapBt.setDisable(false);
@@ -845,6 +845,7 @@ public class MainController implements Initializable {
     */
     public void successfulBtClick(){
         actionManager.setSuccessful(1);
+        actionManager.setSuccessOfShot(SuccessOfShot.CELNY);
         curInsertTA.setText(actionManager.getInsert());
     }
 
@@ -853,6 +854,7 @@ public class MainController implements Initializable {
     */
     public void unsuccessfulBtClick(){
         actionManager.setSuccessful(-1);
+        actionManager.setSuccessOfShot(SuccessOfShot.NIECELNY);
         curInsertTA.setText(actionManager.getInsert());
     }
     
@@ -862,6 +864,7 @@ public class MainController implements Initializable {
     public void goalNegativeBtClick(){
         this.game.setLostGoals(this.game.getLostGoals()+1);
         this.faulButtonFlag = false;
+        this.goalLostLb.setText(this.game.getLostGoals().toString());
         setSuccessButtonContent();
     }
     /*
@@ -869,11 +872,14 @@ public class MainController implements Initializable {
     */
     public void goalPositiveBtClick(){
         actionManager.setSuccessOfShot(SuccessOfShot.GOL);
+        actionManager.setSuccessful(1);
         actionManager.setAction(new Shot());
         curInsertTA.setText(actionManager.getInsert() + "ZDOBYTA BRAMKA!!!");
-        this.game.setScoredGoals(this.game.getScoredGoals()+1);
+        //this.game.setScoredGoals(this.game.getScoredGoals()+1);
         this.faulButtonFlag = false;
+        //this.goalScoredLb.setText(this.game.getScoredGoals().toString());
         setSuccessButtonContent();
+        
     }
     /*
     accept current action and add query to database 
@@ -911,8 +917,14 @@ public class MainController implements Initializable {
                 if(((Card)result).getKind().equals(ColorOfCard.CZERWONA)){
                     lineup.removeFromStartingLineup(((Card)result).getPlayerId());
                 }
+            } else if (result instanceof Shot){
+                if(((Shot)result).getSuccess().equals(SuccessOfShot.GOL.toString())){
+                    this.game.setScoredGoals(this.game.getScoredGoals()+1);
+                    this.goalScoredLb.setText(this.game.getScoredGoals().toString());
+                    this.databaseManager.saveEntityElement(game);
+                }
             }
-             
+            
             actionManager.cancelAction();
             curInsertTA.setText("dodano");
             this.kickType = Kicks.NONE;
@@ -984,7 +996,8 @@ public class MainController implements Initializable {
     
     public void loadTeamAs1BtClick(){
         if(selectedGameAnalize != null){
-            score1LbAnalize.setText(selectedGameAnalize.getScoredGoals().toString());
+            title1LbAnalize.setText(selectedGameAnalize.getOponent());
+            score1LbAnalize.setText(selectedGameAnalize.getScoredGoals().toString() + ":" + selectedGameAnalize.getLostGoals().toString());
             shots1LbAnalize.setText(String.valueOf(selectedGameAnalize.getShotList().size()));
             accurateShots1LbAnalize.setText(String.valueOf(selectedGameAnalize.getAccurateShotList().size()));
             passes1LbAnalize.setText(String.valueOf(selectedGameAnalize.getPassingList().size()));
@@ -1001,7 +1014,8 @@ public class MainController implements Initializable {
    
     public void loadTeamAs2BtClick(){
         if(selectedGameAnalize != null){
-            score2LbAnalize.setText(selectedGameAnalize.getScoredGoals().toString());
+            title2LbAnalize.setText(selectedGameAnalize.getOponent());
+            score2LbAnalize.setText(selectedGameAnalize.getScoredGoals().toString() + ":" + selectedGameAnalize.getLostGoals().toString());
             shots2LbAnalize.setText(String.valueOf(selectedGameAnalize.getShotList().size()));
             accurateShots2LbAnalize.setText(String.valueOf(selectedGameAnalize.getAccurateShotList().size()));
             passes2LbAnalize.setText(String.valueOf(selectedGameAnalize.getPassingList().size()));
@@ -1018,6 +1032,7 @@ public class MainController implements Initializable {
     
     public void loadPlayerAs1BtClick(){
         if(selectedPlayerAnalize != null){
+            title1LbAnalize.setText(selectedPlayerAnalize.getName() + " " + selectedPlayerAnalize.getSurname());
             score1LbAnalize.setText(String.valueOf(selectedGameAnalize.getGoalsPlayer(selectedPlayerAnalize).size()));
             shots1LbAnalize.setText(String.valueOf(selectedGameAnalize.getShotsPlayer(selectedPlayerAnalize).size()));
             accurateShots1LbAnalize.setText(String.valueOf(selectedGameAnalize.getAccurateShotsPlayer(selectedPlayerAnalize).size()));
@@ -1035,6 +1050,7 @@ public class MainController implements Initializable {
     
     public void loadPlayerAs2BtClick(){
         if(selectedPlayerAnalize != null){
+            title2LbAnalize.setText(selectedPlayerAnalize.getName() + " " + selectedPlayerAnalize.getSurname());
             score2LbAnalize.setText(String.valueOf(selectedGameAnalize.getGoalsPlayer(selectedPlayerAnalize).size()));
             shots2LbAnalize.setText(String.valueOf(selectedGameAnalize.getShotsPlayer(selectedPlayerAnalize).size()));
             accurateShots2LbAnalize.setText(String.valueOf(selectedGameAnalize.getAccurateShotsPlayer(selectedPlayerAnalize).size()));

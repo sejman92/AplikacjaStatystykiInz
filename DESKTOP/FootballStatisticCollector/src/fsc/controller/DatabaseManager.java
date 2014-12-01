@@ -54,7 +54,6 @@ public class DatabaseManager {
                 em.merge(entityElement);
             }
             et.commit();
-            
             return entityElement;
         } catch (Exception ex) {
             System.out.println("blad w transakcji " + entityElement.getClass().getName());
