@@ -2,17 +2,6 @@
 <persistence version="2.1" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
   <persistence-unit name="FootballStatisticCollectorPU" transaction-type="RESOURCE_LOCAL">
     <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
-<<<<<<< HEAD
-    <class>fsc.model.User</class>
-    <class>fsc.model.Player</class>
-    <class>fsc.model.Team</class>
-    <class>fsc.model.Access</class>
-    <properties>
-      <property name="javax.persistence.jdbc.url" value="jdbc:mysql://sql5.freemysqlhosting.net:3306/sql554866?zeroDateTimeBehavior=convertToNull"/>
-      <property name="javax.persistence.jdbc.password" value="nU6!fB8%"/>
-      <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver"/>
-      <property name="javax.persistence.jdbc.user" value="sql554866"/>
-=======
     <class>fsc.model.Played</class>
     <class>fsc.model.Game</class>
     <class>fsc.model.Participated</class>
@@ -37,7 +26,6 @@
       <property name="javax.persistence.jdbc.password" value="inzynierka2014"/>
       <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver"/>
       <property name="javax.persistence.jdbc.user" value="kubarobiinz"/>
->>>>>>> origin/SEJMAN_po_koniec_2_Sprintu
     </properties>
   </persistence-unit>
 </persistence>
