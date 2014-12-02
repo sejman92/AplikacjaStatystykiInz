@@ -16,8 +16,9 @@ import javafx.collections.ObservableList;
 public class Lineup {
     private ObservableList<Player> startingLineup;
     private ObservableList<Player> reserveLineup;
-    
+    private String teamName;
     public Lineup() {
+
         this.startingLineup = FXCollections.observableArrayList();
         this.reserveLineup = FXCollections.observableArrayList();
     }
@@ -87,5 +88,19 @@ public class Lineup {
     public void setReserveLineup(ObservableList<Player> reserveLineup) {
         this.reserveLineup = reserveLineup;
     }   
+
+    /**
+     * @return the teamName
+     */
+    public String getTeamName() {
+        return teamName;
+    }
+
+    /**
+     * @param teamName the teamName to set
+     */
+    public void setTeamName(String teamName) {
+        this.teamName = teamName;
+    }
     
 }

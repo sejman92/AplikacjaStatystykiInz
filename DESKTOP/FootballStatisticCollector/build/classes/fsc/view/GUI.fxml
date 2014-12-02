@@ -376,7 +376,7 @@
                   <HBox layoutX="234.0" layoutY="612.0" prefHeight="60.0" prefWidth="381.0">
                      <children>
                         <Button fx:id="comeBackPlayerToTeamBt" disable="true" mnemonicParsing="false" onAction="#comeBackPlayerToTeamBtClick" prefHeight="60.0" prefWidth="202.0" text="Przywróć do zespołu" />
-      <Button fx:id="loadLineupButton" alignment="CENTER" contentDisplay="CENTER" disable="true" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#loadLineupToMatch" prefHeight="60.0" prefWidth="229.0" text="Załaduj skład" textAlignment="CENTER">
+      <Button fx:id="loadLineupButton" alignment="CENTER" contentDisplay="CENTER" disable="true" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#enableCollectViewTab" prefHeight="60.0" prefWidth="229.0" text="Załaduj skład" textAlignment="CENTER">
       <padding>
       <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
       </padding>
@@ -417,7 +417,7 @@
 </Label>
 <HBox prefHeight="61.0" prefWidth="200.0">
 <children>
-<Button alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#startMatchBtClick" text="Start" HBox.hgrow="ALWAYS">
+<Button fx:id="startMatchBt" alignment="CENTER" contentDisplay="CENTER" disable="true" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#startMatchBtClick" text="Start" HBox.hgrow="ALWAYS">
 <HBox.margin>
 <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
 </HBox.margin>
@@ -425,7 +425,7 @@
 <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
 </padding>
 </Button>
-<Button fx:id="pauseMatchBt" alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#pauseMatchBtClick" text="Pauza" HBox.hgrow="ALWAYS">
+<Button fx:id="pauseMatchBt" alignment="CENTER" contentDisplay="CENTER" disable="true" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#pauseMatchBtClick" text="Pauza" HBox.hgrow="ALWAYS">
 <HBox.margin>
 <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
 </HBox.margin>
@@ -433,7 +433,7 @@
 <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
 </padding>
 </Button>
-<Button fx:id="stopMatchBt" alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#stopMatchBtClick" text="Stop" textAlignment="CENTER" HBox.hgrow="ALWAYS">
+<Button fx:id="stopMatchBt" alignment="CENTER" contentDisplay="CENTER" disable="true" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#stopMatchBtClick" text="Stop" textAlignment="CENTER" HBox.hgrow="ALWAYS">
 <HBox.margin>
 <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
 </HBox.margin>
@@ -734,7 +734,7 @@
                   </HBox>
                   <HBox layoutX="234.0" layoutY="35.0" prefHeight="60.0" prefWidth="575.0">
                      <children>
-<Label fx:id="teamNameCollectView" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Nazwa drużyny">
+<Label fx:id="teamNameCollectView" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Nazwa drużyny" wrapText="true" HBox.hgrow="ALWAYS">
 <font>
 <Font size="19.0" />
 </font>
@@ -742,7 +742,7 @@
 <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
 </padding>
 </Label>
-                        <Label fx:id="goalScoredLb" alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="0" HBox.hgrow="ALWAYS">
+                        <Label fx:id="goalScoredLb" alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" text="0" HBox.hgrow="ALWAYS">
                            <HBox.margin>
                               <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
                            </HBox.margin>
@@ -753,7 +753,7 @@
                               <Font size="34.0" />
                            </font>
                         </Label>
-                        <Label alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text=":" HBox.hgrow="ALWAYS">
+                        <Label alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" text=":" HBox.hgrow="ALWAYS">
                            <font>
                               <Font size="34.0" />
                            </font>
@@ -764,7 +764,7 @@
                               <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
                            </padding>
                         </Label>
-                        <Label fx:id="goalLostLb" alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="0" HBox.hgrow="ALWAYS">
+                        <Label fx:id="goalLostLb" alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" text="0" HBox.hgrow="ALWAYS">
                            <HBox.margin>
                               <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
                            </HBox.margin>
@@ -775,14 +775,6 @@
                               <Font size="34.0" />
                            </font>
                         </Label>
-                        <TextField fx:id="matchNameTF" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" promptText="Podaj nazwę przeciwnika">
-                           <padding>
-                              <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
-                           </padding>
-                           <font>
-                              <Font size="19.0" />
-                           </font>
-                        </TextField>
                         <Label fx:id="oponentTeamNameLb" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="0.0" minWidth="0.0" prefWidth="0.0" text=" " HBox.hgrow="ALWAYS">
                            <font>
                               <Font size="19.0" />
@@ -791,9 +783,17 @@
                               <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
                            </padding>
                            <HBox.margin>
-                              <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
+                              <Insets />
                            </HBox.margin>
                         </Label>
+                        <TextField fx:id="matchNameTF" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onMouseExited="#validateOpponentName" promptText="Podaj nazwę przeciwnika" HBox.hgrow="ALWAYS">
+                           <padding>
+                              <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
+                           </padding>
+                           <font>
+                              <Font size="19.0" />
+                           </font>
+                        </TextField>
                      </children>
                   </HBox>
                   <Label fx:id="curInsertTA" alignment="CENTER" contentDisplay="CENTER" layoutX="280.0" layoutY="549.0" prefHeight="31.0" prefWidth="503.0">

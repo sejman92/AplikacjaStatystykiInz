@@ -5,6 +5,7 @@
  */
 package fsc.controller;
 
+import com.sun.javafx.scene.accessibility.Action;
 import static fsc.controller.GlobalVariables.MAX_SUBSTITIONS;
 import fsc.model.Game;
 import fsc.model.Participated;
@@ -23,6 +24,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
+
 import fsc.model.Team;
 import fsc.model.User;
 
@@ -68,9 +70,11 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TextArea;
+import static javafx.scene.layout.Region.USE_COMPUTED_SIZE;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -163,6 +167,7 @@ public class MainController implements Initializable {
    @FXML private Button redCardBt;
    @FXML private Button takeoverBt;
    @FXML private Button stopMatchBt;
+   @FXML private Button startMatchBt;
    @FXML private Button goalPositiveBt;
    @FXML private Button goalNegativeBt;
    @FXML private Button pauseMatchBt;
@@ -199,7 +204,6 @@ public class MainController implements Initializable {
    private Player selectedPlayerToAction;
    private Player selectedReservePlayerToAction;
    private Lineup lineup;
-   private Match match;
    private ActionManager actionManager;
    private ObservableList<IAction>actionList;
    private Game game;
@@ -342,6 +346,9 @@ public class MainController implements Initializable {
     */
     public void addToStartingLineupButtonClick(){
         try{
+            
+            lineup.setTeamName(((Team)teamsLV.getSelectionModel().getSelectedItem()).getName());
+            
             selectedPlayer = getSelectedPlayerInTeamsManager();
             if(selectedPlayer == null)
                 return;      
@@ -434,11 +441,10 @@ public class MainController implements Initializable {
     }
     
     /*
-        load current lineup to match class,
+        enable collect Tab
     */
-    public void loadLineupToMatch(){
+    public void enableCollectViewTab(){
         if (this.lineup.isCorrect()){
-            this.match = new Match(lineup.getStartingLineup(), lineup.getReserveLineup(), selectedTeam);
             beginMatchTab.setDisable(false);
         }
     }
@@ -687,18 +693,12 @@ public class MainController implements Initializable {
     
     
     public void startMatchBtClick(){
+        
         this.game = new Game();
         this.game.setOwnerId(owner);
         this.game.setScoredGoals(0);
         this.game.setLostGoals(0);
         this.game.setOponent(matchNameTF.getText());
-        matchNameTF.setMaxWidth(0);
-        matchNameTF.setMinWidth(0);
-        matchNameTF.setText("");
-        oponentTeamNameLb.setText(this.game.getOponent());
-        oponentTeamNameLb.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
-        
-        
         this.game.setDate(new Date(Calendar.getInstance(Locale.getDefault()).getTimeInMillis()));
         databaseManager.saveEntityElement(game);
         
@@ -708,7 +708,7 @@ public class MainController implements Initializable {
         played.setGameId(game);
         
         databaseManager.saveEntityElement(played);
-        
+
         Participated participated;
         
         for(Player p: lineup.getStartingLineup()){
@@ -721,7 +721,28 @@ public class MainController implements Initializable {
         
         setSuccessButtonContent();
         startTimer();
+        
+        matchNameTF.setMaxWidth(0);
+        matchNameTF.setMinWidth(0);
+        matchNameTF.setText("");
+        oponentTeamNameLb.setText(this.game.getOponent());
+        oponentTeamNameLb.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
+        
+        //enable the start/stop/pause/resume buttons
+        startMatchBt.setDisable(true); 
+        pauseMatchBt.setDisable(false);
+        stopMatchBt.setDisable(false);
     }
+    
+    /*
+    Just set flag if opponent name is typed int text field to let us start game  
+    */
+    public void validateOpponentName(){
+        if( !matchNameTF.getText().isEmpty()){
+            startMatchBt.setDisable(false);
+        } else startMatchBt.setDisable(true);
+    }
+    
     public void pauseMatchBtClick(){
         if (paused){
             timeline.play();
@@ -735,22 +756,25 @@ public class MainController implements Initializable {
     }
     
     public void stopMatchBtClick(){
-        this.disableAllButtonInCollectView();
-        databaseManager.saveEntityElement(game);
-        game = databaseManager.getGame(game.getId());
-        timeline.stop();
+        timeline.pause();
+        int answer = JOptionPane.showConfirmDialog(null, "Czy chcesz zakończyć mecz?\n Jeżeli to zrobisz, nie będzie możliwości jego edycji.", "Koniec meczu", JOptionPane.YES_NO_OPTION);
+       
+        if(answer == 0){
+            this.disableAllButtonInCollectView();
+            databaseManager.saveEntityElement(game);
+            game = databaseManager.getGame(game.getId());
+            timeline.stop();
+        } else {
+            timeline.play();
+        }
     }
     /*
     Fill content in collect view - player lists and team name
     */
     public void fillContentCollectView(){
-        if (this.match != null){
-            teamNameCollectView.setText(this.match.getTeam().getName());
-            if(!this.match.getStartingLineup().isEmpty())
-                playersStartListCollectView.setItems(this.match.getStartingLineup());
-            if(!this.match.getReserveLineup().isEmpty())
-                playersReserveListCollectView.setItems(this.match.getReserveLineup());
-        }
+        teamNameCollectView.setText(this.lineup.getTeamName());
+        playersStartListCollectView.setItems(this.lineup.getStartingLineup());
+        playersReserveListCollectView.setItems(this.lineup.getReserveLineup());
     }
     
     /*
@@ -1175,6 +1199,8 @@ public class MainController implements Initializable {
         series1.setName(AC.getSelectedCriteria().toString());
         
         NumberAxis x = new NumberAxis();
+        
+        
         CategoryAxis y = new CategoryAxis();
         BarChart<Number, String> bc = new BarChart<Number, String>(x,y);
         
