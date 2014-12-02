@@ -174,12 +174,12 @@ public class Card implements Serializable, IAction {
 
     @Override
     public String toString() {
-        String result = this.time.toString() + "min: ";
-        result += this.getActionName() + " "; 
+        String result = "[" + this.time.toString() + "min] ";
+        if(getPlayerId() != null)
+            result += getPlayerId() + " otrzymał "; 
         if(getKind() != null)
             result += getKind();
-        if(getPlayerId() != null)
-            result += getPlayerId() + " ";
+        result += this.getActionName();
         return result;
     }
 
@@ -190,7 +190,7 @@ public class Card implements Serializable, IAction {
 
     @Override
     public String getActionName() {
-        return "Kartka";
+        return "KARTKA";
     }
 
 }

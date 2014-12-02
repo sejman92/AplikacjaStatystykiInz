@@ -203,7 +203,7 @@ public class Swap implements Serializable, IAction {
 
     @Override
     public String getActionName() {
-        return "Zmiana: ";
+        return "ZMIANA";
     }
 
     

@@ -186,12 +186,18 @@ public class Shot implements Serializable, IAction {
     @Override
     public String toString() {
         String result = this.time.toString() + "min: ";
-        result += this.getActionName() + " ";
-        if(getPlayerId() != null)
-            result += getPlayerId() + " "; 
-        if(this.getCorner()) result += "Rzut rożny ";
-        if(this.getPenalty()) result += "Rzut karny ";
-        if(this.getFreekick()) result += "Rzut wolny ";
+        if( (this.getSuccess()!= null) && (this.getSuccess().contains("GOL"))){
+            if(getPlayerId() != null)
+                result += getPlayerId() + "zdobył bramkę!";
+        } else {
+            if(getPlayerId() != null)
+                result += getPlayerId() + " oddał "; 
+            result += this.getActionName() + " ";
+            result += this.getSuccess() + " ";
+            if(this.getCorner()) result += "[Rzut rożny] ";
+            if(this.getPenalty()) result += "[Rzut karny] ";
+            if(this.getFreekick()) result += "[Rzut wolny] ";  
+        }
         return result;
     }
 
@@ -202,7 +208,7 @@ public class Shot implements Serializable, IAction {
 
     @Override
     public String getActionName() {
-        return "Strzał";
+        return "STRZAŁ";
     }
 
 }

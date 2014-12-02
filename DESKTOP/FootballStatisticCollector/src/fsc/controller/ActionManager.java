@@ -47,6 +47,7 @@ public class ActionManager {
         databaseManager = DatabaseManager.getInstance();
         comment = "";
         successful = 0;
+        successOfShot = SuccessOfShot.NIECELNY;
         kickType = Kicks.NONE;
     }
     
@@ -111,67 +112,67 @@ public class ActionManager {
             {
                 case 1:{
                     ((Shot)action).setPlayerId(player);
-                    if(partOfBody != null)
-                        ((Shot)action).setBodyPart(partOfBody.toString());
+                    if(getPartOfBody() != null)
+                        ((Shot)action).setBodyPart(getPartOfBody().toString());
                     setShotKickTypeBool((Shot)action);
-                    if(successOfShot != null){
-                        if(successOfShot.equals(SuccessOfShot.GOL)){
-                            ((Shot)action).setSuccess(successOfShot.toString());
+                    if(getSuccessOfShot() != null){
+                        if(getSuccessOfShot().equals(SuccessOfShot.GOL)){
+                            ((Shot)action).setSuccess(getSuccessOfShot().toString());
                         } else {
-                            if( this.successful == 1) ((Shot)action).setSuccess(SuccessOfShot.CELNY.toString());
+                            if( this.getSuccessful() == 1) ((Shot)action).setSuccess(SuccessOfShot.CELNY.toString());
                             else ((Shot)action).setSuccess((SuccessOfShot.NIECELNY.toString()));
                         }
                     }
-                    ((Shot)action).setTime(time);
+                    ((Shot)action).setTime(getTime());
                     break;
                 }
                 case 2:{
                     ((Passing)action).setPlayerPassingId(player);
-                    if(successful > 0){
+                    if(getSuccessful() > 0){
                         ((Passing)action).setSuccessful(true);
-                    }else if(successful < 0){
+                    }else if(getSuccessful() < 0){
                         ((Passing)action).setSuccessful(false);
                     }
                     setPassKickTypeBool((Passing)action);
-                    ((Passing)action).setTime(time);
+                    ((Passing)action).setTime(getTime());
                     
                     break;
                 }
                 case 5:{
                     ((Defense)action).setPlayerId(player);
-                    ((Defense)action).setTime(time);
+                    ((Defense)action).setTime(getTime());
                     break;
                 }
                 case 6:{
-                    if(successful > 0){
+                    if(getSuccessful() > 0){
                         ((Faul)action).setPlayerVictimId(player);
-                    } else if(successful < 0){
+                    } else if(getSuccessful() < 0){
                         ((Faul)action).setPlayerOfenderId(player);
                     } 
                     ((Faul)action).setGameId(game);
-                    ((Faul)action).setTime(time);
+                    ((Faul)action).setTime(getTime());
                     break;
                 }
                 case 7: {
                     ((Card)action).setPlayerId(player);
-                    ((Card)action).setKind(colorOfCard.toString());
-                    ((Card)action).setTime(time);
+                    ((Card)action).setKind(getColorOfCard().toString());
+                    ((Card)action).setTime(getTime());
                     break;
                 }
                 case 8: {
                     ((Takeover)action).setPlayerId(player);
-                    ((Takeover)action).setTime(time);
+                    ((Takeover)action).setTime(getTime());
                     break;
                 }
                 case 9: {
                     ((Injury)action).setPlayerId(player);
-                    ((Injury)action).setTime(time);
+                    ((Injury)action).setTime(getTime());
                     break;
                 }
                 case 10: {
                     ((Swap)action).setPlayerOutId(player);
                     ((Swap)action).setPlayerInId(reservePlayer);
-                    ((Swap)action).setTime(time);
+                    ((Swap)action).setTime(getTime());
                     break;
                 }
                 
@@ -192,10 +193,10 @@ public class ActionManager {
     */    
     void cancelAction(){
         action = null;
-        partOfBody = null;
+        setPartOfBody(null);
         comment = "";
         successful = 0;
-        if(colorOfCard != null && colorOfCard.equals(ColorOfCard.CZERWONA)){
+        if(getColorOfCard() != null && getColorOfCard().equals(ColorOfCard.CZERWONA)){
             player = null;
         }
         if(action instanceof Swap){
@@ -217,35 +218,35 @@ public class ActionManager {
             result += "wchodzi " + reservePlayer + " za ";
         if(player != null)
             result += player + " ";
-        if(partOfBody != null)
-            result += partOfBody + " ";
-        if(successful > 0){
+        if(getPartOfBody() != null)
+            result += getPartOfBody() + " ";
+        if(getSuccessful() > 0){
             if( action instanceof Faul)
-                result += "faulowany"; //check it is faul or other action
-            else
-                result += "celne ";
+                result += "był faulowany"; //check it is faul or other action
+            else if (action instanceof Shot) result += "celny ";
+            else result += "celne ";
         }
-        else if(successful < 0){
+        else if(getSuccessful() < 0){
             if( action instanceof Faul)
-                result += "faulował"; //check it is faul or other action
-            else
-                result += "niecelne ";
+                result += "faulował "; //check it is faul or other action
+            else if (action instanceof Shot) result += "niecelny ";
+            else result += "niecelne ";
         }
-        if( this.kickType != Kicks.NONE)
+        if( this.getKickType() != Kicks.NONE)
             result += kickTypeName();
         return result;
     }
 
     private void setShotKickTypeBool(Shot shot) {
-        if( this.kickType == Kicks.CORNER){
+        if( this.getKickType() == Kicks.CORNER){
             shot.setFreekick(Boolean.FALSE);
             shot.setPenalty(Boolean.FALSE);
             shot.setCorner(Boolean.TRUE);
-        } else if ( this.kickType == Kicks.FREE){
+        } else if ( this.getKickType() == Kicks.FREE){
             shot.setFreekick(Boolean.TRUE);
             shot.setPenalty(Boolean.FALSE);
             shot.setCorner(Boolean.FALSE);
-        } else if ( this.kickType == Kicks.PENALTY){
+        } else if ( this.getKickType() == Kicks.PENALTY){
             shot.setFreekick(Boolean.FALSE);
             shot.setPenalty(Boolean.TRUE);
             shot.setCorner(Boolean.FALSE);
@@ -257,10 +258,10 @@ public class ActionManager {
     }
 
     private void setPassKickTypeBool(Passing passing) {
-        if( this.kickType == Kicks.CORNER){
+        if( this.getKickType() == Kicks.CORNER){
             passing.setFreekick(Boolean.FALSE);
             passing.setCorner(Boolean.TRUE);
-        } else if ( this.kickType == Kicks.FREE){
+        } else if ( this.getKickType() == Kicks.FREE){
             passing.setFreekick(Boolean.TRUE);
             passing.setCorner(Boolean.FALSE);
         }  else {
@@ -269,9 +270,51 @@ public class ActionManager {
         }
     }
     private String kickTypeName(){
-        if( this.kickType == Kicks.CORNER) return "Rzut rożny";
-        if( this.kickType == Kicks.FREE) return "Rzut wolny";
-        if( this.kickType == Kicks.PENALTY) return "Rzut karny";
+        if( this.getKickType() == Kicks.CORNER) return "Rzut rożny";
+        if( this.getKickType() == Kicks.FREE) return "Rzut wolny";
+        if( this.getKickType() == Kicks.PENALTY) return "Rzut karny";
         else return "";
+    }
+
+    /**
+     * @return the partOfBody
+     */
+    public PartsOfBody getPartOfBody() {
+        return partOfBody;
+    }
+
+    /**
+     * @return the successful
+     */
+    public int getSuccessful() {
+        return successful;
+    }
+
+    /**
+     * @return the kickType
+     */
+    public Kicks getKickType() {
+        return kickType;
+    }
+
+    /**
+     * @return the colorOfCard
+     */
+    public ColorOfCard getColorOfCard() {
+        return colorOfCard;
+    }
+
+    /**
+     * @return the successOfShot
+     */
+    public SuccessOfShot getSuccessOfShot() {
+        return successOfShot;
+    }
+
+    /**
+     * @return the time
+     */
+    public int getTime() {
+        return time;
     }
 }

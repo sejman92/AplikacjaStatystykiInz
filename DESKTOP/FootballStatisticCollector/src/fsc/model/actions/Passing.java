@@ -177,17 +177,17 @@ public class Passing implements Serializable, IAction {
     @Override
     public String toString() {
         String result = this.time.toString() + "min: ";
-        result += getActionName() + " ";
         if(getPlayerPassingId()!= null)
-            result += getPlayerPassingId() + " ";
+            result += getPlayerPassingId() + " wykonał ";
         if(getSuccessful()!=null){
             if(getSuccessful())            
                 result += "celne ";
             else
                 result += "niecelne ";
         }
-        if(this.getCorner()) result += "Rzut rożny ";
-        if(this.getFreekick()) result += "Rzut wolny ";
+        result += getActionName() + " ";
+        if(this.getCorner()) result += "[Rzut rożny] ";
+        if(this.getFreekick()) result += "[Rzut wolny]";
         return result;
     }
 
@@ -198,7 +198,7 @@ public class Passing implements Serializable, IAction {
 
     @Override
     public String getActionName() {
-        return "Podanie ";
+        return "PODANIE";
     }
     
 }

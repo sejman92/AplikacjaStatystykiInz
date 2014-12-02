@@ -855,7 +855,11 @@ public class MainController implements Initializable {
     Add left foot in current action
     */
     public void leftFootBtClick(){
-        actionManager.setPartOfBody(PartsOfBody.LEWA_NOGA);
+        if( (actionManager.getPartOfBody()==null) || ( !actionManager.getPartOfBody().equals(PartsOfBody.LEWA_NOGA)) ){
+            actionManager.setPartOfBody(PartsOfBody.LEWA_NOGA);
+        } else {
+            actionManager.setPartOfBody(null);
+        }
         curInsertTA.setText(actionManager.getInsert());
         
     }
@@ -864,15 +868,23 @@ public class MainController implements Initializable {
     Add right foot in current action
     */
     public void rightFootBtClick(){
-        actionManager.setPartOfBody(PartsOfBody.PRAWA_NOGA);
-        curInsertTA.setText(actionManager.getInsert());        
+        if( (actionManager.getPartOfBody()==null) || ( !actionManager.getPartOfBody().equals(PartsOfBody.PRAWA_NOGA))){
+            actionManager.setPartOfBody(PartsOfBody.PRAWA_NOGA);
+        } else {
+            actionManager.setPartOfBody(null);
+        }
+        curInsertTA.setText(actionManager.getInsert());       
     }
         
     /*
     Add head in current action
     */  
     public void headBtClick(){
-        actionManager.setPartOfBody(PartsOfBody.GŁOWA);
+        if( (actionManager.getPartOfBody()==null) || ( !actionManager.getPartOfBody().equals(PartsOfBody.GŁOWA))){
+            actionManager.setPartOfBody(PartsOfBody.GŁOWA);
+        } else {
+            actionManager.setPartOfBody(null);
+        }
         curInsertTA.setText(actionManager.getInsert());
     }
     
@@ -880,7 +892,11 @@ public class MainController implements Initializable {
     Add chest in current action
     */            
     public void chestBtClick(){        
-        actionManager.setPartOfBody(PartsOfBody.KLATKA);
+        if( (actionManager.getPartOfBody()==null) || ( !actionManager.getPartOfBody().equals(PartsOfBody.KLATKA))){
+            actionManager.setPartOfBody(PartsOfBody.KLATKA);
+        } else {
+            actionManager.setPartOfBody(null);
+        }
         curInsertTA.setText(actionManager.getInsert());
     }
     
@@ -889,7 +905,11 @@ public class MainController implements Initializable {
     */
                 
     public void otherBtClick(){
-        actionManager.setPartOfBody(PartsOfBody.INNA);
+        if( (actionManager.getPartOfBody()==null) || ( !actionManager.getPartOfBody().equals(PartsOfBody.INNA))){
+            actionManager.setPartOfBody(PartsOfBody.INNA);
+        } else {
+            actionManager.setPartOfBody(null);
+        }
         curInsertTA.setText(actionManager.getInsert());
     }
 
@@ -948,6 +968,7 @@ public class MainController implements Initializable {
     public void goalNegativeBtClick(){
         this.game.setLostGoals(this.game.getLostGoals()+1);
         this.faulButtonFlag = false;
+        this.historyLV.getItems().add(new String(this.getCurrentMinute()+"min: Strata bramki"));
         this.goalLostLb.setText(this.game.getLostGoals().toString());
         setSuccessButtonContent();
     }
@@ -970,14 +991,15 @@ public class MainController implements Initializable {
     */
     public void acceptBtClick(){
 
-        //action.setGame(gameManager.getGame(game.getId()));
+        
         actionManager.setComment(commentTA.getText());
         actionManager.setGame(game);
         actionManager.setTime(getCurrentMinute());
+        
         IAction result = actionManager.saveAction();
         game = databaseManager.getGame(game.getId()); 
         if(result != null){
-            actionList.add(result);
+            
             if(result instanceof Swap){
                 lineup.removeFromStartingLineup(((Swap)result).getPlayerOutId());
                 lineup.moveFromReserveToStarting(((Swap)result).getPlayerInId());
@@ -1008,13 +1030,13 @@ public class MainController implements Initializable {
                     this.databaseManager.saveEntityElement(game);
                 }
             }
-            
+            actionList.add(result);
             actionManager.cancelAction();
-            curInsertTA.setText("dodano");
+            curInsertTA.setText("");
             this.kickType = Kicks.NONE;
             
         }else{
-            curInsertTA.setText("nie dodano z powodu bledu");
+            curInsertTA.setText("Wystąpił błąd. Nie dodano akcji!");
         }
         historyLV.setItems(actionList);
         commentTA.setText("");
@@ -1027,7 +1049,7 @@ public class MainController implements Initializable {
     public void cancelBtClick(){
         actionManager.cancelAction();
         commentTA.setText("");
-        curInsertTA.setText("wycofano");
+        curInsertTA.setText("Anulowano");
     }
 
     private void startTimer() {

@@ -184,10 +184,10 @@ public class Faul implements Serializable, IAction {
     @Override
     public String toString() {
         String result = this.time.toString() + "min: ";
-        result += this.getActionName() + " ";
         if(getPlayerOfenderId() != null)
             result += getPlayerOfenderId() + " ";
         else result += getPlayerVictimId() + " ";
+        result += this.getActionName() + " ";
         return result;
     }
 
@@ -198,9 +198,7 @@ public class Faul implements Serializable, IAction {
 
     @Override
     public String getActionName() {
-        if( this.getPlayerOfenderId() == null){
-             return "Faulowany";
-         } else return "Faulował";
+        return "FAUL";
     }
   
 }
