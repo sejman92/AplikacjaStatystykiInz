@@ -19,7 +19,6 @@ import android.widget.AdapterView.OnItemLongClickListener;
 public class ChosePlayersForGameActivity extends Activity {
 
 	DatabaseManager dbm = new DatabaseManager(this);
-	List<Player> listPlayer;
 	ListView view_Player_List;
 	ArrayAdapter<Player> list_adapter;
 	
@@ -34,12 +33,12 @@ public class ChosePlayersForGameActivity extends Activity {
 		@Override
         public void onItemClick(AdapterView<?> parent, View v, int position, long id) 
         {
-			if(Focus.isInPlayersList(listPlayer.get(position).getId(), Focus.backup_players_for_focused_game))
-				Focus.removePlayerFromListForGame(listPlayer.get(position).getId(), Focus.backup_players_for_focused_game);
-        	if(Focus.isInPlayersList(listPlayer.get(position).getId(), Focus.main_players_for_focused_game))
-        		Focus.removePlayerFromListForGame(listPlayer.get(position).getId(), Focus.main_players_for_focused_game);
+			if(Focus.isInPlayersList(Focus.players_from_focused_team.get(position).getId(), Focus.backup_players_for_focused_game))
+				Focus.removePlayerFromListForGame(Focus.players_from_focused_team.get(position).getId(), Focus.backup_players_for_focused_game);
+        	if(Focus.isInPlayersList(Focus.players_from_focused_team.get(position).getId(), Focus.main_players_for_focused_game))
+        		Focus.removePlayerFromListForGame(Focus.players_from_focused_team.get(position).getId(), Focus.main_players_for_focused_game);
 			else
-				Focus.main_players_for_focused_game.add(listPlayer.get(position));
+				Focus.main_players_for_focused_game.add(Focus.players_from_focused_team.get(position));
         	refresh_player_list();
         }
 	};
@@ -49,12 +48,12 @@ public class ChosePlayersForGameActivity extends Activity {
 		@Override
 		public boolean onItemLongClick(AdapterView<?> parent, View a,int position, long id) 
 		{
-			if(Focus.isInPlayersList(listPlayer.get(position).getId(), Focus.main_players_for_focused_game))
-        		Focus.removePlayerFromListForGame(listPlayer.get(position).getId(), Focus.main_players_for_focused_game);
-			if(Focus.isInPlayersList(listPlayer.get(position).getId(), Focus.backup_players_for_focused_game))
-				Focus.removePlayerFromListForGame(listPlayer.get(position).getId(), Focus.backup_players_for_focused_game);
+			if(Focus.isInPlayersList(Focus.players_from_focused_team.get(position).getId(), Focus.main_players_for_focused_game))
+        		Focus.removePlayerFromListForGame(Focus.players_from_focused_team.get(position).getId(), Focus.main_players_for_focused_game);
+			if(Focus.isInPlayersList(Focus.players_from_focused_team.get(position).getId(), Focus.backup_players_for_focused_game))
+				Focus.removePlayerFromListForGame(Focus.players_from_focused_team.get(position).getId(), Focus.backup_players_for_focused_game);
 			else
-				Focus.backup_players_for_focused_game.add(listPlayer.get(position));
+				Focus.backup_players_for_focused_game.add(Focus.players_from_focused_team.get(position));
 			refresh_player_list();
 			return true;
 			
@@ -65,20 +64,19 @@ public class ChosePlayersForGameActivity extends Activity {
 	public void refresh_player_list()
 	{		
 		view_Player_List = (ListView) findViewById(R.id.playerListViewChosingForGame);
-		listPlayer = dbm.getAllPlayersFromTeam(Focus.focused_team.getId());
 		dbm.close();
-		String[] player_list= new String[listPlayer.size()];
+		String[] player_list= new String[Focus.players_from_focused_team.size()];
 		String chosen="";
-		for(int i=0;i<listPlayer.size();i++)
+		for(int i=0;i<Focus.players_from_focused_team.size();i++)
 		{
-			if(Focus.isInPlayersList(listPlayer.get(i).getId(), Focus.main_players_for_focused_game) )
+			if(Focus.isInPlayersList(Focus.players_from_focused_team.get(i).getId(), Focus.main_players_for_focused_game) )
 				chosen=getResources().getString(R.string.basic);
 			else
-				if(Focus.isInPlayersList(listPlayer.get(i).getId(), Focus.backup_players_for_focused_game) )
+				if(Focus.isInPlayersList(Focus.players_from_focused_team.get(i).getId(), Focus.backup_players_for_focused_game) )
 					chosen=getResources().getString(R.string.backup);
 				else
 					chosen="";
-			player_list[i]=listPlayer.get(i).getNr()+"  "+listPlayer.get(i).getName()+" "+listPlayer.get(i).getSurname()+"  "+chosen;
+			player_list[i]=Focus.players_from_focused_team.get(i).getNr()+"  "+Focus.players_from_focused_team.get(i).getName()+" "+Focus.players_from_focused_team.get(i).getSurname()+"  "+chosen;
 		}
 		list_adapter = new ArrayAdapter(this, android.R.layout.simple_expandable_list_item_1,player_list );
 		view_Player_List.refreshDrawableState();

@@ -4,47 +4,25 @@
     android:layout_height="match_parent" >
 
     <EditText
-        android:id="@+id/add_player_dialog_name_edittext"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="68dp"
-        android:hint="@string/player_name"
-        android:ems="10" >
-
-    </EditText>
-
-    <EditText
         android:id="@+id/add_player_dialog_surname_edittext"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/add_player_dialog_name_edittext"
         android:layout_below="@+id/add_player_dialog_name_edittext"
         android:layout_marginTop="30dp"
-        android:hint="@string/player_surname"
-        android:ems="10" />
+        android:ems="10"
+        android:hint="@string/player_surname" />
 
     <EditText
         android:id="@+id/add_player_dialog_number_edittext"
-        android:inputType="number"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/add_player_dialog_surname_edittext"
         android:layout_below="@+id/add_player_dialog_surname_edittext"
-        android:hint="@string/number"
         android:layout_marginTop="24dp"
-        android:ems="10" />
-
-    <EditText
-        android:id="@+id/add_player_dialog_role_edittext"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/add_player_dialog_number_edittext"
-        android:layout_below="@+id/add_player_dialog_number_edittext"
-        android:layout_marginTop="22dp"
-        android:hint="@string/role"
-        android:ems="10" />
+        android:ems="10"
+        android:hint="@string/number"
+        android:inputType="number" />
 
     <Button
         android:id="@+id/add_player_dialog_ok_button"
@@ -52,16 +30,63 @@
         android:layout_height="wrap_content"
         android:layout_alignBaseline="@+id/add_player_dialog_cancel_button"
         android:layout_alignBottom="@+id/add_player_dialog_cancel_button"
-        android:layout_alignRight="@+id/add_player_dialog_role_edittext"
         android:text="@string/add" />
+
+    <EditText
+        android:id="@+id/add_player_dialog_name_edittext"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="14dp"
+        android:ems="10"
+        android:hint="@string/player_name" >
+
+        <requestFocus />
+    </EditText>
 
     <Button
         android:id="@+id/add_player_dialog_cancel_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/add_player_dialog_role_edittext"
-        android:layout_below="@+id/add_player_dialog_role_edittext"
-        android:layout_marginTop="34dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
         android:text="@string/cancel" />
+
+    <RadioGroup
+        android:id="@+id/radioGroup1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/add_player_dialog_number_edittext"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="31dp" >
+
+        <RadioButton
+            android:id="@+id/radio1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="napastnik" />
+
+        <RadioButton
+            android:id="@+id/radio2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="pomocnik" />
+
+        <RadioButton
+            android:id="@+id/radioButton1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="obronca" />
+
+        <RadioButton
+            android:id="@+id/radio0"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="17dp"
+            android:checked="true"
+            android:text="bramkarz" />
+        
+    </RadioGroup>
 
 </RelativeLayout>

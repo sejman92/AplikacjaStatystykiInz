@@ -27,6 +27,7 @@ public class MainMenuActivity extends Activity {
 		Focus.main_players_for_focused_game= new LinkedList<Player>();
 		Focus.backup_players_for_focused_game= new LinkedList<Player>();
 		Focus.swaped_players_for_focused_game= new LinkedList<Player>();
+		Focus.players_from_focused_team = new LinkedList<Player>();
 		
 	}
 	

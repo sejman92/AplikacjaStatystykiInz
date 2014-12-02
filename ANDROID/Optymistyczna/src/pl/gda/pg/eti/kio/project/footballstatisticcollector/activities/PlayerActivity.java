@@ -10,6 +10,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.Toast;
 
 public class PlayerActivity extends Activity {
@@ -17,30 +19,58 @@ public class PlayerActivity extends Activity {
 	int id, number;
 	String name, surname, role;
 	DatabaseManager dbm = new DatabaseManager(this);
-	EditText nameet, surnameet, roleet, numberet;
+	EditText nameet, surnameet, numberet;
 	Player player;
+	RadioGroup radiogroup;
+	RadioButton radiobutton;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_player);
 		
-        id =Focus.focused_player.getId(); 
-        name =Focus.focused_player.getName(); 
-        surname =Focus.focused_player.getSurname();
-        role= Focus.focused_player.getRole();
-        number = Focus.focused_player.getNr();
+        
+        radiogroup = (RadioGroup) findViewById(R.id.radioGroup1);
+        refreshData();
         
         nameet=(EditText) findViewById(R.id.editText1);
         surnameet=(EditText) findViewById(R.id.editText2);
         numberet=(EditText) findViewById(R.id.editText3);
-        roleet=(EditText) findViewById(R.id.editText4);
+
         
         nameet.setText(name);
         surnameet.setText(surname);
         numberet.setText(String.valueOf(number));
-        roleet.setText(role);
-        
         this.setTitle(name+" "+surname);
+	}
+	
+	public void refreshData()
+	{
+		id =Focus.focused_player.getId(); 
+        name =Focus.focused_player.getName(); 
+        surname =Focus.focused_player.getSurname();
+        role= Focus.focused_player.getRole();
+        number = Focus.focused_player.getNr();
+		if(role.equals("napastnik"))
+	    {
+	    	radiobutton = (RadioButton) findViewById(R.id.radio1);
+	    	radiobutton.setChecked(true);
+	    }
+	    if(role.equals("pomocnik"))
+	    {
+	    	radiobutton = (RadioButton) findViewById(R.id.radio2);
+	    	radiobutton.setChecked(true);
+	    }
+	    if(role.equals("obronca"))
+	    {
+	    	radiobutton = (RadioButton) findViewById(R.id.radioButton1);
+	    	radiobutton.setChecked(true);
+	    }
+	    if(role.equals("bramkarz"))
+	    {
+	    	radiobutton = (RadioButton) findViewById(R.id.radio0);
+	    	radiobutton.setChecked(true);
+	    }
 	}
 	
 	public void back(View v)
@@ -52,9 +82,15 @@ public class PlayerActivity extends Activity {
 	{
 		name=nameet.getText().toString();
 		surname=surnameet.getText().toString();
-		role=roleet.getText().toString();
+		//role=roleet.getText().toString();
+		radiobutton = (RadioButton) findViewById(radiogroup.getCheckedRadioButtonId());
+		role = radiobutton.getText().toString();
 		number=Integer.parseInt(numberet.getText().toString());
 		dbm.updatePlayer(id, name, surname, role, number);
+		Focus.focused_player.setName(name);
+		Focus.focused_player.setSurname(surname);
+		Focus.focused_player.setRole(role);
+		Focus.focused_player.setNr(number);
 		dbm.close();
 		Toast.makeText(this, "dane zawodnika zaktualizowane", Toast.LENGTH_SHORT).show();
 		finish();

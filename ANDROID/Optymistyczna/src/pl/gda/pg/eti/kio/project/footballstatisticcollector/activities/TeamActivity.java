@@ -19,6 +19,8 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.Toast;
 import android.widget.AdapterView.OnItemClickListener;
 
@@ -27,7 +29,6 @@ public class TeamActivity extends Activity {
 	static int id;
 	private String name;
 	private  DatabaseManager dbm = new DatabaseManager(this);
-	private List<Player> listPlayer;
 	private ListView view_Player_List;
 	private ArrayAdapter<Player> list_adapter;
 	
@@ -35,7 +36,7 @@ public class TeamActivity extends Activity {
 		@Override
         public void onItemClick(AdapterView<?> parent, View v, int position, long id) 
         {
-        	Focus.focused_player=listPlayer.get(position);
+        	Focus.focused_player=Focus.players_from_focused_team.get(position);
         	
         	Intent intent = new Intent(TeamActivity.this,PlayerStatsActivity.class);
         	startActivity(intent);
@@ -89,11 +90,11 @@ public class TeamActivity extends Activity {
 	public void refresh_player_list()
 	{		
 		view_Player_List = (ListView) findViewById(R.id.playerlistView);
-		listPlayer = dbm.getAllPlayersFromTeam(id);
+		Focus.players_from_focused_team=dbm.getAllPlayersFromTeam(id);
 		dbm.close();
-		String[] player_list= new String[listPlayer.size()];
-		for(int i=0;i<listPlayer.size();i++)
-			player_list[i]=listPlayer.get(i).getNr()+"  "+listPlayer.get(i).getName()+" "+listPlayer.get(i).getSurname();
+		String[] player_list= new String[Focus.players_from_focused_team.size()];
+		for(int i=0;i<Focus.players_from_focused_team.size();i++)
+			player_list[i]=Focus.players_from_focused_team.get(i).getNr()+"  "+Focus.players_from_focused_team.get(i).getName()+" "+Focus.players_from_focused_team.get(i).getSurname();
 		list_adapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1,player_list );
 		view_Player_List.refreshDrawableState();
 		view_Player_List.setAdapter(list_adapter);
@@ -133,12 +134,13 @@ public class TeamActivity extends Activity {
 					EditText name = (EditText) dialog.findViewById(R.id.add_player_dialog_name_edittext);
 					EditText surname = (EditText) dialog.findViewById(R.id.add_player_dialog_surname_edittext);
 					EditText number = (EditText) dialog.findViewById(R.id.add_player_dialog_number_edittext);
-					EditText role = (EditText) dialog.findViewById(R.id.add_player_dialog_role_edittext);
+					RadioGroup radiogroup = (RadioGroup) dialog.findViewById(R.id.radioGroup1);
 					
 					String sName = name.getText().toString();
 					String sSurname = surname.getText().toString();
 					String iNumber = number.getText().toString();
-					String sRole = role.getText().toString();
+					RadioButton radiobutton = (RadioButton) dialog.findViewById(radiogroup.getCheckedRadioButtonId());
+					String sRole = radiobutton.getText().toString();
 					dialog.dismiss();
 					dbm.addPlayer(sName, sSurname, Integer.parseInt(iNumber), sRole, TeamActivity.id );
 					dbm.close();

@@ -69,7 +69,7 @@ public class GameActivity extends Activity {
 		chronometer =(Chronometer) findViewById(R.id.chronometer1);
 		score = (TextView)findViewById(R.id.textView1);
 		chronometer.setTextSize(50);
-		score.setTextSize(50);
+		score.setTextSize(40);
 		ctime=0;
 		Intent input_intent=getIntent();
 		Bundle input_bundle = input_intent.getExtras();
@@ -103,6 +103,12 @@ public class GameActivity extends Activity {
 			play=true;
 		}
 	}
+	
+	public int time()
+	{
+		return (int)(chronometer.getBase()-SystemClock.elapsedRealtime())/-60000+1;
+	} 
+	
 	public void endGame(View v)
 	{
 		
@@ -229,9 +235,9 @@ public class GameActivity extends Activity {
 					success="missed";
 								
 	        	idp=Focus.main_players_for_focused_game.get(position).getId();
-	        	Shot shot = new Shot(idp, edit.getText().toString(), (int)ctime/-60000+1, success );
+	        	Shot shot = new Shot(idp, edit.getText().toString(), time(), success );
 	    		action_list.add(shot);
-	    		Log.d("shot", idp+" "+edit.getText().toString()+" "+String.valueOf(ctime/-60000+1)+" "+success);
+	    		Log.d("shot", idp+" "+edit.getText().toString()+" "+String.valueOf(time())+" "+success);
 	    		dialog.dismiss();
 	        }
 		};		

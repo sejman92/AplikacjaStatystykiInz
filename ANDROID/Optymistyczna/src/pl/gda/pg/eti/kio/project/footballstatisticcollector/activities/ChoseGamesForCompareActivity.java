@@ -27,7 +27,7 @@ public class ChoseGamesForCompareActivity extends Activity {
 	private ListView view_Game_List;
 	private ArrayAdapter<Game> list_adapter;
 	private List<Integer>choises;
-	private int choise=-1,choise2=-1;
+	//private int choise=-1,choise2=-1;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {

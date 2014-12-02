@@ -144,7 +144,7 @@ public class Game {
 	{
 		int goals=0;
 		for(Shot shot : shots)
-			if(shot.getSucces()=="goal")
+			if(shot.getSucces().equals("goal"))
 				goals++;
 		return goals;
 	}
@@ -152,7 +152,7 @@ public class Game {
 	{
 		int missed=0;
 		for(Shot shot : shots)
-			if(shot.getSucces()!="goal")
+			if(!shot.getSucces().equals("goal"))
 				missed++;
 		return missed;
 	}
@@ -160,7 +160,7 @@ public class Game {
 	{
 		int penalty=0;
 		for(Shot shot : shots)
-			if(shot.getSucces()=="goal"&& shot.getPenalty()==1)
+			if( !shot.getSucces().equals("goal") && shot.getPenalty()==1)
 				penalty++;
 		return penalty;
 	}
@@ -208,7 +208,7 @@ public class Game {
 	{
 		int card=0;
 		for(Card c : cards)
-			if(c.getKind()=="yellow")
+			if(c.getKind().equals("yellow"))
 				card++;
 		return card;
 	}
@@ -216,7 +216,7 @@ public class Game {
 	{
 		int card=0;
 		for(Card c : cards)
-			if(c.getKind()=="red")
+			if(c.getKind().equals("red"))
 				card++;
 		return card;
 	}

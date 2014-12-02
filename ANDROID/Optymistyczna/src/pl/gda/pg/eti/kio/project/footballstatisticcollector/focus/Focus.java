@@ -14,6 +14,7 @@ public class Focus {
 	static public List<Player> main_players_for_focused_game;
 	static public List<Player> backup_players_for_focused_game;
 	static public List<Player> swaped_players_for_focused_game;
+	static public List<Player> players_from_focused_team;
 	static public boolean game_ended=false;
 	static public Player focused_player_for_compare1=null;
 	static public Player focused_player_for_compare2=null;
