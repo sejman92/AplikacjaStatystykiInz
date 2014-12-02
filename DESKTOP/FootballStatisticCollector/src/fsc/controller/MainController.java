@@ -153,15 +153,12 @@ public class MainController implements Initializable {
    @FXML private Button noSuccessfullButton;
    @FXML private Button acceptBt;   
    @FXML private Button cancelBt;
-   @FXML private Button flatPassBt;
-   @FXML private Button crossPassBt;
    @FXML private Button freeKickBt;
    @FXML private Button cornerKickBt;
    @FXML private Button penaltyKickBt;
    @FXML private Button injuryBt;
    @FXML private Button faulBt;
    @FXML private Button defenseBt;
-   @FXML private Button handBt;
    @FXML private Button swapBt;
    @FXML private Button yelloCardBt;
    @FXML private Button redCardBt;
@@ -317,7 +314,6 @@ public class MainController implements Initializable {
         this.injuryBt.setDisable(true);
         this.defenseBt.setDisable(true);
         this.faulBt.setDisable(true);
-        this.handBt.setDisable(true);
         this.yelloCardBt.setDisable(true);
         this.redCardBt.setDisable(true);
         this.takeoverBt.setDisable(true);
@@ -332,7 +328,6 @@ public class MainController implements Initializable {
         this.defenseBt.setDisable(false);
         this.faulBt.setDisable(false);
         this.injuryBt.setDisable(false);
-        this.handBt.setDisable(false);
         this.swapBt.setDisable(false);
         this.yelloCardBt.setDisable(false);
         this.redCardBt.setDisable(false);
@@ -826,6 +821,7 @@ public class MainController implements Initializable {
         setSuccessButtonContent();
     }
     public void defenseBtClick(){
+        
         actionManager.setAction(new Defense());
         curInsertTA.setText(actionManager.getInsert());
         this.faulButtonFlag = false;

@@ -59,6 +59,63 @@ public class ActionManager {
     }
     
     public void setAction(IAction action){
+        if ( action instanceof Card){
+            this.setColorOfCard(colorOfCard);
+            this.setKickType(Kicks.NONE);
+            this.setPartOfBody(null);
+            this.setReservePlayer(null);
+            this.setSuccessOfShot(SuccessOfShot.NIECELNY);
+            this.setSuccessful(0);
+        } else if (action instanceof Defense){
+            this.setColorOfCard(null);
+            this.setKickType(Kicks.NONE);
+            this.setPartOfBody(null);
+            this.setReservePlayer(null);
+            this.setSuccessOfShot(null);
+            this.setSuccessful(0);
+        } else if (action instanceof Faul){
+            this.setColorOfCard(null);
+            this.setKickType(Kicks.NONE);
+            this.setPartOfBody(null);
+            this.setReservePlayer(null);
+            this.setSuccessOfShot(null);
+            this.setSuccessful(this.successful);
+        } else if (action instanceof Injury){
+            this.setColorOfCard(null);
+            this.setKickType(Kicks.NONE);
+            this.setPartOfBody(null);
+            this.setReservePlayer(null);
+            this.setSuccessOfShot(null);
+            this.setSuccessful(0);
+        } else if (action instanceof Passing){
+            this.setColorOfCard(null);
+            this.setKickType(this.kickType);
+            this.setPartOfBody(this.partOfBody);
+            this.setReservePlayer(null);
+            this.setSuccessOfShot(null);
+            this.setSuccessful(this.successful);
+        } else if (action instanceof Shot){
+            this.setColorOfCard(null);
+            this.setKickType(this.kickType);
+            this.setPartOfBody(this.partOfBody);
+            this.setReservePlayer(null);
+            this.setSuccessOfShot(this.successOfShot);
+            this.setSuccessful(this.successful);
+        } else if (action instanceof Swap){
+            this.setColorOfCard(null);
+            this.setKickType(Kicks.NONE);
+            this.setPartOfBody(null);
+            this.setReservePlayer(this.reservePlayer);
+            this.setSuccessOfShot(null);
+            this.setSuccessful(0);
+        } else if (action instanceof Takeover){
+            this.setColorOfCard(null);
+            this.setKickType(Kicks.NONE);
+            this.setPartOfBody(null);
+            this.setReservePlayer(null);
+            this.setSuccessOfShot(null);
+            this.setSuccessful(this.successful);
+        }
         this.action = action;
     }
     
