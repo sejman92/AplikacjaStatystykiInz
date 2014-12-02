@@ -168,7 +168,8 @@ public class MainController implements Initializable {
    @FXML private Button pauseMatchBt;
    @FXML private ListView historyLV;
    @FXML private TextArea commentTA;
-   @FXML private TextArea curInsertTA;   
+   @FXML private Label curInsertTA;  
+   @FXML private Label oponentTeamNameLb;
    @FXML private TextField matchNameTF;
    
    @FXML private ListView playersStartListCollectView;
@@ -690,7 +691,14 @@ public class MainController implements Initializable {
         this.game.setOwnerId(owner);
         this.game.setScoredGoals(0);
         this.game.setLostGoals(0);
-        this.game.setOponent(matchNameTF.getText());       
+        this.game.setOponent(matchNameTF.getText());
+        matchNameTF.setMaxWidth(0);
+        matchNameTF.setMinWidth(0);
+        matchNameTF.setText("");
+        oponentTeamNameLb.setText(this.game.getOponent());
+        oponentTeamNameLb.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
+        
+        
         this.game.setDate(new Date(Calendar.getInstance(Locale.getDefault()).getTimeInMillis()));
         databaseManager.saveEntityElement(game);
         

@@ -252,7 +252,7 @@
 <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
 </padding>
 </Label>
-<Label alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Lesza noga" textAlignment="CENTER" GridPane.rowIndex="4">
+<Label alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Lepsza noga" textAlignment="CENTER" GridPane.rowIndex="4">
 <font>
 <Font size="20.0" />
 </font>
@@ -395,17 +395,6 @@
 <children>
 <VBox layoutX="14.0" layoutY="14.0" prefHeight="666.0" prefWidth="200.0">
 <children>
-<Label fx:id="teamNameCollectView" alignment="CENTER" layoutX="14.0" layoutY="14.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Nazwa drużyny" VBox.vgrow="ALWAYS">
-<font>
-<Font size="27.0" />
-</font>
-<VBox.margin>
-<Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
-</VBox.margin>
-<padding>
-<Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
-</padding>
-</Label>
 <ListView id="playersList" fx:id="playersStartListCollectView" editable="true" layoutX="14.0" layoutY="57.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onMouseClicked="#playersStartListCollectViewClick" prefHeight="299.0" prefWidth="198.0" VBox.vgrow="ALWAYS">
 <VBox.margin>
 <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
@@ -426,14 +415,6 @@
 <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
 </padding>
 </Label>
-                        <TextField fx:id="matchNameTF" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" promptText="Podaj nazwę przeciwnika" VBox.vgrow="ALWAYS">
-                           <VBox.margin>
-                              <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
-                           </VBox.margin>
-                           <padding>
-                              <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
-                           </padding>
-                        </TextField>
 <HBox prefHeight="61.0" prefWidth="200.0">
 <children>
 <Button alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#startMatchBtClick" text="Start" HBox.hgrow="ALWAYS">
@@ -465,13 +446,12 @@
 </children>
 </VBox>
 <Separator layoutX="223.0" layoutY="-15.0" orientation="VERTICAL" prefHeight="710.0" prefWidth="7.0" />
-<TextArea fx:id="curInsertTA" editable="false" layoutX="257.0" layoutY="520.0" prefHeight="56.0" prefWidth="548.0" promptText="TUTAJ BEDZIE AKTUALNY INSERT" />
-<TextArea fx:id="commentTA" layoutX="257.0" layoutY="419.0" prefHeight="88.0" prefWidth="297.0" promptText="KOMENTARZ DO AKCJI" />
-<Label layoutX="263.0" layoutY="81.0" text="Akcja" />
-<Label layoutX="261.0" layoutY="348.0" text="Wynik" />
-<Label layoutX="265.0" layoutY="198.0" text="Rzut" />
-<Label layoutX="249.0" layoutY="135.0" text="Część ciała" />
-<VBox layoutX="323.0" layoutY="65.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="48.0" prefWidth="477.0">
+<TextArea fx:id="commentTA" layoutX="242.0" layoutY="490.0" prefHeight="53.0" prefWidth="297.0" promptText="KOMENTARZ DO AKCJI" />
+<Label layoutX="248.0" layoutY="152.0" text="Akcja" />
+<Label layoutX="246.0" layoutY="419.0" text="Wynik" />
+<Label layoutX="250.0" layoutY="269.0" text="Rzut" />
+<Label layoutX="234.0" layoutY="206.0" text="Część ciała" />
+<VBox layoutX="308.0" layoutY="136.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="48.0" prefWidth="477.0">
 <children>
 <HBox maxHeight="1.7976931348623157E308" prefHeight="52.0" prefWidth="477.0" VBox.vgrow="ALWAYS">
 <children>
@@ -501,7 +481,7 @@
 </HBox>
 </children>
 </VBox>
-<VBox layoutX="323.0" layoutY="119.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="48.0" prefWidth="477.0">
+<VBox layoutX="308.0" layoutY="190.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="48.0" prefWidth="477.0">
 <children>
 <HBox maxHeight="1.7976931348623157E308" prefHeight="52.0" prefWidth="477.0" VBox.vgrow="ALWAYS">
 <children>
@@ -555,7 +535,7 @@
 </HBox>
 </children>
 </VBox>
-<VBox layoutX="323.0" layoutY="182.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="48.0" prefWidth="477.0">
+<VBox layoutX="308.0" layoutY="253.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="48.0" prefWidth="477.0">
 <children>
 <HBox maxHeight="1.7976931348623157E308" prefHeight="52.0" prefWidth="477.0" VBox.vgrow="ALWAYS">
 <children>
@@ -593,7 +573,7 @@
 </HBox>
 </children>
 </VBox>
-<VBox layoutX="323.0" layoutY="238.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="84.0" prefWidth="477.0">
+<VBox layoutX="308.0" layoutY="309.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="84.0" prefWidth="477.0">
 <children>
 <HBox maxHeight="1.7976931348623157E308" prefHeight="52.0" prefWidth="477.0" VBox.vgrow="ALWAYS">
 <children>
@@ -674,7 +654,7 @@
 </HBox>
 </children>
 </VBox>
-<VBox layoutX="323.0" layoutY="332.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="48.0" prefWidth="477.0">
+<VBox layoutX="308.0" layoutY="403.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="48.0" prefWidth="477.0">
 <children>
 <HBox maxHeight="1.7976931348623157E308" prefHeight="52.0" prefWidth="477.0" VBox.vgrow="ALWAYS">
 <children>
@@ -704,7 +684,7 @@
 </HBox>
 </children>
 </VBox>
-<Label layoutX="265.0" layoutY="263.0" text="Inne" />
+<Label layoutX="250.0" layoutY="334.0" text="Inne" />
 <Separator layoutX="821.0" layoutY="14.0" orientation="VERTICAL" prefHeight="684.0" prefWidth="2.0" />
 <Label layoutX="849.0" layoutY="14.0" text="Historia">
 <font>
@@ -732,7 +712,7 @@
 </children>
 </HBox>
 <ListView fx:id="historyLV" layoutX="849.0" layoutY="65.0" prefHeight="609.0" prefWidth="415.0" />
-                  <HBox layoutX="562.0" layoutY="419.0" prefHeight="54.0" prefWidth="236.0">
+                  <HBox layoutX="547.0" layoutY="490.0" prefHeight="54.0" prefWidth="236.0">
                      <children>
                         <Button fx:id="goalPositiveBt" alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#goalPositiveBtClick" text="Bramka strzelona" textAlignment="CENTER" HBox.hgrow="ALWAYS">
                            <HBox.margin>
@@ -752,19 +732,16 @@
                         </Button>
                      </children>
                   </HBox>
-                  <HBox layoutX="360.0" layoutY="2.0" prefHeight="60.0" prefWidth="343.0">
+                  <HBox layoutX="234.0" layoutY="35.0" prefHeight="60.0" prefWidth="575.0">
                      <children>
-                        <Label alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="58.0" prefWidth="213.0" text="Wynik: " HBox.hgrow="ALWAYS">
-                           <HBox.margin>
-                              <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
-                           </HBox.margin>
-                           <padding>
-                              <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
-                           </padding>
-                           <font>
-                              <Font size="34.0" />
-                           </font>
-                        </Label>
+<Label fx:id="teamNameCollectView" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Nazwa drużyny">
+<font>
+<Font size="19.0" />
+</font>
+<padding>
+<Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
+</padding>
+</Label>
                         <Label fx:id="goalScoredLb" alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="0" HBox.hgrow="ALWAYS">
                            <HBox.margin>
                               <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
@@ -776,7 +753,7 @@
                               <Font size="34.0" />
                            </font>
                         </Label>
-                        <Label alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="  :  " HBox.hgrow="ALWAYS">
+                        <Label alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text=":" HBox.hgrow="ALWAYS">
                            <font>
                               <Font size="34.0" />
                            </font>
@@ -798,8 +775,35 @@
                               <Font size="34.0" />
                            </font>
                         </Label>
+                        <TextField fx:id="matchNameTF" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" promptText="Podaj nazwę przeciwnika">
+                           <padding>
+                              <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
+                           </padding>
+                           <font>
+                              <Font size="19.0" />
+                           </font>
+                        </TextField>
+                        <Label fx:id="oponentTeamNameLb" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="0.0" minWidth="0.0" prefWidth="0.0" text=" " HBox.hgrow="ALWAYS">
+                           <font>
+                              <Font size="19.0" />
+                           </font>
+                           <padding>
+                              <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
+                           </padding>
+                           <HBox.margin>
+                              <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
+                           </HBox.margin>
+                        </Label>
                      </children>
                   </HBox>
+                  <Label fx:id="curInsertTA" alignment="CENTER" contentDisplay="CENTER" layoutX="280.0" layoutY="549.0" prefHeight="31.0" prefWidth="503.0">
+                     <padding>
+                        <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
+                     </padding>
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </Label>
 </children>
 </Pane>
 </content>
