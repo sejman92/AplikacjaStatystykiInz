@@ -183,11 +183,10 @@ public class Faul implements Serializable, IAction {
 
     @Override
     public String toString() {
-        String result = this.time.toString() + "min: ";
+        String result = "[" + this.time.toString() + " min] ";
         if(getPlayerOfenderId() != null)
-            result += getPlayerOfenderId() + " ";
-        else result += getPlayerVictimId() + " ";
-        result += this.getActionName() + " ";
+            result += getPlayerOfenderId() + " faulował ";
+        else result += getPlayerVictimId() + " został sfaulowany ";
         return result;
     }
 

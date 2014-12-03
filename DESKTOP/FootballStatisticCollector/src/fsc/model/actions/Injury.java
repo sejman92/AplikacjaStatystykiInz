@@ -161,11 +161,10 @@ public class Injury implements Serializable, IAction {
 
     @Override
     public String toString() {
-        String result = this.time.toString() + "min: ";
+        String result = "[" + this.time.toString() + " min] ";
+        result += this.getActionName() + " gracza ";
         if(getPlayerId() != null)
             result += getPlayerId() + " ";
-        result += this.getActionName() + " ";
-
         return result;
     }
 

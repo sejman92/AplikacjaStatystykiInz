@@ -176,16 +176,17 @@ public class Passing implements Serializable, IAction {
 
     @Override
     public String toString() {
-        String result = this.time.toString() + "min: ";
+        String result = "[" + this.time.toString() + " min] ";
+        result += getActionName() + " gracza ";
         if(getPlayerPassingId()!= null)
-            result += getPlayerPassingId() + " wykonał ";
+            result += getPlayerPassingId() + " ";
         if(getSuccessful()!=null){
             if(getSuccessful())            
-                result += "celne ";
+                result += "było CELNE";
             else
-                result += "niecelne ";
+                result += "było NIECELNE ";
         }
-        result += getActionName() + " ";
+        
         if(this.getCorner()) result += "[Rzut rożny] ";
         if(this.getFreekick()) result += "[Rzut wolny]";
         return result;

@@ -185,13 +185,12 @@ public class Swap implements Serializable, IAction {
 
     @Override
     public String toString() {
-        String result = this.time.toString() + "min: ";
+        String result = "[" + this.time.toString() + " min] ";
         result += this.getActionName() + " ";
-        result += " wchodzi ";
-        if(getPlayerInId() != null)
-            result += getPlayerInId()+ " za ";
         if(getPlayerOutId() != null)
-            result += getPlayerOutId();
+            result += getPlayerOutId()+ " zmienia ";
+        if(getPlayerInId() != null)
+            result += getPlayerInId();
         
         return result;
     }

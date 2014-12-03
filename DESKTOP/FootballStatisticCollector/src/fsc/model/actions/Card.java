@@ -174,13 +174,16 @@ public class Card implements Serializable, IAction {
 
     @Override
     public String toString() {
-        String result = "[" + this.time.toString() + "min] ";
-        if(getPlayerId() != null)
-            result += getPlayerId() + " otrzymał "; 
+        String result = "[" + this.time.toString() + " min] ";
         if(getKind() != null)
-            result += getKind();
-        result += this.getActionName();
+            result += getKind()+ " ";
+        result += this.getActionName()+ " ";
+        if(getPlayerId() != null)
+            result += "dla " + getPlayerId()+ " "; 
+
         return result;
+        
+        
     }
 
     @Override

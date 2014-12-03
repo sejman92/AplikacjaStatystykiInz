@@ -974,7 +974,7 @@ public class MainController implements Initializable {
     public void goalNegativeBtClick(){
         this.game.setLostGoals(this.game.getLostGoals()+1);
         this.faulButtonFlag = false;
-        this.historyLV.getItems().add(new String(this.getCurrentMinute()+"min: Strata bramki"));
+        this.historyLV.getItems().add(new String("["+this.getCurrentMinute()+"min] Strata bramki"));
         this.goalLostLb.setText(this.game.getLostGoals().toString());
         setSuccessButtonContent();
     }
@@ -985,12 +985,9 @@ public class MainController implements Initializable {
         actionManager.setSuccessOfShot(SuccessOfShot.GOL);
         actionManager.setSuccessful(1);
         actionManager.setAction(new Shot());
-        curInsertTA.setText(actionManager.getInsert() + "ZDOBYTA BRAMKA!!!");
-        //this.game.setScoredGoals(this.game.getScoredGoals()+1);
+        curInsertTA.setText(actionManager.getInsert());
         this.faulButtonFlag = false;
-        //this.goalScoredLb.setText(this.game.getScoredGoals().toString());
         setSuccessButtonContent();
-        
     }
     /*
     accept current action and add query to database 

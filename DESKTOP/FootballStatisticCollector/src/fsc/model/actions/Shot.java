@@ -185,10 +185,10 @@ public class Shot implements Serializable, IAction {
 
     @Override
     public String toString() {
-        String result = this.time.toString() + "min: ";
+        String result = "[" + this.time.toString() + " min] ";
         if( (this.getSuccess()!= null) && (this.getSuccess().contains("GOL"))){
             if(getPlayerId() != null)
-                result += getPlayerId() + "zdobył bramkę!";
+                result += getPlayerId() + " strzelił GOLA!";
         } else {
             if(getPlayerId() != null)
                 result += getPlayerId() + " oddał "; 
