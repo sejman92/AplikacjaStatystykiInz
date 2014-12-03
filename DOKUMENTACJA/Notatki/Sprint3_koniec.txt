@@ -1,5 +1,5 @@
-15.11.2014
-Koniec sprintu2
+﻿15.11.2014
+Koniec sprintu3
 
 Podczas rozmowy na Skypi'e przedstawiłem zespołowi opinię klienta na temat aplikacji ( szczegóły w notatce).
 Podsumowaliśmy sprint. Niestety nie udało nam się wykonać wszystkich zadań jakie wybraliśmy do tego sprintu. Spowodowane było to przede wszystkim usunięciem przez Wojtka brancha, na który Mateusz umieścił commity z kilkoma feature'ami. Całą sobotę ( 15.11) spędzili Oni na walce o przywrócenie zaimplementowanych zmian. Na szczęście się udało, jednak nie starczyło czasu na implementację wszystkich zadań. Przeniesiemy je automatycznie do następnego sprintu. 

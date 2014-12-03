@@ -1,0 +1,4 @@
+28-11-2014
+Obecni: p. Henryk Kuczma, Mateusz Szymański	
+
+Klientowi został przedstawiony produkt w bardzo zaawansowanej wersji. Jedyne czego nie zawierał to wykresy statystyk. Klient wyraził zadowolenie z postępów. Zapytał się o termin zakończenia prac. Poinformowałem go, że teoretycznie aplikacja jest już niemal gotowa i możnabyłoby ją używać, jednak chcemy dopracować kilka szczegółów i usunąć błędy o których wiemy. W związku z tym produkt zostanie przekazany po zakończeniu ostatniego sprintu. W związku z tym uzgodniliśmy termin 13.12.2014. 

@@ -1,0 +1,4 @@
+22.11.2014 
+Koniec sprintu4
+
+Podczas rozmowy zespół był zadowolony z postępów prac. Udało nam się zrealizować wszystkie wybrane zadania. Nie napotakliśmy błędów. Po tym sprincie nasza aplikacja umożliwia podstawową analizę danych. Doproacowaliśmy też kilka szczegółów w systemie zbierania danych. Dało się zauważyć lekkie zmiany w gui poprzez dodanie nowych funkcjonalności.

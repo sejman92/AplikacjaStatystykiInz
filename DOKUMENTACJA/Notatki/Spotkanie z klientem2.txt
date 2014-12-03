@@ -1,8 +1,9 @@
-14.11.2014
+﻿14.11.2014
 Obecni: Mateusz Szymański, p. Henryk Kuczma
 
 W ww. dniu odbyło się spotkanie przedstawiciela grupy projektowej ( Mateusz Szymański ) z klientem ( p. Henryk Kuczma ),
 podczas którego został zaprezentowany aktualny stan prac. Klient wyraził ogólne zadowolenie z tego co zobaczył.
 Poinformowałem klienta o tym, że aplikacja zmierza w dobrą stronę ( wtedy jeszcze nie wiedziałem że w sobotę będą problemy) i że się wyrobimy do końca sprintu. 
-Po uzgodnieniu z Kubą zapytałem też co sądzi o pomyśle z eksportem danych do pliku  ( w formie tabeli lub jakiegoś zestawienia ). Był zadowolony, nawet bardzo - ze względu na to że prowadzi on stronę internetową klubu, będzie w stanie umieścić informacje z pliku bezpośrednio na stronie co ułatwi mu też trochę pracy, a w związku z tym, że nie będzie on łączył raczej pracy na telefonie i laptopie, to uznał, że brak synchronizacji jest do zaakceptowania. Kolejne spotkanie zaplanowano na koniec listopada ( 28-30.11). Dokładny termin uzgonimy indywidualnie. 
+Po uzgodnieniu z Kubą zapytałem też co sądzi o pomyśle z eksportem danych do pliku  ( w formie tabeli lub jakiegoś zestawienia ).
+ Był zadowolony, nawet bardzo - ze względu na to że prowadzi on stronę internetową klubu, będzie w stanie umieścić informacje z pliku bezpośrednio na stronie co ułatwi mu też trochę pracy, a w związku z tym, że nie będzie on łączył raczej pracy na telefonie i laptopie, to uznał, że brak synchronizacji jest do zaakceptowania. Kolejne spotkanie zaplanowano na koniec listopada ( 28-30.11). Dokładny termin uzgonimy indywidualnie. 
 

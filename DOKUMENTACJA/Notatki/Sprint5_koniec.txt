@@ -1,0 +1,11 @@
+Koniec sprint5
+29.11.2014
+
+Mateusz przedstawił zespołowi opinię klienta i opisał spotkanie. 
+Podczas podsumowania uzgodniliśmy plan działań na kolejny sprint - ostatni. Podzieliliśmy się zadaniami. Uzgodniliśmy, że wersje mobilną będzie testował Wojtek, a Desktopa Kub, który także ma za zadanie założyć dokument "książkę". W tym sprincie nie udało się zrealizować jednego zadania - rysowania wykresu. Po przez problemy z odświeżaniem widoku zdecydowaliśmy przenieść wykres z okna aplikacji do osobnego co umożliwia, rysowanie kilku wykresów jednocześnie. 
+
+W związku z tym, że w GUI pozostało sporo miejsc, w następnym sprincie postaramy się rozbudować opcjie dotyczące wykresów. 
+
+Dodaliśmy opcje logowania i rejestracji, tak  aby każdy użytkownik miał swoje inywidualne drużyny itd.
+
+Wprowadzono ostatnie poprawki do bazy danych, oraz połączono projekt z 2 branchy na master brancha.
