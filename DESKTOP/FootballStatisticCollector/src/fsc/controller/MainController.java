@@ -465,6 +465,7 @@ public class MainController implements Initializable {
     Took selected item in TeamSLV and fill players wich is in selected team
     */
     public void teamsLVClick(){
+        clearStartReserveLineups();
         selectedTeamDisableButtons();
         if(selectedTeam != null){
             nameTeamTF.setText(selectedTeam.getName());
@@ -682,7 +683,14 @@ public class MainController implements Initializable {
         else this.removeFromReserveLineupButton.setDisable(false);
         
     }
-    
+    /*
+    clear LV with start and reserve lineups
+    clear Lineup lists as well
+    */
+    private void clearStartReserveLineups() {
+        this.lineup.getStartingLineup().clear();
+        this.lineup.getReserveLineup().clear();
+    }
     /*
     COLLECT VIEW
     
@@ -1393,4 +1401,6 @@ public class MainController implements Initializable {
         
         return selectedPlayerAnalize;
     }
+
+    
 }
