@@ -1016,6 +1016,19 @@
                   <ComboBox fx:id="teamsCBAnalize" layoutX="24.0" layoutY="53.0" onAction="#teamsCBAnalizeAction" prefWidth="150.0" />
                   <ComboBox fx:id="gamesCBAnalize" layoutX="24.0" layoutY="133.0" onAction="#gamesCBAnalizeAction" prefWidth="150.0" />
                   <ComboBox fx:id="criteriaCBAnalize" layoutX="430.0" layoutY="472.0" onAction="#criteriaCBClick" prefHeight="25.0" prefWidth="266.0" />
+                  <VBox layoutX="738.0" layoutY="22.0" prefHeight="200.0" prefWidth="257.0">
+                     <children>
+                        <CheckBox mnemonicParsing="false" text="CheckBox" />
+                        <CheckBox mnemonicParsing="false" text="CheckBox" />
+                        <CheckBox mnemonicParsing="false" text="CheckBox" />
+                        <CheckBox mnemonicParsing="false" text="CheckBox" />
+                        <CheckBox mnemonicParsing="false" text="CheckBox" />
+                        <CheckBox mnemonicParsing="false" text="CheckBox" />
+                        <CheckBox mnemonicParsing="false" text="CheckBox" />
+                        <CheckBox mnemonicParsing="false" text="CheckBox" />
+                        <CheckBox mnemonicParsing="false" text="CheckBox" />
+                     </children>
+                  </VBox>
 </children></AnchorPane>
 </content>
 </Tab>
