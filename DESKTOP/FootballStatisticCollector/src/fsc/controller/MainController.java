@@ -5,7 +5,6 @@
  */
 package fsc.controller;
 
-import com.sun.javafx.scene.accessibility.Action;
 import static fsc.controller.GlobalVariables.MAX_SUBSTITIONS;
 import fsc.model.Game;
 import fsc.model.Participated;
@@ -44,20 +43,13 @@ import fsc.model.enums.PartsOfBody;
 import fsc.model.enums.Positions;
 import fsc.model.enums.SuccessOfShot;
 import java.sql.Date;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
-import java.util.TimeZone;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.chart.BarChart;
 import javafx.scene.chart.CategoryAxis;
@@ -65,12 +57,10 @@ import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
 import javafx.scene.chart.XYChart.Series;
 import javafx.scene.control.CheckBox;
-import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TextArea;
-import static javafx.scene.layout.Region.USE_COMPUTED_SIZE;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import javafx.util.Duration;
@@ -255,6 +245,11 @@ public class MainController implements Initializable {
    @FXML private Label corners2LbAnalize;
    @FXML private Label penalties2LbAnalize;
    
+   @FXML private Button loadTeamAs1Bt;
+   @FXML private Button loadTeamAs2Bt;
+   @FXML private Button loadPlayerAs1Bt;
+   @FXML private Button loadPlayerAs2Bt; 
+   
    /*
    ANALYZE PARAMS FINISH
    */
@@ -358,11 +353,12 @@ public class MainController implements Initializable {
             if(lineup.isCorrect())
             {
                 loadLineupButton.setDisable(false);
+                addToStartingLineupButton.setDisable(true);
             }
             else
             {
                 loadLineupButton.setDisable(true);
-                //addToStartingLineupButton.setDisable(false);
+                addToStartingLineupButton.setDisable(false);
             }
             setAddRemoveButtonEnabling();
         }catch(Exception e){
@@ -483,6 +479,7 @@ public class MainController implements Initializable {
         playersListViewTeamManager.getSelectionModel().clearSelection();
         formerPlayersLV.setItems(formerPlayers);
         formerPlayersLV.getSelectionModel().clearSelection();
+        //lineup = new Lineup(); #TODO
         
         selectedPlayer = getSelectedPlayerInTeamsManager();
         operationOnPlayerWarningTeamsManagerLb.setText("");
@@ -519,9 +516,14 @@ public class MainController implements Initializable {
     public void removeSelectedTeamBtClick(){              
         selectedTeamDisableButtons();
         if(selectedTeam != null){
-            databaseManager.removeEntityElement(selectedTeam);           
-            teamsLV.setItems(databaseManager.getTeams(owner));
-            playersListViewTeamManager.setItems(null);
+            
+            int answer = JOptionPane.showConfirmDialog(null, "Czy chcesz usunąć drużynę?\n Jej usunięcie spowoduje trwałe skasowanie jej wszystkich zawodników, meczów i statystyk?\n", "Usunięcie drużyny", JOptionPane.YES_NO_OPTION);
+       
+            if(answer == 0){
+                databaseManager.removeEntityElement(selectedTeam);           
+                teamsLV.setItems(databaseManager.getTeams(owner));
+                playersListViewTeamManager.setItems(null);
+            }
         }
     }
     
@@ -1076,24 +1078,15 @@ public class MainController implements Initializable {
     */
     
     public void teamsCBAnalizeAction(){
-        selectedTeamAnalize = (Team)teamsCBAnalize.getSelectionModel().getSelectedItem();
-        if(selectedTeamAnalize != null){
-            gamesCBAnalize.setItems(databaseManager.findGamesForTeam(selectedTeamAnalize));
-        }else{
-            gamesCBAnalize.setItems(null);
-        }
+        getSelectedTeamAnalize();
     }
     
     public void gamesCBAnalizeAction(){
-        selectedGameAnalize = (Game)gamesCBAnalize.getSelectionModel().getSelectedItem();
-        if(selectedGameAnalize != null){
-            playersLVAnalize.setItems(databaseManager.findPlayersForGame(selectedGameAnalize));        
-        }else{
-            playersLVAnalize.setItems(null);
-        }
+        getSelectedGameAnalize();
+        
     }
     public void playersLVAnalizeClick(){
-        selectedPlayerAnalize = (Player) playersLVAnalize.getSelectionModel().getSelectedItem();
+        getSelectedPlayerAnalize();
     }
     
     public void loadTeamAs1BtClick(){
@@ -1177,8 +1170,8 @@ public class MainController implements Initializable {
     */
     public void analizeTabClick(){
         teamsCBAnalize.setItems(databaseManager.getTeams(owner));
-        this.criteriaCBAnalize.setItems(AC.getCriteriaList());
-
+        getSelectedTeamAnalize();
+        criteriaCBAnalize.setItems(AC.getCriteriaList());
     }
     
     public void selectedTeamDisableButtons(){
@@ -1309,9 +1302,12 @@ public class MainController implements Initializable {
             surnamePlayerTF.setText("");
             
             noPlayerTF.setText("");
-            positionsLV.getSelectionModel().select(null);
+            positionsLV.getSelectionModel().clearSelection();
             leftFootCheckBox.setSelected(false);
             rightFootCheckBox.setSelected(false);
+            
+            addToStartingLineupButton.setDisable(true);
+            addToReserveLineupButton.setDisable(true);            
             
         }else{
             editSelectedPlayerBt.setDisable(false);
@@ -1333,6 +1329,11 @@ public class MainController implements Initializable {
                 leftFootCheckBox.setSelected(false);
                 rightFootCheckBox.setSelected(false);
             }
+            if( this.lineup.getStartingLineup().size() < GlobalVariables.MAX_PLAYERS_IN_LINEUP )
+                addToStartingLineupButton.setDisable(false);
+            else
+                addToStartingLineupButton.setDisable(true);
+            addToReserveLineupButton.setDisable(false);     
         }
         
         return selectedPlayer;
@@ -1348,5 +1349,48 @@ public class MainController implements Initializable {
         }
         
         return selectedFormerPlayer;
+    }
+    
+    private Team getSelectedTeamAnalize(){
+        selectedTeamAnalize = (Team)teamsCBAnalize.getSelectionModel().getSelectedItem();
+            
+        gamesCBAnalize.setItems(databaseManager.findGamesForTeam(selectedTeamAnalize));
+            
+        getSelectedGameAnalize();
+        
+        return selectedTeamAnalize;
+    }
+    
+    private Game getSelectedGameAnalize(){
+        selectedGameAnalize = (Game)gamesCBAnalize.getSelectionModel().getSelectedItem();
+        
+        playersLVAnalize.setItems(databaseManager.findPlayersForGame(selectedGameAnalize));
+                    
+        if(selectedGameAnalize == null){
+            loadTeamAs1Bt.setDisable(true);
+            loadTeamAs2Bt.setDisable(true);
+        }else{
+            loadTeamAs1Bt.setDisable(false);
+            loadTeamAs2Bt.setDisable(false);
+        }
+        
+        getSelectedPlayerAnalize();
+        playersLVAnalize.getSelectionModel().clearSelection();
+        
+        return selectedGameAnalize;
+    }
+    
+    private Player getSelectedPlayerAnalize(){
+        selectedPlayerAnalize = (Player) playersLVAnalize.getSelectionModel().getSelectedItem();
+        
+        if(selectedPlayerAnalize == null){
+            loadPlayerAs1Bt.setDisable(true);
+            loadPlayerAs2Bt.setDisable(true);
+        }else{
+            loadPlayerAs1Bt.setDisable(false);
+            loadPlayerAs2Bt.setDisable(false);
+        }
+        
+        return selectedPlayerAnalize;
     }
 }

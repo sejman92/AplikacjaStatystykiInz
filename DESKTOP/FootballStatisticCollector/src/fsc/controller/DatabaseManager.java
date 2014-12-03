@@ -119,10 +119,16 @@ public class DatabaseManager {
     }
     
     public ObservableList<Played> findPlayedListForTeam(Team team){
+        if(team == null)
+            return null;
+                
         return FXCollections.observableArrayList(em.createNamedQuery("Played.findByTeamId").setParameter("teamId", team.getId()).getResultList());
     }
     
     public ObservableList<Game> findGamesForTeam(Team team){
+        if(team == null)
+            return null;
+                
         ObservableList<Played>playedList = findPlayedListForTeam(team);
         
         ObservableList<Game>games = FXCollections.observableArrayList();

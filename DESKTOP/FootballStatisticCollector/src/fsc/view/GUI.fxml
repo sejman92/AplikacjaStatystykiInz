@@ -967,7 +967,7 @@
 <Button alignment="CENTER" contentDisplay="CENTER" layoutX="562.0" layoutY="643.0" mnemonicParsing="false" onAction="#compareBtClick" prefHeight="25.0" prefWidth="108.0" text="Porównaj" textAlignment="CENTER" />
                   <VBox layoutX="15.0" layoutY="500.0" prefHeight="171.0" prefWidth="157.0">
                      <children>
-                        <Button alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#loadTeamAs1BtClick" prefHeight="0.0" prefWidth="148.0" text="Drużyna do lewej tabeli" VBox.vgrow="ALWAYS">
+                        <Button fx:id="loadTeamAs1Bt" alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#loadTeamAs1BtClick" prefHeight="0.0" prefWidth="148.0" text="Drużyna do lewej tabeli" VBox.vgrow="ALWAYS">
                            <opaqueInsets>
                               <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
                            </opaqueInsets>
@@ -978,7 +978,7 @@
                               <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
                            </padding>
                         </Button>
-                        <Button alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#loadTeamAs2BtClick" text="Drużyna do prawej tabeli" VBox.vgrow="ALWAYS">
+                        <Button fx:id="loadTeamAs2Bt" alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#loadTeamAs2BtClick" text="Drużyna do prawej tabeli" VBox.vgrow="ALWAYS">
                            <opaqueInsets>
                               <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
                            </opaqueInsets>
@@ -989,8 +989,8 @@
                               <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
                            </padding>
                         </Button>
-                        <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#loadPlayerAs1BtClick" prefHeight="43.0" prefWidth="166.0" text="Zawodnik do lewej tabeli" />
-                        <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#loadPlayerAs2BtClick" prefHeight="43.0" prefWidth="168.0" text="Zawodnik do prawej tabeli" />
+                        <Button fx:id="loadPlayerAs1Bt" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#loadPlayerAs1BtClick" prefHeight="43.0" prefWidth="166.0" text="Zawodnik do lewej tabeli" />
+                        <Button fx:id="loadPlayerAs2Bt" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#loadPlayerAs2BtClick" prefHeight="43.0" prefWidth="168.0" text="Zawodnik do prawej tabeli" />
                      </children>
                   </VBox>
                   <VBox layoutX="206.0" layoutY="569.0" prefHeight="74.0" prefWidth="179.0">
