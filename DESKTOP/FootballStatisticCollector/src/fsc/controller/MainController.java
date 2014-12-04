@@ -205,7 +205,7 @@ public class MainController implements Initializable {
    */
    @FXML private ComboBox teamsCBAnalize;
    @FXML private ComboBox gamesCBAnalize;
-   @FXML private ComboBox criteriaCBAnalize;
+   //@FXML private ComboBox criteriaCBAnalize;
    @FXML private ListView toComparePlayersLV;
    @FXML private ListView playersLVAnalize;
    @FXML private BarChart barChartAnalize;
@@ -249,6 +249,28 @@ public class MainController implements Initializable {
    @FXML private Button loadTeamAs2Bt;
    @FXML private Button loadPlayerAs1Bt;
    @FXML private Button loadPlayerAs2Bt; 
+   
+   @FXML private CheckBox shotCheckBox;
+   @FXML private CheckBox passCheckBox;
+   @FXML private CheckBox faulCheckBox;
+   @FXML private CheckBox freeKickCheckBox;
+   @FXML private CheckBox penaltyKickCheckBox;
+   @FXML private CheckBox cornerKickCheckBox;
+   @FXML private CheckBox goalCheckBox;
+   @FXML private CheckBox defenseCheckBox;
+   @FXML private CheckBox yellowCardsCheckBox;
+   @FXML private CheckBox redCardsCheckBox;
+   @FXML private CheckBox selectedPlayersCheckBox;
+   @FXML private CheckBox selectedTeamCheckBox;
+   @FXML private CheckBox inSelectedMatchCheckBox;
+   @FXML private CheckBox inAllMatchesCheckBox;
+   @FXML private CheckBox averageCheckBox;
+   @FXML private CheckBox sumCheckBox;
+   
+   
+   
+   
+   
    
    /*
    ANALYZE PARAMS FINISH
@@ -1165,18 +1187,18 @@ public class MainController implements Initializable {
             penalties2LbAnalize.setText(String.valueOf(selectedGameAnalize.getNumberOfPenaltiesPlayer(selectedPlayerAnalize)));
         }
     }
-    public void criteriaCBClick(){
+    /*public void criteriaCBClick(){
         this.AC.setSelectedCriteria((CompareCriteria) criteriaCBAnalize.getSelectionModel().getSelectedItem());
         this.AC.setChartTitle(AC.getSelectedCriteria().toString());
 
-    }
+    }*/
     /*
     There we initialize params for analyze views
     */
     public void analizeTabClick(){
         teamsCBAnalize.setItems(databaseManager.getTeams(owner));
         getSelectedTeamAnalize();
-        criteriaCBAnalize.setItems(AC.getCriteriaList());
+        //criteriaCBAnalize.setItems(AC.getCriteriaList());
     }
     
     public void selectedTeamDisableButtons(){
@@ -1201,8 +1223,17 @@ public class MainController implements Initializable {
         this.toComparePlayersLV.setItems(AC.getSelectedPlayers());
     }
     public void compareBtClick(){
+        AC.setSelectedPlayers(this.toComparePlayersLV.getItems());
+        AC.setSelectedTeam((Team) this.teamsCBAnalize.getSelectionModel().getSelectedItem());
+        AC.setSelectedGame((Game) this.gamesCBAnalize.getSelectionModel().getSelectedItem());
+        setAnalyzeCriteria();
+        if((this.toComparePlayersLV.getItems()!= null) && (this.selectedPlayersCheckBox.isSelected())){
+            AC.drawChartForPlayers();
+        } else if ((this.teamsCBAnalize.getSelectionModel().getSelectedItem() != null)&&(this.selectedTeamCheckBox.isSelected())){
+            AC.drawChartForTeam();
+        }
         
-        List<Integer> value = new ArrayList();
+        /*List<Integer> value = new ArrayList();
         List<String> plName = new ArrayList();
         for( Player p: AC.getSelectedPlayers()){
             
@@ -1221,18 +1252,32 @@ public class MainController implements Initializable {
         BarChart<Number, String> bc = new BarChart<Number, String>(x,y);
         
         bc.setTitle("Porównanie");
-        //bc.getData().retainAll();
-        //Player p = (Player) this.toComparePlayersLV.getSelectionModel().getSelectedItem();
-        //series1.getData().add(new XYChart.Data(p.getNo(),p.getName()));
-        /*for ( Series s : AC.getSeries()){
-            bc.getData().add(s);
-        }*/
         bc.getData().add(series1);
         secondLay.getChildren().add(bc);     
         Scene sScene = new Scene(secondLay, 400,300);
         Stage sSt = new Stage();
         sSt.setScene(sScene);
-        sSt.show();
+        sSt.show();*/
+    }
+    /*
+    set flags in AnalyzeController based on checkboxes
+    
+    */
+    void setAnalyzeCriteria(){
+        AC.setShotCheckBox(this.shotCheckBox.isSelected());
+        AC.setPassCheckBox(this.passCheckBox.isSelected());
+        AC.setFaulCheckBox(this.faulCheckBox.isSelected());
+        AC.setFreeKickCheckBox(this.freeKickCheckBox.isSelected());
+        AC.setCornerKickCheckBox(this.cornerKickCheckBox.isSelected());
+        AC.setPenaltyKickCheckBox(this.penaltyKickCheckBox.isSelected());
+        AC.setGoalCheckBox(this.goalCheckBox.isSelected());
+        AC.setYellowCardsCheckBox(this.yellowCardsCheckBox.isSelected());
+        AC.setRedCardsCheckBox(this.redCardsCheckBox.isSelected());
+        AC.setDefenseCheckBox(this.defenseCheckBox.isSelected());
+        AC.setSumCheckBox(this.sumCheckBox.isSelected());
+        AC.setAverageCheckBox(this.averageCheckBox.isSelected());
+        AC.setInAllMatchesCheckBox(this.inAllMatchesCheckBox.isSelected());
+        AC.setInSelectedMatchCheckBox(this.inSelectedMatchCheckBox.isSelected());
     }
     //LoginTab element's actions
     
