@@ -249,6 +249,9 @@ public class MainController implements Initializable {
    @FXML private Button loadTeamAs2Bt;
    @FXML private Button loadPlayerAs1Bt;
    @FXML private Button loadPlayerAs2Bt; 
+   @FXML private Button removeToComparePlayerBt;
+   @FXML private Button addToComparePlayerBt;
+   @FXML private Button compareBt;
    
    @FXML private CheckBox shotCheckBox;
    @FXML private CheckBox passCheckBox;
@@ -1107,14 +1110,38 @@ public class MainController implements Initializable {
     
     public void teamsCBAnalizeAction(){
         getSelectedTeamAnalize();
+        if(this.selectedTeamAnalize != null){
+            this.selectedTeamCheckBox.setDisable(false);
+            this.selectedTeamCheckBox.setSelected(true);
+            this.inAllMatchesCheckBox.setDisable(false);
+            this.inAllMatchesCheckBox.setSelected(true);
+            this.compareBt.setDisable(false);
+        } else {
+            this.selectedTeamCheckBox.setDisable(true);
+            this.selectedTeamCheckBox.setSelected(false);
+            this.inAllMatchesCheckBox.setDisable(true);
+            this.inAllMatchesCheckBox.setSelected(false);
+        }
     }
     
     public void gamesCBAnalizeAction(){
         getSelectedGameAnalize();
+        if(this.selectedGameAnalize != null){
+            this.inSelectedMatchCheckBox.setDisable(false);
+            this.successCheckBox.setDisable(false);
+            this.unsuccessCheckBox.setDisable(false);
+        } else {
+            this.inSelectedMatchCheckBox.setDisable(true);
+            this.successCheckBox.setDisable(true);
+            this.unsuccessCheckBox.setDisable(true);
+        }
         
     }
     public void playersLVAnalizeClick(){
         getSelectedPlayerAnalize();
+        if(selectedPlayerAnalize!=null){
+            addToComparePlayerBt.setDisable(false);
+        } else addToComparePlayerBt.setDisable(true);
     }
     
     public void loadTeamAs1BtClick(){
@@ -1213,15 +1240,35 @@ public class MainController implements Initializable {
         }
 
     }
-    public void addToComparePlayerBt(){
+    public void addToComparePlayerBtClick(){
         Player sel = (Player) playersLVAnalize.getSelectionModel().getSelectedItem();
-        AC.addPlayerToSelected(sel);
-        this.toComparePlayersLV.setItems(AC.getSelectedPlayers());
+        if( sel != null){
+            AC.addPlayerToSelected(sel);
+            this.toComparePlayersLV.setItems(AC.getSelectedPlayers());
+            this.compareBt.setDisable(false);
+            this.selectedPlayersCheckBox.setDisable(false);
+        }
+        
     }
-    public void removeToComparePlayerBt(){
+    public void removeToComparePlayerBtClick(){
         Player p = (Player) toComparePlayersLV.getSelectionModel().getSelectedItem();
-        AC.removePlayerFromSelected(p);
-        this.toComparePlayersLV.setItems(AC.getSelectedPlayers());
+        if(p!=null){
+            AC.removePlayerFromSelected(p);
+            this.toComparePlayersLV.setItems(AC.getSelectedPlayers());
+        }
+        if(toComparePlayersLV.getItems().size()==0){
+            removeToComparePlayerBt.setDisable(true);
+            this.selectedPlayersCheckBox.setDisable(true);
+            this.selectedPlayersCheckBox.setSelected(false);
+            if(this.selectedTeamCheckBox.isSelected()) compareBt.setDisable(false);
+            else compareBt.setDisable(true);
+        }
+        
+    }
+    public void removeFromCompareLVEnable(){
+        if( (Player) toComparePlayersLV.getSelectionModel().getSelectedItem()!=null){
+            removeToComparePlayerBt.setDisable(false);
+        } else removeToComparePlayerBt.setDisable(true);
     }
     public void compareBtClick(){
         AC.setSelectedPlayers(this.toComparePlayersLV.getItems());

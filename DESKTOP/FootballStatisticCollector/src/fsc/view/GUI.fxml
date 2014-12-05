@@ -963,8 +963,8 @@
 <Font size="20.0" />
 </font>
 </Label>
-<ListView fx:id="toComparePlayersLV" layoutX="402.0" layoutY="405.0" prefHeight="253.0" prefWidth="303.0" />
-<Button alignment="CENTER" contentDisplay="CENTER" layoutX="206.0" layoutY="617.0" mnemonicParsing="false" onAction="#compareBtClick" prefHeight="40.0" prefWidth="180.0" text="Rysuj" textAlignment="CENTER" />
+<ListView fx:id="toComparePlayersLV" layoutX="402.0" layoutY="405.0" onMouseClicked="#removeFromCompareLVEnable" prefHeight="253.0" prefWidth="303.0" />
+<Button fx:id="compareBt" alignment="CENTER" contentDisplay="CENTER" disable="true" layoutX="728.0" layoutY="617.0" mnemonicParsing="false" onAction="#compareBtClick" prefHeight="40.0" prefWidth="180.0" text="Rysuj" textAlignment="CENTER" />
                   <VBox layoutX="22.0" layoutY="497.0" prefHeight="160.0" prefWidth="180.0">
                      <children>
                         <Button fx:id="loadTeamAs1Bt" alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#loadTeamAs1BtClick" text="Drużyna do lewej tabeli" VBox.vgrow="ALWAYS">
@@ -1007,7 +1007,7 @@
                   </VBox>
                   <VBox layoutX="206.0" layoutY="404.0" prefHeight="80.0" prefWidth="180.0">
                      <children>
-      <Button alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#addToComparePlayerBt" text="-&gt;" textAlignment="CENTER" VBox.vgrow="ALWAYS">
+      <Button fx:id="addToComparePlayerBt" alignment="CENTER" contentDisplay="CENTER" disable="true" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#addToComparePlayerBtClick" text="-&gt;" textAlignment="CENTER" VBox.vgrow="ALWAYS">
                            <padding>
                               <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
                            </padding>
@@ -1015,7 +1015,7 @@
                               <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
                            </VBox.margin>
                         </Button>
-      <Button alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#removeToComparePlayerBt" text="&lt;-" textAlignment="CENTER" VBox.vgrow="ALWAYS">
+      <Button fx:id="removeToComparePlayerBt" alignment="CENTER" contentDisplay="CENTER" disable="true" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#removeToComparePlayerBtClick" text="&lt;-" textAlignment="CENTER" VBox.vgrow="ALWAYS">
                            <VBox.margin>
                               <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
                            </VBox.margin>
@@ -1143,7 +1143,7 @@
                   </VBox>
                   <VBox layoutX="500.0" layoutY="93.0" prefHeight="200.0" prefWidth="257.0">
                      <children>
-                        <CheckBox fx:id="selectedPlayersCheckBox" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#selectedPlayersCheckBoxClick" text="Wybrani zawodnicy" VBox.vgrow="ALWAYS">
+                        <CheckBox fx:id="selectedPlayersCheckBox" disable="true" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#selectedPlayersCheckBoxClick" text="Wybrani zawodnicy" VBox.vgrow="ALWAYS">
                            <font>
                               <Font size="15.0" />
                            </font>
@@ -1154,40 +1154,7 @@
                               <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
                            </VBox.margin>
                         </CheckBox>
-                        <CheckBox fx:id="selectedTeamCheckBox" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#selectedTeamCheckBoxClick" text="Drużyna" VBox.vgrow="ALWAYS">
-                           <font>
-                              <Font size="15.0" />
-                           </font>
-                           <padding>
-                              <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
-                           </padding>
-                           <VBox.margin>
-                              <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
-                           </VBox.margin>
-                        </CheckBox>
-                        <CheckBox disable="true" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" visible="false" VBox.vgrow="ALWAYS">
-                           <font>
-                              <Font size="15.0" />
-                           </font>
-                           <padding>
-                              <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
-                           </padding>
-                           <VBox.margin>
-                              <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
-                           </VBox.margin>
-                        </CheckBox>
-                        <CheckBox fx:id="inSelectedMatchCheckBox" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#inSelectedMatchCheckBoxClick" text="W wybranym meczu" VBox.vgrow="ALWAYS">
-                           <font>
-                              <Font size="15.0" />
-                           </font>
-                           <padding>
-                              <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
-                           </padding>
-                           <VBox.margin>
-                              <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
-                           </VBox.margin>
-                        </CheckBox>
-                        <CheckBox fx:id="inAllMatchesCheckBox" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#inAllMatchesCheckBoxClick" text="We wszystkich meczach" VBox.vgrow="ALWAYS">
+                        <CheckBox fx:id="selectedTeamCheckBox" disable="true" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#selectedTeamCheckBoxClick" text="Drużyna" VBox.vgrow="ALWAYS">
                            <font>
                               <Font size="15.0" />
                            </font>
@@ -1209,7 +1176,7 @@
                               <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
                            </VBox.margin>
                         </CheckBox>
-                        <CheckBox fx:id="successCheckBox" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Sukces" VBox.vgrow="ALWAYS">
+                        <CheckBox fx:id="inSelectedMatchCheckBox" disable="true" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#inSelectedMatchCheckBoxClick" text="W wybranym meczu" VBox.vgrow="ALWAYS">
                            <font>
                               <Font size="15.0" />
                            </font>
@@ -1220,7 +1187,40 @@
                               <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
                            </VBox.margin>
                         </CheckBox>
-                        <CheckBox fx:id="unsuccessCheckBox" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Porażka" VBox.vgrow="ALWAYS">
+                        <CheckBox fx:id="inAllMatchesCheckBox" disable="true" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#inAllMatchesCheckBoxClick" text="We wszystkich meczach" VBox.vgrow="ALWAYS">
+                           <font>
+                              <Font size="15.0" />
+                           </font>
+                           <padding>
+                              <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
+                           </padding>
+                           <VBox.margin>
+                              <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
+                           </VBox.margin>
+                        </CheckBox>
+                        <CheckBox disable="true" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" visible="false" VBox.vgrow="ALWAYS">
+                           <font>
+                              <Font size="15.0" />
+                           </font>
+                           <padding>
+                              <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
+                           </padding>
+                           <VBox.margin>
+                              <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
+                           </VBox.margin>
+                        </CheckBox>
+                        <CheckBox fx:id="successCheckBox" disable="true" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Sukces" VBox.vgrow="ALWAYS">
+                           <font>
+                              <Font size="15.0" />
+                           </font>
+                           <padding>
+                              <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
+                           </padding>
+                           <VBox.margin>
+                              <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
+                           </VBox.margin>
+                        </CheckBox>
+                        <CheckBox fx:id="unsuccessCheckBox" disable="true" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Porażka" VBox.vgrow="ALWAYS">
                            <font>
                               <Font size="15.0" />
                            </font>
@@ -1239,7 +1239,7 @@
                               <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
                            </padding>
                         </CheckBox>
-                        <CheckBox fx:id="averageCheckBox" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#averageCheckBoxClick" text="Średnia " VBox.vgrow="ALWAYS">
+                        <CheckBox fx:id="averageCheckBox" disable="true" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#averageCheckBoxClick" text="Średnia " VBox.vgrow="ALWAYS">
                            <font>
                               <Font size="15.0" />
                            </font>
@@ -1250,7 +1250,7 @@
                               <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
                            </VBox.margin>
                         </CheckBox>
-                        <CheckBox fx:id="sumCheckBox" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#sumCheckBoxClick" text="Suma" VBox.vgrow="ALWAYS">
+                        <CheckBox fx:id="sumCheckBox" disable="true" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#sumCheckBoxClick" selected="true" text="Suma" VBox.vgrow="ALWAYS">
                            <font>
                               <Font size="15.0" />
                            </font>
