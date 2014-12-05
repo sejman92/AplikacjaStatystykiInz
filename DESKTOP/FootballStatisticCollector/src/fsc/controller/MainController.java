@@ -266,7 +266,8 @@ public class MainController implements Initializable {
    @FXML private CheckBox inAllMatchesCheckBox;
    @FXML private CheckBox averageCheckBox;
    @FXML private CheckBox sumCheckBox;
-   
+   @FXML private CheckBox unsuccessCheckBox;
+   @FXML private CheckBox successCheckBox;
    
    
    
@@ -1228,7 +1229,15 @@ public class MainController implements Initializable {
         AC.setSelectedGame((Game) this.gamesCBAnalize.getSelectionModel().getSelectedItem());
         setAnalyzeCriteria();
         if((this.toComparePlayersLV.getItems()!= null) && (this.selectedPlayersCheckBox.isSelected())){
-            AC.drawChartForPlayers();
+            if( this.successCheckBox.isSelected() && this.unsuccessCheckBox.isSelected()){
+                AC.drawChartForPlayersSuccAndUnsucc();
+            } else if( this.successCheckBox.isSelected()){
+                AC.drawChartForPlayersSucc();
+            } else if (this.unsuccessCheckBox.isSelected()){
+                AC.drawChartForPlayersUnsucc();
+            } else {
+                AC.drawChartForPlayers();
+            }
         } else if ((this.teamsCBAnalize.getSelectionModel().getSelectedItem() != null)&&(this.selectedTeamCheckBox.isSelected())){
             AC.drawChartForTeam();
         }
@@ -1253,6 +1262,26 @@ public class MainController implements Initializable {
         AC.setAverageCheckBox(this.averageCheckBox.isSelected());
         AC.setInAllMatchesCheckBox(this.inAllMatchesCheckBox.isSelected());
         AC.setInSelectedMatchCheckBox(this.inSelectedMatchCheckBox.isSelected());
+        AC.setSuccessCheckBox(this.successCheckBox.isSelected());
+        AC.setUnsuccessCheckBox(this.unsuccessCheckBox.isSelected());
+    }
+    public void averageCheckBoxClick(){
+        this.sumCheckBox.setSelected(false);
+    }
+    public void sumCheckBoxClick(){
+        this.averageCheckBox.setSelected(false);
+    }
+    public void inSelectedMatchCheckBoxClick(){
+        this.inAllMatchesCheckBox.setSelected(false);
+    }
+    public void inAllMatchesCheckBoxClick(){
+        this.inSelectedMatchCheckBox.setSelected(false);
+    }
+    public void selectedPlayersCheckBoxClick(){
+        this.selectedTeamCheckBox.setSelected(false);
+    }
+    public void selectedTeamCheckBoxClick(){
+        this.selectedPlayersCheckBox.setSelected(false);
     }
     //LoginTab element's actions
     

@@ -464,7 +464,15 @@ public class Game implements Serializable, IEntityElement {
         }
         return fauls;
     }
-    
+    public List<Faul> getFaulsCommitedPlayer(Player player){
+        List<Faul>faulsCommited = new ArrayList();
+        
+        for(Faul f: getFaulList()){
+            if(f.getPlayerOfenderId()!=null && f.getPlayerOfenderId().equals(player))
+                faulsCommited.add(f);
+        }
+        return faulsCommited;
+    }
     public List<Defense> getDefensePlayer(Player player){
         List<Defense>defense = new ArrayList();
         
