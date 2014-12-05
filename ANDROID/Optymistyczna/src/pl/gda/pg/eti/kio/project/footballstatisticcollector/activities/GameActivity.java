@@ -598,7 +598,14 @@ public class GameActivity extends Activity {
 	        	idp=Focus.main_players_for_focused_game.get(position).getId();
 	        	Card card = new Card(idp, (int)ctime/-60000+1, edit.getText().toString(), kind );
 	    		action_list.add(card);
+	    		if(kind.equals("red"))
+	    		{
+	    			Focus.swaped_players_for_focused_game.add(Focus.main_players_for_focused_game.get(position));
+					Focus.removePlayerFromListForGame(Focus.main_players_for_focused_game.get(position).getId(), Focus.main_players_for_focused_game);
+					Log.d("removed player","removed from list");
+	    		}
 	    		Log.d("card", idp+" "+edit.getText().toString()+" "+String.valueOf(ctime/-60000+1)+" "+kind);
+	    		
 	    		dialog.dismiss();
 	        }
 		};

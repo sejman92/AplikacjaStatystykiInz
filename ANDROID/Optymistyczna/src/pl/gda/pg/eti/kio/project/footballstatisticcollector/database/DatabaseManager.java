@@ -215,8 +215,25 @@ public class DatabaseManager extends SQLiteOpenHelper{
 	{
 		SQLiteDatabase db = getWritableDatabase();
 		String[] arg={""+id};
+		String query;
 		try{
 			db.delete("Team", "ID=?", arg);
+			query="DELETE FROM Card WHERE player_id IN (SELECT player_id FROM Player WHERE team_id="+id+")";
+			db.execSQL(query);
+			query="DELETE FROM Defense WHERE player_id IN (SELECT player_id FROM Player WHERE team_id="+id+")";
+			db.execSQL(query);
+			query="DELETE FROM Faul WHERE player_id IN (SELECT player_id FROM Player WHERE team_id="+id+")";
+			db.execSQL(query);
+			query="DELETE FROM Injury WHERE player_id IN (SELECT player_id FROM Player WHERE team_id="+id+")";
+			db.execSQL(query);
+			query="DELETE FROM Passing WHERE player_id IN (SELECT player_id FROM Player WHERE team_id="+id+")";
+			db.execSQL(query);
+			query="DELETE FROM Shot WHERE player_id IN (SELECT player_id FROM Player WHERE team_id="+id+")";
+			db.execSQL(query);
+			query="DELETE FROM Swap WHERE player_id IN (SELECT player_id FROM Player WHERE team_id="+id+")";
+			db.execSQL(query);
+			query="DELETE FROM Takeover WHERE player_id IN (SELECT player_id FROM Player WHERE team_id="+id+")";
+			db.execSQL(query);
 		}catch(SQLException e)
 		{
 			Log.d("baza",e.toString());
@@ -276,7 +293,12 @@ public class DatabaseManager extends SQLiteOpenHelper{
 			String[] args={String.valueOf(id)};
 			
 			cursor = db.query("Player", columns, "ID=?", args, null, null, null);
-			cursor.moveToNext();
+			if(!cursor.moveToNext())
+			{
+				player=new Player(-1,"usuniety ","zawodnik",-1,"brak",-1);
+				cursor.close();
+				return player;
+			}
 			player=new Player(cursor.getInt(0),cursor.getString(1),cursor.getString(2), cursor.getInt(3), cursor.getString(4), cursor.getInt(5));
 			
 			player.setGames(getGamesForPlayer(id));
@@ -1247,8 +1269,29 @@ public class DatabaseManager extends SQLiteOpenHelper{
 	public void zmiany()
 	{
 		SQLiteDatabase db = getWritableDatabase();
-		String query="DELETE FROM Played WHERE game_id=0";
+		String query;
 		try{
+			query="DELETE FROM Card";
+			db.execSQL(query);
+			query="DELETE FROM Defense";
+			db.execSQL(query);
+			query="DELETE FROM Faul";
+			db.execSQL(query);
+			query="DELETE FROM Injury";
+			db.execSQL(query);
+			query="DELETE FROM Passing";
+			db.execSQL(query);
+			query="DELETE FROM Shot";
+			db.execSQL(query);
+			query="DELETE FROM Swap";
+			db.execSQL(query);
+			query="DELETE FROM Takeover";
+			db.execSQL(query);
+			query="DELETE FROM Played";
+			db.execSQL(query);
+			query="DELETE FROM Participated";
+			db.execSQL(query);
+			query="DELETE FROM Game";
 			db.execSQL(query);
 			Log.d("poszlo","poszlo");
 		}catch(SQLException e)
