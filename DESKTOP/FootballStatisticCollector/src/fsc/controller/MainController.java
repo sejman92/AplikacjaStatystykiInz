@@ -1233,31 +1233,6 @@ public class MainController implements Initializable {
             AC.drawChartForTeam();
         }
         
-        /*List<Integer> value = new ArrayList();
-        List<String> plName = new ArrayList();
-        for( Player p: AC.getSelectedPlayers()){
-            
-            plName.add(p.getSurname() + " " + p.getName());
-        }
-        AC.addSeries(AC.getSelectedCriteria().toString(), value, plName);
-        //BarChart barChart = getNewChart();
-        StackPane secondLay = new StackPane();
-        XYChart.Series series1 = getSeries(AC.getSelectedCriteria());
-        series1.setName(AC.getSelectedCriteria().toString());
-        
-        NumberAxis x = new NumberAxis();
-        
-        
-        CategoryAxis y = new CategoryAxis();
-        BarChart<Number, String> bc = new BarChart<Number, String>(x,y);
-        
-        bc.setTitle("Porównanie");
-        bc.getData().add(series1);
-        secondLay.getChildren().add(bc);     
-        Scene sScene = new Scene(secondLay, 400,300);
-        Stage sSt = new Stage();
-        sSt.setScene(sScene);
-        sSt.show();*/
     }
     /*
     set flags in AnalyzeController based on checkboxes

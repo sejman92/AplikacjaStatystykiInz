@@ -465,6 +465,15 @@ public class Game implements Serializable, IEntityElement {
         return fauls;
     }
     
+    public List<Defense> getDefensePlayer(Player player){
+        List<Defense>defense = new ArrayList();
+        
+        for(Defense d: getDefenseList()){
+            if(d.getPlayerId().equals(player)) defense.add(d);
+        }
+        return defense;
+    }
+    
     public List<Takeover> getTakeoversPlayer(Player player){
         List<Takeover>takeovers = new ArrayList();
         
