@@ -264,7 +264,6 @@ public class MainController implements Initializable {
    @FXML private CheckBox yellowCardsCheckBox;
    @FXML private CheckBox redCardsCheckBox;
    @FXML private CheckBox selectedPlayersCheckBox;
-   @FXML private CheckBox selectedTeamCheckBox;
    @FXML private CheckBox inSelectedMatchCheckBox;
    @FXML private CheckBox inAllMatchesCheckBox;
    @FXML private CheckBox averageCheckBox;
@@ -1123,14 +1122,11 @@ public class MainController implements Initializable {
     public void teamsCBAnalizeAction(){
         getSelectedTeamAnalize();
         if(this.selectedTeamAnalize != null){
-            this.selectedTeamCheckBox.setDisable(false);
-            this.selectedTeamCheckBox.setSelected(true);
             this.inAllMatchesCheckBox.setDisable(false);
             this.inAllMatchesCheckBox.setSelected(true);
             this.compareBt.setDisable(false);
         } else {
-            this.selectedTeamCheckBox.setDisable(true);
-            this.selectedTeamCheckBox.setSelected(false);
+
             this.inAllMatchesCheckBox.setDisable(true);
             this.inAllMatchesCheckBox.setSelected(false);
         }
@@ -1272,8 +1268,7 @@ public class MainController implements Initializable {
             removeToComparePlayerBt.setDisable(true);
             this.selectedPlayersCheckBox.setDisable(true);
             this.selectedPlayersCheckBox.setSelected(false);
-            if(this.selectedTeamCheckBox.isSelected()) compareBt.setDisable(false);
-            else compareBt.setDisable(true);
+
         }
         
     }
@@ -1288,10 +1283,7 @@ public class MainController implements Initializable {
         AC.setSelectedGame((Game) this.gamesCBAnalize.getSelectionModel().getSelectedItem());
         setAnalyzeCriteria();
         if((this.toComparePlayersLV.getItems()!= null) && (this.selectedPlayersCheckBox.isSelected())){
-                AC.drawChartForPlayers();
-            
-        } else if ((this.teamsCBAnalize.getSelectionModel().getSelectedItem() != null)&&(this.selectedTeamCheckBox.isSelected())){
-            AC.drawChartForTeam();
+                AC.drawChartForPlayers();   
         }
         
     }
@@ -1330,11 +1322,9 @@ public class MainController implements Initializable {
         this.inSelectedMatchCheckBox.setSelected(false);
     }
     public void selectedPlayersCheckBoxClick(){
-        this.selectedTeamCheckBox.setSelected(false);
+        
     }
-    public void selectedTeamCheckBoxClick(){
-        this.selectedPlayersCheckBox.setSelected(false);
-    }
+
     //LoginTab element's actions
     
     public void loginBtClick(){

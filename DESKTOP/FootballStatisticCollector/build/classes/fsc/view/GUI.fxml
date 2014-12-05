@@ -1154,7 +1154,7 @@
                               <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
                            </VBox.margin>
                         </CheckBox>
-                        <CheckBox fx:id="selectedTeamCheckBox" disable="true" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#selectedTeamCheckBoxClick" text="Drużyna" VBox.vgrow="ALWAYS">
+                        <CheckBox disable="true" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Drużyna" visible="false" VBox.vgrow="ALWAYS">
                            <font>
                               <Font size="15.0" />
                            </font>
@@ -1239,7 +1239,7 @@
                               <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
                            </padding>
                         </CheckBox>
-                        <CheckBox fx:id="averageCheckBox" disable="true" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#averageCheckBoxClick" text="Średnia " VBox.vgrow="ALWAYS">
+                        <CheckBox fx:id="averageCheckBox" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#averageCheckBoxClick" text="Średnia " VBox.vgrow="ALWAYS">
                            <font>
                               <Font size="15.0" />
                            </font>
@@ -1250,7 +1250,7 @@
                               <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
                            </VBox.margin>
                         </CheckBox>
-                        <CheckBox fx:id="sumCheckBox" disable="true" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#sumCheckBoxClick" selected="true" text="Suma" VBox.vgrow="ALWAYS">
+                        <CheckBox fx:id="sumCheckBox" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#sumCheckBoxClick" selected="true" text="Suma" VBox.vgrow="ALWAYS">
                            <font>
                               <Font size="15.0" />
                            </font>

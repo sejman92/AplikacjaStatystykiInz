@@ -196,7 +196,25 @@ public class Player implements Serializable, IEntityElement, Comparable<Player> 
     public List<Shot> getShotList() {
         return shotList;
     }
-
+    
+    public int getNumberOfSuccessShots(){
+        int i = 0;
+        for( Shot s: this.getShotList()){
+            if(s.getSuccess()!= null && !s.getSuccess().contains("NIE")){
+                i++;
+            }
+        }
+        return i;
+    }
+    public int getNumberOfUnsuccessShots(){
+        int i= 0;
+        for (Shot s: this.getShotList()){
+            if(s.getSuccess()==null || s.getSuccess().contains("NIE")){
+                i++;
+            }
+        }
+        return i;
+    }
     public void setShotList(List<Shot> shotList) {
         this.shotList = shotList;
     }

@@ -212,8 +212,6 @@ public class AnalizeController {
     void drawChartForPlayers() {
         List<XYChart.Series> series = new ArrayList();
         if (this.isShotCheckBox()){       
-            XYChart.Series s = new XYChart.Series();
-            
             if(this.isInAllMatchesCheckBox()){
                 if( this.isSuccessCheckBox() && this.isUnsuccessCheckBox()){
                     series.add(doSeriesShotInAllMatchesByPlayers(!sumCheckBox,1));
@@ -435,47 +433,6 @@ public class AnalizeController {
         Stage stage = new Stage();
         stage.setScene(scene);
         stage.show();
-    }
-
-    void drawChartForPlayersSuccAndUnsucc() {
-        
-    }
-
-    void drawChartForPlayersSucc() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    void drawChartForPlayersUnsucc() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-    
-    void drawChartForTeam() {
-         
-        /*List<Integer> value = new ArrayList();
-        List<String> plName = new ArrayList();
-        for( Player p: AC.getSelectedPlayers()){
-            
-            plName.add(p.getSurname() + " " + p.getName());
-        }
-        AC.addSeries(AC.getSelectedCriteria().toString(), value, plName);
-        //BarChart barChart = getNewChart();
-        StackPane secondLay = new StackPane();
-        XYChart.Series series1 = getSeries(AC.getSelectedCriteria());
-        series1.setName(AC.getSelectedCriteria().toString());
-        
-        NumberAxis x = new NumberAxis();
-        
-        
-        CategoryAxis y = new CategoryAxis();
-        BarChart<Number, String> bc = new BarChart<Number, String>(x,y);
-        
-        bc.setTitle("Porównanie");
-        bc.getData().add(series1);
-        secondLay.getChildren().add(bc);     
-        Scene sScene = new Scene(secondLay, 400,300);
-        Stage sSt = new Stage();
-        sSt.setScene(sScene);
-        sSt.show();*/
     }
     
     /**
@@ -971,7 +928,7 @@ public class AnalizeController {
                             Player p = getSelectedPlayers().get(i);
                             int value = 0;
                             for( Passing pass: p.getPassingList()){
-                                if(pass ==null || !pass.getSuccessful()) value ++;
+                                if(pass.getSuccessful() == null || !pass.getSuccessful()) value ++;
                             }
                             XYChart.Data d = new XYChart.Data(value,p.getName()+" "+p.getSurname()/*+ " ("+value+")"*/);
                             s.getData().add(d);
@@ -982,7 +939,7 @@ public class AnalizeController {
                             Player p = getSelectedPlayers().get(i);
                             int value = 0;
                             for( Passing pass: p.getPassingList()){
-                                if(pass ==null || !pass.getSuccessful()) value ++;
+                                if(pass.getSuccessful() ==null || !pass.getSuccessful()) value ++;
                             }
                             XYChart.Data d = new XYChart.Data(value/(double)p.getParticipatedList().size(),p.getName()+" "+p.getSurname()/*+ " ("+value+")"*/);
                             s.getData().add(d);
