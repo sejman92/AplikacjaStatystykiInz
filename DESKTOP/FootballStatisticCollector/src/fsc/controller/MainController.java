@@ -1229,15 +1229,8 @@ public class MainController implements Initializable {
         AC.setSelectedGame((Game) this.gamesCBAnalize.getSelectionModel().getSelectedItem());
         setAnalyzeCriteria();
         if((this.toComparePlayersLV.getItems()!= null) && (this.selectedPlayersCheckBox.isSelected())){
-            if( this.successCheckBox.isSelected() && this.unsuccessCheckBox.isSelected()){
-                AC.drawChartForPlayersSuccAndUnsucc();
-            } else if( this.successCheckBox.isSelected()){
-                AC.drawChartForPlayersSucc();
-            } else if (this.unsuccessCheckBox.isSelected()){
-                AC.drawChartForPlayersUnsucc();
-            } else {
                 AC.drawChartForPlayers();
-            }
+            
         } else if ((this.teamsCBAnalize.getSelectionModel().getSelectedItem() != null)&&(this.selectedTeamCheckBox.isSelected())){
             AC.drawChartForTeam();
         }

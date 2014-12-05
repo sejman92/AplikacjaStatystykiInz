@@ -1027,7 +1027,6 @@
                   </VBox>
                   <ComboBox fx:id="teamsCBAnalize" layoutX="24.0" layoutY="53.0" onAction="#teamsCBAnalizeAction" prefHeight="25.0" prefWidth="180.0" />
                   <ComboBox fx:id="gamesCBAnalize" layoutX="24.0" layoutY="133.0" onAction="#gamesCBAnalizeAction" prefHeight="25.0" prefWidth="180.0" />
-                  <ComboBox layoutX="895.0" layoutY="521.0" prefHeight="25.0" prefWidth="266.0" />
                   <VBox layoutX="218.0" layoutY="93.0" prefHeight="200.0" prefWidth="257.0">
                      <children>
                         <CheckBox fx:id="shotCheckBox" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Strzał" VBox.vgrow="ALWAYS">
@@ -1144,7 +1143,7 @@
                   </VBox>
                   <VBox layoutX="500.0" layoutY="93.0" prefHeight="200.0" prefWidth="257.0">
                      <children>
-                        <CheckBox fx:id="selectedPlayersCheckBox" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Wybrani zawodnicy" VBox.vgrow="ALWAYS">
+                        <CheckBox fx:id="selectedPlayersCheckBox" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#selectedPlayersCheckBoxClick" text="Wybrani zawodnicy" VBox.vgrow="ALWAYS">
                            <font>
                               <Font size="15.0" />
                            </font>
@@ -1155,7 +1154,7 @@
                               <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
                            </VBox.margin>
                         </CheckBox>
-                        <CheckBox fx:id="selectedTeamCheckBox" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Drużyna" VBox.vgrow="ALWAYS">
+                        <CheckBox fx:id="selectedTeamCheckBox" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#selectedTeamCheckBoxClick" text="Drużyna" VBox.vgrow="ALWAYS">
                            <font>
                               <Font size="15.0" />
                            </font>

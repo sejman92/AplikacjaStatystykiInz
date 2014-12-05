@@ -26,6 +26,8 @@ import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.ValueAxis;
 import javafx.scene.chart.XYChart;
+import javafx.scene.chart.XYChart.Data;
+import javafx.scene.chart.XYChart.Series;
 import javafx.scene.control.Tooltip;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
@@ -211,43 +213,175 @@ public class AnalizeController {
         List<XYChart.Series> series = new ArrayList();
         if (this.isShotCheckBox()){       
             XYChart.Series s = new XYChart.Series();
-            if(this.isInAllMatchesCheckBox()) s = doSeriesShotInAllMatchesByPlayers(!sumCheckBox,2);
-            if(this.isInSelectedMatchCheckBox()) s = doSeriesShotInSelectedMatchByPlayers(!sumCheckBox,2);
             
-            series.add(s);
+            if(this.isInAllMatchesCheckBox()){
+                if( this.isSuccessCheckBox() && this.isUnsuccessCheckBox()){
+                    series.add(doSeriesShotInAllMatchesByPlayers(!sumCheckBox,1));
+                    series.add(doSeriesShotInAllMatchesByPlayers(!sumCheckBox,-1));
+                } else if( this.isSuccessCheckBox()) {
+                    series.add(doSeriesShotInAllMatchesByPlayers(!sumCheckBox,1));
+                } else if (this.isUnsuccessCheckBox()){
+                    series.add(doSeriesShotInAllMatchesByPlayers(!sumCheckBox,-1));
+                } else { //sum succ and unsucc actions
+                    series.add(doSeriesShotInAllMatchesByPlayers(!sumCheckBox,0));
+                }                
+            }
+            if(this.isInSelectedMatchCheckBox()){
+                if( this.isSuccessCheckBox() && this.isUnsuccessCheckBox()){
+                    series.add(doSeriesShotInSelectedMatchByPlayers(!sumCheckBox,1));
+                    series.add(doSeriesShotInSelectedMatchByPlayers(!sumCheckBox,-1));
+                } else if(this.isSuccessCheckBox()){
+                    series.add(doSeriesShotInSelectedMatchByPlayers(!sumCheckBox,1));
+                } else if(this.isUnsuccessCheckBox()){
+                    series.add(doSeriesShotInSelectedMatchByPlayers(!sumCheckBox,-1));
+                } else {
+                    series.add(doSeriesShotInSelectedMatchByPlayers(!sumCheckBox,0));
+                }
+                
+            }
         }
         if(this.isPassCheckBox()){
-            XYChart.Series s = new XYChart.Series();
-            if(this.isInAllMatchesCheckBox()) s = doSeriesPassInAllMatchesByPlayers(!sumCheckBox,2);
-            if(this.isInSelectedMatchCheckBox()) s = doSeriesPassInSelectedMatchByPlayers(!sumCheckBox,2);
-             
-            series.add(s);
-             
+            if(this.isInAllMatchesCheckBox()){
+                if(this.isSuccessCheckBox() && this.isUnsuccessCheckBox()){
+                    series.add(doSeriesPassInAllMatchesByPlayers(!sumCheckBox,1));
+                    series.add(doSeriesPassInAllMatchesByPlayers(!sumCheckBox,-1));
+                }else if( this.isSuccessCheckBox()){
+                    series.add(doSeriesPassInAllMatchesByPlayers(!sumCheckBox,1));
+                }else if( this.isUnsuccessCheckBox()){
+                    series.add(doSeriesPassInAllMatchesByPlayers(!sumCheckBox,-1));
+                } else {
+                    series.add(doSeriesPassInAllMatchesByPlayers(!sumCheckBox,0));
+                }
+            }
+            if(this.isInSelectedMatchCheckBox()){
+                if(this.isSuccessCheckBox() && this.isUnsuccessCheckBox()){
+                    series.add(doSeriesPassInSelectedMatchByPlayers(!sumCheckBox,1));
+                    series.add(doSeriesPassInSelectedMatchByPlayers(!sumCheckBox,-1));
+                }else if( this.isSuccessCheckBox()){
+                    series.add(doSeriesPassInSelectedMatchByPlayers(!sumCheckBox,1));
+                }else if( this.isUnsuccessCheckBox()){
+                    series.add(doSeriesPassInSelectedMatchByPlayers(!sumCheckBox,-1));
+                } else {
+                    series.add(doSeriesPassInSelectedMatchByPlayers(!sumCheckBox,0));
+                }
+            }            
         }
         if(this.isFaulCheckBox()){
-            XYChart.Series s = new XYChart.Series();
-            if(this.isInAllMatchesCheckBox()) s = doSeriesFaulInAllMatchesByPlayers(!sumCheckBox,2);
-            if(this.isInSelectedMatchCheckBox()) s = doSeriesFaulInSelectedMatchByPlayers(!sumCheckBox,2);
-
-            series.add(s); 
+                
+            if(this.isInAllMatchesCheckBox()){
+                if(this.isSuccessCheckBox() && this.isUnsuccessCheckBox()){
+                    series.add(doSeriesFaulInAllMatchesByPlayers(!sumCheckBox,1));
+                    series.add(doSeriesFaulInAllMatchesByPlayers(!sumCheckBox,-1));
+                }else if( this.isSuccessCheckBox()){
+                    series.add(doSeriesFaulInAllMatchesByPlayers(!sumCheckBox,1));
+                }else if( this.isUnsuccessCheckBox()){
+                    series.add(doSeriesFaulInAllMatchesByPlayers(!sumCheckBox,-1));
+                } else {
+                    series.add(doSeriesFaulInAllMatchesByPlayers(!sumCheckBox,0));
+                }
+            }
+            if(this.isInSelectedMatchCheckBox()){
+                if(this.isSuccessCheckBox() && this.isUnsuccessCheckBox()){
+                    series.add(doSeriesFaulInSelectedMatchByPlayers(!sumCheckBox,1));
+                    series.add(doSeriesFaulInSelectedMatchByPlayers(!sumCheckBox,-1));
+                }else if( this.isSuccessCheckBox()){
+                    series.add(doSeriesFaulInSelectedMatchByPlayers(!sumCheckBox,1));
+                }else if( this.isUnsuccessCheckBox()){
+                    series.add(doSeriesFaulInSelectedMatchByPlayers(!sumCheckBox,-1));
+                } else {
+                    series.add(doSeriesFaulInSelectedMatchByPlayers(!sumCheckBox,0));
+                }
+            }
         }
         if(this.isFreeKickCheckBox()){
-            XYChart.Series s = new XYChart.Series();
-            if(this.isInAllMatchesCheckBox()) s = doSeriesFreeKickInAllMatchesByPlayers(!sumCheckBox,2);
-            if(this.isInSelectedMatchCheckBox()) s = doSeriesFreeKickInSelectedMatchByPlayers(!sumCheckBox,2);
-            series.add(s);
+                
+            if(this.isInAllMatchesCheckBox()){
+                if(this.isSuccessCheckBox() && this.isUnsuccessCheckBox()){
+                    series.add(doSeriesFreeKickInAllMatchesByPlayers(!sumCheckBox,1));
+                    series.add(doSeriesFreeKickInAllMatchesByPlayers(!sumCheckBox,-1));
+                }else if( this.isSuccessCheckBox()){
+                    series.add(doSeriesFreeKickInAllMatchesByPlayers(!sumCheckBox,1));
+                }else if( this.isUnsuccessCheckBox()){
+                    series.add(doSeriesFreeKickInAllMatchesByPlayers(!sumCheckBox,-1));
+                } else {
+                    series.add(doSeriesFreeKickInAllMatchesByPlayers(!sumCheckBox,0));
+                }
+                
+            }
+            if(this.isInSelectedMatchCheckBox()){
+                if(this.isSuccessCheckBox() && this.isUnsuccessCheckBox()){
+                    series.add(doSeriesFreeKickInSelectedMatchByPlayers(!sumCheckBox,1));
+                    series.add(doSeriesFreeKickInSelectedMatchByPlayers(!sumCheckBox,-1));
+                }else if( this.isSuccessCheckBox()){
+                    series.add(doSeriesFreeKickInSelectedMatchByPlayers(!sumCheckBox,1));
+                }else if( this.isUnsuccessCheckBox()){
+                    series.add(doSeriesFreeKickInSelectedMatchByPlayers(!sumCheckBox,-1));
+                } else {
+                    series.add(doSeriesFreeKickInSelectedMatchByPlayers(!sumCheckBox,0));
+                }
+            }
         }
         if( this.isCornerKickCheckBox()){
-            XYChart.Series s = new XYChart.Series();
-            if(this.isInAllMatchesCheckBox()) s = doSeriesCornerKickInAllMatchesByPlayers(!sumCheckBox,2);
-            if(this.isInSelectedMatchCheckBox()) s = doSeriesCornerKickInSelectedMatchByPlayers(!sumCheckBox,2);
-            series.add(s);
+                if(this.isSuccessCheckBox() && this.isUnsuccessCheckBox()){
+
+                }else if( this.isSuccessCheckBox()){
+
+                }else if( this.isUnsuccessCheckBox()){
+
+                } else {
+
+                }
+            if(this.isInAllMatchesCheckBox()){
+                if(this.isSuccessCheckBox() && this.isUnsuccessCheckBox()){
+                    series.add(doSeriesCornerKickInAllMatchesByPlayers(!sumCheckBox,1));
+                    series.add(doSeriesCornerKickInAllMatchesByPlayers(!sumCheckBox,-1));
+                }else if( this.isSuccessCheckBox()){
+                    series.add(doSeriesCornerKickInAllMatchesByPlayers(!sumCheckBox,1));
+                }else if( this.isUnsuccessCheckBox()){
+                    series.add(doSeriesCornerKickInAllMatchesByPlayers(!sumCheckBox,-1));
+                } else {
+                    series.add(doSeriesCornerKickInAllMatchesByPlayers(!sumCheckBox,0));
+                }      
+            }
+            if(this.isInSelectedMatchCheckBox()){
+                if(this.isSuccessCheckBox() && this.isUnsuccessCheckBox()){
+                    series.add(doSeriesCornerKickInSelectedMatchByPlayers(!sumCheckBox,1));
+                    series.add(doSeriesCornerKickInSelectedMatchByPlayers(!sumCheckBox,-1));
+                }else if( this.isSuccessCheckBox()){
+                    series.add(doSeriesCornerKickInSelectedMatchByPlayers(!sumCheckBox,1));
+                }else if( this.isUnsuccessCheckBox()){
+                    series.add(doSeriesCornerKickInSelectedMatchByPlayers(!sumCheckBox,-1));
+                } else {
+                    series.add(doSeriesCornerKickInSelectedMatchByPlayers(!sumCheckBox,0));
+                }
+            }
         }
         if( this.isPenaltyKickCheckBox()){
-            XYChart.Series s = new XYChart.Series();
-            if(this.isInAllMatchesCheckBox()) s = doSeriesPenaltyKickInAllMatchesByPlayers(!sumCheckBox,2);
-            if(this.isInSelectedMatchCheckBox()) s = doSeriesPenaltyKickInSelectedMatchByPlayers(!sumCheckBox,2);
-            series.add(s);
+                
+            if(this.isInAllMatchesCheckBox()){
+                if(this.isSuccessCheckBox() && this.isUnsuccessCheckBox()){
+                    series.add(doSeriesPenaltyKickInAllMatchesByPlayers(!sumCheckBox,1));
+                    series.add(doSeriesPenaltyKickInAllMatchesByPlayers(!sumCheckBox,-1));
+                }else if( this.isSuccessCheckBox()){
+                    series.add(doSeriesPenaltyKickInAllMatchesByPlayers(!sumCheckBox,1));
+                }else if( this.isUnsuccessCheckBox()){
+                    series.add(doSeriesPenaltyKickInAllMatchesByPlayers(!sumCheckBox,-1));
+                } else {
+                    series.add(doSeriesPenaltyKickInAllMatchesByPlayers(!sumCheckBox,0));
+                }
+            }
+            if(this.isInSelectedMatchCheckBox()){
+                if(this.isSuccessCheckBox() && this.isUnsuccessCheckBox()){
+                    series.add(doSeriesPenaltyKickInSelectedMatchByPlayers(!sumCheckBox,1));
+                    series.add(doSeriesPenaltyKickInSelectedMatchByPlayers(!sumCheckBox,-1));
+                }else if( this.isSuccessCheckBox()){
+                    series.add(doSeriesPenaltyKickInSelectedMatchByPlayers(!sumCheckBox,1));
+                }else if( this.isUnsuccessCheckBox()){
+                    series.add(doSeriesPenaltyKickInSelectedMatchByPlayers(!sumCheckBox,-1));
+                } else {
+                    series.add(doSeriesPenaltyKickInSelectedMatchByPlayers(!sumCheckBox,0));
+                }
+            }
         }
         if(this.isGoalCheckBox()){
             XYChart.Series s = new XYChart.Series();
@@ -277,16 +411,25 @@ public class AnalizeController {
         
         StackPane layer = new StackPane();
         
-       ValueAxis x = new NumberAxis();
+        NumberAxis x = new NumberAxis();
         
         CategoryAxis y = new CategoryAxis();
-        BarChart<Integer, String> chart = new BarChart<Integer, String>(x,y);
+        BarChart<Number, String> chart = new BarChart<Number, String>(x,y);
         chart.setTitle("Wykres");
         
         for(XYChart.Series s: series){
             chart.getData().add(s);
         }
-
+        /*
+        Add tooltip based on: https://community.oracle.com/thread/2345433?tstart=0
+        */
+        for (final Series<Number, String>ser : chart.getData()) {
+            for (final Data<Number, String> data : ser.getData()) {
+                 Tooltip tooltip = new Tooltip();
+                 tooltip.setText(data.getXValue().toString());
+                 Tooltip.install(data.getNode(), tooltip);   
+            }
+        }
         layer.getChildren().add(chart);
         Scene scene = new Scene (layer, 800, 600);
         Stage stage = new Stage();
@@ -633,13 +776,25 @@ public class AnalizeController {
                             Player p = getSelectedPlayers().get(i);
                             int value = 0; 
                             
-                            for( Shot shot : p.getShotList()) if(shot.getSuccess()=="NIECELNY")  value++;  
+                            for( Shot shot : p.getShotList()){
+                                if(shot.getSuccess()== null || shot.getSuccess().contains("NIECELNY"))  value++;
+                            }  
                             XYChart.Data d = new XYChart.Data(value,p.getName()+" "+p.getSurname()/*+ " ("+value+")"*/);
                             s.getData().add(d);
                     }
                     s.setName("Suma strzałów niecelnych ze wszystkich meczy");
                 } else {
-                    //todo liczymy średni strzał
+                    for(int i = 0; i<this.getSelectedPlayers().size(); i++){
+                            Player p = getSelectedPlayers().get(i);
+                            int value = 0; 
+                            
+                            for( Shot shot : p.getShotList()){
+                                if(shot.getSuccess()== null || shot.getSuccess().contains("NIECELNY"))  value++;
+                            }  
+                            
+                            XYChart.Data d = new XYChart.Data(value/(double)p.getParticipatedList().size(),p.getName()+" "+p.getSurname()/*+ " ("+value+")"*/);
+                            s.getData().add(d);
+                    }
                     s.setName("Średnia liczba strzałów niecelnych na mecz");
                 }
             break;
@@ -648,13 +803,23 @@ public class AnalizeController {
                     for(int i = 0; i<this.getSelectedPlayers().size(); i++){
                             Player p = getSelectedPlayers().get(i);
                             int value = 0; 
-                            for( Shot shot : p.getShotList()) if(shot.getSuccess()=="CELNY" || shot.getSuccess()=="GOL")  value++;  
+                            for( Shot shot : p.getShotList()){
+                                if(shot.getSuccess()!= null && (shot.getSuccess().contains("CELNY") || shot.getSuccess().contains("GOL")))  value++;
+                            }  
                             XYChart.Data d = new XYChart.Data(value,p.getName()+" "+p.getSurname()/*+ " ("+value+")"*/);
                             s.getData().add(d);
                     }
                     s.setName("Suma strzałów celnych ze wszystkich meczy");
                 } else {
-                    //todo liczymy średni strzał
+                    for(int i = 0; i<this.getSelectedPlayers().size(); i++){
+                            Player p = getSelectedPlayers().get(i);
+                            int value = 0; 
+                            for( Shot shot : p.getShotList()){
+                                if(shot.getSuccess()!= null && (shot.getSuccess().contains("CELNY") || shot.getSuccess().contains("GOL")))  value++;
+                            }  
+                            XYChart.Data d = new XYChart.Data(value/(double)p.getParticipatedList().size(),p.getName()+" "+p.getSurname()/*+ " ("+value+")"*/);
+                            s.getData().add(d);
+                    }
                     s.setName("Średnia liczba strzałów celnych na mecz");
                 }
             break;
@@ -668,7 +833,13 @@ public class AnalizeController {
                     }
                     s.setName("Suma strzałów z wszystkich meczy");
                 } else {
-                    //todo liczymy średni strzał
+                    for(int i = 0; i<this.getSelectedPlayers().size(); i++){
+                            Player p = getSelectedPlayers().get(i);
+                            int value = p.getShotList().size();
+                            double v = value/(double)p.getParticipatedList().size();
+                            XYChart.Data d = new XYChart.Data(value/(double)p.getParticipatedList().size(),p.getName()+" "+p.getSurname()/*+ " ("+value+")"*/);
+                            s.getData().add(d);
+                    }
                     s.setName("Średnia liczba strzałów na mecz");
                 }
             break;
@@ -685,14 +856,14 @@ public class AnalizeController {
                             Player p = getSelectedPlayers().get(i);
                             int value = 0;
                             for( Shot shot: this.selectedGame.getShotsPlayer(p)){
-                                if( shot.getSuccess()== "NIECELNY") value++;
+                                if( shot.getSuccess()== null || shot.getSuccess()== "NIECELNY") value++;
                             }
                             XYChart.Data d = new XYChart.Data(value,p.getName()+" "+p.getSurname());
                             s.getData().add(d);
                     }
                     s.setName("Suma strzałów niecelnych w meczu: " + this.selectedGame.getOponent());
                 } else {
-                    //todo liczymy średnią
+                    //never occur... we cannot count average for single match
                     s.setName("Średnia strzałów niecelnych w meczu: " + this.selectedGame.getOponent());
                 }
             break;
@@ -702,14 +873,14 @@ public class AnalizeController {
                             Player p = getSelectedPlayers().get(i);
                             int value = 0;
                             for( Shot shot: this.selectedGame.getShotsPlayer(p)){
-                                if( shot.getSuccess()== "CELNY" || shot.getSuccess()== "GOL") value++;
+                                if(shot.getSuccess() != null && (shot.getSuccess()== "CELNY" || shot.getSuccess()== "GOL")) value++;
                             }
                             XYChart.Data d = new XYChart.Data(value,p.getName()+" "+p.getSurname());
                             s.getData().add(d);
                     }
                     s.setName("Suma strzałów celnych w meczu: " + this.selectedGame.getOponent());
                 } else {
-                    //todo liczymy średnią
+                    //never occur... we cannot count average for single match
                     s.setName("Średnia strzałów celnych w meczu: " + this.selectedGame.getOponent());
                 }
                 break;
@@ -725,7 +896,7 @@ public class AnalizeController {
                     }
                     s.setName("Suma strzałów w meczu: " + this.selectedGame.getOponent());
                 } else {
-                    //todo liczymy średnią
+                    //never occur... we cannot count average for single match
                     s.setName("Średnia strzałów w meczu: " + this.selectedGame.getOponent());
                 }
             break;
@@ -742,14 +913,14 @@ public class AnalizeController {
                             Player p = getSelectedPlayers().get(i);
                             int value = 0;
                             for( Passing pass : this.selectedGame.getPassesPlayer(p)){
-                                if(!pass.getSuccessful()) value++;
+                                if(pass.getSuccessful()== null || !pass.getSuccessful()) value++;
                             }
                             XYChart.Data d = new XYChart.Data(value,p.getName()+" "+p.getSurname()/*+ " ("+value+")"*/);
                             s.getData().add(d);
                     }
                     s.setName("Suma niecelnych podań w meczu: " + this.selectedGame.getOponent());
                 } else {
-                    //todo liczymy średnią
+                    //never occur... we cannot count average for single match
                     s.setName("Średnia niecelnych podań w meczu: " + this.selectedGame.getOponent());
                 }
                 break;
@@ -759,14 +930,14 @@ public class AnalizeController {
                             Player p = getSelectedPlayers().get(i);
                             int value = 0;
                             for( Passing pass : this.selectedGame.getPassesPlayer(p)){
-                                if(pass.getSuccessful()) value++;
+                                if(pass != null && pass.getSuccessful()) value++;
                             }
                             XYChart.Data d = new XYChart.Data(value,p.getName()+" "+p.getSurname()/*+ " ("+value+")"*/);
                             s.getData().add(d);
                     }
                     s.setName("Suma celnych podań w meczu: " + this.selectedGame.getOponent());
                 } else {
-                    //todo liczymy średnią
+                    //never occur... we cannot count average for single match
                     s.setName("Średnia celnych podań w meczu: " + this.selectedGame.getOponent());
                 }
                 break;
@@ -781,7 +952,7 @@ public class AnalizeController {
                     }
                     s.setName("Suma podań w meczu: " + this.selectedGame.getOponent());
                 } else {
-                    //todo liczymy średnią
+                    //never occur... we cannot count average for single match
                     s.setName("Średnia podań w meczu: " + this.selectedGame.getOponent());
                 }
                 break;
@@ -800,14 +971,22 @@ public class AnalizeController {
                             Player p = getSelectedPlayers().get(i);
                             int value = 0;
                             for( Passing pass: p.getPassingList()){
-                                if( !pass.getSuccessful()) value ++;
+                                if(pass ==null || !pass.getSuccessful()) value ++;
                             }
                             XYChart.Data d = new XYChart.Data(value,p.getName()+" "+p.getSurname()/*+ " ("+value+")"*/);
                             s.getData().add(d);
                     }
                     s.setName("Suma podań niecelnych z wszystkich meczy");
                 } else {
-                    //todo liczymy średni strzał
+                    for(int i = 0; i<this.getSelectedPlayers().size(); i++){
+                            Player p = getSelectedPlayers().get(i);
+                            int value = 0;
+                            for( Passing pass: p.getPassingList()){
+                                if(pass ==null || !pass.getSuccessful()) value ++;
+                            }
+                            XYChart.Data d = new XYChart.Data(value/(double)p.getParticipatedList().size(),p.getName()+" "+p.getSurname()/*+ " ("+value+")"*/);
+                            s.getData().add(d);
+                    }
                     s.setName("Średnia liczba podań niecelnych na mecz");
                 }
             break;
@@ -817,14 +996,22 @@ public class AnalizeController {
                             Player p = getSelectedPlayers().get(i);
                             int value = 0;
                             for( Passing pass: p.getPassingList()){
-                                if( pass.getSuccessful()) value ++;
+                                if(pass.getSuccessful()!= null && pass.getSuccessful()) value ++;
                             }
                             XYChart.Data d = new XYChart.Data(value,p.getName()+" "+p.getSurname()/*+ " ("+value+")"*/);
                             s.getData().add(d);
                     }
                     s.setName("Suma podań celnych z wszystkich meczy");
                 } else {
-                    //todo liczymy średni strzał
+                    for(int i = 0; i<this.getSelectedPlayers().size(); i++){
+                            Player p = getSelectedPlayers().get(i);
+                            int value = 0;
+                            for( Passing pass: p.getPassingList()){
+                                if(pass.getSuccessful()!= null && pass.getSuccessful()) value ++;
+                            }
+                            XYChart.Data d = new XYChart.Data(value/(double)p.getParticipatedList().size(),p.getName()+" "+p.getSurname()/*+ " ("+value+")"*/);
+                            s.getData().add(d);
+                    }
                     s.setName("Średnia liczba podań celnych na mecz");
                 }
             break;
@@ -838,7 +1025,12 @@ public class AnalizeController {
                     }
                     s.setName("Suma podań z wszystkich meczy");
                 } else {
-                    //todo liczymy średni strzał
+                    for(int i = 0; i<this.getSelectedPlayers().size(); i++){
+                            Player p = getSelectedPlayers().get(i);
+                            int value = p.getPassingList().size();
+                            XYChart.Data d = new XYChart.Data(value/(double)p.getParticipatedList().size(),p.getName()+" "+p.getSurname()/*+ " ("+value+")"*/);
+                            s.getData().add(d);
+                    }
                     s.setName("Średnia liczba podań na mecz");
                 }
             break;
@@ -861,7 +1053,12 @@ public class AnalizeController {
                     }
                     s.setName("Suma popełnionych fauli we wszystkich meczach");
                 } else {
-                    //todo liczymy średni strzał
+                    for(int i = 0; i<this.getSelectedPlayers().size(); i++){
+                        Player p = getSelectedPlayers().get(i);
+                        int value = p.getFaulList1().size();
+                        XYChart.Data d = new XYChart.Data(value/(double)p.getParticipatedList().size(),p.getName()+" "+p.getSurname());
+                        s.getData().add(d);
+                    }
                     s.setName("Średnia liczba popełnionych fauli na mecz");
                 }
                 break;
@@ -875,7 +1072,12 @@ public class AnalizeController {
                     }
                     s.setName("Suma popełnionych otrzymanych we wszystkich meczach");
                 } else {
-                    //todo liczymy średni strzał
+                    for(int i = 0; i<this.getSelectedPlayers().size(); i++){
+                        Player p = getSelectedPlayers().get(i);
+                        int value = p.getFaulList().size();
+                        XYChart.Data d = new XYChart.Data(value/(double)p.getParticipatedList().size(),p.getName()+" "+p.getSurname());
+                        s.getData().add(d);
+                    }
                     s.setName("Średnia liczba otrzymanych fauli na mecz");
                 }
                 break;
@@ -889,7 +1091,12 @@ public class AnalizeController {
                     }
                     s.setName("Suma fauli we wszystkich meczach");
                 } else {
-                    //todo liczymy średni strzał
+                    for(int i = 0; i<this.getSelectedPlayers().size(); i++){
+                            Player p = getSelectedPlayers().get(i);
+                            int value = p.getFaulList().size() + p.getFaulList1().size();
+                            XYChart.Data d = new XYChart.Data(value/(double)p.getParticipatedList().size(),p.getName()+" "+p.getSurname());
+                            s.getData().add(d);
+                    }
                     s.setName("Średnia liczba fauli na mecz");
                 }
             break;
@@ -911,7 +1118,7 @@ public class AnalizeController {
                     }
                     s.setName("Suma fauli popełnionych w meczu " + this.selectedGame.getOponent());
                 } else {
-                    //todo liczymy średnią
+                    //never occur... we cannot count average for single match
                     s.setName("Średnia liczba fauli popełnionych w meczu: " + this.selectedGame.getOponent());
                 }
                 
@@ -926,7 +1133,7 @@ public class AnalizeController {
                     }
                     s.setName("Suma fauli otrzymanych w meczu " + this.selectedGame.getOponent());
                 } else {
-                    //todo liczymy średnią
+                    //never occur... we cannot count average for single match
                     s.setName("Średnia liczba fauli otrzymanych w meczu: " + this.selectedGame.getOponent());
                 }
                 break;
@@ -940,7 +1147,7 @@ public class AnalizeController {
                     }
                     s.setName("Suma fauli w meczu " + this.selectedGame.getOponent());
                 } else {
-                    //todo liczymy średnią
+                    //never occur... we cannot count average for single match
                     s.setName("Średnia liczba fauli w meczu: " + this.selectedGame.getOponent());
                 }
                 break;
@@ -960,7 +1167,7 @@ public class AnalizeController {
                             List<Shot> shotL = p.getShotList();
                             int value = 0;
                             for( Shot shot : shotL){
-                                if( shot.getFreekick() && shot.getSuccess()=="NIECELNY"){
+                                if( shot.getFreekick() && (shot.getSuccess()==null || shot.getSuccess().contains("NIECELNY"))){
                                     value++;
                                 }
                             }
@@ -969,7 +1176,18 @@ public class AnalizeController {
                     }
                     s.setName("Suma niecelnych rzutów wolnych we wszystkich meczach");
                 } else {
-                    //todo liczymy średni strzał
+                    for(int i = 0; i<this.getSelectedPlayers().size(); i++){
+                            Player p = getSelectedPlayers().get(i);
+                            List<Shot> shotL = p.getShotList();
+                            int value = 0;
+                            for( Shot shot : shotL){
+                                if( shot.getFreekick() && (shot.getSuccess()==null || shot.getSuccess().contains("NIECELNY"))){
+                                    value++;
+                                }
+                            }
+                            XYChart.Data d = new XYChart.Data(value/(double)p.getParticipatedList().size(),p.getName()+" "+p.getSurname());
+                            s.getData().add(d);
+                    }
                     s.setName("Średnia liczba niecelnych rzutów wolnych na mecz");
                 }
                 break;
@@ -980,7 +1198,7 @@ public class AnalizeController {
                             List<Shot> shotL = p.getShotList();
                             int value = 0;
                             for( Shot shot : shotL){
-                                if(shot.getFreekick() && shot.getSuccess()!="NIECELNY"){
+                                if(shot.getFreekick() && shot.getSuccess()!=null && !shot.getSuccess().contains("NIE")){
                                     value++;
                                 }
                             }
@@ -989,7 +1207,18 @@ public class AnalizeController {
                     }
                     s.setName("Suma celnych rzutów wolnych we wszystkich meczach");
                 } else {
-                    //todo liczymy średni strzał
+                    for(int i = 0; i<this.getSelectedPlayers().size(); i++){
+                            Player p = getSelectedPlayers().get(i);
+                            List<Shot> shotL = p.getShotList();
+                            int value = 0;
+                            for( Shot shot : shotL){
+                                if(shot.getFreekick() && shot.getSuccess()!=null && !shot.getSuccess().contains("NIE")){
+                                    value++;
+                                }
+                            }
+                            XYChart.Data d = new XYChart.Data(value/(double)p.getParticipatedList().size(),p.getName()+" "+p.getSurname());
+                            s.getData().add(d);
+                    }
                     s.setName("Średnia liczba celnych rzutów wolnych na mecz");
                 }
                 break;
@@ -1009,7 +1238,18 @@ public class AnalizeController {
                     }
                     s.setName("Suma rzutów wolnych we wszystkich meczach");
                 } else {
-                    //todo liczymy średni strzał
+                    for(int i = 0; i<this.getSelectedPlayers().size(); i++){
+                            Player p = getSelectedPlayers().get(i);
+                            List<Shot> shotL = p.getShotList();
+                            int value = 0;
+                            for( Shot shot : shotL){
+                                if( shot.getFreekick()){
+                                    value++;
+                                }
+                            }
+                            XYChart.Data d = new XYChart.Data(value/(double)p.getParticipatedList().size(),p.getName()+" "+p.getSurname());
+                            s.getData().add(d);
+                    }
                     s.setName("Średnia liczba rzutów wolnych na mecz");
                 }
                 break;
@@ -1026,14 +1266,14 @@ public class AnalizeController {
                             Player p = getSelectedPlayers().get(i);
                             int value = 0;
                             for( Shot shot : this.selectedGame.getShotsPlayer(p)){
-                                if(shot.getFreekick() && shot.getSuccess()=="NIECELNY") value++;
+                                if(shot.getFreekick() &&( shot.getSuccess()==null || shot.getSuccess().contains("NIECELNY"))) value++;
                             }
                             XYChart.Data d = new XYChart.Data(value,p.getName()+" "+p.getSurname());
                             s.getData().add(d);
                     }
                     s.setName("Suma niecelnych rzutów wolnych w meczu " + this.selectedGame.getOponent());
                 } else {
-                    //todo liczymy średnią
+                    //never occur... we cannot count average for single match
                     s.setName("Średnia liczba niecelnych rzutów wolnych w meczu: " + this.selectedGame.getOponent());
                 }
                 break;
@@ -1043,14 +1283,14 @@ public class AnalizeController {
                             Player p = getSelectedPlayers().get(i);
                             int value = 0;
                             for( Shot shot : this.selectedGame.getShotsPlayer(p)){
-                                if(shot.getFreekick() && shot.getSuccess()!="NIECELNY") value++;
+                                if(shot.getFreekick() && shot.getSuccess()!=null && !shot.getSuccess().contains("NIE")) value++;
                             }
                             XYChart.Data d = new XYChart.Data(value,p.getName()+" "+p.getSurname());
                             s.getData().add(d);
                     }
                     s.setName("Suma celnych rzutów wolnych w meczu " + this.selectedGame.getOponent());
                 } else {
-                    //todo liczymy średnią
+                    //never occur... we cannot count average for single match
                     s.setName("Średnia liczba celnych rzutów wolnych w meczu: " + this.selectedGame.getOponent());
                 }
                 break;
@@ -1064,7 +1304,7 @@ public class AnalizeController {
                     }
                     s.setName("Suma rzutów wolnych w meczu " + this.selectedGame.getOponent());
                 } else {
-                    //todo liczymy średnią
+                    //never occur... we cannot count average for single match
                     s.setName("Średnia liczba rzutów wolnych w meczu: " + this.selectedGame.getOponent());
                 }
                 break;
@@ -1081,7 +1321,7 @@ public class AnalizeController {
                             Player p = getSelectedPlayers().get(i);
                             int value = 0;
                             for( Shot shot : p.getShotList()){
-                                if( shot.getCorner() && shot.getSuccess()=="NIECELNY"){
+                                if( shot.getCorner() &&(shot.getSuccess()==null || shot.getSuccess().contains("NIECELNY"))){
                                     value++;
                                 }
                             }
@@ -1090,7 +1330,17 @@ public class AnalizeController {
                     }
                     s.setName("Suma niecelnych rzutów rożnych we wszystkich meczach");
                 } else {
-                    //todo liczymy średni strzał
+                    for(int i = 0; i<this.getSelectedPlayers().size(); i++){
+                            Player p = getSelectedPlayers().get(i);
+                            int value = 0;
+                            for( Shot shot : p.getShotList()){
+                                if( shot.getCorner() &&(shot.getSuccess()==null || shot.getSuccess().contains("NIECELNY"))){
+                                    value++;
+                                }
+                            }
+                            XYChart.Data d = new XYChart.Data(value/(double)p.getParticipatedList().size(),p.getName()+" "+p.getSurname());
+                            s.getData().add(d);
+                    }
                     s.setName("Średnia liczba niecelnych rzutów rożnych na mecz");
                 }
                 break;
@@ -1100,7 +1350,7 @@ public class AnalizeController {
                             Player p = getSelectedPlayers().get(i);
                             int value = 0;
                             for( Shot shot : p.getShotList()){
-                                if( shot.getCorner() && shot.getSuccess()!="NIECELNY"){
+                                if( shot.getCorner() && shot.getSuccess()!=null && !shot.getSuccess().contains("NIE")){
                                     value++;
                                 }
                             }
@@ -1109,7 +1359,17 @@ public class AnalizeController {
                     }
                     s.setName("Suma celnych rzutów rożnych we wszystkich meczach");
                 } else {
-                    //todo liczymy średni strzał
+                    for(int i = 0; i<this.getSelectedPlayers().size(); i++){
+                            Player p = getSelectedPlayers().get(i);
+                            int value = 0;
+                            for( Shot shot : p.getShotList()){
+                                if( shot.getCorner() && shot.getSuccess()!=null && !shot.getSuccess().contains("NIE")){
+                                    value++;
+                                }
+                            }
+                            XYChart.Data d = new XYChart.Data(value/(double)p.getParticipatedList().size(),p.getName()+" "+p.getSurname());
+                            s.getData().add(d);
+                    }
                     s.setName("Średnia liczba celnych rzutów rożnych na mecz");
                 }
                 break;
@@ -1128,7 +1388,17 @@ public class AnalizeController {
                     }
                     s.setName("Suma rzutów rożnych we wszystkich meczach");
                 } else {
-                    //todo liczymy średni strzał
+                    for(int i = 0; i<this.getSelectedPlayers().size(); i++){
+                            Player p = getSelectedPlayers().get(i);
+                            int value = 0;
+                            for( Shot shot : p.getShotList()){
+                                if( shot.getCorner()){
+                                    value++;
+                                }
+                            }
+                            XYChart.Data d = new XYChart.Data(value/(double)p.getParticipatedList().size(),p.getName()+" "+p.getSurname());
+                            s.getData().add(d);
+                    }
                     s.setName("Średnia liczba rzutów rożnych na mecz");
                 }
                 break;
@@ -1147,14 +1417,14 @@ public class AnalizeController {
                             Player p = getSelectedPlayers().get(i);
                             int value = 0;
                             for( Shot shot : this.selectedGame.getShotsPlayer(p)){
-                                if(shot.getCorner() && shot.getSuccess()=="NIECELNY") value++;
+                                if(shot.getCorner() &&(shot.getSuccess()== null ||  shot.getSuccess().contains("NIECELNY"))) value++;
                             }
                             XYChart.Data d = new XYChart.Data(value,p.getName()+" "+p.getSurname());
                             s.getData().add(d);
                     }
                     s.setName("Suma niecelnych rzutów rożnych w meczu " + this.selectedGame.getOponent());
                 } else {
-                    //todo liczymy średnią
+                   //never occur... we cannot count average for single match
                     s.setName("Średnia liczba niecelnych rzutów rożnych w meczu: " + this.selectedGame.getOponent());
                 }
                 break;
@@ -1164,14 +1434,14 @@ public class AnalizeController {
                             Player p = getSelectedPlayers().get(i);
                             int value = 0;
                             for( Shot shot : this.selectedGame.getShotsPlayer(p)){
-                                if(shot.getCorner() && shot.getSuccess()!="NIECELNY") value++;
+                                if(shot.getCorner() && shot.getSuccess()!=null && !shot.getSuccess().contains("NIE")) value++;
                             }
                             XYChart.Data d = new XYChart.Data(value,p.getName()+" "+p.getSurname());
                             s.getData().add(d);
                     }
                     s.setName("Suma celnych rzutów rożnych w meczu " + this.selectedGame.getOponent());
                 } else {
-                    //todo liczymy średnią
+                    //never occur... we cannot count average for single match
                     s.setName("Średnia liczba celnych rzutów rożnych w meczu: " + this.selectedGame.getOponent());
                 }
                 break;
@@ -1185,7 +1455,7 @@ public class AnalizeController {
                     }
                     s.setName("Suma rzutów rożnych w meczu " + this.selectedGame.getOponent());
                 } else {
-                    //todo liczymy średnią
+                    //never occur... we cannot count average for single match
                     s.setName("Średnia liczba rzutów rożnych w meczu: " + this.selectedGame.getOponent());
                 }
                 break;
@@ -1204,14 +1474,23 @@ public class AnalizeController {
                             int value =0;
                             List<Shot> shotL= p.getShotList();
                             for(Shot shot : shotL){
-                                if( shot.getPenalty() && shot.getSuccess()=="NIECELNY") value++;
+                                if( shot.getPenalty() && (shot.getSuccess()== null ||  shot.getSuccess().contains("NIECELNY"))) value++;
                             }
                             XYChart.Data d = new XYChart.Data(value,p.getName()+" "+p.getSurname());
                             s.getData().add(d);
                     }
                     s.setName("Suma niecelnych rzutów karnych we wszystkich mechach");
                 } else {
-                    //todo liczymy średni strzał
+                    for(int i = 0; i<this.getSelectedPlayers().size(); i++){
+                            Player p = getSelectedPlayers().get(i);
+                            int value =0;
+                            List<Shot> shotL= p.getShotList();
+                            for(Shot shot : shotL){
+                                if( shot.getPenalty() && (shot.getSuccess()== null ||  shot.getSuccess().contains("NIECELNY"))) value++;
+                            }
+                            XYChart.Data d = new XYChart.Data(value/(double)p.getParticipatedList().size(),p.getName()+" "+p.getSurname());
+                            s.getData().add(d);
+                    }
                     s.setName("Średnia liczba niecelnych rzutów karnych na mecz");
                 }
                 break;
@@ -1222,14 +1501,23 @@ public class AnalizeController {
                             int value =0;
                             List<Shot> shotL= p.getShotList();
                             for(Shot shot : shotL){
-                                if( shot.getPenalty() && shot.getSuccess()=="NIECELNY") value++;
+                                if( shot.getPenalty() && shot.getSuccess()!=null && !shot.getSuccess().contains("NIE")) value++;
                             }
                             XYChart.Data d = new XYChart.Data(value,p.getName()+" "+p.getSurname());
                             s.getData().add(d);
                     }
                     s.setName("Suma rzutów karnych we wszystkich mechach");
                 } else {
-                    //todo liczymy średni strzał
+                    for(int i = 0; i<this.getSelectedPlayers().size(); i++){
+                            Player p = getSelectedPlayers().get(i);
+                            int value =0;
+                            List<Shot> shotL= p.getShotList();
+                            for(Shot shot : shotL){
+                                if( shot.getPenalty() && shot.getSuccess()!=null && !shot.getSuccess().contains("NIE")) value++;
+                            }
+                            XYChart.Data d = new XYChart.Data(value/(double)p.getParticipatedList().size(),p.getName()+" "+p.getSurname());
+                            s.getData().add(d);
+                    }
                     s.setName("Średnia liczba rzutów karnych na mecz");
                 }
                 break;
@@ -1247,7 +1535,16 @@ public class AnalizeController {
                     }
                     s.setName("Suma celnych rzutów karnych we wszystkich mechach");
                 } else {
-                    //todo liczymy średni strzał
+                    for(int i = 0; i<this.getSelectedPlayers().size(); i++){
+                            Player p = getSelectedPlayers().get(i);
+                            int value =0;
+                            List<Shot> shotL= p.getShotList();
+                            for(Shot shot : shotL){
+                                if( shot.getPenalty() && shot.getSuccess()!="NIECELNY") value++;
+                            }
+                            XYChart.Data d = new XYChart.Data(value/(double)p.getParticipatedList().size(),p.getName()+" "+p.getSurname());
+                            s.getData().add(d);
+                    }
                     s.setName("Średnia liczba celnych rzutów karnych na mecz");
                 }
                 break;
@@ -1264,14 +1561,14 @@ public class AnalizeController {
                             Player p = getSelectedPlayers().get(i);
                             int value = 0;
                             for( Shot shot : this.selectedGame.getShotsPlayer(p)){
-                                if(shot.getPenalty() && shot.getSuccess()=="NIECELNY") value++;
+                                if(shot.getPenalty() && (shot.getSuccess()== null ||  shot.getSuccess().contains("NIECELNY"))) value++;
                             }
                             XYChart.Data d = new XYChart.Data(value,p.getName()+" "+p.getSurname());
                             s.getData().add(d);
                     }
                     s.setName("Suma niecelnych rzutów karnych w meczu " + this.selectedGame.getOponent());
                 } else {
-                    //todo liczymy średnią
+                    //never occur... we cannot count average for single match
                     s.setName("Średnia liczba niecelnych rzutów karnych w meczu: " + this.selectedGame.getOponent());
                 }
                 break;
@@ -1281,14 +1578,14 @@ public class AnalizeController {
                             Player p = getSelectedPlayers().get(i);
                             int value = 0;
                             for( Shot shot : this.selectedGame.getShotsPlayer(p)){
-                                if(shot.getPenalty() && shot.getSuccess()!="NIECELNY") value++;
+                                if(shot.getPenalty() && shot.getSuccess()!=null && !shot.getSuccess().contains("NIE")) value++;
                             }
                             XYChart.Data d = new XYChart.Data(value,p.getName()+" "+p.getSurname());
                             s.getData().add(d);
                     }
                     s.setName("Suma celnych rzutów karnych w meczu " + this.selectedGame.getOponent());
                 } else {
-                    //todo liczymy średnią
+                    //never occur... we cannot count average for single match
                     s.setName("Średnia liczba celnych rzutów karnych w meczu: " + this.selectedGame.getOponent());
                 }
                 break;
@@ -1302,7 +1599,7 @@ public class AnalizeController {
                     }
                     s.setName("Suma rzutów karnych w meczu " + this.selectedGame.getOponent());
                 } else {
-                    //todo liczymy średnią
+                    //never occur... we cannot count average for single match
                     s.setName("Średnia liczba rzutów karnych w meczu: " + this.selectedGame.getOponent());
                 }
                 break;
@@ -1319,14 +1616,23 @@ public class AnalizeController {
                             int value =0;
                             List<Shot> shotL= p.getShotList();
                             for(Shot shot : shotL){
-                                if( shot.getSuccess()=="GOL") value++;
+                                if(shot.getSuccess()!=null && shot.getSuccess()=="GOL") value++;
                             }
                             XYChart.Data d = new XYChart.Data(value,p.getName()+" "+p.getSurname());
                             s.getData().add(d);
                     }
-                    s.setName("SUma goli we wszystkich mechach");
+                    s.setName("Suma goli we wszystkich mechach");
                 } else {
-                    //todo liczymy średni strzał
+                    for(int i = 0; i<this.getSelectedPlayers().size(); i++){
+                            Player p = getSelectedPlayers().get(i);
+                            int value =0;
+                            List<Shot> shotL= p.getShotList();
+                            for(Shot shot : shotL){
+                                if(shot.getSuccess()!=null && shot.getSuccess()=="GOL") value++;
+                            }
+                            XYChart.Data d = new XYChart.Data(value/(double)p.getParticipatedList().size(),p.getName()+" "+p.getSurname());
+                            s.getData().add(d);
+                    }
                     s.setName("Średnia liczba goli na mecz");
                 }
         
@@ -1345,7 +1651,7 @@ public class AnalizeController {
             }
             s.setName("Suma goli w meczu " + this.selectedGame.getOponent());
         } else {
-            //todo liczymy średnią
+            //never occur... we cannot count average for single match
             s.setName("Średnia liczba goli w meczu: " + this.selectedGame.getOponent());
         }
         return s;
@@ -1362,7 +1668,12 @@ public class AnalizeController {
             }
             s.setName("Suma obronionych strzałów we wszystkich mechach");
         } else {
-            //todo liczymy średni strzał
+            for(int i = 0; i<this.getSelectedPlayers().size(); i++){
+                    Player p = getSelectedPlayers().get(i);
+                    int value = p.getDefenseList().size();
+                    XYChart.Data d = new XYChart.Data(value/(double)p.getParticipatedList().size(),p.getName()+" "+p.getSurname());
+                    s.getData().add(d);
+            }
             s.setName("Średnia liczba obronionych strzałów na mecz");
         }
         
@@ -1380,7 +1691,7 @@ public class AnalizeController {
             }
             s.setName("Suma obronionych strzałów w meczu " + this.selectedGame.getOponent());
         } else {
-            //todo liczymy średnią
+            //never occur... we cannot count average for single match
             s.setName("Średnia liczba obronionych strzałów w meczu: " + this.selectedGame.getOponent());
         }
         return s;
@@ -1395,14 +1706,23 @@ public class AnalizeController {
                     int value =0;
                     List<Card> cardL= p.getCardList();
                     for(Card card : cardL){
-                        if( card.getKind()=="ŻÓŁTA") value++;
+                        if(card.getKind()!= null && card.getKind()=="ŻÓŁTA") value++;
                     }
                     XYChart.Data d = new XYChart.Data(value,p.getName()+" "+p.getSurname());
                     s.getData().add(d);
             }
             s.setName("Suma żółtych kartek we wszystkich mechach");
         } else {
-            //todo liczymy średni strzał
+            for(int i = 0; i<this.getSelectedPlayers().size(); i++){
+                    Player p = getSelectedPlayers().get(i);
+                    int value =0;
+                    List<Card> cardL= p.getCardList();
+                    for(Card card : cardL){
+                        if(card.getKind()!= null && card.getKind()=="ŻÓŁTA") value++;
+                    }
+                    XYChart.Data d = new XYChart.Data(value/(double)p.getParticipatedList().size(),p.getName()+" "+p.getSurname());
+                    s.getData().add(d);
+            }
             s.setName("Średnia liczba żółtych kartek na mecz");
         }
         
@@ -1420,7 +1740,7 @@ public class AnalizeController {
             }
             s.setName("Liczba żółtych kartek w meczu " + this.selectedGame.getOponent());
         } else {
-            //todo liczymy średnią
+            //never occur... we cannot count average for single match
             s.setName("Średnia liczba żółtych kartek w meczu: " + this.selectedGame.getOponent());
         }
         return s;
@@ -1435,14 +1755,23 @@ public class AnalizeController {
                     int value =0;
                     List<Card> cardL= p.getCardList();
                     for(Card card : cardL){
-                        if( card.getKind()=="CZERWONA") value++;
+                        if( card.getKind()!= null && card.getKind()=="CZERWONA") value++;
                     }
                     XYChart.Data d = new XYChart.Data(value,p.getName()+" "+p.getSurname());
                     s.getData().add(d);
             }
             s.setName("Suma czerwonych kartek we wszystkich mechach");
         } else {
-            //todo liczymy średni strzał
+            for(int i = 0; i<this.getSelectedPlayers().size(); i++){
+                    Player p = getSelectedPlayers().get(i);
+                    int value =0;
+                    List<Card> cardL= p.getCardList();
+                    for(Card card : cardL){
+                        if( card.getKind()!= null && card.getKind()=="CZERWONA") value++;
+                    }
+                    XYChart.Data d = new XYChart.Data(value/(double)p.getParticipatedList().size(),p.getName()+" "+p.getSurname());
+                    s.getData().add(d);
+            }
             s.setName("Średnia liczba czerwonych kartek na mecz");
         }
         
@@ -1461,7 +1790,7 @@ public class AnalizeController {
             }
             s.setName("Liczba czerwonych kartek w meczu " + this.selectedGame.getOponent());
         } else {
-            //todo liczymy średnią
+            //never occur... we cannot count average for single match
             s.setName("Średnia liczba czerwonych kartek w meczu: " + this.selectedGame.getOponent());
         }
         return s;
