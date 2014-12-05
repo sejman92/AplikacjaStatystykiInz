@@ -1049,8 +1049,20 @@ public class MainController implements Initializable {
                     playersReserveListCollectView.setDisable(true);
                 }          
             }else if(result instanceof Card){
-                if(((Card)result).getKind().equals(ColorOfCard.CZERWONA)){
+                if(((Card)result).getKind().contains("CZ")){
                     lineup.removeFromStartingLineup(((Card)result).getPlayerId());
+                    playersStartListCollectView.setItems(lineup.getStartingLineup());
+                }else if (((Card)result).getKind().contains("ŻÓŁTA")){
+                    int i=0;
+                    for( Card c : game.getCardList()){
+                        if(c.getPlayerId().getId() == selectedPlayerToAction.getId()){
+                            i++;
+                        }
+                    }
+                    if( i==1){
+                        lineup.removeFromStartingLineup(((Card)result).getPlayerId());
+                        playersStartListCollectView.setItems(lineup.getStartingLineup());
+                    }
                 }
             } else if (result instanceof Shot){
                 if(((Shot)result).getSuccess().equals(SuccessOfShot.GOL.toString())){
