@@ -2,9 +2,7 @@
 Obecni: Mateusz Szymañski, p. Henryk Kuczma
 
 W ww. dniu odby³o siê spotkanie przedstawiciela grupy projektowej ( Mateusz Szymañski ) z klientem ( p. Henryk Kuczma ),
-podczas którego zosta³ zaprezentowany aktualny stan prac. Klient wyrazi³ ogólne zadowolenie z tego co zobaczy³.
-Nie zg³asza³ wiêkszych uwag poza tym, ¿e aplikacja wygl¹da trochê "ponuro". Oczywiœcie zosta³ on poinformowany, 
-¿e prace na wygl¹dem finalnym bêd¹ prowadzone w ostatnim sprincie. Stwierdzi³ równie¿, ¿e w widoku "Zarz¹dzaj dru¿ynami"
+podczas którego zosta³ zaprezentowany aktualny stan prac. Klient wyrazi³ ogólne zadowolenie z tego co zobaczy³.Stwierdzi³, ¿e w widoku "Zarz¹dzaj dru¿ynami"
 nie potrzebuje tak du¿ej listy dru¿yn, gdy¿ bêdzie ich zaledwie kilka. Dodatkowo równie¿ zaznaczy³, 
 ¿e mecz mo¿e rozpocz¹æ siê ju¿ w momencie zapisania 7 zawodników do podstawowego sk³adu ( w chwili obecnej warunkiem by³o >11).
 Zaznaczy³ te¿, ¿e nie zale¿y mu na wykresie ko³owym i wola³by, ¿ebyœmy skupili siê na porównywaniu pojedynczych zawodników
