@@ -42,7 +42,6 @@ import fsc.model.enums.Legs;
 import fsc.model.enums.PartsOfBody;
 import fsc.model.enums.Positions;
 import fsc.model.enums.SuccessOfShot;
-import fsc.model.validators.PlayerValidator;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -272,7 +271,9 @@ public class MainController implements Initializable {
    @FXML private CheckBox unsuccessCheckBox;
    @FXML private CheckBox successCheckBox;
    
-   private PlayerValidator pv;
+   
+   
+   
    
    /*
    ANALYZE PARAMS FINISH
@@ -283,7 +284,6 @@ public class MainController implements Initializable {
         loginTabControler = LoginTabController.getInstance(this);
         databaseManager = DatabaseManager.getInstance();
         actionManager = ActionManager.getInstance();
-        pv = PlayerValidator.getInstance();
         // TODO 
         //there i ititialize conection with db and other stuff
         
@@ -558,48 +558,19 @@ public class MainController implements Initializable {
     */
     public void createPlayerBtClick(){
         try{
-            String nameWarning = pv.nameValidator(namePlayerTF.getText());          
-            if(nameWarning != null){
-                operationOnPlayerWarningTeamsManagerLb.setText(nameWarning);
-                return;
-            }
-                               
-            String surnameWarning = pv.surnameValidator(surnamePlayerTF.getText());      
-            if(surnameWarning != null){
-                operationOnPlayerWarningTeamsManagerLb.setText(surnameWarning);
-                return;
-            }
-            
-            if(noPlayerTF.getText() == null || noPlayerTF.getText().equals("") || noPlayerTF.getText().length()>2){
-                operationOnPlayerWarningTeamsManagerLb.setText("Niepoprawny numer zawodnika\n"
-                        + "Poprawna wartość to numer od 1 do 99");
-                return;
-            }
-            
             Player player = new Player();
             player.setOwnerId(owner);
-            
-            player.setName(namePlayerTF.getText());        
+            player.setName(namePlayerTF.getText());
             player.setSurname(surnamePlayerTF.getText());
             player.setNo(Integer.parseInt(noPlayerTF.getText()));
             if(positionsLV.getSelectionModel().getSelectedItem() != null)
                 player.setRole(positionsLV.getSelectionModel().getSelectedItem().toString());
-            else{
-                operationOnPlayerWarningTeamsManagerLb.setText("Brak zaznaczonej pozycji zawodnika");
-                return;  
-            }
-            
-            String preferLegWarning = "";
-            
+            else
+                return;       
             if(leftFootCheckBox.isSelected())
                 player.setPreferedLeg(Legs.LEWA.toString());
-            else{ 
+            else 
                 player.setPreferedLeg(Legs.PRAWA.toString());
-                if(rightFootCheckBox.isSelected() == false){
-                    preferLegWarning = "Brak preferowanej nogi zawodnika\n"
-                            + "Oznaczono domyślnie prawą nogą jako preferowaną";
-                }
-            }
             player.setTeamId(selectedTeam);
             player.setOwnerId(owner);
             player.setActive(KindsOfActive.AKTYWNY);
@@ -615,86 +586,43 @@ public class MainController implements Initializable {
             }
             //playersListViewTeamManager.setItems(databaseManager.findPlayersFromTeam(selectedTeam));
             selectedPlayer = getSelectedPlayerInTeamsManager();
-            
-            if(preferLegWarning.equals(""))
-                operationOnPlayerWarningTeamsManagerLb.setText("Utworzono zawodnika poprawnie");
-            else
-                operationOnPlayerWarningTeamsManagerLb.setText(preferLegWarning);
         }
         catch(Exception e){
-            operationOnPlayerWarningTeamsManagerLb.setText("Bład w trakcie próby stworzenia zawodnika");
+            System.out.println("wyjatek createPlayer");
+            System.out.println(e.getCause());
         }
     }
     /*
     When we choose player and want edit his data
     */
     public void editSelectedPlayerBtClick(){
-        try{
-            if(noPlayerTF.getText() == null || noPlayerTF.getText().equals("") || noPlayerTF.getText().length()>2){
-                operationOnPlayerWarningTeamsManagerLb.setText("Niepoprawny numer zawodnika\n"
-                        + "Poprawna wartość to numer od 1 do 99");
-                return;
-            }
-            
-            Integer newNo = Integer.parseInt(noPlayerTF.getText());
-            
-            if(newNo.equals(selectedPlayer.getNo()) == false && databaseManager.getPlayersNumbersFromTeam(selectedPlayer.getTeamId()).contains(newNo)){
-                operationOnPlayerWarningTeamsManagerLb.setText("Zawodnik z numerem " + newNo + " już występuje w zespole");
-                return;
-            }
-            
-            String nameWarning = pv.nameValidator(namePlayerTF.getText());          
-            if(nameWarning != null){
-                operationOnPlayerWarningTeamsManagerLb.setText(nameWarning);
-                return;
-            }
-                               
-            String surnameWarning = pv.nameValidator(surnamePlayerTF.getText());      
-            if(surnameWarning != null){
-                operationOnPlayerWarningTeamsManagerLb.setText(surnameWarning);
-                return;
-            }
-            
+        selectedPlayer = getSelectedPlayerInTeamsManager();
+        if(selectedPlayer != null){
             selectedPlayer.setName(namePlayerTF.getText());
             selectedPlayer.setSurname(surnamePlayerTF.getText());
             
-            selectedPlayer.setRole(positionsLV.getSelectionModel().getSelectedItem().toString());
+            Integer formerNo = selectedPlayer.getNo();
             
-            String preferLegWarning = "";
+            selectedPlayer.setNo(Integer.parseInt(noPlayerTF.getText()));
+            selectedPlayer.setRole(positionsLV.getSelectionModel().getSelectedItem().toString());
             
             if(leftFootCheckBox.isSelected())
                 selectedPlayer.setPreferedLeg(Legs.LEWA.toString());
-            else{ 
-                if(rightFootCheckBox.isSelected())
-                    selectedPlayer.setPreferedLeg(Legs.PRAWA.toString());
-                else{
-                    preferLegWarning = "Brak preferowanej nogi zawodnika\n"
-                            + "Dokonano aktualizacji, nie zmieniając preferowanej dotychczas nogi";
-                }
+            else if(rightFootCheckBox.isSelected())
+                selectedPlayer.setPreferedLeg(Legs.PRAWA.toString());
+            
+            if(formerNo.equals(selectedPlayer.getNo()) == false && databaseManager.getPlayersNumbersFromTeam(selectedPlayer.getTeamId()).contains(selectedPlayer.getNo())){
+                operationOnPlayerWarningTeamsManagerLb.setText("Zawodnik z numerem " + selectedPlayer.getNo() + " już występuje w zespole");
+                selectedPlayer = (Player) databaseManager.findPlayer(selectedPlayer.getId());
+                return;
             }
-            
-            selectedPlayer.setNo(newNo);
-            
-            if(preferLegWarning.equals(""))
-                operationOnPlayerWarningTeamsManagerLb.setText("Zaktualizowano zawodnika poprawnie");
-            else
-                operationOnPlayerWarningTeamsManagerLb.setText(preferLegWarning);
             
             databaseManager.saveEntityElement(selectedPlayer);
             areNotSelectedToLineup.remove(selectedPlayer); //remove selected item from listView
             areNotSelectedToLineup.add(selectedPlayer); //add changed item to list :D
             playersListViewTeamManager.setItems(areNotSelectedToLineup);
             
-            playersListViewTeamManager.getSelectionModel().clearSelection();
-            playersListViewTeamManager.getSelectionModel().select(selectedPlayer);
-            selectedPlayer = getSelectedPlayerInTeamsManager();
-            
             //playersListViewTeamManager.setItems(databaseManager.findPlayersFromTeam(selectedTeam));
-        }catch(NumberFormatException ex){
-            operationOnPlayerWarningTeamsManagerLb.setText("Bledny numer zawodnika");
-        }
-        catch(Exception ex2){
-            operationOnPlayerWarningTeamsManagerLb.setText("Blad w aktualizacji zawodnika");
         }
     }
     /*
@@ -716,7 +644,6 @@ public class MainController implements Initializable {
         playersListViewTeamManager.setItems(areNotSelectedToLineup);
         
         selectedFormerPlayer = getSelectedFormerPlayerInTeamsManager();
-        operationOnPlayerWarningTeamsManagerLb.setText("Przywrócono zawodnika do drużyny");
     }
     /*
     when we select player and want delete him
@@ -1301,13 +1228,9 @@ public class MainController implements Initializable {
         this.AC.setChartTitle(AC.getSelectedCriteria().toString());
 
     }*/
-    public void teamsManagerTabClick(){
-        operationOnPlayerWarningTeamsManagerLb.setText("");
-    }
     /*
     There we initialize params for analyze views
     */
-        
     public void analizeTabClick(){
         teamsCBAnalize.setItems(databaseManager.getTeams(owner));
         getSelectedTeamAnalize();
