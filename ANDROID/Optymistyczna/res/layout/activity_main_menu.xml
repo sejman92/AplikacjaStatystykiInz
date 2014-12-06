@@ -10,44 +10,13 @@
     tools:context=".MainMenuActivity" >
 
     <Button
-        android:id="@+id/buttonUstawienia"
+        android:id="@+id/buttonDruzyny"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
-        android:onClick="buttonUstawienia"
-        android:text="@string/settings"/>
-
-    <Button
-        android:id="@+id/buttonDruzyny"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/buttonUstawienia"
-        android:layout_centerHorizontal="true"
         android:layout_marginBottom="35dp"
         android:onClick="buttonDruzyny"
-        android:text="@string/teams"/>
-
-    <EditText
-        android:id="@+id/przycisk"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_alignTop="@+id/button1"
-        android:hint="nidfdfc"
-        android:ems="10" >
-
-        
-    </EditText>
-
-    <Button
-        android:id="@+id/button1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/buttonUstawienia"
-        android:layout_marginTop="26dp"
-        android:layout_toLeftOf="@+id/przycisk"
-        android:onClick="klik"
-        android:text="ok" />
+        android:text="@string/teams" />
 
 </RelativeLayout>

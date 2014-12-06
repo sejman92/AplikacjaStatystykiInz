@@ -30,6 +30,7 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
         android:layout_alignTop="@+id/checkBox1"
+        android:layout_toRightOf="@+id/textView1"
         android:ems="10"
         android:hint="komentarz"
         android:inputType="textMultiLine" >
@@ -44,5 +45,14 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
         android:text="żółta" />
+
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/editText1"
+        android:layout_alignBottom="@+id/editText1"
+        android:layout_centerHorizontal="true"
+        android:text=" " />
 
 </RelativeLayout>

@@ -22,6 +22,7 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
         android:layout_alignTop="@+id/checkBox1"
+        android:layout_toRightOf="@+id/checkBox4"
         android:ems="10"
         android:hint="komentarz"
         android:inputType="textMultiLine" >

@@ -1240,7 +1240,7 @@ public class DatabaseManager extends SQLiteOpenHelper{
 		Cursor cursor=null;
 		Swap swap=null;
 		String[] args={String.valueOf(id)};
-		String[] columns={"ID","game_id","playerin_id","player_out_id","time","injury_id","comment"};
+		String[] columns={"ID","game_id","player_in_id","player_out_id","time","injury_id","comment"};
 		try
 		{
 			cursor = db.query("Swap", columns, "ID=?", args,null, null, null);

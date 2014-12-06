@@ -23,7 +23,7 @@ public class MainMenuActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main_menu);
-		edit = (EditText) findViewById(R.id.przycisk);
+		//edit = (EditText) findViewById(R.id.przycisk);
 		Focus.main_players_for_focused_game= new LinkedList<Player>();
 		Focus.backup_players_for_focused_game= new LinkedList<Player>();
 		Focus.swaped_players_for_focused_game= new LinkedList<Player>();

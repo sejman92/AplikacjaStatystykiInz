@@ -32,6 +32,7 @@ public class ChoseGameForCompareActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_chose_game_for_compare);
 		refreshGameList();
+		setTitle("Mecz do porównania");
 	}
 
 	public void refreshGameList()
