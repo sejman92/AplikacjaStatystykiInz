@@ -50,7 +50,7 @@ public class PlayerStatsActivity extends Activity {
 		missed_shots.setText(String.valueOf(Focus.focused_player.getMissedShots()));
 		penaltys.setText(String.valueOf(Focus.focused_player.getPenaltys()));
 		
-		for(Passing p : Focus.focused_player.getPassings())
+		/*for(Passing p : Focus.focused_player.getPassings())
 		{
 			if(p.getAssist()==1)
 				assists_i++;
@@ -62,7 +62,7 @@ public class PlayerStatsActivity extends Activity {
 				good_passings_i++;
 			else
 				bad_passings_i++;
-		}
+		}*/
 		
 		assists.setText(String.valueOf(Focus.focused_player.getAssists()));
 		corners.setText(String.valueOf(Focus.focused_player.getCorners()));
@@ -70,13 +70,13 @@ public class PlayerStatsActivity extends Activity {
 		good_passings.setText(String.valueOf(Focus.focused_player.getGoodPassings()));
 		bad_passings.setText(String.valueOf(Focus.focused_player.getBadPassings()));
 		
-		for(Card c : Focus.focused_player.getCards())
+		/*for(Card c : Focus.focused_player.getCards())
 		{
 			if(c.getKind().equals("yellow"))
 				yellow_cards_i++;
 			else
 				red_cards_i++;
-		}
+		}*/
 		
 		yellow_cards.setText(String.valueOf(Focus.focused_player.getYellowCards()));
 		red_cards.setText(String.valueOf(Focus.focused_player.getRedCards()));

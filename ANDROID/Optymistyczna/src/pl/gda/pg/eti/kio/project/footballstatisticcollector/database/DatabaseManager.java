@@ -47,6 +47,7 @@ public class DatabaseManager extends SQLiteOpenHelper{
 				"name TEXT,"+
 				"surname TEXT,"+
 				"number INTEGER,"+
+				"active INTEGER,"+
 				"role TEXT,"+
 				"team_id INTEGER"+
 				")";
@@ -318,10 +319,12 @@ public class DatabaseManager extends SQLiteOpenHelper{
 		{
 			cursor.close();
 		}
+		Log.d("player", "pobrano zawodnika");
 		return player;
 	}
 	public void addPlayer(String name, String surname, int no, String role, int id_team)
 	{
+		int id;
 		SQLiteDatabase db = getWritableDatabase();
 		try
 		{
@@ -331,13 +334,15 @@ public class DatabaseManager extends SQLiteOpenHelper{
 			values.put("number", no);
 			values.put("role", role);
 			values.put("team_id", id_team);
-			db.insertOrThrow("Player", null, values);
+			id=(int)db.insertOrThrow("Player", null, values);
+			if(id>0)
+				Log.d("player", "dodano "+name);
+			else
+				Log.d("player", "ujemne id");
 		}catch(SQLException e)
 		{
 			Log.d("blad", e.toString());
 		}
-		
-		Log.d("Baza","dodano rekord do zawodnika o nazwie"+name);
 	}
 	public void deletePlayerById(int id)
 	{
@@ -390,7 +395,10 @@ public class DatabaseManager extends SQLiteOpenHelper{
 			values.put("comment",game.getComment());
 			game_id=(int) db.insertOrThrow("Game", null, values);
 			if(game_id==-1)
+			{
+				Log.d("game", "id -1");
 				throw new Exception("game_id == -1");
+			}
 			Log.d("Baza Game", "dodano gre");
 			
 		}catch(SQLException e)
@@ -435,7 +443,7 @@ public class DatabaseManager extends SQLiteOpenHelper{
 				values.put("game_id", game_id);
 				values.put("player_id",swaped_players_list.get(i).getId());
 				db.insertOrThrow("Participated", null, values);
-				Log.d("Baza Game", "dodano graczy do gry");
+				Log.d("Baza Game", "dodano zmienionego gracza do gry");
 			}
 		}catch(SQLException e)
 		{
@@ -581,7 +589,10 @@ public class DatabaseManager extends SQLiteOpenHelper{
 			values.put("corner", corner);
 			values.put("freekick", freekick);
 			id=(int)db.insertOrThrow("Shot", null, values);
-			Log.d("shot", "dodano rekord");
+			if(id<1)
+				Log.d("shot", "ujemne id");
+			else
+				Log.d("shot", "dodano rekord");
 		}catch(SQLException e)
 		{
 			Log.d("blad shot", e.toString());
@@ -671,7 +682,10 @@ public class DatabaseManager extends SQLiteOpenHelper{
 			values.put("assist", assist);
 			values.put("freekick",freekick);
 			id=(int)db.insertOrThrow("Passing", null, values);
-			Log.d("passing", "dodano rekord");
+			if(id<1)
+				Log.d("passing", "ujemne id");
+			else
+				Log.d("passing", "dodano rekord");
 		}catch(SQLException e)
 		{
 			Log.d("blad passing", e.toString());
@@ -757,7 +771,10 @@ public class DatabaseManager extends SQLiteOpenHelper{
 			values.put("time",time);
 			values.put("comment",comment);
 			id=(int)db.insertOrThrow("Defense", null, values);
-			Log.d("defense", "dodano rekord");
+			if(id<1)
+				Log.d("defense", "ujemne id");
+			else
+				Log.d("defense", "dodano rekord");
 		}catch(SQLException e)
 		{
 			Log.d("blad defense", e.toString());
@@ -844,7 +861,10 @@ public class DatabaseManager extends SQLiteOpenHelper{
 			values.put("comment",comment );
 			values.put("kind",kind);
 			id = (int)db.insertOrThrow("Card", null, values);
-			Log.d("card", "dodano rekord");
+			if(id<1)
+				Log.d("card", "ujemne id");
+			else
+				Log.d("card", "dodano rekord");
 		}catch(SQLException e)
 		{
 			Log.d("blad card", e.toString());
@@ -933,7 +953,10 @@ public class DatabaseManager extends SQLiteOpenHelper{
 			values.put("card_id",card_id);
 			values.put("injury_id",injury_id);
 			id=(int)db.insertOrThrow("Faul", null, values);
-			Log.d("faul", "dodano rekord");
+			if(id<1)
+				Log.d("faul", "ujemny id");
+			else
+				Log.d("faul", "dodano rekord");
 		}catch(SQLException e)
 		{
 			Log.d("blad", e.toString());
@@ -1022,7 +1045,10 @@ public class DatabaseManager extends SQLiteOpenHelper{
 			values.put("time", time);
 			values.put("comment",comment);
 			id=(int)db.insertOrThrow("Injury", null, values);
-			Log.d("injury", "dodano rekord");
+			if(id<1)
+				Log.d("injury", "ujemny id");
+			else
+				Log.d("injury", "dodano rekord");
 		}catch(SQLException e)
 		{
 			Log.d("blad", e.toString());
@@ -1108,7 +1134,10 @@ public class DatabaseManager extends SQLiteOpenHelper{
 			values.put("time", time);
 			values.put("comment",comment);
 			id = (int)db.insertOrThrow("Injury", null, values);
-			Log.d("takeover", "dodano rekord");
+			if(id<1)
+				Log.d("takoever", "ujemne id");
+			else
+				Log.d("takeover", "dodano rekord");
 		}catch(SQLException e)
 		{
 			Log.d("blad takeover", e.toString());
@@ -1195,7 +1224,10 @@ public class DatabaseManager extends SQLiteOpenHelper{
 			values.put("time", time);
 			values.put("comment",comment);
 			id = (int)db.insertOrThrow("Swap", null, values);
-			Log.d("dwap","dodano rekord");
+			if(id<1)
+				Log.d("swap", "ujemne id");
+			else
+				Log.d("dwap","dodano rekord");
 		}catch(SQLException e)
 		{
 			Log.d("blad", e.toString());
@@ -1287,11 +1319,11 @@ public class DatabaseManager extends SQLiteOpenHelper{
 			db.execSQL(query);
 			query="DELETE FROM Takeover";
 			db.execSQL(query);
+			query="DELETE FROM Game";
+			db.execSQL(query);
 			query="DELETE FROM Played";
 			db.execSQL(query);
 			query="DELETE FROM Participated";
-			db.execSQL(query);
-			query="DELETE FROM Game";
 			db.execSQL(query);
 			Log.d("poszlo","poszlo");
 		}catch(SQLException e)
