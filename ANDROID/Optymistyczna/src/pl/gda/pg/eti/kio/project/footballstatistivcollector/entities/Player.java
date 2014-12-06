@@ -26,7 +26,7 @@ public class Player {
 	private List<Shot> shots;
 	private List<Takeover> takeovers;
 	
-	public Player(int id, String name, String surname, int nr, String role, int team_id)
+	public Player(int id, String name, String surname, int nr, String role, int team_id)//, int active)
 	{
 		this.id=id;
 		this.name=name;
@@ -169,6 +169,9 @@ public class Player {
 		for(Passing p : passings)
 			if(p.getFreekick()==1)
 				freekicks++;
+		for(Shot s :shots)
+			if(s.getFreekick()==1)
+				freekicks++;
 		return freekicks;
 	}
 	public int getGoodPassings()
@@ -183,7 +186,7 @@ public class Player {
 	{
 		int passing=0;
 		for(Passing p : passings)
-			if(p.getSuccess()==0)
+			if(p.getSuccess()==0 && p.getFreekick()!=1 && p.getCorner()!=1)
 				passing++;
 		return passing;
 	}
@@ -266,6 +269,9 @@ public class Player {
 		for(Passing p : passings)
 			if(p.getFreekick()==1 && p.getGame_id()==game_id)
 				freekicks++;
+		for(Shot s : shots)
+			if(s.getFreekick()==1 && s.getGame_id()==game_id)
+				freekicks++;
 		return freekicks;
 	}
 	public int getGoodPassingsForGame(int game_id)
@@ -280,7 +286,7 @@ public class Player {
 	{
 		int passing=0;
 		for(Passing p : passings)
-			if(p.getSuccess()==0 && p.getGame_id()==game_id)
+			if(p.getSuccess()==0 && p.getGame_id()==game_id && p.getFreekick()!=1 && p.getCorner()!=1)
 				passing++;
 		return passing;
 	}
@@ -324,5 +330,4 @@ public class Player {
 				injury++;
 		return injury;
 	}
-
 }

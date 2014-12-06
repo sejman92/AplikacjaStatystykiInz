@@ -322,11 +322,11 @@ public class GameActivity extends Activity {
 					success=0;
 	        	idp=Focus.main_players_for_focused_game.get(position).getId();
 	        	comm=edit.getText().toString();
-	        	Passing passing = new Passing(idp, (int)ctime/-60000+1, success, comm);
+	        	Passing passing = new Passing(idp, time(), success, comm);
 	        	if(box2.isChecked())
 					passing.setAssist(1);
 	    		action_list.add(passing);
-	    		Log.d("passing", idp+" "+String.valueOf(ctime/-60000+1)+" "+success+" "+comm);
+	    		Log.d("passing", idp+" "+String.valueOf(time())+" "+success+" "+comm);
 	    		dialog.dismiss();
 	        }
 		};
@@ -358,11 +358,11 @@ public class GameActivity extends Activity {
 				Injury injury=null;
 				int idpo,idpv;
 				if(box.isChecked())
-					card = new Card(Focus.main_players_for_focused_game.get(position).getId(),(int)ctime/-60000+1,"yellow",edit.getText().toString());
+					card = new Card(Focus.main_players_for_focused_game.get(position).getId(),time(),"yellow",edit.getText().toString());
 				if(box4.isChecked())
-					card = new Card(Focus.main_players_for_focused_game.get(position).getId(),(int)ctime/-60000+1,"red",edit.getText().toString());
+					card = new Card(Focus.main_players_for_focused_game.get(position).getId(),time(),"red",edit.getText().toString());
 				if(box2.isChecked())
-					injury = new Injury(Focus.main_players_for_focused_game.get(position).getId(), (int)ctime/-60000+1, edit.getText().toString());
+					injury = new Injury(Focus.main_players_for_focused_game.get(position).getId(), time(), edit.getText().toString());
 				if(!box3.isChecked())
 				{
 					idpo=Focus.main_players_for_focused_game.get(position).getId();
@@ -374,12 +374,12 @@ public class GameActivity extends Activity {
 					idpo=0;
 				}
 				
-	        	Faul faul = new Faul(idpv, idpo, (int)ctime/-60000+1, edit.getText().toString(), card, injury);
+	        	Faul faul = new Faul(idpv, idpo, time(), edit.getText().toString(), card, injury);
 	    		action_list.add(faul);
 	    		if(box.isChecked())
-	    			Log.d("faul", idpo+" "+edit.getText().toString()+" "+String.valueOf(ctime/-60000+1)+" "+card.getKind());
+	    			Log.d("faul", idpo+" "+edit.getText().toString()+" "+String.valueOf(time())+" "+card.getKind());
 	    		if(box2.isChecked())
-	    			Log.d("faul", idpo+" "+edit.getText().toString()+" "+String.valueOf(ctime/-60000+1)+" "+String.valueOf(injury.getPlayer_id()));
+	    			Log.d("faul", idpo+" "+edit.getText().toString()+" "+String.valueOf(time())+" "+String.valueOf(injury.getPlayer_id()));
 	    		dialog.dismiss();
 	        }
 		};
@@ -440,7 +440,7 @@ public class GameActivity extends Activity {
 			public void onClick(View arg0) {
 				if(to_swap==-1 || swaped==-1)
 				{
-					Log.d("no swap", String.valueOf(to_swap)+" "+String.valueOf(swaped)+" "+String.valueOf(ctime/-60000+1));
+					Log.d("no swap", String.valueOf(to_swap)+" "+String.valueOf(swaped)+" "+String.valueOf(time()));
 					to_swap=-1;
 					swaped=-1;
 					dialog.dismiss();
@@ -454,11 +454,11 @@ public class GameActivity extends Activity {
 					Focus.removePlayerFromListForGame(Focus.main_players_for_focused_game.get(to_swap).getId(), Focus.main_players_for_focused_game);
 					Focus.main_players_for_focused_game.add(Focus.backup_players_for_focused_game.get(swaped));
 					Focus.removePlayerFromListForGame(Focus.backup_players_for_focused_game.get(swaped).getId(), Focus.backup_players_for_focused_game);
-					Swap swap = new Swap(idi, ido, (int)ctime/-60000+1);
+					Swap swap = new Swap(idi, ido, time());
 					action_list.add(swap);
 					swaped=0;
 					to_swap=0;
-					Log.d("swap", String.valueOf(swap.getPlayer_in_id())+" "+String.valueOf(swap.getPlayer_out_id())+" "+String.valueOf(ctime/-60000+1));
+					Log.d("swap", String.valueOf(swap.getPlayer_in_id())+" "+String.valueOf(swap.getPlayer_out_id())+" "+String.valueOf(time()));
 					dialog.dismiss();
 					refreshPlayerLists();
 				}
@@ -504,19 +504,19 @@ public class GameActivity extends Activity {
 	        	{
 	        		scored_goals++;
 	        		score.setText(String.valueOf(scored_goals)+":"+String.valueOf(lost_goals));
-	        		shot = new Shot(idp, comm, (int)ctime/-60000+1, "goal");
+	        		shot = new Shot(idp, comm,time(), "goal");
 	        	}
 	        	else
 	        	{
-	        		shot = new Shot(idp, comm, (int)ctime/-60000+1, "saved");
+	        		shot = new Shot(idp, comm,time(), "saved");
 	        	}
 
 	        	shot.setPenalty(1);
 	    		action_list.add(shot);
 	    		if(success==0)
-	    			Log.d("penalty", idp+" "+String.valueOf(ctime/-60000+1)+comm+" "+String.valueOf(success));
+	    			Log.d("penalty", idp+" "+String.valueOf(time())+comm+" "+String.valueOf(success));
 	    		else
-	    			Log.d("penalty", idp+" "+String.valueOf(ctime/-60000+1)+comm+" "+String.valueOf(success)+" "+shot.getSucces());
+	    			Log.d("penalty", idp+" "+String.valueOf(time())+comm+" "+String.valueOf(success)+" "+shot.getSucces());
 	    		dialog.dismiss();
 	        }
 		};
@@ -550,11 +550,11 @@ public class GameActivity extends Activity {
 					success=0;
 	        	idp=Focus.main_players_for_focused_game.get(position).getId();
 	        	comm=edit.getText().toString();
-	        	Passing passing = new Passing(idp, (int)ctime/-60000+1,success, comm);
+	        	Passing passing = new Passing(idp, time(),0, comm);
 	        	passing.setAssist(success);
 	        	passing.setCorner(1);
 	    		action_list.add(passing);
-	    		Log.d("corner", idp+" "+String.valueOf(ctime/-60000+1)+comm);
+	    		Log.d("corner", idp+" "+String.valueOf(time())+comm);
 	    		dialog.dismiss();
 	        }
 		};
@@ -596,7 +596,7 @@ public class GameActivity extends Activity {
 				
 				
 	        	idp=Focus.main_players_for_focused_game.get(position).getId();
-	        	Card card = new Card(idp, (int)ctime/-60000+1, edit.getText().toString(), kind );
+	        	Card card = new Card(idp, time(), kind, edit.getText().toString() );
 	    		action_list.add(card);
 	    		if(kind.equals("red"))
 	    		{
@@ -604,7 +604,7 @@ public class GameActivity extends Activity {
 					Focus.removePlayerFromListForGame(Focus.main_players_for_focused_game.get(position).getId(), Focus.main_players_for_focused_game);
 					Log.d("removed player","removed from list");
 	    		}
-	    		Log.d("card", idp+" "+edit.getText().toString()+" "+String.valueOf(ctime/-60000+1)+" "+kind);
+	    		Log.d("card", idp+" "+edit.getText().toString()+" "+String.valueOf(time())+" "+kind);
 	    		
 	    		dialog.dismiss();
 	        }
@@ -633,9 +633,9 @@ public class GameActivity extends Activity {
 				String comm;
 	        	idp=Focus.main_players_for_focused_game.get(position).getId();
 	        	comm=edit.getText().toString();
-	        	Takeover takeover = new Takeover(idp, (int)ctime/-60000+1, comm);
+	        	Takeover takeover = new Takeover(idp, time(), comm);
 	    		action_list.add(takeover);
-	    		Log.d("takeover", idp+" "+String.valueOf(ctime/-60000+1)+comm);
+	    		Log.d("takeover", idp+" "+String.valueOf(time())+comm);
 	    		dialog.dismiss();
 	        }
 		};
@@ -663,9 +663,9 @@ public class GameActivity extends Activity {
 				String comm;
 	        	idp=Focus.main_players_for_focused_game.get(position).getId();
 	        	comm=edit.getText().toString();
-	        	Defense defense = new Defense(idp, (int)ctime/-60000+1, comm);
+	        	Defense defense = new Defense(idp, time(), comm);
 	    		action_list.add(defense);
-	    		Log.d("defense", idp+" "+String.valueOf(ctime/-60000+1)+comm);
+	    		Log.d("defense", idp+" "+String.valueOf(time())+comm);
 	    		dialog.dismiss();
 	        }
 		};
@@ -711,30 +711,33 @@ public class GameActivity extends Activity {
 	        	
 	        	if(goal==1)
 	        	{
-	        		shot = new Shot(idp, comm,(int)ctime/-60000+1,"goal" );
+	        		shot = new Shot(idp, comm,time(),"goal" );
 	        		shot.setFreekick(1);
 	        		scored_goals++;
 	        		action_list.add(shot);
 	        	}
 	        	else
 	        	{
-	        		shot = new Shot(idp, comm,(int)ctime/-60000+1,"goal" );
-	        		shot.setFreekick(0);
-	        		action_list.add(shot);
-	        	}
-	        	if(assist==1)
-	        	{
-	        		Passing passing = new Passing(idp,(int)ctime/-60000+1,0,comm);
-	        		passing.setFreekick(1);
-	        		passing.setAssist(assist);
-	        		action_list.add(passing);
+		        	if(assist==1)
+		        	{
+		        		Passing passing = new Passing(idp,time(),0,comm);
+		        		passing.setFreekick(1);
+		        		passing.setAssist(assist);
+		        		action_list.add(passing);
+		        	}
+		        	else
+		        	{
+		        		Passing passing = new Passing(idp,time(),0,comm);
+		        		passing.setFreekick(1);
+		        		action_list.add(passing);
+		        	}
 	        	}
 	        	
 	    		
 	    		if(goal==0)
-	    			Log.d("freekick", idp+" "+String.valueOf(ctime/-60000+1)+comm+" "+String.valueOf(goal));
+	    			Log.d("freekick", idp+" "+String.valueOf(time())+comm+" "+String.valueOf(goal));
 	    		else
-	    			Log.d("freekick", idp+" "+String.valueOf(ctime/-60000+1)+comm+" "+String.valueOf(goal)+" "+shot.getSucces());
+	    			Log.d("freekick", idp+" "+String.valueOf(time())+comm+" "+String.valueOf(goal)+" "+shot.getSucces());
 	    		dialog.dismiss();
 	        }
 		};
@@ -786,9 +789,9 @@ public class GameActivity extends Activity {
 				String comm;
 	        	idp=Focus.main_players_for_focused_game.get(position).getId();
 	        	comm=edit.getText().toString();
-	        	Injury injury = new Injury(idp, (int)ctime/-60000+1, comm);
+	        	Injury injury = new Injury(idp, time(), comm);
 	    		action_list.add(injury);
-	    		Log.d("injury", idp+" "+String.valueOf(ctime/-60000+1)+comm);
+	    		Log.d("injury", idp+" "+String.valueOf(time())+comm);
 	    		dialog.dismiss();
 	        }
 		};
