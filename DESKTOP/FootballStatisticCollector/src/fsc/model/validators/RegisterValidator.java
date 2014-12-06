@@ -12,8 +12,8 @@ package fsc.model.validators;
 public class RegisterValidator {
     
     private static RegisterValidator instance;
-    public final int LOGIN_AND_PASSWORD_LENGTH = 4;
-    public final int NAME_AND_SURNAME_LENGTH = 2;
+    private final int LOGIN_AND_PASSWORD_LENGTH = 4;
+    private final int NAME_AND_SURNAME_LENGTH = 2;
    
     private final String FIELD_EMPTY = "Pole nie może być puste";    
     private final String LOGIN_TOO_SHORT = "Login musi mieć minimum " + LOGIN_AND_PASSWORD_LENGTH +" znaki";

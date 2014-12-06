@@ -208,6 +208,7 @@ public class DatabaseManager {
         for(Player p: findPlayersFromTeam(team)){
             numbers.add(p.getNo());
         }
+        
         return numbers;
     }
 
