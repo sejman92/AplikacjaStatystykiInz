@@ -1143,7 +1143,7 @@
                   </VBox>
                   <VBox layoutX="500.0" layoutY="93.0" prefHeight="200.0" prefWidth="257.0">
                      <children>
-                        <CheckBox fx:id="selectedPlayersCheckBox" disable="true" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#selectedPlayersCheckBoxClick" text="Wybrani zawodnicy" VBox.vgrow="ALWAYS">
+                        <CheckBox fx:id="selectedPlayersCheckBox" disable="true" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#selectedPlayersCheckBoxClick" selected="true" text="Wybrani zawodnicy" VBox.vgrow="ALWAYS">
                            <font>
                               <Font size="15.0" />
                            </font>
