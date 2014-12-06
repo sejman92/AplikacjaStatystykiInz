@@ -166,7 +166,7 @@ public class GameActivity extends Activity {
 		Game game = new Game(date, place, lost_goals, scored_goals, enemy_name,comment);
 		try
 		{
-			game_id=dbm.addGame(game, Focus.main_players_for_focused_game, Focus.backup_players_for_focused_game, Focus.focused_team.getId());
+			game_id=dbm.addGame(game, Focus.main_players_for_focused_game, Focus.swaped_players_for_focused_game, Focus.focused_team.getId());
 		}catch(Exception e)
 		{
 			Toast.makeText(this, "Wyst¹pi³ b³¹d nie uda³o siê zapisaæ gry", Toast.LENGTH_LONG).show();
@@ -363,7 +363,7 @@ public class GameActivity extends Activity {
 					card = new Card(Focus.main_players_for_focused_game.get(position).getId(),time(),"red",edit.getText().toString());
 				if(box2.isChecked())
 					injury = new Injury(Focus.main_players_for_focused_game.get(position).getId(), time(), edit.getText().toString());
-				if(!box3.isChecked())
+				if(box3.isChecked())
 				{
 					idpo=Focus.main_players_for_focused_game.get(position).getId();
 					idpv=0;
@@ -505,10 +505,12 @@ public class GameActivity extends Activity {
 	        		scored_goals++;
 	        		score.setText(String.valueOf(scored_goals)+":"+String.valueOf(lost_goals));
 	        		shot = new Shot(idp, comm,time(), "goal");
+	        		shot.setPenalty(1);
 	        	}
 	        	else
 	        	{
 	        		shot = new Shot(idp, comm,time(), "saved");
+	        		shot.setPenalty(1);
 	        	}
 
 	        	shot.setPenalty(1);

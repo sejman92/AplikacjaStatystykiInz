@@ -14,8 +14,7 @@ import android.widget.TextView;
 
 public class PlayerStatsActivity extends Activity {
 
-	private TextView played_games,goals,missed_shots,assists,good_passings, bad_passings,penaltys, corners, freekick, fauls, injuries, red_cards, yellow_cards,fauls_on_player;
-	private int goals_i=0, missed_shots_i=0,assists_i=0, good_passings_i=0, bad_passings_i=0, penaltys_i=0, corners_i=0, freekicks_i=0, red_cards_i=0, yellow_cards_i=0;  
+	private TextView played_games,goals,missed_shots,assists,good_passings, bad_passings,penaltys, corners, freekick, fauls, injuries, red_cards, yellow_cards,fauls_on_player,defenses,takeovers;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -37,7 +36,8 @@ public class PlayerStatsActivity extends Activity {
 		injuries= (TextView) findViewById(R.id.textView24);
 		red_cards= (TextView) findViewById(R.id.textView20);
 		yellow_cards= (TextView) findViewById(R.id.textView18);
-
+		takeovers=(TextView) findViewById(R.id.textView30);
+		defenses=(TextView) findViewById(R.id.textView32);
 		
 		played_games.setText(String.valueOf(Focus.focused_player.getGames().size()));
 		fauls.setText(String.valueOf(Focus.focused_player.getFaulsByPlayer()));
@@ -48,38 +48,16 @@ public class PlayerStatsActivity extends Activity {
 		
 		goals.setText(String.valueOf(Focus.focused_player.getGoals()));
 		missed_shots.setText(String.valueOf(Focus.focused_player.getMissedShots()));
-		penaltys.setText(String.valueOf(Focus.focused_player.getPenaltys()));
-		
-		/*for(Passing p : Focus.focused_player.getPassings())
-		{
-			if(p.getAssist()==1)
-				assists_i++;
-			if(p.getCorner()==1)
-				corners_i++;
-			if(p.getFreekick()==1)
-				freekicks_i++;
-			if(p.getSuccess()==1)
-				good_passings_i++;
-			else
-				bad_passings_i++;
-		}*/
-		
+		penaltys.setText(String.valueOf(Focus.focused_player.getPenaltys()));		
 		assists.setText(String.valueOf(Focus.focused_player.getAssists()));
 		corners.setText(String.valueOf(Focus.focused_player.getCorners()));
 		freekick.setText(String.valueOf(Focus.focused_player.getFreekicks()));
 		good_passings.setText(String.valueOf(Focus.focused_player.getGoodPassings()));
 		bad_passings.setText(String.valueOf(Focus.focused_player.getBadPassings()));
-		
-		/*for(Card c : Focus.focused_player.getCards())
-		{
-			if(c.getKind().equals("yellow"))
-				yellow_cards_i++;
-			else
-				red_cards_i++;
-		}*/
-		
 		yellow_cards.setText(String.valueOf(Focus.focused_player.getYellowCards()));
 		red_cards.setText(String.valueOf(Focus.focused_player.getRedCards()));
+		defenses.setText(String.valueOf(Focus.focused_player.getDefense().size()));
+		takeovers.setText(String.valueOf(Focus.focused_player.getTakeovers().size()));
 	}
 	
 	public void backButton(View v)

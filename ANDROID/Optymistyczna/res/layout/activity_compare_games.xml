@@ -39,14 +39,14 @@
                     android:layout_height="wrap_content"
                     android:gravity="left"
                     android:text="0"
-                    android:textSize="32sp" />
+                    android:textSize="30sp" />
 
                 <TextView
                     android:id="@+id/textView16"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:textSize="32sp"
+                    android:textSize="30sp"
                     android:text="bramki" />
 
                 <TextView
@@ -54,7 +54,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="right"
-                    android:textSize="32sp"
+                    android:textSize="30sp"
                     android:text="0" />
             </TableRow>
 
@@ -69,21 +69,21 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="0"
-                    android:textSize="32sp" />
+                    android:textSize="30sp" />
 
                 <TextView
                     android:id="@+id/textView17"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:textSize="32sp"
+                    android:textSize="30sp"
                     android:text="strzały niecelne" />
 
                 <TextView
                     android:id="@+id/textView30"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="32sp"
+                    android:textSize="30sp"
                     android:text="0" />
             </TableRow>
 
@@ -98,21 +98,21 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="0"
-                    android:textSize="32sp" />
+                    android:textSize="30sp" />
 
                 <TextView
                     android:id="@+id/textView18"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:textSize="32sp"
+                    android:textSize="30sp"
                     android:text="podania celne" />
 
                 <TextView
                     android:id="@+id/textView31"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="32sp"
+                    android:textSize="30sp"
                     android:text="0" />
             </TableRow>
 
@@ -127,7 +127,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="0"
-                    android:textSize="32sp" />
+                    android:textSize="30sp" />
 
                 <TextView
                     android:id="@+id/textView19"
@@ -135,14 +135,14 @@
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:text="podania niecelne"
-                    android:textSize="32sp" />
+                    android:textSize="30sp" />
 
                 <TextView
                     android:id="@+id/textView32"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="0"
-                    android:textSize="32sp" />
+                    android:textSize="30sp" />
             </TableRow>
 
             <TableRow
@@ -156,21 +156,21 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="0"
-                    android:textSize="32sp" />
+                    android:textSize="30sp" />
 
                 <TextView
                     android:id="@+id/textView20"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:textSize="32sp"
+                    android:textSize="30sp"
                     android:text="żółte kartki" />
 
                 <TextView
                     android:id="@+id/textView33"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="32sp"
+                    android:textSize="30sp"
                     android:text="0" />
             </TableRow>
 
@@ -185,21 +185,21 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="0"
-                    android:textSize="32sp" />
+                    android:textSize="30sp" />
 
                 <TextView
                     android:id="@+id/textView21"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:textSize="32sp"
+                    android:textSize="30sp"
                     android:text="czerwone kartki" />
 
                 <TextView
                     android:id="@+id/textView34"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="32sp"
+                    android:textSize="30sp"
                     android:text="0" />
             </TableRow>
 
@@ -214,21 +214,21 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="0"
-                    android:textSize="32sp" />
+                    android:textSize="30sp" />
 
                 <TextView
                     android:id="@+id/textView22"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:textSize="32sp"
+                    android:textSize="30sp"
                     android:text="faule" />
 
                 <TextView
                     android:id="@+id/textView35"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="32sp"
+                    android:textSize="30sp"
                     android:text="0" />
             </TableRow>
 
@@ -243,21 +243,21 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="0"
-                    android:textSize="32sp" />
+                    android:textSize="30sp" />
 
                 <TextView
                     android:id="@+id/textView23"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:textSize="32sp"
+                    android:textSize="30sp"
                     android:text="kontuzje" />
 
                 <TextView
                     android:id="@+id/textView36"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="32sp"
+                    android:textSize="30sp"
                     android:text="0" />
             </TableRow>
 
@@ -272,21 +272,21 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="0"
-                    android:textSize="32sp" />
+                    android:textSize="30sp" />
 
                 <TextView
                     android:id="@+id/textView24"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:textSize="32sp"
+                    android:textSize="30sp"
                     android:text="karne" />
 
                 <TextView
                     android:id="@+id/textView37"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="32sp"
+                    android:textSize="30sp"
                     android:text="0" />
             </TableRow>
 
@@ -301,21 +301,21 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="0"
-                    android:textSize="32sp" />
+                    android:textSize="30sp" />
 
                 <TextView
                     android:id="@+id/textView25"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:textSize="32sp"
+                    android:textSize="30sp"
                     android:text="rożne" />
 
                 <TextView
                     android:id="@+id/textView38"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="32sp"
+                    android:textSize="30sp"
                     android:text="0" />
             </TableRow>
 
@@ -330,21 +330,21 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="0"
-                    android:textSize="32sp" />
+                    android:textSize="30sp" />
 
                 <TextView
                     android:id="@+id/textView26"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:textSize="32sp"
+                    android:textSize="30sp"
                     android:text="wolne" />
 
                 <TextView
                     android:id="@+id/textView39"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="32sp"
+                    android:textSize="30sp"
                     android:text="0" />
             </TableRow>
 
@@ -359,21 +359,21 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="0"
-                    android:textSize="32sp" />
+                    android:textSize="30sp" />
 
                 <TextView
                     android:id="@+id/textView27"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:textSize="32sp"
+                    android:textSize="30sp"
                     android:text="asysty" />
 
                 <TextView
                     android:id="@+id/textView40"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="32sp"
+                    android:textSize="30sp"
                     android:text="0" />
             </TableRow>
 
@@ -388,21 +388,21 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="0"
-                    android:textSize="32sp" />
+                    android:textSize="30sp" />
 
                 <TextView
                     android:id="@+id/textView43"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:textSize="32sp"
+                    android:textSize="30sp"
                     android:text="faulowani" />
 
                 <TextView
                     android:id="@+id/textView44"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="32sp"
+                    android:textSize="30sp"
                     android:text="0" />
             </TableRow>
             
@@ -417,21 +417,79 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="0"
-                    android:textSize="32sp" />
+                    android:textSize="30sp" />
 
                 <TextView
                     android:id="@+id/textView46"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:textSize="32sp"
+                    android:textSize="30sp"
                     android:text="zmiany" />
 
                 <TextView
                     android:id="@+id/textView47"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="32sp"
+                    android:textSize="30sp"
+                    android:text="0" />
+            </TableRow>
+            
+            <TableRow
+                android:id="@+id/tableRow16"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center" >
+
+                <TextView
+                    android:id="@+id/textView48"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0"
+                    android:textSize="30sp" />
+
+                <TextView
+                    android:id="@+id/textView49"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:textSize="30sp"
+                    android:text="obrony" />
+
+                <TextView
+                    android:id="@+id/textView50"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="30sp"
+                    android:text="0" />
+            </TableRow>
+            
+            <TableRow
+                android:id="@+id/tableRow17"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center" >
+
+                <TextView
+                    android:id="@+id/textView51"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0"
+                    android:textSize="30sp" />
+
+                <TextView
+                    android:id="@+id/textView52"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:textSize="30sp"
+                    android:text="przejecia" />
+
+                <TextView
+                    android:id="@+id/textView53"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="30sp"
                     android:text="0" />
             </TableRow>
         </TableLayout>

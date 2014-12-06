@@ -14,7 +14,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 public class ComparePlayersActivity extends Activity {
-	public TextView goals1,goals2,missed_shots1,missed_shots2,good_passings1,good_passings2,bad_passings1,bad_passings2,red1,red2,yellow1,yellow2,fauls1,fauls2,corners1,corners2,penaltys1,penaltys2,freekicks1,freekicks2,assissts1,assissts2,games1,games2, injuries1,injuries2,fauls_on_player1,fauls_on_player2,name1,name2;
+	public TextView goals1,goals2,missed_shots1,missed_shots2,good_passings1,good_passings2,bad_passings1,bad_passings2,red1,red2,yellow1,yellow2,fauls1,fauls2,corners1,corners2,penaltys1,penaltys2,freekicks1,freekicks2,assissts1,assissts2,games1,games2, injuries1,injuries2,fauls_on_player1,fauls_on_player2,name1,name2,takeover1,takeover2,defense1,defense2;
 	int goals1_i,goals2_i,missed_shots1_i,missed_shots2_i,good_passings1_i,good_passings2_i,bad_passings1_i,bad_passings2_i,red1_i,red2_i,yellow1_i,yellow2_i,fauls1_i,fauls2_i,corners1_i,corners2_i,penaltys1_i,penaltys2_i,freekicks1_i,freekicks2_i,assissts1_i,assissts2_i,games1_i,games2_i,injuries1_i, injuries2_i;
 	boolean game_b;
 	Game game;
@@ -58,6 +58,10 @@ public class ComparePlayersActivity extends Activity {
 		games2= (TextView)findViewById(R.id.textView41);
 		injuries1= (TextView)findViewById(R.id.textView10);
 		injuries2= (TextView)findViewById(R.id.textView36);
+		takeover1=(TextView)findViewById(R.id.textView48);
+		takeover2=(TextView)findViewById(R.id.textView50);
+		defense1=(TextView)findViewById(R.id.textView45);
+		defense2=(TextView)findViewById(R.id.textView47);
 	}
 	
 	public void back(View v)
@@ -279,6 +283,31 @@ public class ComparePlayersActivity extends Activity {
 				injuries2.setBackgroundColor(Color.GREEN);
 				injuries1.setBackgroundColor(Color.RED);
 			}
+		defense1.setText(String.valueOf(Focus.focused_player_for_compare1.getDefense().size()));
+		defense2.setText(String.valueOf(Focus.focused_player_for_compare2.getDefense().size()));
+		if(Focus.focused_player_for_compare1.getDefense().size()!=Focus.focused_player_for_compare2.getDefense().size())
+			if(Focus.focused_player_for_compare1.getDefense().size()>Focus.focused_player_for_compare2.getDefense().size())
+			{
+				defense1.setBackgroundColor(Color.GREEN);
+				defense2.setBackgroundColor(Color.RED);
+			}else
+			{
+				defense2.setBackgroundColor(Color.GREEN);
+				defense1.setBackgroundColor(Color.RED);
+			}
+		takeover1.setText(String.valueOf(Focus.focused_player_for_compare1.getTakeovers().size()));
+		takeover2.setText(String.valueOf(Focus.focused_player_for_compare2.getTakeovers().size()));
+		if(Focus.focused_player_for_compare1.getTakeovers().size()!=Focus.focused_player_for_compare2.getTakeovers().size())
+			if(Focus.focused_player_for_compare1.getTakeovers().size()>Focus.focused_player_for_compare2.getTakeovers().size())
+			{
+				takeover1.setBackgroundColor(Color.GREEN);
+				takeover2.setBackgroundColor(Color.RED);
+			}else
+			{
+				takeover2.setBackgroundColor(Color.GREEN);
+				takeover1.setBackgroundColor(Color.RED);
+			}
+			
 		
 	}
 	
@@ -460,6 +489,32 @@ public class ComparePlayersActivity extends Activity {
 			{
 				injuries2.setBackgroundColor(Color.GREEN);
 				injuries1.setBackgroundColor(Color.RED);
+			}
+		
+		takeover1.setText(String.valueOf(Focus.focused_player_for_compare1.getTakeoversForGame(Focus.focused_game_for_compare.getId())));
+		takeover2.setText(String.valueOf(Focus.focused_player_for_compare2.getTakeoversForGame(Focus.focused_game_for_compare.getId())));
+		if(Focus.focused_player_for_compare1.getTakeoversForGame(Focus.focused_game_for_compare.getId()) != Focus.focused_player_for_compare2.getTakeoversForGame(Focus.focused_game_for_compare.getId()))
+			if(Focus.focused_player_for_compare1.getTakeoversForGame(Focus.focused_game_for_compare.getId()) > Focus.focused_player_for_compare2.getTakeoversForGame(Focus.focused_game_for_compare.getId()))
+			{
+				takeover1.setBackgroundColor(Color.GREEN);
+				takeover2.setBackgroundColor(Color.RED);
+			}else
+			{
+				takeover2.setBackgroundColor(Color.GREEN);
+				takeover1.setBackgroundColor(Color.RED);
+			}
+		
+		defense1.setText(String.valueOf(Focus.focused_player_for_compare1.getInjuriesForGame(Focus.focused_game_for_compare.getId())));
+		defense2.setText(String.valueOf(Focus.focused_player_for_compare2.getInjuriesForGame(Focus.focused_game_for_compare.getId())));
+		if(Focus.focused_player_for_compare1.getDefensesForGame(Focus.focused_game_for_compare.getId()) != Focus.focused_player_for_compare2.getDefensesForGame(Focus.focused_game_for_compare.getId()))
+			if(Focus.focused_player_for_compare1.getDefensesForGame(Focus.focused_game_for_compare.getId()) > Focus.focused_player_for_compare2.getDefensesForGame(Focus.focused_game_for_compare.getId()))
+			{
+				defense1.setBackgroundColor(Color.GREEN);
+				defense2.setBackgroundColor(Color.RED);
+			}else
+			{
+				defense2.setBackgroundColor(Color.GREEN);
+				defense1.setBackgroundColor(Color.RED);
 			}
 	}
 	

@@ -16,7 +16,7 @@ import android.widget.Toast;
 public class CompareGamesActivity extends Activity {
 	int game1_id,game2_id;
 	Game game1,game2;
-	public TextView goals1,goals2,missed_shots1,missed_shots2,good_passings1,good_passings2,bad_passings1,bad_passings2,red1,red2,yellow1,yellow2,fauls1,fauls2,corners1,corners2,penaltys1,penaltys2,freekicks1,freekicks2,assissts1,assissts2,injuries1,injuries2,fauls_on_player1,fauls_on_player2,name1,name2,swaps1,swaps2;
+	public TextView goals1,goals2,missed_shots1,missed_shots2,good_passings1,good_passings2,bad_passings1,bad_passings2,red1,red2,yellow1,yellow2,fauls1,fauls2,corners1,corners2,penaltys1,penaltys2,freekicks1,freekicks2,assissts1,assissts2,injuries1,injuries2,fauls_on_player1,fauls_on_player2,name1,name2,swaps1,swaps2,defenses1,defenses2,takeovers1,takeovers2;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -68,6 +68,10 @@ public class CompareGamesActivity extends Activity {
 		injuries2= (TextView)findViewById(R.id.textView36);
 		swaps1= (TextView)findViewById(R.id.textView45);
 		swaps2= (TextView)findViewById(R.id.textView47);
+		takeovers1=(TextView)findViewById(R.id.textView51);
+		takeovers2=(TextView)findViewById(R.id.textView53);
+		defenses1=(TextView)findViewById(R.id.textView48);
+		defenses2=(TextView)findViewById(R.id.textView50);
 		
 		game1 = dbm.getFullGameStats(game1_id);
 		game2 = dbm.getFullGameStats(game2_id);
@@ -269,6 +273,32 @@ public class CompareGamesActivity extends Activity {
 			{
 				swaps2.setBackgroundColor(Color.GREEN);
 				swaps1.setBackgroundColor(Color.RED);
+			}
+		
+		takeovers1.setText(String.valueOf(game1.getTakeovers().size()));
+		takeovers2.setText(String.valueOf(game2.getTakeovers().size()));
+		if(game1.getTakeovers().size()!=game2.getTakeovers().size())
+			if(game1.getTakeovers().size()>game2.getTakeovers().size())
+			{
+				takeovers1.setBackgroundColor(Color.GREEN);
+				takeovers2.setBackgroundColor(Color.RED);
+			}else
+			{
+				takeovers2.setBackgroundColor(Color.GREEN);
+				takeovers1.setBackgroundColor(Color.RED);
+			}
+		
+		defenses1.setText(String.valueOf(game1.getDefense().size()));
+		defenses2.setText(String.valueOf(game2.getDefense().size()));
+		if(game1.getDefense().size()!=game2.getDefense().size())
+			if(game1.getDefense().size()>game2.getDefense().size())
+			{
+				defenses1.setBackgroundColor(Color.GREEN);
+				defenses2.setBackgroundColor(Color.RED);
+			}else
+			{
+				defenses2.setBackgroundColor(Color.GREEN);
+				defenses1.setBackgroundColor(Color.RED);
 			}
 	}
 

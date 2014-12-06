@@ -20,7 +20,7 @@ public class Player {
 	private List<Passing> passings;
 	private List<Game> games;
 	private List<Card> cards;
-	private List<Defense> defense;
+	private List<Defense> defenses;
 	private List<Faul> fauls;
 	private List<Injury> injuries;
 	private List<Shot> shots;
@@ -90,10 +90,10 @@ public class Player {
 		this.cards = cards;
 	}
 	public List<Defense> getDefense() {
-		return defense;
+		return defenses;
 	}
 	public void setDefense(List<Defense> defense) {
-		this.defense = defense;
+		this.defenses = defense;
 	}
 	public List<Faul> getFauls() {
 		return fauls;
@@ -329,5 +329,23 @@ public class Player {
 			if(i.getGame_id()==game_id)
 				injury++;
 		return injury;
+	}
+	
+	public int getTakeoversForGame(int game_id)
+	{
+		int takeover=0;
+		for(Takeover t : takeovers)
+			if(t.getGame_id()==game_id)
+				takeover++;
+		return takeover;
+	}
+	
+	public int getDefensesForGame(int game_id)
+	{
+		int defense=0;
+		for(Defense d : defenses)
+			if(d.getGame_id()==game_id)
+				defense++;
+		return defense;
 	}
 }
