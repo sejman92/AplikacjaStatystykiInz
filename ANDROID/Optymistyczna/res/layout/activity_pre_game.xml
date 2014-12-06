@@ -26,7 +26,7 @@
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/time_edittext"
         android:layout_below="@+id/time_edittext"
-        android:hint="aktualna data"
+        android:hint="data"
         android:ems="10"
         android:inputType="date" />
 
@@ -47,7 +47,7 @@
         android:layout_alignLeft="@+id/enemy_name_edittext"
         android:layout_below="@+id/enemy_name_edittext"
         android:ems="10"
-        android:hint="aktualna godzina"
+        android:hint="godzina"
         android:inputType="time" />
 
     <Button
