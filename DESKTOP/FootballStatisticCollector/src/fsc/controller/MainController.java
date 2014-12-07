@@ -276,7 +276,8 @@ public class MainController implements Initializable {
    @FXML private Label commentLbAnalize;
    private PlayerValidator pv;
    private IAction selectedActionWithCommentAnalize;
-  
+   private double matchNameTFMinWidth;
+   private double matchNameTFMaxWidth;
    
    /*
    ANALYZE PARAMS FINISH
@@ -309,6 +310,8 @@ public class MainController implements Initializable {
         kickType = Kicks.NONE; //just initialize kicktype
         //beginMatchTab.setDisable(false);
         AC = new AnalizeController();
+        matchNameTFMinWidth = matchNameTF.getMinWidth();
+        matchNameTFMaxWidth = matchNameTF.getMaxWidth();
     }
     
 
@@ -350,6 +353,31 @@ public class MainController implements Initializable {
         this.goalPositiveBt.setDisable(true);
         this.commentTA.setDisable(true);
         this.curInsertTA.setText("");
+    }
+    private void enableAllButtonInCollectView(){
+        this.shotBt.setDisable(false);
+        this.passingBt.setDisable(false);
+        this.leftFootBt.setDisable(false);
+        this.rightFootBt.setDisable(false);
+        this.headBt.setDisable(false);
+        this.chestBt.setDisable(false);
+        this.otherBt.setDisable(false);
+        this.successfullButton.setDisable(false);
+        this.noSuccessfullButton.setDisable(false);
+        this.cancelBt.setDisable(false);
+        this.freeKickBt.setDisable(false);
+        this.cornerKickBt.setDisable(false);
+        this.penaltyKickBt.setDisable(false);
+        this.injuryBt.setDisable(false);
+        this.defenseBt.setDisable(false);
+        this.faulBt.setDisable(false);
+        this.yelloCardBt.setDisable(false);
+        this.redCardBt.setDisable(false);
+        this.takeoverBt.setDisable(false);
+        this.swapBt.setDisable(false);
+        this.goalNegativeBt.setDisable(false);
+        this.goalPositiveBt.setDisable(false);
+        this.commentTA.setDisable(false);
     }
     private void setBasicActionsEnable(){
         this.disableAllButtonInCollectView();
@@ -472,6 +500,16 @@ public class MainController implements Initializable {
     public void enableCollectViewTab(){
         if (this.lineup.isCorrect()){
             beginMatchTab.setDisable(false);
+            enableAllButtonInCollectView();
+            matchNameTF.setMaxWidth(matchNameTFMaxWidth);
+            matchNameTF.setMinWidth(matchNameTFMinWidth);
+            oponentTeamNameLb.setText("");
+            timer.setText("00:00");
+            actionList.clear();
+            historyLV.setItems(actionList);
+            goalScoredLb.setText("0");
+            goalLostLb.setText("0");
+            acceptBt.setDisable(true);   
         }
     }
     
@@ -838,6 +876,7 @@ public class MainController implements Initializable {
         matchNameTF.setMaxWidth(0);
         matchNameTF.setMinWidth(0);
         matchNameTF.setText("");
+        
         oponentTeamNameLb.setText(this.game.getOponent());
         oponentTeamNameLb.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
         
@@ -847,6 +886,7 @@ public class MainController implements Initializable {
         stopMatchBt.setDisable(false);
         loginTab.setDisable(true);
         teamsManagerTab.setDisable(true);
+        acceptBt.setDisable(false);  
     }
     
     /*
@@ -877,12 +917,12 @@ public class MainController implements Initializable {
         if(answer == 0){
             this.disableAllButtonInCollectView();
             databaseManager.saveEntityElement(game);
-            game = databaseManager.getGame(game.getId());
             timeline.stop();
             pauseMatchBt.setDisable(true);
             stopMatchBt.setDisable(true);
             loginTab.setDisable(false);
             teamsManagerTab.setDisable(false);
+            game = null;
         } else {
             timeline.play();
         }
@@ -1091,6 +1131,8 @@ public class MainController implements Initializable {
         this.historyLV.getItems().add(new String("["+this.getCurrentMinute()+"min] Strata bramki"));
         this.goalLostLb.setText(this.game.getLostGoals().toString());
         setSuccessButtonContent();
+        databaseManager.saveEntityElement(game);
+        game = (Game) databaseManager.refresh(game);    
     }
     /*
     insert successfull shot and mark it as goal.
@@ -1418,6 +1460,35 @@ public class MainController implements Initializable {
     public void selectedPlayersCheckBoxClick(){
         
     }
+    
+    public void clearTablesAnalize(){ 
+        title1LbAnalize.setText("");
+        score1LbAnalize.setText("");
+        shots1LbAnalize.setText("");
+        accurateShots1LbAnalize.setText("");
+        passes1LbAnalize.setText("");
+        accuracyPasses1LbAnalize.setText("");
+        yellowCards1LbAnalize.setText("");
+        redCards1LbAnalize.setText("");
+        fauls1LbAnalize.setText("");
+        takeover1LbAnalize.setText("");
+        freekicks1LbAnalize.setText("");
+        corners1LbAnalize.setText("");
+        penalties1LbAnalize.setText(""); 
+        title2LbAnalize.setText("");
+        score2LbAnalize.setText("");
+        shots2LbAnalize.setText("");
+        accurateShots2LbAnalize.setText("");
+        passes2LbAnalize.setText("");
+        accuracyPasses2LbAnalize.setText("");
+        yellowCards2LbAnalize.setText("");
+        redCards2LbAnalize.setText("");
+        fauls2LbAnalize.setText("");
+        takeover2LbAnalize.setText("");
+        freekicks2LbAnalize.setText("");
+        corners2LbAnalize.setText("");
+        penalties2LbAnalize.setText("");                 
+    }
 
     //LoginTab element's actions
     
@@ -1430,6 +1501,8 @@ public class MainController implements Initializable {
         getSelectedFormerPlayerInTeamsManager();
         getSelectedPlayerInTeamsManager();
         clearStartReserveLineups();
+        clearTablesAnalize();
+        toComparePlayersLV.setItems(null);
     }
     public void registerBtClick(){
         loginTabControler.registerBtClick();
