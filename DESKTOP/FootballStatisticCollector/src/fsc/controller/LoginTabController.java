@@ -116,6 +116,8 @@ public class LoginTabController {
             dbm.saveEntityElement(user);
             mc.infoRegisterLb.setText(REGISTER_SUCCESS);
             //user.setPassword(Hashing.sha256().hashString(mc.nameRegisterTF.getText(), Charsets.UTF_8).toString());
+        }else if(dbm.getUser(mc.loginRegisterTF.getText()) != null){
+            mc.infoRegisterLb.setText("Login jest zajęty");
         }
     }
     

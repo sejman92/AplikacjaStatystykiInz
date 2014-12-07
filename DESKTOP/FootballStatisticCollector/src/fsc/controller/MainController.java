@@ -340,6 +340,8 @@ public class MainController implements Initializable {
         this.swapBt.setDisable(true);
         this.goalNegativeBt.setDisable(true);
         this.goalPositiveBt.setDisable(true);
+        this.commentTA.setDisable(true);
+        this.curInsertTA.setText("");
     }
     private void setBasicActionsEnable(){
         this.disableAllButtonInCollectView();
@@ -352,7 +354,7 @@ public class MainController implements Initializable {
         this.yelloCardBt.setDisable(false);
         this.redCardBt.setDisable(false);
         this.takeoverBt.setDisable(false);
-        
+        this.commentTA.setDisable(false);     
     }
     /*
     Add selected players to starting lineup
@@ -867,6 +869,9 @@ public class MainController implements Initializable {
             databaseManager.saveEntityElement(game);
             game = databaseManager.getGame(game.getId());
             timeline.stop();
+            pauseMatchBt.setDisable(true);
+            stopMatchBt.setDisable(true);
+            
         } else {
             timeline.play();
         }
@@ -1220,9 +1225,6 @@ public class MainController implements Initializable {
     }
     public void playersLVAnalizeClick(){
         getSelectedPlayerAnalize();
-        if(selectedPlayerAnalize!=null){
-            addToComparePlayerBt.setDisable(false);
-        } else addToComparePlayerBt.setDisable(true);
     }
     
     public void loadTeamAs1BtClick(){
@@ -1332,6 +1334,7 @@ public class MainController implements Initializable {
             this.toComparePlayersLV.setItems(AC.getSelectedPlayers());
             this.compareBt.setDisable(false);
             this.selectedPlayersCheckBox.setDisable(false);
+            addToComparePlayerBt.setDisable(true);
         }
         
     }
@@ -1345,7 +1348,6 @@ public class MainController implements Initializable {
             removeToComparePlayerBt.setDisable(true);
             this.selectedPlayersCheckBox.setDisable(true);
             this.selectedPlayersCheckBox.setSelected(false);
-
         }
         
     }
@@ -1407,6 +1409,12 @@ public class MainController implements Initializable {
     public void loginBtClick(){
         loginTabControler.loginBtClick();
         teamsLV.setItems(databaseManager.getTeams(owner));
+        teamsLV.getSelectionModel().clearSelection();
+        playersListViewTeamManager.setItems(null);
+        formerPlayersLV.setItems(null);
+        getSelectedFormerPlayerInTeamsManager();
+        getSelectedPlayerInTeamsManager();
+        clearStartReserveLineups();
     }
     public void registerBtClick(){
         loginTabControler.registerBtClick();
@@ -1559,9 +1567,16 @@ public class MainController implements Initializable {
         if(selectedPlayerAnalize == null){
             loadPlayerAs1Bt.setDisable(true);
             loadPlayerAs2Bt.setDisable(true);
+            addToComparePlayerBt.setDisable(true);
         }else{
             loadPlayerAs1Bt.setDisable(false);
             loadPlayerAs2Bt.setDisable(false);
+            
+            if(AC.getSelectedPlayers().contains(selectedPlayerAnalize)){
+                addToComparePlayerBt.setDisable(true);
+            }else{
+                addToComparePlayerBt.setDisable(false);
+            }
         }
         
         return selectedPlayerAnalize;
