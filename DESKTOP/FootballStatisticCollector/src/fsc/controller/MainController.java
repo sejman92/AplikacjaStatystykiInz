@@ -845,6 +845,8 @@ public class MainController implements Initializable {
         startMatchBt.setDisable(true); 
         pauseMatchBt.setDisable(false);
         stopMatchBt.setDisable(false);
+        loginTab.setDisable(true);
+        teamsManagerTab.setDisable(true);
     }
     
     /*
@@ -879,7 +881,8 @@ public class MainController implements Initializable {
             timeline.stop();
             pauseMatchBt.setDisable(true);
             stopMatchBt.setDisable(true);
-            
+            loginTab.setDisable(false);
+            teamsManagerTab.setDisable(false);
         } else {
             timeline.play();
         }
