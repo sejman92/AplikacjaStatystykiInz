@@ -10,6 +10,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import javax.swing.JOptionPane;
 
 
 /**
@@ -33,7 +34,12 @@ public class FootbalStatisticCollector extends Application {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        launch(args);
+        try{
+            launch(args);
+        }catch(Exception ex){
+            JOptionPane.showMessageDialog(null,"Połączenie z bazą zakończone niepowodzeniem\n"
+                    + "Upewnij się, że jesteś połączony z internetem i spróbuj ponownie");
+        }
     }
     
 }

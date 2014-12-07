@@ -964,7 +964,7 @@
 </font>
 </Label>
 <ListView fx:id="toComparePlayersLV" layoutX="402.0" layoutY="405.0" onMouseClicked="#removeFromCompareLVEnable" prefHeight="253.0" prefWidth="303.0" />
-<Button fx:id="compareBt" alignment="CENTER" contentDisplay="CENTER" disable="true" layoutX="728.0" layoutY="617.0" mnemonicParsing="false" onAction="#compareBtClick" prefHeight="40.0" prefWidth="180.0" text="Rysuj" textAlignment="CENTER" />
+<Button fx:id="compareBt" alignment="CENTER" contentDisplay="CENTER" disable="true" layoutX="206.0" layoutY="617.0" mnemonicParsing="false" onAction="#compareBtClick" prefHeight="40.0" prefWidth="180.0" text="Rysuj" textAlignment="CENTER" />
                   <VBox layoutX="22.0" layoutY="497.0" prefHeight="160.0" prefWidth="180.0">
                      <children>
                         <Button fx:id="loadTeamAs1Bt" alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#loadTeamAs1BtClick" text="Drużyna do lewej tabeli" VBox.vgrow="ALWAYS">
@@ -1268,6 +1268,12 @@
                         <Font size="20.0" />
                      </font>
                   </Label>
+                  <VBox layoutX="764.0" layoutY="450.0" prefHeight="200.0" prefWidth="500.0">
+                     <children>
+                        <ComboBox fx:id="commentsCBAnalize" onAction="#commentsCBAnalizeClick" prefHeight="63.0" prefWidth="500.0" />
+                        <Label fx:id="commentLbAnalize" alignment="CENTER" contentDisplay="CENTER" prefHeight="194.0" prefWidth="540.0" textAlignment="CENTER" />
+                     </children>
+                  </VBox>
 </children></AnchorPane>
 </content>
 </Tab>

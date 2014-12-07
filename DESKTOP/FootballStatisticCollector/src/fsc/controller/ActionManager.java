@@ -132,7 +132,7 @@ public class ActionManager {
     }
     
     public void setComment(String comment){
-        
+        this.comment = comment;
     }
     public void setTime(Integer minute){
         this.time = minute;

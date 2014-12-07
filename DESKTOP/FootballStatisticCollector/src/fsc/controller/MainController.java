@@ -271,8 +271,12 @@ public class MainController implements Initializable {
    @FXML private CheckBox sumCheckBox;
    @FXML private CheckBox unsuccessCheckBox;
    @FXML private CheckBox successCheckBox;
-   
+  
+   @FXML private ComboBox commentsCBAnalize;
+   @FXML private Label commentLbAnalize;
    private PlayerValidator pv;
+   private IAction selectedActionWithCommentAnalize;
+  
    
    /*
    ANALYZE PARAMS FINISH
@@ -280,8 +284,12 @@ public class MainController implements Initializable {
    private AnalizeController AC;
    @Override
     public void initialize(URL url, ResourceBundle rb) {
+        try{
+            databaseManager = DatabaseManager.getInstance();
+        }catch (Exception ex){
+            throw ex;
+        }
         loginTabControler = LoginTabController.getInstance(this);
-        databaseManager = DatabaseManager.getInstance();
         actionManager = ActionManager.getInstance();
         pv = PlayerValidator.getInstance();
         // TODO 
@@ -1227,6 +1235,10 @@ public class MainController implements Initializable {
         getSelectedPlayerAnalize();
     }
     
+    public void commentsCBAnalizeClick(){
+        getSelectedActionWithCommentAnalize();
+    }
+    
     public void loadTeamAs1BtClick(){
         if(selectedGameAnalize != null){
             title1LbAnalize.setText(selectedGameAnalize.getOponent());
@@ -1546,7 +1558,8 @@ public class MainController implements Initializable {
         selectedGameAnalize = (Game)gamesCBAnalize.getSelectionModel().getSelectedItem();
         
         playersLVAnalize.setItems(databaseManager.findPlayersForGame(selectedGameAnalize));
-                    
+        commentsCBAnalize.setItems(databaseManager.getAllActionsWithCommentForGame(selectedGameAnalize));
+                        
         if(selectedGameAnalize == null){
             loadTeamAs1Bt.setDisable(true);
             loadTeamAs2Bt.setDisable(true);
@@ -1556,6 +1569,7 @@ public class MainController implements Initializable {
         }
         
         getSelectedPlayerAnalize();
+        getSelectedActionWithCommentAnalize();
         playersLVAnalize.getSelectionModel().clearSelection();
         
         return selectedGameAnalize;
@@ -1581,6 +1595,16 @@ public class MainController implements Initializable {
         
         return selectedPlayerAnalize;
     }
-
     
+    private IAction getSelectedActionWithCommentAnalize(){
+        selectedActionWithCommentAnalize = (IAction) commentsCBAnalize.getSelectionModel().getSelectedItem();
+        
+        if(selectedActionWithCommentAnalize == null){
+            commentLbAnalize.setText("");
+        }else{
+            commentLbAnalize.setText(selectedActionWithCommentAnalize.getComment());
+        }
+        
+        return selectedActionWithCommentAnalize;
+    }
 }

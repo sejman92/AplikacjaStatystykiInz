@@ -11,7 +11,16 @@ import fsc.model.Played;
 import fsc.model.Player;
 import fsc.model.Team;
 import fsc.model.User;
+import fsc.model.actions.Card;
+import fsc.model.actions.Defense;
+import fsc.model.actions.Faul;
+import fsc.model.actions.Injury;
+import fsc.model.actions.Passing;
+import fsc.model.actions.Shot;
+import fsc.model.actions.Swap;
+import fsc.model.actions.Takeover;
 import fsc.model.enums.KindsOfActive;
+import fsc.model.interfaces.IAction;
 import fsc.model.interfaces.IEntityElement;
 import java.util.ArrayList;
 import java.util.List;
@@ -33,14 +42,23 @@ public class DatabaseManager {
     private final EntityTransaction et;
     
     private DatabaseManager() {
-        emFactory = Persistence.createEntityManagerFactory("FootballStatisticCollectorPU"); 
-        em = emFactory.createEntityManager();
-        et = em.getTransaction();
+        try{
+            emFactory = Persistence.createEntityManagerFactory("FootballStatisticCollectorPU"); 
+            em = emFactory.createEntityManager();
+            et = em.getTransaction();
+        }catch(Exception ex){
+            throw ex;
+        }
     }
     
     public static DatabaseManager getInstance(){
-        if(instance == null)
-            instance = new DatabaseManager();
+        if(instance == null){
+            try{
+                instance = new DatabaseManager();
+            }catch(Exception ex){
+                throw ex;
+            }    
+        }
         
         return instance;
     }
@@ -241,5 +259,52 @@ public class DatabaseManager {
             return null;
         
         return users.get(0);
+    }
+    
+    public ObservableList<IAction> getAllActionsForGame(Game game){
+        if(game == null)
+            return null;
+        
+        ObservableList<IAction> actions = FXCollections.observableArrayList();
+        
+        for(Card c: game.getCardList()){
+            actions.add(c);
+        }
+        for(Defense d: game.getDefenseList()){
+            actions.add(d);
+        }
+        for(Faul f: game.getFaulList()){
+            actions.add(f);
+        }
+        for(Injury i: game.getInjuryList()){
+            actions.add(i);
+        }
+        for(Passing p: game.getPassingList()){
+            actions.add(p);
+        }
+        for(Shot s: game.getShotList()){
+            actions.add(s);
+        }
+        for(Swap s: game.getSwapList()){
+            actions.add(s);
+        }
+        for(Takeover t: game.getTakeoverList()){
+            actions.add(t);
+        }
+        return actions;
+    }
+    
+    public ObservableList<IAction> getAllActionsWithCommentForGame(Game game){
+        if(game == null)
+            return null;
+        
+        ObservableList<IAction>actions = FXCollections.observableArrayList();
+        
+        for(IAction a: getAllActionsForGame(game)){
+            if(a.getComment() != null && a.getComment().equals("") == false)
+                actions.add(a);
+        }
+        
+        return actions;
     }
 }
