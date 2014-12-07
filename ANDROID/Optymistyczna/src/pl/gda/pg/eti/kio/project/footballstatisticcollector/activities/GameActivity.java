@@ -195,12 +195,16 @@ public class GameActivity extends Activity {
 	
 	public void enemyGoal(View v)
 	{
+		if(!play)
+			return;
 		this.lost_goals++;
 		score.setText(String.valueOf(scored_goals)+":"+String.valueOf(lost_goals));
 	}
 	
 	public void shot(View v)
 	{
+		if(!play)
+			return;
 		final Dialog dialog = new Dialog(GameActivity.this);
 		dialog.setContentView(R.layout.new_shot_dialog);
 		dialog.setTitle("strza³");
@@ -297,7 +301,8 @@ public class GameActivity extends Activity {
 	
 	public void passing(View v)
 	{
-		
+		if(!play)
+			return;
 		final Dialog dialog = new Dialog(GameActivity.this);
 		dialog.setContentView(R.layout.new_passing_dialog);
 		dialog.setTitle("podanie");
@@ -336,6 +341,8 @@ public class GameActivity extends Activity {
 	
 	public void faul(View v)
 	{
+		if(!play)
+			return;
 		final Dialog dialog = new Dialog(GameActivity.this);
 		dialog.setContentView(R.layout.new_faul_dialog);
 		dialog.setTitle("faul");
@@ -357,11 +364,11 @@ public class GameActivity extends Activity {
 				Card card=null;
 				Injury injury=null;
 				int idpo,idpv;
-				if(box.isChecked())
+				if(box.isChecked() && box3.isChecked())
 					card = new Card(Focus.main_players_for_focused_game.get(position).getId(),time(),"yellow",edit.getText().toString());
-				if(box4.isChecked())
+				if(box4.isChecked() && box3.isChecked())
 					card = new Card(Focus.main_players_for_focused_game.get(position).getId(),time(),"red",edit.getText().toString());
-				if(box2.isChecked())
+				if(box2.isChecked() && !box3.isChecked())
 					injury = new Injury(Focus.main_players_for_focused_game.get(position).getId(), time(), edit.getText().toString());
 				if(box3.isChecked())
 				{
@@ -380,15 +387,25 @@ public class GameActivity extends Activity {
 	    			Log.d("faul", idpo+" "+edit.getText().toString()+" "+String.valueOf(time())+" "+card.getKind());
 	    		if(box2.isChecked())
 	    			Log.d("faul", idpo+" "+edit.getText().toString()+" "+String.valueOf(time())+" "+String.valueOf(injury.getPlayer_id()));
+	    		if(box4.isChecked())
+	    		{
+	    			Focus.swaped_players_for_focused_game.add(Focus.main_players_for_focused_game.get(position));
+					Focus.removePlayerFromListForGame(Focus.main_players_for_focused_game.get(position).getId(), Focus.main_players_for_focused_game);
+					Log.d("removed player","removed from list");
+	    		}
+	    		refreshPlayerLists();
 	    		dialog.dismiss();
 	        }
 		};
+		
 		view_Player_List.setOnItemClickListener(listner);
 		dialog.show();
 	}
 	
 	public void swap(View v)
 	{
+		if(!play)
+			return;
 		final Dialog dialog = new Dialog(GameActivity.this);
 		dialog.setContentView(R.layout.new_swap_dialog);
 		dialog.setTitle("zmiana");
@@ -475,6 +492,8 @@ public class GameActivity extends Activity {
 	
 	public void penalty(View v)
 	{
+		if(!play)
+			return;
 		final Dialog dialog = new Dialog(GameActivity.this);
 		dialog.setContentView(R.layout.new_penalty_dialog);
 		dialog.setTitle("rzut karny");
@@ -528,6 +547,8 @@ public class GameActivity extends Activity {
 	
 	public void corner(View v)
 	{
+		if(!play)
+			return;
 		final Dialog dialog = new Dialog(GameActivity.this);
 		dialog.setContentView(R.layout.new_corner_dialog);
 		dialog.setTitle("rzut ro¿ny");
@@ -566,6 +587,8 @@ public class GameActivity extends Activity {
 	
 	public void card(View v)
 	{
+		if(!play)
+			return;
 		final Dialog dialog = new Dialog(GameActivity.this);
 		dialog.setContentView(R.layout.new_card_dialog);
 		dialog.setTitle("kartka");
@@ -609,14 +632,18 @@ public class GameActivity extends Activity {
 	    		Log.d("card", idp+" "+edit.getText().toString()+" "+String.valueOf(time())+" "+kind);
 	    		
 	    		dialog.dismiss();
+	    		refreshPlayerLists();
 	        }
 		};
+		refreshPlayerLists();
 		view_Player_List.setOnItemClickListener(listner);
 		dialog.show();
 	}
 	
 	public void takeover(View v)
 	{
+		if(!play)
+			return;
 		final Dialog dialog = new Dialog(GameActivity.this);
 		dialog.setContentView(R.layout.new_takeover_dialog);
 		dialog.setTitle("przejêcie pi³ki");
@@ -647,6 +674,8 @@ public class GameActivity extends Activity {
 	
 	public void defense(View v)
 	{
+		if(!play)
+			return;
 		final Dialog dialog = new Dialog(GameActivity.this);
 		dialog.setContentView(R.layout.new_defense_dialog);
 		dialog.setTitle("obrona");
@@ -677,6 +706,8 @@ public class GameActivity extends Activity {
 	
 	public void freekick(View v)
 	{
+		if(!play)
+			return;
 		final Dialog dialog = new Dialog(GameActivity.this);
 		dialog.setContentView(R.layout.new_freekick_dialog);
 		dialog.setTitle("rzut wolny");
@@ -773,6 +804,8 @@ public class GameActivity extends Activity {
 	
 	public void injury(View v)
 	{
+		if(!play)
+			return;
 		final Dialog dialog = new Dialog(GameActivity.this);
 		dialog.setContentView(R.layout.new_injury_dialog);
 		dialog.setTitle("kontuzja");
