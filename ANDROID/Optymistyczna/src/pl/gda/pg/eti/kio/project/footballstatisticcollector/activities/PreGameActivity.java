@@ -80,9 +80,9 @@ public class PreGameActivity extends Activity {
 		if(valid)
 		{
 			
-			if(Focus.main_players_for_focused_game.size()!=11)
+			if(Focus.main_players_for_focused_game.size()>11 || Focus.main_players_for_focused_game.size()<7)
 			{
-				Toast.makeText(this, "Proszê wybraæ 11 zawodników do podstawowego skadu", Toast.LENGTH_SHORT).show();
+				Toast.makeText(this, "Proszê wybraæ od 7 do 11 zawodników do podstawowego skadu", Toast.LENGTH_SHORT).show();
 			}
 			else
 			{
