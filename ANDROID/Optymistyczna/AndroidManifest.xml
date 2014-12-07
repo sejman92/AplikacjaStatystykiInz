@@ -91,6 +91,10 @@
             android:name="pl.gda.pg.eti.kio.project.footballstatisticcollector.activities.CompareGamesActivity"
             android:label="@string/title_activity_compare_games" >
         </activity>
+        <activity
+            android:name="pl.gda.pg.eti.kio.project.footballstatisticcollector.activities.CommentsForPlayerActivity"
+            android:label="@string/title_activity_comments_for_player" >
+        </activity>
     </application>
 
 </manifest>

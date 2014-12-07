@@ -64,7 +64,7 @@ public class ChosePlayersForGameActivity extends Activity {
 	public void refresh_player_list()
 	{		
 		view_Player_List = (ListView) findViewById(R.id.playerListViewChosingForGame);
-		dbm.close();
+		//dbm.close();
 		String[] player_list= new String[Focus.players_from_focused_team.size()];
 		String chosen="";
 		for(int i=0;i<Focus.players_from_focused_team.size();i++)

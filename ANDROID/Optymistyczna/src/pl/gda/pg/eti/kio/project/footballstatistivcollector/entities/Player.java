@@ -1,6 +1,10 @@
 package pl.gda.pg.eti.kio.project.footballstatistivcollector.entities;
 
+import android.annotation.SuppressLint;
+import java.util.LinkedList;
 import java.util.List;
+
+import org.w3c.dom.Comment;
 
 import pl.gda.pg.eti.kio.project.footballstatistivcollector.entities.actions.Card;
 import pl.gda.pg.eti.kio.project.footballstatistivcollector.entities.actions.Defense;
@@ -25,6 +29,7 @@ public class Player {
 	private List<Injury> injuries;
 	private List<Shot> shots;
 	private List<Takeover> takeovers;
+	private List<String> comments;
 	
 	public Player(int id, String name, String surname, int nr, String role, int team_id)//, int active)
 	{
@@ -35,6 +40,37 @@ public class Player {
 		this.role=role;
 		this.team_id=team_id;
 		
+	}
+	
+	@SuppressLint("NewApi")
+	public List<String> getCommentsForActions()
+	{
+		List<String> comments=new LinkedList<String>();
+		for(Passing p : passings)
+			if(!p.getComment().isEmpty())
+				comments.add(p.getComment());
+		for(Game g : games)
+			if(!g.getComment().isEmpty())
+				comments.add(g.getComment());
+		for(Card c : cards)
+			if(!c.getComment().isEmpty())
+				comments.add(c.getComment());
+		for(Defense d : defenses)
+			if(!d.getComment().isEmpty())
+				comments.add(d.getComment());
+		for(Faul f : fauls)
+			if(!f.getComment().isEmpty())
+				comments.add(f.getComment());
+		for(Injury i : injuries)
+			if(!i.getComment().isEmpty())
+				comments.add(i.getComment());
+		for(Takeover t : takeovers)
+			if(!t.getComment().isEmpty())
+				comments.add(t.getComment());
+		for(Shot s : shots)
+			if(!s.getComment().isEmpty())
+				comments.add(s.getComment());
+		return comments;
 	}
 	
 	public String getName() {

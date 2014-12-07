@@ -21,5 +21,6 @@
     <string name="title_activity_comparing_players">ComparingPlayersActivity</string>
     <string name="title_activity_chose_games_for_compare">ChoseGamesForCompareActivity</string>
     <string name="title_activity_compare_games">CompareGamesActivity</string>
+    <string name="title_activity_comments_for_player">CommentsForPlayerActivity</string>
 
 </resources>

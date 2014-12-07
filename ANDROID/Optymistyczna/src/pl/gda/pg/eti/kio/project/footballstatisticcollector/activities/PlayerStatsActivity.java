@@ -70,6 +70,12 @@ public class PlayerStatsActivity extends Activity {
 		Intent intent = new Intent(PlayerStatsActivity.this,PlayerActivity.class);
     	startActivity(intent);
 	}
+	
+	public void beginComments(View v)
+	{
+		Intent intent = new Intent(PlayerStatsActivity.this, CommentsForPlayerActivity.class);
+		startActivity(intent);
+	}
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
