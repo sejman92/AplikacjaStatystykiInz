@@ -1271,7 +1271,7 @@
                   <VBox layoutX="764.0" layoutY="450.0" prefHeight="200.0" prefWidth="500.0">
                      <children>
                         <ComboBox fx:id="commentsCBAnalize" onAction="#commentsCBAnalizeClick" prefHeight="63.0" prefWidth="500.0" />
-                        <Label fx:id="commentLbAnalize" alignment="CENTER" contentDisplay="CENTER" prefHeight="194.0" prefWidth="540.0" textAlignment="CENTER" />
+                        <Label fx:id="commentLbAnalize" alignment="CENTER" contentDisplay="CENTER" prefHeight="194.0" prefWidth="540.0" textAlignment="CENTER" wrapText="true" />
                      </children>
                   </VBox>
 </children></AnchorPane>
