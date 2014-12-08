@@ -5,10 +5,10 @@
  */
 package fsc.controller;
 
+import com.google.common.base.Charsets;
+import com.google.common.hash.Hashing;
 import fsc.model.User;
 import fsc.model.validators.RegisterValidator;
-//import com.google.common.base.Charsets;
-//import com.google.common.hash.Hashing;
 
 /**
  *
@@ -94,7 +94,7 @@ public class LoginTabController {
             return;
         }
         
-        if(password.equals("") || !user.getPassword().equals(password)){
+        if(password.equals("") || !user.getPassword().equals(transform(Hashing.sha256().hashString(password, Charsets.UTF_8).toString()))){
             mc.passwordLoginWarningLb.setText(BAD_PASSWORD);
             return;
         }
@@ -111,12 +111,12 @@ public class LoginTabController {
             User user = new User();
             user.setLogin(mc.loginRegisterTF.getText());
             user.setName(mc.nameRegisterTF.getText());
-            user.setSurname(mc.surnameRegisterTF.getText());
-            user.setPassword(mc.passwordRegisterPF.getText());
+            user.setSurname(mc.surnameRegisterTF.getText());        
+            user.setPassword(transform(Hashing.sha256().hashString(mc.passwordRegisterPF.getText(), Charsets.UTF_8).toString()));
+            
             dbm.saveEntityElement(user);
             mc.infoRegisterLb.setText(REGISTER_SUCCESS);
-            //user.setPassword(Hashing.sha256().hashString(mc.nameRegisterTF.getText(), Charsets.UTF_8).toString());
-        }else if(dbm.getUser(mc.loginRegisterTF.getText()) != null){
+                    }else if(dbm.getUser(mc.loginRegisterTF.getText()) != null){
             mc.infoRegisterLb.setText("Login jest zajęty");
         }
     }
@@ -140,5 +140,18 @@ public class LoginTabController {
             mc.infoLoginLb.setText(LOGOUT_SUCCESS);
             mc.beginMatchTab.setDisable(true);
         }
+    }
+    
+    public String transform(String sha){
+        if(sha.length()<=50)
+            return sha;
+        
+        String result = ""; 
+        
+        for(int i=0;i<50;i++){
+            result+=sha.charAt(i);
+        }
+        
+        return result;
     }
 }
