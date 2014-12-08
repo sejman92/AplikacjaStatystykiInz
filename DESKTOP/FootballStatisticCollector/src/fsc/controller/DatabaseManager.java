@@ -252,12 +252,6 @@ public class DatabaseManager {
     }
     
     //Logintab element's method
-    
-    public List<User> findAllUsers(){
-        List<User>users = new ArrayList<>(em.createNamedQuery("User.findAll").getResultList());
-
-        return users;
-    }
     public User getUser(String login){
         List<User>users = new ArrayList<>(em.createNamedQuery("User.findByLogin").setParameter("login", login).getResultList());
         
